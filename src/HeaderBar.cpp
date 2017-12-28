@@ -23,7 +23,7 @@ void HeaderBar::draw()
 
    // draw the info text
    std::stringstream str;
-   str << "W: " << COLS << " H: " << LINES;
+   str << "Cs: " << COLORS << " W: " << COLS << " H: " << LINES;
    std::string width_height_text = str.str();
    mvprintw(0, COLS - width_height_text.length() - 2, width_height_text.c_str());
 
