@@ -64,6 +64,9 @@ void AppController::run_loop()
          "read_file",
          "view_git_status",
          "show_git_log",
+         "this_projekt_pid",
+         "this_projekt_standard_input",
+         "this_projekt_standard_error",
          EVENT_ABORT_PROGRAM,
       });
 
@@ -76,6 +79,12 @@ void AppController::run_loop()
          break;
       case 'k':
          event_queue.append_event(EVENT_MOVE_CURSOR_UP);
+         break;
+      case 'l':
+         event_queue.append_event("show_git_log");
+         break;
+      case 's':
+         event_queue.append_event("view_git_status");
          break;
       case 10:
          event_queue.append_event(EVENT_CHOOSE_CURRENT_MENU_ITEM);
@@ -97,6 +106,21 @@ void AppController::run_loop()
          else if (event == "set_title_text_2") title_text = "Ncurses is Amazing!!";
          else if (event == "system_command") system("echo \"Hello Mark\"");
          else if (event == "create_new_file") system("echo \"This is the file contents\">\"newfile.txt\"");
+         else if (event == "this_projekt_pid")
+         {
+            system("ps -A | grep -m1 ncurses | awk '{print $1}' > \"output.txt\"");
+            event_queue.append_event("read_file");
+         }
+         else if (event == "this_projekt_standard_input")
+         {
+            system("ps -A | grep -m1 ncurses | awk '{print \"proc/\"$1\"/fd/0\"}' > \"output.txt\"");
+            event_queue.append_event("read_file");
+         }
+         else if (event == "this_projekt_standard_error")
+         {
+            system("ps -A | grep -m1 ncurses | awk '{print \"proc/\"$1\"/fd/1\"}' > \"output.txt\"");
+            event_queue.append_event("read_file");
+         }
          else if (event == "curl_command")
          {
             system("curl -s \"https://jsonplaceholder.typicode.com/users\" > \"output.txt\"");
