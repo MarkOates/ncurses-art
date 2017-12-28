@@ -17,5 +17,6 @@ public:
    Text &bold(bool on=true);
    Text &underline(bool on=true);
    Text &reverse(bool on=true);
+   Text &color(int color_num);
    void draw();
 };

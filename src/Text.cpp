@@ -38,6 +38,12 @@ Text &Text::reverse(bool on)
    return *this;
 }
 
+Text &Text::color(int color_num)
+{
+   styles |= COLOR_PAIR(color_num);
+   return *this;
+}
+
 void Text::draw()
 {
    float str_width = text.length();
