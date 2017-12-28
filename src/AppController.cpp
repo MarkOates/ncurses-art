@@ -50,7 +50,7 @@ void AppController::run_loop()
    init_pair(1, 20, COLOR_BLACK);
    init_pair(2, 20, COLOR_BLACK);
 
-   std::string title_text = "Ncurses is Amazing!!";
+   std::string title_text = "Projekt";
    std::string body_text = "[Body text goes here]";
 
    Menu menu(10.0f, 10.0f, {
