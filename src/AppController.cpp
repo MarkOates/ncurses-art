@@ -10,12 +10,11 @@ const int AppController::DEFAULT_USLEEP_DELAY = 10000;
 
 AppController::AppController()
    : initialized(false)
-   , screen(nullptr)
+   , screen()
    , event_queue()
    , usleep_delay(DEFAULT_USLEEP_DELAY)
    , program_aborted(false)
 {
-   screen->initialize();
 }
 
 AppController::~AppController()
@@ -24,7 +23,9 @@ AppController::~AppController()
 
 void AppController::initialize()
 {
-   screen = new Screen();
+   if (initialized) return;
+
+   screen.initialize();
    initialized = true;
 }
 
