@@ -1,0 +1,14 @@
+# Ignore everything in this directory
+*
+# Except this file and everything in the bin directory
+!.gitignore
+!data/
+!data/*
+!data/*/*
+!data/*/*/*
+!data/*/*/*/*     # (4 levels should be enough)
+!tools/
+!tools/*
+!tools/*/*
+!tools/*/*/*
+!tools/*/*/*/*     # (4 levels should be enough)
