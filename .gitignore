@@ -1,0 +1,17 @@
+
+/msvc-*
+
+*.swp
+*.swo
+
+allegro.log
+
+*.o
+*.o-*
+*.obj
+*.exe
+
+.DS_Store
+
+.project_info
+
