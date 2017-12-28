@@ -1,6 +1,7 @@
 #include <ncurses_art/AppController.h>
 
 #include <ncurses_art/Screen.h>
+#include <ncurses_art/HeaderBar.h>
 #include <ncurses.h>
 #include <stdexcept>
 
@@ -25,7 +26,8 @@ void AppController::run_loop()
 {
    validate_init();
 
-   printw("Hello world.");
+   HeaderBar header_bar;
+   header_bar.draw();
 }
 
 void AppController::validate_init()
