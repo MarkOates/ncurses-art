@@ -46,7 +46,7 @@ void AppController::run_loop()
       case 'k':
          event_queue.append_event(EVENT_MOVE_CURSOR_UP);
          break;
-      case 13:
+      case 10:
          event_queue.append_event(EVENT_CHOOSE_CURRENT_MENU_ITEM);
          break;
       case 'q':
