@@ -6,6 +6,11 @@ Screen::Screen()
 {
    initscr();
    cbreak();
+   start_color();
+
+   noecho();
+   cbreak();
+   curs_set(0);
 }
 
 Screen::~Screen()
