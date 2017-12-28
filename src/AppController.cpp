@@ -13,7 +13,6 @@ AppController::AppController()
 
 AppController::~AppController()
 {
-   getch();
 }
 
 void AppController::initialize()
@@ -26,8 +25,14 @@ void AppController::run_loop()
 {
    validate_init();
 
-   HeaderBar header_bar;
-   header_bar.draw();
+   char ch = ' ';
+
+   do
+   {
+      HeaderBar header_bar;
+      header_bar.draw();
+   }
+   while ((ch = getch()) != 'q');
 }
 
 void AppController::validate_init()
