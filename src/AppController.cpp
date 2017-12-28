@@ -12,6 +12,7 @@ AppController::AppController()
 
 AppController::~AppController()
 {
+   getch();
 }
 
 void AppController::initialize()
@@ -25,7 +26,6 @@ void AppController::run_loop()
    validate_init();
 
    printw("Hello world.");
-   getch();
 }
 
 void AppController::validate_init()
