@@ -11,6 +11,7 @@ const int AppController::DEFAULT_USLEEP_DELAY = 10000;
 AppController::AppController()
    : initialized(false)
    , screen(nullptr)
+   , event_queue()
    , usleep_delay(DEFAULT_USLEEP_DELAY)
    , program_aborted(false)
 {
