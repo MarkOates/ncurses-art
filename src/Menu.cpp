@@ -16,7 +16,7 @@ Menu::~Menu()
 
 void Menu::move_cursor_up()
 {
-   cursor_pos = (cursor_pos - 1) % options.size();
+   cursor_pos = (cursor_pos - 1 + options.size()) % options.size();
 }
 
 void Menu::move_cursor_down()
