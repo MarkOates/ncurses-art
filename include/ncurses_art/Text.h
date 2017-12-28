@@ -14,5 +14,8 @@ public:
    ~Text();
 
    void set_styles(int styles);
+   Text &bold(bool on=true);
+   Text &underline(bool on=true);
+   Text &reverse(bool on=true);
    void draw();
 };

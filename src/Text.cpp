@@ -20,6 +20,24 @@ void Text::set_styles(int styles)
    this->styles = styles;
 }
 
+Text &Text::bold(bool on)
+{
+   on ? styles |= A_BOLD : styles &= ~A_BOLD;
+   return *this;
+}
+
+Text &Text::underline(bool on)
+{
+   on ? styles |= A_UNDERLINE : styles &= ~A_UNDERLINE;
+   return *this;
+}
+
+Text &Text::reverse(bool on)
+{
+   on ? styles |= A_REVERSE : styles &= ~A_REVERSE;
+   return *this;
+}
+
 void Text::draw()
 {
    float str_width = text.length();
