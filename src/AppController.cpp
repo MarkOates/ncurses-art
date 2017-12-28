@@ -15,6 +15,7 @@ AppController::AppController()
    , usleep_delay(DEFAULT_USLEEP_DELAY)
    , program_aborted(false)
 {
+   screen->initialize();
 }
 
 AppController::~AppController()

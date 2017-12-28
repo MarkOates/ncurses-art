@@ -3,7 +3,21 @@
 #include <ncurses.h>
 
 Screen::Screen()
+   : initialized(false)
 {
+}
+
+Screen::~Screen()
+{
+   if (!initialized) return;
+
+   endwin();
+}
+
+bool Screen::initialize()
+{
+   if (initialized) return true;
+
    initscr();
    cbreak();
    start_color();
@@ -11,9 +25,6 @@ Screen::Screen()
    noecho();
    cbreak();
    curs_set(0);
-}
 
-Screen::~Screen()
-{
-   endwin();
+   return true;
 }
