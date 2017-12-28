@@ -33,16 +33,22 @@ void AppController::run_loop()
 {
    validate_init();
 
-   char ch = '\0';
    nodelay(stdscr, true);
 
    do
    {
-      switch (ch)
+      switch (getch())
       {
       case 'q':
-         abort_program();
+         event_queue.append_event(EVENT_ABORT_PROGRAM);
          break;
+      }
+
+      while (!event_queue.is_empty())
+      {
+         std::string event = event_queue.pop_event();
+
+         if (event == EVENT_ABORT_PROGRAM) abort_program();
       }
 
       erase();
@@ -51,7 +57,6 @@ void AppController::run_loop()
       header_bar.draw();
 
       usleep(usleep_delay);
-      ch = getch();
    }
    while (!program_aborted);
 }
