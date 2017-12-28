@@ -1,11 +1,9 @@
-#include <ncurses.h>
+#include <ncurses_art/AppController.h>
 
 int main(int, char**)
 {
-   initscr();
-   cbreak();
-   printw("Hello world.");
-   getch();
-   endwin();
+   AppController app_controller;
+   app_controller.initialize();
+   app_controller.run_loop();
    return 0;
 }
