@@ -20,6 +20,12 @@ void Text::set_styles(int styles)
    this->styles = styles;
 }
 
+Text &Text::blink(bool on)
+{
+   on ? styles |= A_BLINK : styles &= ~A_BLINK;
+   return *this;
+}
+
 Text &Text::bold(bool on)
 {
    on ? styles |= A_BOLD : styles &= ~A_BOLD;

@@ -15,6 +15,7 @@ public:
 
    void set_styles(int styles);
    Text &bold(bool on=true);
+   Text &blink(bool on=true);
    Text &underline(bool on=true);
    Text &reverse(bool on=true);
    Text &color(int color_num);
