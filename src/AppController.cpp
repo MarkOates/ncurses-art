@@ -12,6 +12,7 @@ AppController::AppController()
    : initialized(false)
    , screen(nullptr)
    , usleep_delay(DEFAULT_USLEEP_DELAY)
+   , program_aborted(false)
 {
 }
 
@@ -29,22 +30,36 @@ void AppController::run_loop()
 {
    validate_init();
 
-   char ch = ' ';
+   char ch = '\0';
    nodelay(stdscr, true);
 
    do
    {
+      switch (ch)
+      {
+      case 'q':
+         abort_program();
+         break;
+      }
+
       erase();
 
       HeaderBar header_bar;
       header_bar.draw();
 
       usleep(usleep_delay);
+      ch = getch();
    }
-   while ((ch = getch()) != 'q');
+   while (!program_aborted);
 }
 
 void AppController::validate_init()
 {
    if (!initialized) throw std::runtime_error("AppController must be initialized before using functionality");
+}
+
+void AppController::abort_program()
+{
+   validate_init();
+   program_aborted = true;
 }

@@ -9,6 +9,7 @@ private:
    bool initialized;
    Screen *screen;
    int usleep_delay;
+   bool program_aborted;
 
 public:
    AppController();
@@ -17,4 +18,5 @@ public:
    void initialize();
    void run_loop();
    void validate_init();
+   void abort_program();
 };
