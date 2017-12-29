@@ -18,6 +18,7 @@ public:
 
    void set_app_controller(AppController *app_controller);
    bool emit_event(std::string event);
+   virtual bool process_input(char input_ch);
    virtual bool process_event(std::string event);
    void draw() override;
 };

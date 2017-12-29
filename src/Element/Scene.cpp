@@ -25,6 +25,11 @@ bool Scene::emit_event(std::string event)
    return true;
 }
 
+bool Scene::process_input(char input_ch)
+{
+   return true;
+}
+
 bool Scene::process_event(std::string event)
 {
    return true;

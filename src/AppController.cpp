@@ -54,7 +54,8 @@ void AppController::run_loop()
 
    do
    {
-      switch (getch())
+      char ch = getch();
+      switch (ch)
       {
       case 'j':
          emit_event(EVENT_MOVE_CURSOR_DOWN);
@@ -67,6 +68,9 @@ void AppController::run_loop()
          break;
       case '\e':
          emit_event(EVENT_ABORT_PROGRAM);
+         break;
+      default:
+         if (scene) scene->process_input(ch);
          break;
       }
 
