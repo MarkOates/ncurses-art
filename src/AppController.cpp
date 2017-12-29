@@ -43,6 +43,11 @@ void AppController::set_scene(Scene *scene)
    this->scene = scene;
 }
 
+void AppController::emit_event(std::string event)
+{
+   event_queue.append_event(event);
+}
+
 void AppController::run_loop()
 {
    validate_init();
@@ -52,16 +57,16 @@ void AppController::run_loop()
       switch (getch())
       {
       case 'j':
-         event_queue.append_event(EVENT_MOVE_CURSOR_DOWN);
+         emit_event(EVENT_MOVE_CURSOR_DOWN);
          break;
       case 'k':
-         event_queue.append_event(EVENT_MOVE_CURSOR_UP);
+         emit_event(EVENT_MOVE_CURSOR_UP);
          break;
       case 10:
-         event_queue.append_event(EVENT_CHOOSE_CURRENT_MENU_ITEM);
+         emit_event(EVENT_CHOOSE_CURRENT_MENU_ITEM);
          break;
       case 'q':
-         event_queue.append_event(EVENT_ABORT_PROGRAM);
+         emit_event(EVENT_ABORT_PROGRAM);
          break;
       }
 

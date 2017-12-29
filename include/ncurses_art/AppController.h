@@ -22,6 +22,7 @@ public:
 
    void initialize();
    void set_scene(Scene *scene);
+   void emit_event(std::string event);
    void run_loop();
    void validate_init();
    void abort_program();
