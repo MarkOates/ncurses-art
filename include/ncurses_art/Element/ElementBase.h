@@ -12,5 +12,6 @@ public:
    virtual ~ElementBase();
 
    std::string get_type();
+   bool is_type(std::string type);
    virtual void draw() = 0;
 };
