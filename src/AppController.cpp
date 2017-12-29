@@ -1,6 +1,7 @@
 #include <ncurses_art/AppController.h>
 
 #include <ncurses_art/Element/Scene.h>
+#include <ncurses_art/Element/Text.h>
 #include <ncurses_art/EventTypes.h>
 #include <ncurses_art/Screen.h>
 #include <ncurses.h>
@@ -20,7 +21,7 @@ AppController::AppController()
    , event_queue()
    , usleep_delay(DEFAULT_USLEEP_DELAY)
    , program_aborted(false)
-   , scene()
+   , scene(nullptr)
 {
 }
 
@@ -35,6 +36,11 @@ void AppController::initialize()
    screen.initialize();
    initialized = true;
    nodelay(stdscr, true);
+}
+
+void AppController::set_scene(Scene *scene)
+{
+   this->scene = scene;
 }
 
 void AppController::run_loop()
@@ -67,7 +73,8 @@ void AppController::run_loop()
          else throw std::runtime_error(std::string("unrecognized event ") + event);
       }
 
-      scene.draw();
+      if (scene) scene->draw();
+      else Text("- no scene is currently active -", COLS/2, LINES/3, 0.5).draw();
 
       usleep(usleep_delay);
    }

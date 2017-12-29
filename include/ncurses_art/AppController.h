@@ -1,8 +1,9 @@
 #pragma once
 
-#include <ncurses_art/Element/Scene.h>
 #include <ncurses_art/EventQueue.h>
 #include <ncurses_art/Screen.h>
+
+class Scene;
 
 class AppController
 {
@@ -13,13 +14,14 @@ private:
    EventQueue event_queue;
    int usleep_delay;
    bool program_aborted;
-   Scene scene;
+   Scene *scene;
 
 public:
    AppController();
    ~AppController();
 
    void initialize();
+   void set_scene(Scene *scene);
    void run_loop();
    void validate_init();
    void abort_program();
