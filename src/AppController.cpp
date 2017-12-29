@@ -57,15 +57,6 @@ void AppController::run_loop()
       char ch = getch();
       switch (ch)
       {
-      case 'j':
-         emit_event(EVENT_MOVE_CURSOR_DOWN);
-         break;
-      case 'k':
-         emit_event(EVENT_MOVE_CURSOR_UP);
-         break;
-      case 10:
-         emit_event(EVENT_CHOOSE_CURRENT_MENU_ITEM);
-         break;
       case '\e':
          emit_event(EVENT_ABORT_PROGRAM);
          break;
