@@ -36,13 +36,12 @@ void AppController::initialize()
 
    screen.initialize();
    initialized = true;
+   nodelay(stdscr, true);
 }
 
 void AppController::run_loop()
 {
    validate_init();
-
-   nodelay(stdscr, true);
 
    do
    {
