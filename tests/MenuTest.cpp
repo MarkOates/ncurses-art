@@ -31,3 +31,23 @@ TEST(MenuTest, when_containing_no_menu_options_current_selection_is_empty_string
 
    ASSERT_EQ("", menu.current_selection());
 }
+
+TEST(MenuTest, can_get_the_x_position)
+{
+   Menu menu1(0, 0, {});
+   ASSERT_EQ(0, menu1.get_x());
+   Menu menu2(9, 0, {});
+   ASSERT_EQ(9, menu2.get_x());
+   Menu menu3(-10, {});
+   ASSERT_EQ(-10, menu3.get_x());
+}
+
+TEST(MenuTest, can_get_the_y_position)
+{
+   Menu menu1(0, 0, {});
+   ASSERT_EQ(0, menu1.get_y());
+   Menu menu2(0, 9, {});
+   ASSERT_EQ(9, menu2.get_y());
+   Menu menu3(0, -10, {});
+   ASSERT_EQ(-10, menu3.get_y());
+}

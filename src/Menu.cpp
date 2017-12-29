@@ -14,6 +14,16 @@ Menu::~Menu()
 {
 }
 
+float Menu::get_x()
+{
+   return x;
+}
+
+float Menu::get_y()
+{
+   return y;
+}
+
 void Menu::move_cursor_up()
 {
    cursor_pos = (cursor_pos - 1 + options.size()) % options.size();
