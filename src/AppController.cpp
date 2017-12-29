@@ -65,7 +65,7 @@ void AppController::run_loop()
       case 10:
          emit_event(EVENT_CHOOSE_CURRENT_MENU_ITEM);
          break;
-      case 'q':
+      case '\e':
          emit_event(EVENT_ABORT_PROGRAM);
          break;
       }
