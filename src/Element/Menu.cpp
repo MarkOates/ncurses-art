@@ -9,11 +9,17 @@ Menu::Menu(float x, float y, std::vector<std::string> options)
    , y(y)
    , options(options)
    , cursor_pos(0)
+   , styles(0)
 {
 }
 
 Menu::~Menu()
 {
+}
+
+void Menu::set_styles(int styles)
+{
+   this->styles = styles;
 }
 
 float Menu::get_x()
@@ -51,7 +57,7 @@ void Menu::draw()
    }
 
    Rectangle rectangle(x-3, y-1, largest_length+6, options.size()+2);
-   rectangle.set_styles(COLOR_PAIR(3));
+   rectangle.set_styles(styles);
    rectangle.draw();
 
    for (unsigned i=0; i<options.size(); i++)
@@ -59,6 +65,7 @@ void Menu::draw()
       std::string text_str = options[i];
       if (i == cursor_pos) text_str += " <=";
       Text text(text_str, x, y+i);
+      text.set_styles(styles);
       if (i == cursor_pos) text.reverse();
       text.draw();
    }
