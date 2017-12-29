@@ -13,7 +13,7 @@ protected:
 
 public:
    Scene();
-   ~Scene();
+   virtual ~Scene();
 
    void set_app_controller(AppController *app_controller);
    void draw() override;
