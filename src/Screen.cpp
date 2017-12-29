@@ -23,7 +23,6 @@ bool Screen::initialize()
    start_color();
 
    noecho();
-   cbreak();
    curs_set(0);
 
    return true;
