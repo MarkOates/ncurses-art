@@ -3,7 +3,8 @@
 #include <ncurses.h>
 
 Text::Text(std::string text, float x, float y, float align_x)
-   : text(text)
+   : ElementBase("Text")
+   , text(text)
    , x(x)
    , y(y)
    , align_x(align_x)

@@ -3,7 +3,8 @@
 #include <ncurses.h>
 
 Rectangle::Rectangle(float x, float y, float w, float h)
-   : x(x)
+   : ElementBase("Rectangle")
+   , x(x)
    , y(y)
    , w(w)
    , h(h)

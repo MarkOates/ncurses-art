@@ -4,7 +4,7 @@
 #include <ncurses.h>
 
 Scene::Scene()
-   : ElementBase()
+   : ElementBase("Scene")
    , app_controller(nullptr)
    , elements()
 {

@@ -5,7 +5,8 @@
 #include <curses.h>
 
 Menu::Menu(float x, float y, std::vector<std::string> options)
-   : x(x)
+   : ElementBase("Menu")
+   , x(x)
    , y(y)
    , options(options)
    , cursor_pos(0)

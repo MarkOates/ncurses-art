@@ -7,6 +7,12 @@ TEST(MenuTest, can_be_created)
    Menu menu(10.0f, 10.0f, { "Option1", "Option2" });
 }
 
+TEST (MenuTest, has_the_expected_type)
+{
+   Menu menu(10.0f, 10.0f, { "Option1", "Option2" });
+   EXPECT_EQ("Menu", menu.get_type());
+}
+
 TEST(MenuTest, can_return_the_current_selection)
 {
    Menu menu(0, 0, { "Option1", "Option2", "Option3" });

@@ -5,7 +5,8 @@
 #include <sstream>
 
 HeaderBar::HeaderBar()
-   : text("[Untitled]")
+   : ElementBase("HeaderBar")
+   , text("[Untitled]")
 {
 }
 
