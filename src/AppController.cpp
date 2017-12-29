@@ -22,6 +22,7 @@ AppController::AppController()
    , event_queue()
    , usleep_delay(DEFAULT_USLEEP_DELAY)
    , program_aborted(false)
+   , elements()
 {
 }
 
@@ -70,6 +71,8 @@ void AppController::run_loop()
       }
 
       erase();
+
+      for (auto &element : elements) element->draw();
 
       usleep(usleep_delay);
    }

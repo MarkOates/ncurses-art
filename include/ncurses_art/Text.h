@@ -1,8 +1,9 @@
 #pragma once
 
+#include <ncurses_art/Element.h>
 #include <string>
 
-class Text
+class Text : public Element
 {
 private:
    std::string text;
@@ -19,5 +20,5 @@ public:
    Text &underline(bool on=true);
    Text &reverse(bool on=true);
    Text &color(int color_num);
-   void draw();
+   void draw() override;
 };

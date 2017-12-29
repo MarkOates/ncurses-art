@@ -1,6 +1,8 @@
 #pragma once
 
-class Rectangle
+#include <ncurses_art/Element.h>
+
+class Rectangle : public Element
 {
 private:
    float x, y, w, h;
@@ -11,5 +13,5 @@ public:
    ~Rectangle();
 
    void set_styles(int styles);
-   void draw();
+   void draw() override;
 };

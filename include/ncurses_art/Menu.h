@@ -1,9 +1,10 @@
 #pragma once
 
+#include <ncurses_art/Element.h>
 #include <string>
 #include <vector>
 
-class Menu
+class Menu : public Element
 {
 private:
    float x, y;
@@ -20,5 +21,5 @@ public:
    void move_cursor_down();
    std::string current_selection();
 
-   void draw();
+   void draw() override;
 };
