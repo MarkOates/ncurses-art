@@ -45,7 +45,7 @@ run_tests: tests
 
 obj/%.o: src/%.cpp
 	@mkdir -p $(@D)
-	@printf "compiling object for \e[1m\e[34m$<\033[0m..."
+	@printf "compiling object for \e[1m\e[34m$<\033[0m...\n"
 	@g++ -c -std=gnu++11 -Wall -Wuninitialized -Weffc++ $< -o $@ -I./include
 	@echo "done. object at \033[1m\033[32m$@\033[0m"
 
@@ -53,14 +53,14 @@ obj/%.o: src/%.cpp
 
 obj/tests/%.o: tests/%.cpp $(OBJECTS)
 	@mkdir -p $(@D)
-	@printf "compiling test obj file \e[1m\e[36m$<\033[0m..."
+	@printf "compiling test obj file \e[1m\e[36m$<\033[0m...\n"
 	@g++ -c -std=gnu++11 -Wall -Wuninitialized -Weffc++ $< -o $@ -I./include -I$(GOOGLE_TEST_INCLUDE_DIR)
 	@echo "done. Object at \033[1m\033[32m$@\033[0m"
 
 
 obj/test_runner.o: programs/test_runner.cpp
 	@mkdir -p $(@D)
-	@printf "compiling test obj file \e[1m\e[36m$<\033[0m..."
+	@printf "compiling test obj file \e[1m\e[36m$<\033[0m...\n"
 	@g++ -c -std=gnu++11 -Wall -Wuninitialized -Weffc++ $< -o $@ -I$(GOOGLE_TEST_INCLUDE_DIR)
 	@echo "done. Object at \033[1m\033[32m$@\033[0m"
 
@@ -68,7 +68,7 @@ obj/test_runner.o: programs/test_runner.cpp
 
 bin/tests/%: obj/tests/%.o obj/programs/test_runner.o
 	@mkdir -p $(@D)
-	@printf "compiling standalone test \e[1m\e[36m$<\033[0m..."
+	@printf "compiling standalone test \e[1m\e[36m$<\033[0m...\n"
 	@g++ -std=gnu++11 -Wall -Wuninitialized -Weffc++ $(OBJECTS) $< obj/programs/test_runner.o -o $@ -l$(GOOGLE_TEST_LIBS) -I./include -I$(GOOGLE_TEST_INCLUDE_DIR) -L$(GOOGLE_TEST_LIB_DIR) -l$(NCURSES_LIB)
 	@echo "done. Executable at \033[1m\033[32m$@\033[0m"
 
@@ -77,7 +77,7 @@ bin/tests/%: obj/tests/%.o obj/programs/test_runner.o
 bin/test_runner: programs/test_runner.cpp $(TEST_OBJECTS)
 	echo $(TEST_OBJECTS)
 	@mkdir -p $(@D)
-	@printf "compiling test_runer \e[1m\e[36m$<\033[0m..."
+	@printf "compiling test_runer \e[1m\e[36m$<\033[0m...\n"
 	@g++ -std=gnu++11 -Wall -Wuninitialized -Weffc++ $(OBJECTS) $(TEST_OBJECTS) $< -o $@ -l$(GOOGLE_TEST_LIBS) -I./include -I$(GOOGLE_TEST_INCLUDE_DIR) -L$(GOOGLE_TEST_LIB_DIR) -l$(NCURSES_LIB)
 	@echo "done. Executable at \033[1m\033[32m$@\033[0m"
 
