@@ -49,6 +49,7 @@ void AppController::run_loop()
 
    init_pair(1, 20, COLOR_BLACK);
    init_pair(2, 20, COLOR_BLACK);
+   init_pair(3, COLOR_BLACK, 20);
 
    std::string title_text = "Projekt";
    std::string body_text = "[Body text goes here]";
