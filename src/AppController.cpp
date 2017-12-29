@@ -75,6 +75,7 @@ void AppController::run_loop()
          std::string event = event_queue.pop_event();
 
          if (event == EVENT_ABORT_PROGRAM) abort_program();
+         else if (scene && scene->process_event(event)) break;
          else throw std::runtime_error(std::string("unrecognized event ") + event);
       }
 

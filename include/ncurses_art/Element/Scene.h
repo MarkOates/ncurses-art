@@ -1,6 +1,7 @@
 #pragma once
 
 #include <ncurses_art/Element/ElementBase.h>
+#include <string>
 #include <vector>
 
 class AppController;
@@ -16,5 +17,7 @@ public:
    virtual ~Scene();
 
    void set_app_controller(AppController *app_controller);
+   bool emit_event(std::string event);
+   virtual bool process_event(std::string event);
    void draw() override;
 };

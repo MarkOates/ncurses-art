@@ -19,6 +19,17 @@ void Scene::set_app_controller(AppController *app_controller)
    this->app_controller = app_controller;
 }
 
+bool Scene::emit_event(std::string event)
+{
+   if (app_controller) app_controller->emit_event(event);
+   return true;
+}
+
+bool Scene::process_event(std::string event)
+{
+   return true;
+}
+
 void Scene::draw()
 {
    erase();
