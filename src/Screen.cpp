@@ -11,6 +11,7 @@ Screen::~Screen()
 {
    if (!initialized) return;
 
+   curs_set(1);
    endwin();
 }
 
@@ -24,6 +25,8 @@ bool Screen::initialize()
 
    noecho();
    curs_set(0);
+
+   initialized = true;
 
    return true;
 }
