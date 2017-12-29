@@ -1,9 +1,8 @@
 #pragma once
 
+#include <ncurses_art/Element/Scene.h>
 #include <ncurses_art/EventQueue.h>
 #include <ncurses_art/Screen.h>
-
-class ElementBase;
 
 class AppController
 {
@@ -14,7 +13,7 @@ private:
    EventQueue event_queue;
    int usleep_delay;
    bool program_aborted;
-   std::vector<ElementBase *> elements;
+   Scene scene;
 
 public:
    AppController();

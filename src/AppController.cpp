@@ -1,8 +1,6 @@
 #include <ncurses_art/AppController.h>
 
-#include <ncurses_art/Element/HeaderBar.h>
-#include <ncurses_art/Element/Menu.h>
-#include <ncurses_art/Element/Text.h>
+#include <ncurses_art/Element/Scene.h>
 #include <ncurses_art/EventTypes.h>
 #include <ncurses_art/Screen.h>
 #include <ncurses.h>
@@ -22,7 +20,7 @@ AppController::AppController()
    , event_queue()
    , usleep_delay(DEFAULT_USLEEP_DELAY)
    , program_aborted(false)
-   , elements()
+   , scene()
 {
 }
 
@@ -69,9 +67,7 @@ void AppController::run_loop()
          else throw std::runtime_error(std::string("unrecognized event ") + event);
       }
 
-      erase();
-
-      for (auto &element : elements) element->draw();
+      scene.draw();
 
       usleep(usleep_delay);
    }
