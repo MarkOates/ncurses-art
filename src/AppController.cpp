@@ -64,6 +64,7 @@ void AppController::run_loop()
          "read_file",
          "view_git_status",
          "show_git_log",
+         "show_git_diff",
          "this_projekt_pid",
          "this_projekt_standard_input",
          "this_projekt_standard_error",
@@ -138,6 +139,11 @@ void AppController::run_loop()
          else if (event == "view_git_status")
          {
             system("git status > \"output.txt\"");
+            event_queue.append_event("read_file");
+         }
+         else if (event == "show_git_diff")
+         {
+            system("git diff > \"output.txt\"");
             event_queue.append_event("read_file");
          }
          else if (event == "show_git_log")
