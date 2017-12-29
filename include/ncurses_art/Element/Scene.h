@@ -3,14 +3,18 @@
 #include <ncurses_art/Element/ElementBase.h>
 #include <vector>
 
+class AppController;
+
 class Scene : public ElementBase
 {
-private:
+protected:
+   AppController *app_controller;
    std::vector<ElementBase *> elements;
 
 public:
    Scene();
    ~Scene();
 
+   void set_app_controller(AppController *app_controller);
    void draw() override;
 };
