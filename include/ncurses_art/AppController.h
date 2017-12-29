@@ -3,7 +3,7 @@
 #include <ncurses_art/EventQueue.h>
 #include <ncurses_art/Screen.h>
 
-class Element;
+class ElementBase;
 
 class AppController
 {
@@ -14,7 +14,7 @@ private:
    EventQueue event_queue;
    int usleep_delay;
    bool program_aborted;
-   std::vector<Element *> elements;
+   std::vector<ElementBase *> elements;
 
 public:
    AppController();

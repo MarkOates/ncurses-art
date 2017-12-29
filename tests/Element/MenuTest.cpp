@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include <ncurses_art/Menu.h>
+#include <ncurses_art/Element/Menu.h>
 
 TEST(MenuTest, can_be_created)
 {

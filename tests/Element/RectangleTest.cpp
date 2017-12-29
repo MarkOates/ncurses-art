@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include <ncurses_art/Rectangle.h>
+#include <ncurses_art/Element/Rectangle.h>
 
 TEST(RectangleTest, can_be_created)
 {

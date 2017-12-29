@@ -1,9 +1,9 @@
 #pragma once
 
-#include <ncurses_art/Element.h>
+#include <ncurses_art/Element/ElementBase.h>
 #include <string>
 
-class Text : public Element
+class Text : public ElementBase
 {
 private:
    std::string text;

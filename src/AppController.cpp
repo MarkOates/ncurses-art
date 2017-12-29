@@ -1,10 +1,10 @@
 #include <ncurses_art/AppController.h>
 
-#include <ncurses_art/Screen.h>
-#include <ncurses_art/HeaderBar.h>
+#include <ncurses_art/Element/HeaderBar.h>
+#include <ncurses_art/Element/Menu.h>
+#include <ncurses_art/Element/Text.h>
 #include <ncurses_art/EventTypes.h>
-#include <ncurses_art/Menu.h>
-#include <ncurses_art/Text.h>
+#include <ncurses_art/Screen.h>
 #include <ncurses.h>
 #include <stdexcept>
 #include <sstream>

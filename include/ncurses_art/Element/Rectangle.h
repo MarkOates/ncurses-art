@@ -1,8 +1,8 @@
 #pragma once
 
-#include <ncurses_art/Element.h>
+#include <ncurses_art/Element/ElementBase.h>
 
-class Rectangle : public Element
+class Rectangle : public ElementBase
 {
 private:
    float x, y, w, h;

@@ -1,6 +1,6 @@
-#include <ncurses_art/HeaderBar.h>
+#include <ncurses_art/Element/HeaderBar.h>
 
-#include <ncurses_art/Text.h>
+#include <ncurses_art/Element/Text.h>
 #include <ncurses.h>
 #include <sstream>
 

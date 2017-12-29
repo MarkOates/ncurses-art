@@ -1,10 +1,10 @@
 #pragma once
 
-#include <ncurses_art/Element.h>
+#include <ncurses_art/Element/ElementBase.h>
 #include <string>
 #include <vector>
 
-class Menu : public Element
+class Menu : public ElementBase
 {
 private:
    float x, y;
