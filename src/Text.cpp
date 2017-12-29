@@ -55,6 +55,6 @@ void Text::draw()
    float str_width = text.length();
    float x_pos = x - (str_width * align_x);
    attron(styles);
-   mvprintw((int)y, (int)x_pos, text.c_str());
+   mvaddstr((int)y, (int)x_pos, text.c_str());
    attroff(styles);
 }
