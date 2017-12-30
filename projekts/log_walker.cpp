@@ -11,6 +11,7 @@
 #define SET_COMMIT_LOG_MENU "set_commit_log_menu"
 #define SET_DIFF_TEXT "set_diff_text"
 #define COPY_CURRENT_HASH_TO_CLIPBOARD "copy_current_hash_to_clipboard"
+#define COPY_INTERACTIVE_REBASE_COMMAND "copy_interactive_rebase_command"
 
 void set_commit_log_menu()
 {
@@ -47,6 +48,7 @@ bool Projekt::process_input(char input_ch)
    case 'k': emit_event(MOVE_CURSOR_UP); break;
    case 'q': emit_event(EVENT_ABORT_PROGRAM); break;
    case 'y': emit_event(COPY_CURRENT_HASH_TO_CLIPBOARD); break;
+   case 'r': emit_event(COPY_INTERACTIVE_REBASE_COMMAND); break;
    case 10: emit_event(CHOOSE_CURRENT_MENU_ITEM); break;
    default: return false; break;
    }
@@ -73,6 +75,15 @@ bool Projekt::process_event(std::string event)
 
       std::stringstream command;
       command << "printf \"" << git_line_tokens[2] << "\" | pbcopy";
+      system(command.str().c_str());
+   }
+   else if (event == COPY_INTERACTIVE_REBASE_COMMAND)
+   {
+      std::string selection_text = find_menu("main_menu").current_selection();
+      auto git_line_tokens = split_string(selection_text, "\t");
+
+      std::stringstream command;
+      command << "printf \"git rebase -i " << git_line_tokens[2] << "~\" | pbcopy";
       system(command.str().c_str());
    }
    else if (event == SET_DIFF_TEXT)
