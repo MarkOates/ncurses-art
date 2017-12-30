@@ -88,6 +88,7 @@ std::vector<std::string> split_string(std::string s, std::string delimiter)
        results.push_back(token);
        s.erase(0, pos + delimiter.length());
    }
+   results.push_back(s);
 
    return results;
 }
