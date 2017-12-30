@@ -14,6 +14,7 @@ public:
    Text(std::string text, float x, float y, float align_x=0.0);
    ~Text();
 
+   bool set_text(std::string text);
    void set_styles(int styles);
    Text &bold(bool on=true);
    Text &blink(bool on=true);

@@ -16,6 +16,12 @@ Text::~Text()
 {
 }
 
+bool Text::set_text(std::string text)
+{
+   this->text = text;
+   return true;
+}
+
 void Text::set_styles(int styles)
 {
    this->styles = styles;
