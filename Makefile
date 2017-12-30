@@ -21,20 +21,27 @@ NCURSES_LIB=ncurses
 
 
 SOURCES := $(shell find src -name '*.cpp')
-PROGRAMS := $(shell find programs -name '*.cpp')
+PROJEKTS := $(shell find projekts -name '*.cpp')
 OBJECTS := $(SOURCES:src/%.cpp=obj/%.o)
 TEST_SOURCES := $(shell find tests -name '*.cpp')
 TEST_OBJECTS := $(TEST_SOURCES:tests/%.cpp=obj/tests/%.o)
 INDIVIDUAL_TEST_EXECUTABLES := $(TEST_SOURCES:tests/%.cpp=bin/tests/%)
-PROGRAM_EXECUTABLES := $(PROGRAMS:programs/%.cpp=bin/%)
+PROJEKT_EXECUTABLES := $(PROJEKTS:projekts/%.cpp=bin/%)
 
 
 
-progs: $(PROGRAM_EXECUTABLES)
+projekts: $(PROJEKT_EXECUTABLES)
 
 
 
-bin/%: programs/%.cpp $(OBJECTS)
+bin/%: projekts/%.cpp $(OBJECTS)
+	@printf "compiling program \e[1m\e[36m$<\033[0m..."
+	@g++ -std=gnu++11 -Wall -Wuninitialized -Weffc++ $(OBJECTS) $< -o $@ -I./include -l$(NCURSES_LIB)
+	@echo "done. Executable at \033[1m\033[32m$@\033[0m"
+
+
+
+bin/$(PROJECT_NAME_SNAKE_CASE): programs/$(PROJECT_NAME_SNAKE_CASE).cpp $(OBJECTS)
 	@printf "compiling program \e[1m\e[36m$<\033[0m..."
 	@g++ -std=gnu++11 -Wall -Wuninitialized -Weffc++ $(OBJECTS) $< -o $@ -I./include -l$(NCURSES_LIB)
 	@echo "done. Executable at \033[1m\033[32m$@\033[0m"
