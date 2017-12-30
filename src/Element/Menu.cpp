@@ -18,6 +18,14 @@ Menu::~Menu()
 {
 }
 
+bool Menu::set_cursor_pos(int pos)
+{
+   if (pos < 0) throw std::runtime_error("Cannot set_cursor_pos to a negative number");
+   if (options.empty()) cursor_pos = 0;
+   else cursor_pos = pos % options.size();
+   return true;
+}
+
 void Menu::set_styles(int styles)
 {
    this->styles = styles;
@@ -38,6 +46,11 @@ float Menu::get_x()
 float Menu::get_y()
 {
    return y;
+}
+
+int Menu::get_cursor_pos()
+{
+   return cursor_pos;
 }
 
 void Menu::move_cursor_up()
