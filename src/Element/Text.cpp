@@ -57,6 +57,11 @@ Text &Text::color(int color_num)
    return *this;
 }
 
+std::string Text::get_text()
+{
+   return text;
+}
+
 void Text::draw()
 {
    float str_width = text.length();
