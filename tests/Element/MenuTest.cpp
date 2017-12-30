@@ -38,6 +38,32 @@ TEST(MenuTest, when_containing_no_menu_options_current_selection_is_empty_string
    ASSERT_EQ("", menu.current_selection());
 }
 
+TEST(MenuTest, can_set_the_options)
+{
+   Menu menu(0, 0, { "Option1", "Option2", "Option3" });
+
+   ASSERT_TRUE(menu.set_options({ "OptionA", "OptionB", "OptionC" }));
+
+   ASSERT_EQ("OptionA", menu.current_selection());
+   menu.move_cursor_down();
+   ASSERT_EQ("OptionB", menu.current_selection());
+   menu.move_cursor_down();
+   ASSERT_EQ("OptionC", menu.current_selection());
+   menu.move_cursor_down();
+}
+
+TEST(MenuTest, when_setting_the_options_the_current_selection_becomes_the_first_option)
+{
+   Menu menu(0, 0, { "Option1", "Option2", "Option3" });
+
+   menu.move_cursor_down();
+   menu.move_cursor_down();
+   ASSERT_EQ("Option3", menu.current_selection());
+
+   ASSERT_TRUE(menu.set_options({ "OptionA", "OptionB", "OptionC" }));
+   ASSERT_EQ("OptionA", menu.current_selection());
+}
+
 TEST(MenuTest, can_get_the_x_position)
 {
    Menu menu1(0, 0, {});

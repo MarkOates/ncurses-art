@@ -23,6 +23,13 @@ void Menu::set_styles(int styles)
    this->styles = styles;
 }
 
+bool Menu::set_options(std::vector<std::string> options)
+{
+   this->options = options;
+   cursor_pos = 0;
+   return true;
+}
+
 float Menu::get_x()
 {
    return x;
