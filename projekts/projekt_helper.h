@@ -53,6 +53,24 @@ ElementBase &last_element()
    return *current_project->get_elements().back();
 }
 
+Text &create_text(std::string name="", int x=0, int y=0)
+{
+   if (!current_project) throw std::runtime_error("Cannot create a text, current_project is not set");
+   Text *text = new Text("", x, y);
+   current_project->get_elements().push_back(text);
+   last_element().set_name(name);
+   return (*text);
+}
+
+Menu &create_menu(std::string name="")
+{
+   if (!current_project) throw std::runtime_error("Cannot create a menu, current_project is not set");
+   Menu *menu = new Menu(0, 0, {});
+   current_project->get_elements().push_back(menu);
+   last_element().set_name(name);
+   return (*menu);
+}
+
 const std::string MOVE_CURSOR_DOWN = "move_cursor_down";
 const std::string MOVE_CURSOR_UP = "move_cursor_up";
 const std::string CHOOSE_CURRENT_MENU_ITEM = "choose_current_menu_item";
@@ -92,3 +110,14 @@ std::vector<std::string> split_string(std::string s, std::string delimiter)
 
    return results;
 }
+
+// append new line to text
+
+bool append_text(Text &text, std::string str_to_append)
+{
+   std::string str = text.get_text();
+   str += str_to_append;
+   text.set_text(str);
+   return true;
+}
+
