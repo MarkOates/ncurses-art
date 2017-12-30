@@ -62,11 +62,35 @@ std::string Text::get_text()
    return text;
 }
 
+#include <vector>
+std::vector<std::string> ___split_string(std::string s, std::string delimiter);
+
 void Text::draw()
 {
    float str_width = text.length();
    float x_pos = x - (str_width * align_x);
    attron(styles);
-   mvaddstr((int)y, (int)x_pos, text.c_str());
+   int yy = 0;
+   for (auto &line : ___split_string(text, "\n"))
+      mvaddstr((int)y + yy++, (int)x_pos, line.c_str());
    attroff(styles);
+}
+
+////
+
+
+std::vector<std::string> ___split_string(std::string s, std::string delimiter)
+{
+   std::vector<std::string> results;
+
+   size_t pos = 0;
+   std::string token;
+   while ((pos = s.find(delimiter)) != std::string::npos) {
+       token = s.substr(0, pos);
+       results.push_back(token);
+       s.erase(0, pos + delimiter.length());
+   }
+   results.push_back(s);
+
+   return results;
 }
