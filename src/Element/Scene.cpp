@@ -35,6 +35,11 @@ bool Scene::process_event(std::string event)
    return true;
 }
 
+const std::vector<ElementBase *> &Scene::get_elements()
+{
+   return elements;
+}
+
 void Scene::draw()
 {
    erase();
