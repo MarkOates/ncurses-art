@@ -21,13 +21,20 @@ NCURSES_LIB=ncurses
 
 
 SOURCES := $(shell find src -name '*.cpp')
+PROGRAMS := $(shell find programs -name '*.cpp')
 OBJECTS := $(SOURCES:src/%.cpp=obj/%.o)
 TEST_SOURCES := $(shell find tests -name '*.cpp')
 TEST_OBJECTS := $(TEST_SOURCES:tests/%.cpp=obj/tests/%.o)
 INDIVIDUAL_TEST_EXECUTABLES := $(TEST_SOURCES:tests/%.cpp=bin/tests/%)
+PROGRAM_EXECUTABLES := $(PROGRAMS:programs/%.cpp=bin/%)
 
 
-bin/$(PROJECT_NAME_SNAKE_CASE): programs/$(PROJECT_NAME_SNAKE_CASE).cpp $(OBJECTS)
+
+progs: $(PROGRAM_EXECUTABLES)
+
+
+
+bin/%: programs/%.cpp $(OBJECTS)
 	@printf "compiling program \e[1m\e[36m$<\033[0m..."
 	@g++ -std=gnu++11 -Wall -Wuninitialized -Weffc++ $(OBJECTS) $< -o $@ -I./include -l$(NCURSES_LIB)
 	@echo "done. Executable at \033[1m\033[32m$@\033[0m"
@@ -85,13 +92,11 @@ bin/test_runner: programs/test_runner.cpp $(TEST_OBJECTS)
 
 clean:
 	-rm -rdf obj/
-	-rm bin/$(PROJECT_NAME_SNAKE_CASE)
+	-rm $(PROGRAM_EXECUTABLES)
 
 
 
 fresh:
 	make clean
 	make -j8
-	make tests -j8
-	make bin/test_runner -j8
-	bin/test_runner
+	#make tests -j8
