@@ -72,7 +72,7 @@ bool Projekt::process_event(std::string event)
       auto git_line_tokens = split_string(selection_text, "\t");
 
       std::stringstream command;
-      command << "echo " << git_line_tokens[2] << " | pbcopy";
+      command << "printf \"" << git_line_tokens[2] << "\" | pbcopy";
       system(command.str().c_str());
    }
    else if (event == SET_DIFF_TEXT)
