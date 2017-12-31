@@ -108,6 +108,16 @@ void throwit(std::string message)
    throw std::runtime_error(message);
 }
 
+void emit_event(std::string event)
+{
+   if (!current_project)
+   {
+      std::stringstream ss;
+      ss << "Cannot emit_event " << event << ", current_project is not set";
+      throw std::runtime_error(ss.str());
+   }
+   current_project->emit_event(event);
+};
 
 // file content reader
 
