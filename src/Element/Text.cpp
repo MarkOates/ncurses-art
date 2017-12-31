@@ -22,9 +22,31 @@ bool Text::set_text(std::string text)
    return true;
 }
 
+bool Text::set_x(float x)
+{
+   this->x = x;
+   return true;
+}
+
+bool Text::set_y(float y)
+{
+   this->y = y;
+   return true;
+}
+
 void Text::set_styles(int styles)
 {
    this->styles = styles;
+}
+
+float Text::get_x()
+{
+   return x;
+}
+
+float Text::get_y()
+{
+   return y;
 }
 
 Text &Text::blink(bool on)
