@@ -72,10 +72,10 @@ ElementBase &last_element()
    return *current_project->get_elements().back();
 }
 
-Text &create_text(std::string name="", int x=0, int y=0)
+Text &create_text(std::string name="", int x=0, int y=0, float align_x=0)
 {
    if (!current_project) throw std::runtime_error("Cannot create a text, current_project is not set");
-   Text *text = new Text("", x, y);
+   Text *text = new Text("", x, y, align_x);
    current_project->get_elements().push_back(text);
    last_element().set_name(name);
    return (*text);
