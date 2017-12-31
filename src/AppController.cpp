@@ -61,6 +61,8 @@ void AppController::run_loop()
       case '\e':
          emit_event(EVENT_ABORT_PROGRAM);
          break;
+      case ERR:
+         break;
       default:
          if (scene) scene->process_input(ch);
          break;
