@@ -67,6 +67,8 @@ std::vector<std::string> ___split_string(std::string s, std::string delimiter);
 
 void Text::draw()
 {
+   if (text.empty()) return;
+
    float str_width = text.length();
    float x_pos = x - (str_width * align_x);
    attron(styles);
