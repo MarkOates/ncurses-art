@@ -21,6 +21,15 @@ std::vector<Text *> texts()
    return results;
 }
 
+std::vector<Frame *> frames()
+{
+   if (!current_project) throw std::runtime_error("Cannot retrieve tests on a nullptr current_project");
+   std::vector<Frame *> results;
+   for (ElementBase *element : current_project->get_elements())
+      if (element->is_type("Frame")) results.push_back(static_cast<Frame *>(element));
+   return results;
+}
+
 Menu &find_menu(std::string name)
 {
    std::vector<Menu *> results;
@@ -38,6 +47,16 @@ Text &find_text(std::string name)
 
    std::stringstream error_message;
    error_message << "Cannot find text with the name \"" << name << "\"";
+   throw std::runtime_error(error_message.str());
+}
+
+Frame &find_frame(std::string name)
+{
+   std::vector<Frame *> results;
+   for (Frame *frame : frames()) if (frame->is_name(name)) return *frame;
+
+   std::stringstream error_message;
+   error_message << "Cannot find frame with the name \"" << name << "\"";
    throw std::runtime_error(error_message.str());
 }
 
@@ -69,6 +88,15 @@ Menu &create_menu(std::string name="")
    current_project->get_elements().push_back(menu);
    last_element().set_name(name);
    return (*menu);
+}
+
+Frame &create_frame(std::string name="", int x=0, int y=0, int w=20, int h=6)
+{
+   if (!current_project) throw std::runtime_error("Cannot create a menu, current_project is not set");
+   Frame *frame = new Frame(x, y, w, h);
+   current_project->get_elements().push_back(frame);
+   last_element().set_name(name);
+   return (*frame);
 }
 
 const std::string MOVE_CURSOR_DOWN = "move_cursor_down";
