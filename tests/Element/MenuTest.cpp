@@ -83,3 +83,36 @@ TEST(MenuTest, can_get_the_y_position)
    Menu menu3(0, -10, {});
    ASSERT_EQ(-10, menu3.get_y());
 }
+
+TEST(MenuTest, can_get_an_set_the_cursor_position)
+{
+   Menu menu(0, 0, { "Option1", "Option2", "Option3" });
+
+   ASSERT_EQ(0, menu.get_cursor_pos());
+
+   ASSERT_TRUE(menu.set_cursor_pos(2));
+   ASSERT_EQ(2, menu.get_cursor_pos());
+
+   ASSERT_TRUE(menu.set_cursor_pos(1));
+   ASSERT_EQ(1, menu.get_cursor_pos());
+}
+
+TEST(MenuTest, when_setting_the_cursor_pos_to_a_negative_number_throws_an_exception)
+{
+   Menu menu(0, 0, { "Option1", "Option2", "Option3" });
+
+   ASSERT_THROW(menu.set_cursor_pos(-1), std::runtime_error);
+}
+
+TEST(MenuTest, when_setting_the_cursor_pos_will_modulo_the_position_if_gt_number_of_options)
+{
+   Menu menu(0, 0, { "Option1", "Option2", "Option3" });
+
+   ASSERT_EQ(0, menu.get_cursor_pos());
+
+   ASSERT_TRUE(menu.set_cursor_pos(3));
+   ASSERT_EQ(0, menu.get_cursor_pos());
+
+   ASSERT_TRUE(menu.set_cursor_pos(7));
+   ASSERT_EQ(1, menu.get_cursor_pos());
+}

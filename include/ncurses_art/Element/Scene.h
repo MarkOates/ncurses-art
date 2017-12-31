@@ -21,7 +21,7 @@ public:
    virtual bool process_input(char input_ch);
    virtual bool process_event(std::string event);
 
-   const std::vector<ElementBase *> &get_elements();
+   std::vector<ElementBase *> &get_elements();
 
    void draw() override;
 };

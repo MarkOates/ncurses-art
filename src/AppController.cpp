@@ -36,6 +36,7 @@ void AppController::initialize()
    screen.initialize();
    initialized = true;
    nodelay(stdscr, true);
+   emit_event(EVENT_PROGRAM_INITIALIZED);
 }
 
 void AppController::set_scene(Scene *scene)

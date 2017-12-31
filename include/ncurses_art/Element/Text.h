@@ -21,5 +21,8 @@ public:
    Text &underline(bool on=true);
    Text &reverse(bool on=true);
    Text &color(int color_num);
+
+   std::string get_text();
+
    void draw() override;
 };
