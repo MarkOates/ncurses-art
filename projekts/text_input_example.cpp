@@ -74,11 +74,12 @@ Projekt::Projekt()
    init_pair(3, COLOR_BLACK, 21);
    init_pair(1, 20, 22);
 
+   create_header_bar("header_bar");
    create_input("text_input1", 40, 20, "First Name:");
    create_input("text_input2", 40, 25, "Last Name:");
    create_input("text_input3", 40, 30, "Address:");
 
-   create_menu("input_selector").set_options({ "text_input1", "text_input2", "text_input3" });
+   create_menu("input_selector", 0, 2).set_options({ "text_input1", "text_input2", "text_input3" });
 
    events[EVENT_PROGRAM_INITIALIZED] = []{};
    events[START_INPUT] = []{
