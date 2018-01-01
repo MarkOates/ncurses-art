@@ -99,6 +99,15 @@ Frame &create_frame(std::string name="", int x=0, int y=0, int w=20, int h=6)
    return (*frame);
 }
 
+HeaderBar &create_header_bar(std::string name="")
+{
+   if (!current_project) throw std::runtime_error("Cannot create a header_bar, current_project is not set");
+   HeaderBar *header_bar = new HeaderBar();
+   current_project->get_elements().push_back(header_bar);
+   last_element().set_name(name);
+   return (*header_bar);
+}
+
 const std::string MOVE_CURSOR_DOWN = "move_cursor_down";
 const std::string MOVE_CURSOR_UP = "move_cursor_up";
 const std::string CHOOSE_CURRENT_MENU_ITEM = "choose_current_menu_item";
