@@ -81,10 +81,10 @@ Text &create_text(std::string name="", int x=0, int y=0, float align_x=0)
    return (*text);
 }
 
-Menu &create_menu(std::string name="")
+Menu &create_menu(std::string name="", float x=0, float y=0)
 {
    if (!current_project) throw std::runtime_error("Cannot create a menu, current_project is not set");
-   Menu *menu = new Menu(0, 0, {});
+   Menu *menu = new Menu(x, y, {});
    current_project->get_elements().push_back(menu);
    last_element().set_name(name);
    return (*menu);
