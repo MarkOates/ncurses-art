@@ -1,6 +1,7 @@
 #include <ncurses_art/AppController.h>
 
 #include <ncurses_art/Element/ElementBase.h>
+#include <ncurses_art/Element/Frame.h>
 #include <ncurses_art/Element/HeaderBar.h>
 #include <ncurses_art/Element/Menu.h>
 #include <ncurses_art/Element/Rectangle.h>

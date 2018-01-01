@@ -21,6 +21,15 @@ std::vector<Text *> texts()
    return results;
 }
 
+std::vector<Frame *> frames()
+{
+   if (!current_project) throw std::runtime_error("Cannot retrieve tests on a nullptr current_project");
+   std::vector<Frame *> results;
+   for (ElementBase *element : current_project->get_elements())
+      if (element->is_type("Frame")) results.push_back(static_cast<Frame *>(element));
+   return results;
+}
+
 Menu &find_menu(std::string name)
 {
    std::vector<Menu *> results;
@@ -41,6 +50,16 @@ Text &find_text(std::string name)
    throw std::runtime_error(error_message.str());
 }
 
+Frame &find_frame(std::string name)
+{
+   std::vector<Frame *> results;
+   for (Frame *frame : frames()) if (frame->is_name(name)) return *frame;
+
+   std::stringstream error_message;
+   error_message << "Cannot find frame with the name \"" << name << "\"";
+   throw std::runtime_error(error_message.str());
+}
+
 Menu &last_menu()
 {
    return (*menus().back());
@@ -53,22 +72,40 @@ ElementBase &last_element()
    return *current_project->get_elements().back();
 }
 
-Text &create_text(std::string name="", int x=0, int y=0)
+Text &create_text(std::string name="", int x=0, int y=0, float align_x=0)
 {
    if (!current_project) throw std::runtime_error("Cannot create a text, current_project is not set");
-   Text *text = new Text("", x, y);
+   Text *text = new Text("", x, y, align_x);
    current_project->get_elements().push_back(text);
    last_element().set_name(name);
    return (*text);
 }
 
-Menu &create_menu(std::string name="")
+Menu &create_menu(std::string name="", float x=0, float y=0)
 {
    if (!current_project) throw std::runtime_error("Cannot create a menu, current_project is not set");
-   Menu *menu = new Menu(0, 0, {});
+   Menu *menu = new Menu(x, y, {});
    current_project->get_elements().push_back(menu);
    last_element().set_name(name);
    return (*menu);
+}
+
+Frame &create_frame(std::string name="", int x=0, int y=0, int w=20, int h=6)
+{
+   if (!current_project) throw std::runtime_error("Cannot create a menu, current_project is not set");
+   Frame *frame = new Frame(x, y, w, h);
+   current_project->get_elements().push_back(frame);
+   last_element().set_name(name);
+   return (*frame);
+}
+
+HeaderBar &create_header_bar(std::string name="")
+{
+   if (!current_project) throw std::runtime_error("Cannot create a header_bar, current_project is not set");
+   HeaderBar *header_bar = new HeaderBar();
+   current_project->get_elements().push_back(header_bar);
+   last_element().set_name(name);
+   return (*header_bar);
 }
 
 const std::string MOVE_CURSOR_DOWN = "move_cursor_down";
@@ -80,6 +117,16 @@ void throwit(std::string message)
    throw std::runtime_error(message);
 }
 
+void emit_event(std::string event)
+{
+   if (!current_project)
+   {
+      std::stringstream ss;
+      ss << "Cannot emit_event " << event << ", current_project is not set";
+      throw std::runtime_error(ss.str());
+   }
+   current_project->emit_event(event);
+};
 
 // file content reader
 

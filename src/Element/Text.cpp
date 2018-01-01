@@ -22,9 +22,31 @@ bool Text::set_text(std::string text)
    return true;
 }
 
+bool Text::set_x(float x)
+{
+   this->x = x;
+   return true;
+}
+
+bool Text::set_y(float y)
+{
+   this->y = y;
+   return true;
+}
+
 void Text::set_styles(int styles)
 {
    this->styles = styles;
+}
+
+float Text::get_x()
+{
+   return x;
+}
+
+float Text::get_y()
+{
+   return y;
 }
 
 Text &Text::blink(bool on)
@@ -67,6 +89,8 @@ std::vector<std::string> ___split_string(std::string s, std::string delimiter);
 
 void Text::draw()
 {
+   if (text.empty()) return;
+
    float str_width = text.length();
    float x_pos = x - (str_width * align_x);
    attron(styles);

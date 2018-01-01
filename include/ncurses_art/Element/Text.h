@@ -15,7 +15,11 @@ public:
    ~Text();
 
    bool set_text(std::string text);
+   bool set_x(float x);
+   bool set_y(float y);
    void set_styles(int styles);
+   float get_x();
+   float get_y();
    Text &bold(bool on=true);
    Text &blink(bool on=true);
    Text &underline(bool on=true);
