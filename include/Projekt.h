@@ -6,6 +6,7 @@
 #include <ncurses_art/Element/Menu.h>
 #include <ncurses_art/Element/Rectangle.h>
 #include <ncurses_art/Element/Scene.h>
+#include <ncurses_art/Element/TabSet.h>
 #include <ncurses_art/Element/Text.h>
 #include <ncurses_art/EventTypes.h>
 
