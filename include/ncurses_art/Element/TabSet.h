@@ -24,5 +24,9 @@ public:
    float get_y();
    std::vector<std::string> get_tabs();
 
+   bool goto_next_tab();
+   bool goto_previous_tab();
+   std::string current_tab();
+
    void draw() override;
 };

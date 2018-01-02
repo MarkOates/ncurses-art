@@ -31,6 +31,7 @@ bool TabSet::set_y(float y)
 bool TabSet::set_tabs(std::vector<std::string> tabs)
 {
    this->tabs = tabs;
+   active_tab = 0;
    return true;
 }
 
@@ -47,6 +48,24 @@ float TabSet::get_y()
 std::vector<std::string> TabSet::get_tabs()
 {
    return tabs;
+}
+
+bool TabSet::goto_next_tab()
+{
+   active_tab = (active_tab + 1) % tabs.size();
+   return true;
+}
+
+bool TabSet::goto_previous_tab()
+{
+   active_tab = (active_tab - 1 + tabs.size()) % tabs.size();
+   return true;
+}
+
+std::string TabSet::current_tab()
+{
+   if (tabs.empty()) return "";
+   return tabs[active_tab];
 }
 
 void __draw_tab(float x, float y, std::string text, bool active)

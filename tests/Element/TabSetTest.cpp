@@ -48,3 +48,45 @@ TEST (TabSetTest, can_get_an_set_tabs)
    ASSERT_TRUE(tab_set.set_tabs({ "Tab1", "Tab2" }));
    ASSERT_EQ(std::vector<std::string>({ "Tab1", "Tab2" }), tab_set.get_tabs());
 }
+
+TEST (TabSetTest, can_goto_the_next_tab)
+{
+   TabSet tab_set;
+   tab_set.set_tabs({ "Tab1", "Tab2", "Tab3" });
+
+   ASSERT_EQ("Tab1", tab_set.current_tab());
+   ASSERT_TRUE(tab_set.goto_next_tab());
+   ASSERT_EQ("Tab2", tab_set.current_tab());
+   ASSERT_TRUE(tab_set.goto_next_tab());
+   ASSERT_EQ("Tab3", tab_set.current_tab());
+   ASSERT_TRUE(tab_set.goto_next_tab());
+   ASSERT_EQ("Tab1", tab_set.current_tab());
+}
+
+TEST (TabSetTest, can_goto_the_previous_tab)
+{
+   TabSet tab_set;
+   tab_set.set_tabs({ "Tab1", "Tab2", "Tab3" });
+
+   ASSERT_EQ("Tab1", tab_set.current_tab());
+   ASSERT_TRUE(tab_set.goto_previous_tab());
+   ASSERT_EQ("Tab3", tab_set.current_tab());
+   ASSERT_TRUE(tab_set.goto_previous_tab());
+   ASSERT_EQ("Tab2", tab_set.current_tab());
+   ASSERT_TRUE(tab_set.goto_previous_tab());
+   ASSERT_EQ("Tab1", tab_set.current_tab());
+}
+
+TEST (TabSetTest, when_setting_tabs_resets_current_tab_to_be_the_first)
+{
+   TabSet tab_set;
+   tab_set.set_tabs({ "Tab1", "Tab2", "Tab3" });
+
+   ASSERT_TRUE(tab_set.goto_next_tab());
+   ASSERT_EQ("Tab2", tab_set.current_tab());
+   ASSERT_TRUE(tab_set.goto_next_tab());
+   ASSERT_EQ("Tab3", tab_set.current_tab());
+
+   ASSERT_TRUE(tab_set.set_tabs({ "TabA", "TabB", "TabC" }));
+   ASSERT_EQ("TabA", tab_set.current_tab());
+}
