@@ -154,7 +154,7 @@ void emit_event(std::string event)
 
 std::string get_file_contents()
 {
-   std::ifstream t("out.tmp");
+   std::ifstream t(TMP_OUTFILE);
    std::string str((std::istreambuf_iterator<char>(t)), std::istreambuf_iterator<char>());
    return str;
 }

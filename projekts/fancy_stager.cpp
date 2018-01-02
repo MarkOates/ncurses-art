@@ -139,23 +139,23 @@ bool Projekt::process_event(std::string e)
          if (git_status_line_deducer.line_is_untracked())
          {
             text.set_styles(COLOR_PAIR(5));
-            system_command << "cat \"" << filename << "\" > \"out.tmp\"";
+            system_command << "cat \"" << filename << "\" > \"" << TMP_OUTFILE << "\"";
          }
          else if (git_status_line_deducer.line_is_not_staged())
          {
             text.set_styles(COLOR_PAIR(4));
-            system_command << "git diff \"" << filename << "\" > \"out.tmp\"";
+            system_command << "git diff \"" << filename << "\" > \"" << TMP_OUTFILE << "\"";
          }
          else if (git_status_line_deducer.line_is_staged())
          {
             text.set_styles(COLOR_PAIR(3));
-            system_command << "git diff --staged \"" << filename << "\" > \"out.tmp\"";
+            system_command << "git diff --staged \"" << filename << "\" > \"" << TMP_OUTFILE << "\"";
          }
       }
       else
       {
          text.set_styles(COLOR_PAIR(2));
-         system_command << "git diff --staged > \"out.tmp\"";
+         system_command << "git diff --staged > \"" << TMP_OUTFILE << "\"";
       }
 
       system(system_command.str().c_str());
@@ -217,7 +217,9 @@ bool Projekt::process_event(std::string e)
    }
    else if (e == COMMAND_REBUILD_MENU)
    {
-      system("git status > \"out.tmp\"");
+      std::stringstream ss;
+      ss << "git status > \"" << TMP_OUTFILE << "\"";
+      system(ss.str().c_str());
       std::string txt = get_file_contents();
       std::vector<std::string> tokens = split_string(txt, "\n");
       find_menu("main_menu").set_options(tokens);

@@ -10,6 +10,8 @@
 #include <ncurses_art/Element/Text.h>
 #include <ncurses_art/EventTypes.h>
 
+#define TMP_OUTFILE "/tmp/out.txt.tmp"
+
 class Projekt : public Scene
 {
 public:

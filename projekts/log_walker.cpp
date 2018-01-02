@@ -16,7 +16,9 @@
 
 void set_commit_log_menu()
 {
-   system("git log --pretty=tformat:'\''%an%x09%ad%x09%C(yellow)%h%Creset%x09%s'\'' --date=format:'\''%Y-%m-%d %H:%M:%S'\'' -100 > \"out.tmp\"");
+   std::stringstream ss;
+   ss << "git log --pretty=tformat:'\''%an%x09%ad%x09%C(yellow)%h%Creset%x09%s'\'' --date=format:'\''%Y-%m-%d %H:%M:%S'\'' -100 > \"" << TMP_OUTFILE << "\"";
+   system(ss.str().c_str());
    std::string txt = get_file_contents();
    std::vector<std::string> tokens = split_string(txt, "\n");
    find_text("body_text").set_text(tokens[0]);
@@ -103,7 +105,7 @@ bool Projekt::process_event(std::string event)
       auto git_line_tokens = split_string(selection_text, "\t");
 
       std::stringstream command;
-      command << "git show " << git_line_tokens[2] << " > \"out.tmp\"";
+      command << "git show " << git_line_tokens[2] << " > \"" << TMP_OUTFILE << "\"";
       system(command.str().c_str());
 
       std::string command_output = get_file_contents();

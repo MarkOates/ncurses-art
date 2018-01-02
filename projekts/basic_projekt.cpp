@@ -53,7 +53,9 @@ bool Projekt::process_event(std::string event)
    }
    else if (event == GIT_DIFF_COMMAND)
    {
-      system("git diff > \"out.tmp\"");
+      std::stringstream ss;
+      ss << "git diff > \"" << TMP_OUTFILE << "\"";
+      system(ss.str().c_str());
       emit_event(LOAD_FILE_COMMAND);
    }
    else if (event == GIT_STATUS_COMMAND)
@@ -63,7 +65,9 @@ bool Projekt::process_event(std::string event)
    }
    else if (event == GIT_LOG_COMMAND)
    {
-      system("git log --pretty=tformat:'\''%an%x09%ad%x09%C(yellow)%h%Creset%x09%s'\'' --date=format:'\''%Y-%m-%d %H:%M:%S'\'' -12 > \"out.tmp\"");
+      std::stringstream ss;
+      ss << "git log --pretty=tformat:'\''%an%x09%ad%x09%C(yellow)%h%Creset%x09%s'\'' --date=format:'\''%Y-%m-%d %H:%M:%S'\'' -12 > \"" << TMP_OUTFILE << "\"";
+      system(ss.str().c_str());
       emit_event(LOAD_FILE_COMMAND);
    }
    else if (event == LOAD_FILE_COMMAND)
