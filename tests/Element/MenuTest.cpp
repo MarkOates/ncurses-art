@@ -97,6 +97,18 @@ TEST(MenuTest, can_get_an_set_the_cursor_position)
    ASSERT_EQ(1, menu.get_cursor_pos());
 }
 
+TEST(MenuTest, can_get_the_number_of_menu_options)
+{
+   Menu menu(0, 0, {});
+   ASSERT_EQ(0, menu.get_num_options());
+
+   ASSERT_TRUE(menu.set_options({ "OptionA", "OptionB", "OptionC" }));
+   ASSERT_EQ(3, menu.get_num_options());
+
+   ASSERT_TRUE(menu.set_options({ "Option1", "Option2", "Option3", "Option4", "Option5" }));
+   ASSERT_EQ(5, menu.get_num_options());
+}
+
 TEST(MenuTest, when_setting_the_cursor_pos_to_a_negative_number_throws_an_exception)
 {
    Menu menu(0, 0, { "Option1", "Option2", "Option3" });
