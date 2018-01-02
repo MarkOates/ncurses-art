@@ -3,6 +3,15 @@
 
 Projekt *current_project = nullptr;
 
+std::vector<TabSet *> tab_sets()
+{
+   if (!current_project) throw std::runtime_error("Cannot retrieve tab_sets on a nullptr current_project");
+   std::vector<TabSet *> results;
+   for (ElementBase *element : current_project->get_elements())
+      if (element->is_type("TabSet")) results.push_back(static_cast<TabSet *>(element));
+   return results;
+}
+
 std::vector<Menu *> menus()
 {
    if (!current_project) throw std::runtime_error("Cannot retrieve menus on a nullptr current_project");
@@ -28,6 +37,16 @@ std::vector<Frame *> frames()
    for (ElementBase *element : current_project->get_elements())
       if (element->is_type("Frame")) results.push_back(static_cast<Frame *>(element));
    return results;
+}
+
+TabSet &find_tab_set(std::string name)
+{
+   std::vector<TabSet *> results;
+   for (TabSet *tab_set : tab_sets()) if (tab_set->is_name(name)) return *tab_set;
+
+   std::stringstream error_message;
+   error_message << "Cannot find tab_set with the name \"" << name << "\"";
+   throw std::runtime_error(error_message.str());
 }
 
 Menu &find_menu(std::string name)

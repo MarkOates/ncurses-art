@@ -49,7 +49,7 @@ std::vector<std::string> TabSet::get_tabs()
    return tabs;
 }
 
-float __draw_tab(float x, float y, std::string text, bool active)
+void __draw_tab(float x, float y, std::string text, bool active)
 {
    float w = text.length() + 6;
    float h = 3;
