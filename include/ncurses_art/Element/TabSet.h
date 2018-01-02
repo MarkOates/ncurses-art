@@ -9,6 +9,8 @@ class TabSet : public ElementBase
 private:
    float x, y;
    std::vector<std::string> tabs;
+   float horizontal_padding;
+   int active_tab;
 
 public:
    TabSet(float x=0, float y=0, std::vector<std::string> tabs={});
