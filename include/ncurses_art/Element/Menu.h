@@ -23,6 +23,7 @@ public:
    float get_x();
    float get_y();
    int get_cursor_pos();
+   int get_num_options();
    void move_cursor_up();
    void move_cursor_down();
    std::string current_selection();

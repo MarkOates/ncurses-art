@@ -53,6 +53,11 @@ int Menu::get_cursor_pos()
    return cursor_pos;
 }
 
+int Menu::get_num_options()
+{
+   return options.size();
+}
+
 void Menu::move_cursor_up()
 {
    cursor_pos = (cursor_pos - 1 + options.size()) % options.size();
