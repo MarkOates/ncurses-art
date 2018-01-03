@@ -19,6 +19,34 @@ private:
 public:
    GitStatusLineDeducer(Menu menu_dup) : menu(menu_dup), line_number(menu.get_cursor_pos()) {}
 
+   int find_next_file_line()
+   {
+      int initial_cursor_pos = menu.get_cursor_pos();
+      int iterator = initial_cursor_pos + 1;
+
+      for (int i=iterator; i!=initial_cursor_pos; i = (i+1) % menu.get_num_options())
+      {
+         menu.set_cursor_pos(i);
+         if (is_file_line()) return i;
+      }
+
+      return -1;
+   }
+
+   int find_previous_file_line()
+   {
+      int initial_cursor_pos = menu.get_cursor_pos();
+      int iterator = initial_cursor_pos - 1;
+
+      for (int i=iterator; i!=initial_cursor_pos; i=(i-1+menu.get_num_options()) % menu.get_num_options())
+      {
+         menu.set_cursor_pos(i);
+         if (is_file_line()) return i;
+      }
+
+      return -1;
+   }
+
    std::string line()
    {
       return menu.current_selection();
@@ -166,13 +194,19 @@ bool Projekt::process_event(std::string e)
    else if (e == MOVE_CURSOR_DOWN)
    {
       Menu &menu = find_menu("main_menu");
-      menu.move_cursor_down();
+      GitStatusLineDeducer git_status_line_deducer(menu);
+      int next_file_line = git_status_line_deducer.find_next_file_line();
+      if (next_file_line != -1) menu.set_cursor_pos(next_file_line);
+      else menu.move_cursor_down();
       emit_event(REFRESH_TEXT_DISPLAY);
    }
    else if (e == MOVE_CURSOR_UP)
    {
       Menu &menu = find_menu("main_menu");
-      menu.move_cursor_up();
+      GitStatusLineDeducer git_status_line_deducer(menu);
+      int previous_file_line = git_status_line_deducer.find_previous_file_line();
+      if (previous_file_line != -1) menu.set_cursor_pos(previous_file_line);
+      else menu.move_cursor_up();
       emit_event(REFRESH_TEXT_DISPLAY);
    }
    else if (e == COMMAND_FLIP_STAGING)
