@@ -152,6 +152,7 @@ bool Projekt::process_event(std::string e)
       create_text("body_text", 80, 3).set_styles(COLOR_PAIR(2));
 
       emit_event(COMMAND_REBUILD_MENU);
+      emit_event(MOVE_CURSOR_DOWN);
    }
    else if (e == REFRESH_TEXT_DISPLAY)
    {
