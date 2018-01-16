@@ -86,7 +86,7 @@ std::string Text::get_text()
 
 #include <vector>
 std::vector<std::string> ___split_string(std::string s, std::string delimiter);
-int ___replace_tabs(std::string& str);
+void ___replace_tabs(std::string& str);
 
 void Text::draw()
 {
@@ -126,7 +126,7 @@ std::vector<std::string> ___split_string(std::string s, std::string delimiter)
 }
 
 
-int ___replace_tabs(std::string& str)
+void ___replace_tabs(std::string& str)
 {
    static const std::string from = "\t";
    static const std::string to = std::string(3, ' ');
