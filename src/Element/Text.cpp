@@ -116,9 +116,9 @@ std::vector<std::string> ___split_string(std::string s, std::string delimiter)
    size_t pos = 0;
    std::string token;
    while ((pos = s.find(delimiter)) != std::string::npos) {
-       token = s.substr(0, pos);
-       results.push_back(token);
-       s.erase(0, pos + delimiter.length());
+      token = s.substr(0, pos);
+      results.push_back(token);
+      s.erase(0, pos + delimiter.length());
    }
    results.push_back(s);
 
