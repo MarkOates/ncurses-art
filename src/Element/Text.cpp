@@ -86,17 +86,23 @@ std::string Text::get_text()
 
 #include <vector>
 std::vector<std::string> ___split_string(std::string s, std::string delimiter);
+int ___replace_tabs(std::string& str);
 
 void Text::draw()
 {
    if (text.empty()) return;
 
+   int screen_width = COLS;
    float str_width = text.length();
    float x_pos = x - (str_width * align_x);
    attron(styles);
    int yy = 0;
    for (auto &line : ___split_string(text, "\n"))
-      mvaddstr((int)y + yy++, (int)x_pos, line.c_str());
+   {
+      ___replace_tabs(line);
+      int max_characters = (int)(screen_width - x_pos);
+      mvaddnstr((int)y + yy++, (int)x_pos, line.c_str(), max_characters);
+   }
    attroff(styles);
 }
 
@@ -118,3 +124,18 @@ std::vector<std::string> ___split_string(std::string s, std::string delimiter)
 
    return results;
 }
+
+
+int ___replace_tabs(std::string& str)
+{
+   static const std::string from = "\t";
+   static const std::string to = std::string(3, ' ');
+
+   size_t start_pos = 0;
+   while((start_pos = str.find(from, start_pos)) != std::string::npos) {
+      str.replace(start_pos, from.length(), to);
+      start_pos += to.length();
+   }
+}
+
+
