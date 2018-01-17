@@ -70,6 +70,7 @@ public:
 #define COPY_CURRENT_HASH_TO_CLIPBOARD "copy_current_hash_to_clipboard"
 #define COPY_INTERACTIVE_REBASE_COMMAND "copy_interactive_rebase_command"
 #define COPY_FANCY_FIXUP_COMMAND "copy_fancy_fixup_command"
+#define TOGGLE_MENU_PLACEMENT "toggle_menu_placement"
 
 
 //GitLogFormat git_log_format({ AUTHOR_NAME, AUTHOR_DATE, ABBREVIATED_COMMIT_HASH, SUBJECT });
@@ -96,10 +97,10 @@ Projekt::Projekt()
 
    init_pair(1, COLOR_BLACK, 20);
 
-   elements.push_back(new Text("[ output text empty ]", 0, 5));
+   elements.push_back(new Text("[ output text empty ]", 0, 0));
    last_element().set_name("body_text");
 
-   elements.push_back(new Menu(100, 5, { "[ menu empty ]" }));
+   elements.push_back(new Menu(130, 1, { "[ menu empty ]" }));
    last_menu().set_styles(COLOR_PAIR(1));
    last_element().set_name("main_menu");
 
@@ -117,6 +118,7 @@ bool Projekt::process_input(char input_ch)
    case 'r': emit_event(COPY_INTERACTIVE_REBASE_COMMAND); break;
    case 'f': emit_event(COPY_FANCY_FIXUP_COMMAND); break;
    case 10: emit_event(CHOOSE_CURRENT_MENU_ITEM); break;
+   case '\t': emit_event(TOGGLE_MENU_PLACEMENT); break;
    default: return false; break;
    }
 
@@ -161,6 +163,12 @@ bool Projekt::process_event(std::string event)
 
       command << "printf \"git_fixup " << command_token << "\" | pbcopy";
       system(command.str().c_str());
+   }
+   else if (event == TOGGLE_MENU_PLACEMENT)
+   {
+      Menu &menu = find_menu("main_menu");
+      if (menu.get_x() >= 130) menu.set_x(100);
+      else menu.set_x(130);
    }
    else if (event == SET_DIFF_TEXT)
    {
