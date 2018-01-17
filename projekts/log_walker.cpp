@@ -8,16 +8,78 @@
 
 #include "projekt_helper.h"
 
+
+static std::string COMMIT_HASH = "%H";
+static std::string ABBREVIATED_COMMIT_HASH = "%h";
+static std::string AUTHOR_NAME = "%an";
+static std::string AUTHOR_DATE = "%ad";
+static std::string SUBJECT = "%s";
+
+static std::string DELIMITER = "%x09"; // 09 is the tab character
+static std::string DELIMITER_CHAR = "\t"; // 09 is the tab character
+
+class GitLogFormat
+{
+private:
+   std::vector<std::string> format_components;
+
+public:
+   GitLogFormat(std::vector<std::string> format_components)
+      : format_components(format_components)
+   {}
+
+   std::string command(unsigned limit = 100)
+   {
+      std::stringstream ss;
+      //ss << "git log --pretty=tformat:'\''%an%x09%ad%x09%C(yellow)%h%Creset%x09%s'\'' --date=format:'\''%Y-%m-%d %H:%M:%S'\'' -100 > \"" << TMP_OUTFILE << "\"";
+      ss << "git log --pretty=tformat:'\''";
+      for (auto &format_component : format_components)
+         ss << format_component << DELIMITER;
+      ss << "'\'' ";
+      //ss << " --date=format:'\''%Y-%m-%d %H:%M:%S'\''";
+      ss << " --date=relative";
+      ss << " -" << limit;
+
+      return ss.str();
+
+      //%an%x09%ad%x09%C(yellow)%h%Creset%x09%s'\'' --date=format:'\''%Y-%m-%d %H:%M:%S'\'' -100 > \"" << TMP_OUTFILE << "\"";
+   }
+   std::string extract_component(std::string line, std::string component_identifier)
+   {
+      int index = -1;
+      for (int i=0; i<format_components.size(); i++)
+         if (format_components[i] == component_identifier)
+         {
+            index = i;
+            break;
+         }
+
+      if (index == -1) throw std::runtime_error("GitLogFormat::extract_component(): expected component for extraction is not present");
+
+      auto git_line_tokens = split_string(line, DELIMITER_CHAR);
+
+      if (index >= git_line_tokens.size()) throw std::runtime_error("GitLogFormat::extract_component(): number of extracted tokens does not match the expected position");
+
+      return git_line_tokens[index];
+   }
+};
+
+
 #define SET_COMMIT_LOG_MENU "set_commit_log_menu"
 #define SET_DIFF_TEXT "set_diff_text"
 #define COPY_CURRENT_HASH_TO_CLIPBOARD "copy_current_hash_to_clipboard"
 #define COPY_INTERACTIVE_REBASE_COMMAND "copy_interactive_rebase_command"
 #define COPY_FANCY_FIXUP_COMMAND "copy_fancy_fixup_command"
 
+
+GitLogFormat git_log_format({ AUTHOR_NAME, AUTHOR_DATE, ABBREVIATED_COMMIT_HASH, SUBJECT });
+
+
 void set_commit_log_menu()
 {
    std::stringstream ss;
-   ss << "git log --pretty=tformat:'\''%an%x09%ad%x09%C(yellow)%h%Creset%x09%s'\'' --date=format:'\''%Y-%m-%d %H:%M:%S'\'' -100 > \"" << TMP_OUTFILE << "\"";
+   //ss << "git log --pretty=tformat:'\''%an%x09%ad%x09%C(yellow)%h%Creset%x09%s'\'' --date=format:'\''%Y-%m-%d %H:%M:%S'\'' -100 > \"" << TMP_OUTFILE << "\"";
+   ss << git_log_format.command() << " > \"" << TMP_OUTFILE << "\"";
    system(ss.str().c_str());
    std::string txt = get_file_contents();
    std::vector<std::string> tokens = split_string(txt, "\n");
@@ -75,37 +137,37 @@ bool Projekt::process_event(std::string event)
    else if (event == COPY_CURRENT_HASH_TO_CLIPBOARD)
    {
       std::string selection_text = find_menu("main_menu").current_selection();
-      auto git_line_tokens = split_string(selection_text, "\t");
-
+      std::string command_token = git_log_format.extract_component(selection_text, ABBREVIATED_COMMIT_HASH);
       std::stringstream command;
-      command << "printf \"" << git_line_tokens[2] << "\" | pbcopy";
+
+      command << "printf \"" << command_token << "\" | pbcopy";
       system(command.str().c_str());
    }
    else if (event == COPY_INTERACTIVE_REBASE_COMMAND)
    {
       std::string selection_text = find_menu("main_menu").current_selection();
-      auto git_line_tokens = split_string(selection_text, "\t");
-
+      std::string command_token = git_log_format.extract_component(selection_text, ABBREVIATED_COMMIT_HASH);
       std::stringstream command;
-      command << "printf \"git rebase -i " << git_line_tokens[2] << "~\" | pbcopy";
+
+      command << "printf \"git rebase -i " << command_token << "~\" | pbcopy";
       system(command.str().c_str());
    }
    else if (event == COPY_FANCY_FIXUP_COMMAND)
    {
       std::string selection_text = find_menu("main_menu").current_selection();
-      auto git_line_tokens = split_string(selection_text, "\t");
-
+      std::string command_token = git_log_format.extract_component(selection_text, ABBREVIATED_COMMIT_HASH);
       std::stringstream command;
-      command << "printf \"git_fixup " << git_line_tokens[2] << "\" | pbcopy";
+
+      command << "printf \"git_fixup " << command_token << "\" | pbcopy";
       system(command.str().c_str());
    }
    else if (event == SET_DIFF_TEXT)
    {
       std::string selection_text = find_menu("main_menu").current_selection();
-      auto git_line_tokens = split_string(selection_text, "\t");
-
+      std::string command_token = git_log_format.extract_component(selection_text, ABBREVIATED_COMMIT_HASH);
       std::stringstream command;
-      command << "git show " << git_line_tokens[2] << " > \"" << TMP_OUTFILE << "\"";
+
+      command << "git show " << command_token << " > \"" << TMP_OUTFILE << "\"";
       system(command.str().c_str());
 
       std::string command_output = get_file_contents();
