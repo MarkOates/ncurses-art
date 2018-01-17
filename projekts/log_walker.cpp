@@ -72,7 +72,8 @@ public:
 #define COPY_FANCY_FIXUP_COMMAND "copy_fancy_fixup_command"
 
 
-GitLogFormat git_log_format({ AUTHOR_NAME, AUTHOR_DATE, ABBREVIATED_COMMIT_HASH, SUBJECT });
+//GitLogFormat git_log_format({ AUTHOR_NAME, AUTHOR_DATE, ABBREVIATED_COMMIT_HASH, SUBJECT });
+GitLogFormat git_log_format({ ABBREVIATED_COMMIT_HASH, SUBJECT });
 
 
 void set_commit_log_menu()
