@@ -16,6 +16,9 @@ public:
    Menu(float x, float y, std::vector<std::string> options = {});
    ~Menu();
 
+   void set_x(float x);
+   void set_y(float y);
+
    bool set_cursor_pos(int pos);
    void set_styles(int styles);
    bool set_options(std::vector<std::string> options);

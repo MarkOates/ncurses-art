@@ -64,24 +64,24 @@ TEST(MenuTest, when_setting_the_options_the_current_selection_becomes_the_first_
    ASSERT_EQ("OptionA", menu.current_selection());
 }
 
-TEST(MenuTest, can_get_the_x_position)
+TEST(MenuTest, can_get_and_set_the_x_position)
 {
-   Menu menu1(0, 0, {});
-   ASSERT_EQ(0, menu1.get_x());
-   Menu menu2(9, 0, {});
-   ASSERT_EQ(9, menu2.get_x());
-   Menu menu3(-10, {});
-   ASSERT_EQ(-10, menu3.get_x());
+   Menu menu(9, 0, {});
+   ASSERT_EQ(9, menu.get_x());
+   menu.set_x(-10);
+   ASSERT_EQ(-10, menu.get_x());
+   menu.set_x(999);
+   ASSERT_EQ(999, menu.get_x());
 }
 
-TEST(MenuTest, can_get_the_y_position)
+TEST(MenuTest, can_get_and_set_the_y_position)
 {
-   Menu menu1(0, 0, {});
-   ASSERT_EQ(0, menu1.get_y());
-   Menu menu2(0, 9, {});
-   ASSERT_EQ(9, menu2.get_y());
-   Menu menu3(0, -10, {});
-   ASSERT_EQ(-10, menu3.get_y());
+   Menu menu(0, 9, {});
+   ASSERT_EQ(9, menu.get_y());
+   menu.set_y(-10);
+   ASSERT_EQ(-10, menu.get_y());
+   menu.set_y(999);
+   ASSERT_EQ(999, menu.get_y());
 }
 
 TEST(MenuTest, can_get_an_set_the_cursor_position)

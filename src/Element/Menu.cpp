@@ -18,6 +18,16 @@ Menu::~Menu()
 {
 }
 
+void Menu::set_x(float x)
+{
+   this->x = x;
+}
+
+void Menu::set_y(float y)
+{
+   this->y = y;
+}
+
 bool Menu::set_cursor_pos(int pos)
 {
    if (pos < 0) throw std::runtime_error("Cannot set_cursor_pos to a negative number");
