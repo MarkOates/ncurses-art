@@ -8,6 +8,7 @@
 #include <ncurses_art/Element/Scene.h>
 #include <ncurses_art/Element/TabSet.h>
 #include <ncurses_art/Element/Text.h>
+#include <ncurses_art/Element/TextInput.h>
 #include <ncurses_art/EventTypes.h>
 
 #define TMP_OUTFILE "/tmp/out.txt.tmp"

@@ -30,6 +30,15 @@ std::vector<Text *> texts()
    return results;
 }
 
+std::vector<TextInput *> text_inputs()
+{
+   if (!current_project) throw std::runtime_error("Cannot retrieve text_inputs on a nullptr current_project");
+   std::vector<TextInput *> results;
+   for (ElementBase *element : current_project->get_elements())
+      if (element->is_type("TextInput")) results.push_back(static_cast<TextInput *>(element));
+   return results;
+}
+
 std::vector<Frame *> frames()
 {
    if (!current_project) throw std::runtime_error("Cannot retrieve frames on a nullptr current_project");
@@ -69,6 +78,16 @@ Text &find_text(std::string name)
    throw std::runtime_error(error_message.str());
 }
 
+TextInput &find_text_input(std::string name)
+{
+   std::vector<TextInput *> results;
+   for (TextInput *text_input : text_inputs()) if (text_input->is_name(name)) return *text_input;
+
+   std::stringstream error_message;
+   error_message << "Cannot find text_input with the name \"" << name << "\"";
+   throw std::runtime_error(error_message.str());
+}
+
 Frame &find_frame(std::string name)
 {
    std::vector<Frame *> results;
@@ -98,6 +117,15 @@ Text &create_text(std::string name="", int x=0, int y=0, float align_x=0)
    current_project->get_elements().push_back(text);
    last_element().set_name(name);
    return (*text);
+}
+
+TextInput &create_text_input(std::string name="", int x=0, int y=0)
+{
+   if (!current_project) throw std::runtime_error("Cannot create a text_input, current_project is not set");
+   TextInput *text_input = new TextInput(x, y);
+   current_project->get_elements().push_back(text_input);
+   last_element().set_name(name);
+   return (*text_input);
 }
 
 Menu &create_menu(std::string name="", float x=0, float y=0)
