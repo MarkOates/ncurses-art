@@ -23,7 +23,7 @@ std::vector<Menu *> menus()
 
 std::vector<Text *> texts()
 {
-   if (!current_project) throw std::runtime_error("Cannot retrieve tests on a nullptr current_project");
+   if (!current_project) throw std::runtime_error("Cannot retrieve texts on a nullptr current_project");
    std::vector<Text *> results;
    for (ElementBase *element : current_project->get_elements())
       if (element->is_type("Text")) results.push_back(static_cast<Text *>(element));
@@ -32,7 +32,7 @@ std::vector<Text *> texts()
 
 std::vector<Frame *> frames()
 {
-   if (!current_project) throw std::runtime_error("Cannot retrieve tests on a nullptr current_project");
+   if (!current_project) throw std::runtime_error("Cannot retrieve frames on a nullptr current_project");
    std::vector<Frame *> results;
    for (ElementBase *element : current_project->get_elements())
       if (element->is_type("Frame")) results.push_back(static_cast<Frame *>(element));
