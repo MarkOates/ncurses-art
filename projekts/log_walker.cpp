@@ -8,6 +8,9 @@
 
 #include "projekt_helper.h"
 
+#define MENU_OUT_POS (COLS-80)
+#define MENU_DOCKED_POS (COLS-40)
+
 
 static std::string COMMIT_HASH = "%H";
 static std::string ABBREVIATED_COMMIT_HASH = "%h";
@@ -100,7 +103,7 @@ Projekt::Projekt()
    elements.push_back(new Text("[ output text empty ]", 0, 0));
    last_element().set_name("body_text");
 
-   elements.push_back(new Menu(130, 1, { "[ menu empty ]" }));
+   elements.push_back(new Menu(MENU_OUT_POS, 1, { "[ menu empty ]" }));
    last_menu().set_styles(COLOR_PAIR(1));
    last_element().set_name("main_menu");
 
@@ -167,8 +170,8 @@ bool Projekt::process_event(std::string event)
    else if (event == TOGGLE_MENU_PLACEMENT)
    {
       Menu &menu = find_menu("main_menu");
-      if (menu.get_x() >= 130) menu.set_x(100);
-      else menu.set_x(130);
+      if (menu.get_x() == MENU_OUT_POS) menu.set_x(MENU_DOCKED_POS);
+      else menu.set_x(MENU_OUT_POS);
    }
    else if (event == SET_DIFF_TEXT)
    {
