@@ -72,6 +72,7 @@ obj/tests/%.o: tests/%.cpp $(OBJECTS)
 	@echo "done. Object at \033[1m\033[32m$@\033[0m"
 
 
+
 obj/test_runner.o: programs/test_runner.cpp
 	@mkdir -p $(@D)
 	@printf "compiling test obj file \e[1m\e[36m$<\033[0m...\n"
@@ -106,4 +107,4 @@ clean:
 fresh:
 	make clean
 	make -j8
-	#make tests -j8
+	make bin/test_runner

@@ -17,7 +17,7 @@ TEST (TextInputTest, when_initialized_without_arguments_has_the_expected_values)
 {
    TextInput text_input;
    EXPECT_EQ(0, text_input.get_x());
-   EXPECT_EQ(0, text_input.get_x());
+   EXPECT_EQ(0, text_input.get_y());
    EXPECT_EQ("", text_input.get_label());
    EXPECT_EQ("", text_input.get_value());
    EXPECT_EQ(60, text_input.get_width());
