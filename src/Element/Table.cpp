@@ -3,12 +3,27 @@
 #include <ncurses_art/Element/Rectangle.h>
 #include <ncurses_art/Element/Text.h>
 #include <curses.h>
+#include <sstream>
+
+std::vector<std::vector<std::string>> &Table::__validate_table_dimensions(std::vector<std::vector<std::string>> &elements)
+{
+   if (elements.empty()) return elements;
+   int row_0_num_cols = elements[0].size();
+   for (unsigned row=0; row<elements.size(); row++)
+      if (elements[row].size() != row_0_num_cols)
+      {
+         std::stringstream error_message;
+         error_message << "Table error: Num cols on row " << row << " (" << elements[row].size() << ") is not equal to the num cols in the previous row (" << row_0_num_cols << ")";
+         throw std::runtime_error(error_message.str());
+      }
+   return elements;
+}
 
 Table::Table(float x, float y, std::vector<std::vector<std::string>> elements)
    : ElementBase("Table")
    , x(x)
    , y(y)
-   , elements(elements)
+   , elements(__validate_table_dimensions(elements))
    , cursor_pos_x(0)
    , cursor_pos_y(0)
 {
@@ -46,7 +61,7 @@ bool Table::set_cursor_pos_y(int pos_y)
 
 bool Table::set_elements(std::vector<std::vector<std::string>> elements)
 {
-   this->elements = elements;
+   this->elements = __validate_table_dimensions(elements);
    cursor_pos_x = 0;
    cursor_pos_y = 0;
    return true;

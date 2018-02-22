@@ -10,6 +10,7 @@ private:
    float x, y;
    std::vector<std::vector<std::string>> elements;
    int cursor_pos_x, cursor_pos_y;
+   std::vector<std::vector<std::string>> &__validate_table_dimensions(std::vector<std::vector<std::string>> &elements);
 
 public:
    Table(float x=0, float y=0, std::vector<std::vector<std::string>> elements={});

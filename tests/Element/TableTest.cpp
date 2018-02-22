@@ -2,6 +2,12 @@
 
 #include <ncurses_art/Element/Table.h>
 
+#define ASSERT_THROW_WITH_MESSAGE(code, raised_exception_type, raised_exception_message) \
+   try { code; FAIL() << "Expected " # raised_exception_type; } \
+   catch ( raised_exception_type const &err ) { EXPECT_EQ(err.what(), std::string( raised_exception_message )); } \
+   catch (...) { FAIL() << "Expected " # raised_exception_type; }
+
+
 TEST(TableTest, can_be_created)
 {
    Table menu;
@@ -29,6 +35,14 @@ TEST(TableTest, with_arguments_on_construction_sets_the_expected_values)
    EXPECT_EQ(17.125, menu.get_x());
    EXPECT_EQ(195.0, menu.get_y());
    EXPECT_EQ(elements, menu.get_elements());
+}
+
+TEST(TableTest, when_constructing_with_invalid_elements_raises_an_exception)
+{
+   Table table(0, 0, {});
+   std::vector<std::vector<std::string>> invalid_elements = { { "a", "b", "c" }, { "e", "f" } };
+   std::string expected_error_message = "Table error: Num cols on row 1 (2) is not equal to the num cols in the previous row (3)";
+   ASSERT_THROW_WITH_MESSAGE(table.set_elements(invalid_elements), std::runtime_error, expected_error_message);
 }
 
 TEST(TableTest, can_get_and_set_the_x_position)
@@ -121,6 +135,13 @@ TEST(TableTest, when_setting_the_elements_the_current_selection_becomes_the_firs
 
    ASSERT_TRUE(menu.set_elements({ { "x", "y", "z" }, { "u", "v", "w" } }));
    ASSERT_EQ("x", menu.current_selection());
+}
+
+TEST(TableTest, when_setting_the_elements_with_invalid_elements_raises_an_exception)
+{
+   std::vector<std::vector<std::string>> invalid_elements = { { "a", "b" }, { "c", "e", "f" } };
+   std::string expected_error_message = "Table error: Num cols on row 1 (3) is not equal to the num cols in the previous row (2)";
+   ASSERT_THROW_WITH_MESSAGE(Table(0, 0, invalid_elements), std::runtime_error, expected_error_message);
 }
 
 TEST(TableTest, can_get_an_set_the_x_cursor_position)
