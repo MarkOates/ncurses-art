@@ -3,6 +3,15 @@
 
 Projekt *current_project = nullptr;
 
+std::vector<Table *> tables()
+{
+   if (!current_project) throw std::runtime_error("Cannot retrieve tables on a nullptr current_project");
+   std::vector<Table *> results;
+   for (ElementBase *element : current_project->get_elements())
+      if (element->is_type("Table")) results.push_back(static_cast<Table *>(element));
+   return results;
+}
+
 std::vector<TabSet *> tab_sets()
 {
    if (!current_project) throw std::runtime_error("Cannot retrieve tab_sets on a nullptr current_project");
@@ -58,6 +67,16 @@ TabSet &find_tab_set(std::string name)
    throw std::runtime_error(error_message.str());
 }
 
+Table &find_table(std::string name)
+{
+   std::vector<Table *> results;
+   for (Table *table : tables()) if (table->is_name(name)) return *table;
+
+   std::stringstream error_message;
+   error_message << "Cannot find table with the name \"" << name << "\"";
+   throw std::runtime_error(error_message.str());
+}
+
 Menu &find_menu(std::string name)
 {
    std::vector<Menu *> results;
@@ -108,6 +127,15 @@ ElementBase &last_element()
    if (!current_project) throw std::runtime_error("Cannot last_element on a nullptr current_project");
    if (current_project->get_elements().empty()) throw std::runtime_error("Cannot retrieve last_element on an empty set of elements");
    return *current_project->get_elements().back();
+}
+
+Table &create_table(std::string name="", int x=0, int y=0, std::vector<std::vector<std::string>> elements={})
+{
+   if (!current_project) throw std::runtime_error("Cannot create a table, current_project is not set");
+   Table *table = new Table(x, y, elements);
+   current_project->get_elements().push_back(table);
+   last_element().set_name(name);
+   return (*table);
 }
 
 Text &create_text(std::string name="", int x=0, int y=0, float align_x=0)
