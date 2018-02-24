@@ -6,6 +6,7 @@
 #define COMMAND_FLIP_STAGING "flip_staging"
 #define COMMAND_REBUILD_MENU "rebuild_menu"
 #define REFRESH_TEXT_DISPLAY "refresh_text_display"
+#define YANK_SELECTED_TEXT "YANK_SELECTED_TEXT"
 
 class GitStatusLineDeducer
 {
@@ -130,6 +131,7 @@ bool Projekt::process_input(char ch)
    case 'k': emit_event(MOVE_CURSOR_UP); break;
    case 10: emit_event(COMMAND_FLIP_STAGING); break;
    case 'q': emit_event(EVENT_ABORT_PROGRAM); break;
+   case 'y': emit_event(YANK_SELECTED_TEXT); break;
    default: return false; break;
    }
    return true;
@@ -153,6 +155,14 @@ bool Projekt::process_event(std::string e)
 
       emit_event(COMMAND_REBUILD_MENU);
       emit_event(MOVE_CURSOR_DOWN);
+   }
+   if (e == YANK_SELECTED_TEXT)
+   {
+      Menu &menu = find_menu("main_menu");
+      GitStatusLineDeducer git_status_line_deducer(menu);
+      std::stringstream command;
+      command << "printf \"" << git_status_line_deducer.parse_filename() << "\" | pbcopy";
+      system(command.str().c_str());
    }
    else if (e == REFRESH_TEXT_DISPLAY)
    {
