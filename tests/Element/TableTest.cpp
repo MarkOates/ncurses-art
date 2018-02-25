@@ -144,6 +144,56 @@ TEST(TableTest, when_setting_the_elements_with_invalid_elements_raises_an_except
    ASSERT_THROW_WITH_MESSAGE(Table(0, 0, invalid_elements), std::runtime_error, expected_error_message);
 }
 
+TEST(TableTest, set_element__set_an_element_to_a_coordinate_within_the_table)
+{
+   Table menu(0, 0, { { "a", "b", "c" }, { "d", "e", "f" } });
+   std::vector<std::vector<std::string>> expected_result_elements = { { "a", "y", "c" }, { "d", "x", "z" } };
+
+   menu.set_element(2, 1, "z");
+   menu.set_element(1, 1, "x");
+   menu.set_element(1, 0, "y");
+
+   ASSERT_EQ(expected_result_elements, menu.get_elements());
+}
+
+TEST(TableTest, set_element__when_x_pos_is_less_than_0_raises_an_exception)
+{
+   Table menu(0, 0, { { "a", "b", "c" }, { "d", "e", "f" } });
+
+   std::string expected_error_message = "Table [set_element] error: pos_x cannot be less than 0";
+   ASSERT_THROW_WITH_MESSAGE(menu.set_element(-1, 0, "foo"), std::runtime_error, expected_error_message);
+}
+
+TEST(TableTest, set_element__when_y_pos_is_less_than_0_raises_an_exception)
+{
+   Table menu(0, 0, { { "a", "b", "c" }, { "d", "e", "f" } });
+
+   std::string expected_error_message = "Table [set_element] error: pos_y cannot be less than 0";
+   ASSERT_THROW_WITH_MESSAGE(menu.set_element(0, -1, "foo"), std::runtime_error, expected_error_message);
+}
+
+TEST(TableTest, set_element__with_an_x_value_greater_than_or_equal_to_the_number_of_columns_raises_an_exception)
+{
+   Table menu(0, 0, { { "a", "b" }, { "c", "d" }, { "e", "f" } });
+
+   std::string expected_error_message_1 = "[Table::set_element error]: pos_x (value: \"2\") cannot be greater than or equal the number of cols (value: \"2\")";
+   ASSERT_THROW_WITH_MESSAGE(menu.set_element(menu.get_num_cols(), 0, "x"), std::runtime_error, expected_error_message_1);
+
+   std::string expected_error_message_2 = "[Table::set_element error]: pos_x (value: \"3\") cannot be greater than or equal the number of cols (value: \"2\")";
+   ASSERT_THROW_WITH_MESSAGE(menu.set_element(menu.get_num_cols()+1, 0, "x"), std::runtime_error, expected_error_message_2);
+}
+
+TEST(TableTest, set_element__with_an_y_value_greater_than_or_equal_to_the_number_of_columns_raises_an_exception)
+{
+   Table menu(0, 0, { { "a", "b" }, { "c", "d" }, { "e", "f" } });
+
+   std::string expected_error_message_1 = "[Table::set_element error]: pos_y (value: \"3\") cannot be greater than or equal the number of rows (value: \"3\")";
+   ASSERT_THROW_WITH_MESSAGE(menu.set_element(0, menu.get_num_rows(), "x"), std::runtime_error, expected_error_message_1);
+
+   std::string expected_error_message_2 = "[Table::set_element error]: pos_y (value: \"4\") cannot be greater than or equal the number of rows (value: \"3\")";
+   ASSERT_THROW_WITH_MESSAGE(menu.set_element(0, menu.get_num_rows()+1, "x"), std::runtime_error, expected_error_message_2);
+}
+
 TEST(TableTest, can_get_an_set_the_x_cursor_position)
 {
    Table menu(0, 0, { { "a", "b", "c" }, { "d", "e", "f" } });

@@ -22,6 +22,7 @@ public:
    bool set_cursor_pos_x(int pos_x);
    bool set_cursor_pos_y(int pos_y);
    bool set_elements(std::vector<std::vector<std::string>> elements);
+   bool set_element(int pos_x, int pos_y, std::string element);
 
    float get_x();
    float get_y();

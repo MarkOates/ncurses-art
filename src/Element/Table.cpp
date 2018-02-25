@@ -67,6 +67,26 @@ bool Table::set_elements(std::vector<std::vector<std::string>> elements)
    return true;
 }
 
+bool Table::set_element(int pos_x, int pos_y, std::string element)
+{
+   if (pos_x < 0) throw std::runtime_error("Table [set_element] error: pos_x cannot be less than 0");
+   if (pos_y < 0) throw std::runtime_error("Table [set_element] error: pos_y cannot be less than 0");
+   if (pos_x >= get_num_cols())
+   {
+      std::stringstream error_message;
+      error_message << "[Table::set_element error]: pos_x (value: \"" << pos_x << "\") cannot be greater than or equal the number of cols (value: \"" << get_num_cols() << "\")";
+      throw std::runtime_error(error_message.str());
+   }
+   if (pos_y >= get_num_rows())
+   {
+      std::stringstream error_message;
+      error_message << "[Table::set_element error]: pos_y (value: \"" << pos_y << "\") cannot be greater than or equal the number of rows (value: \"" << get_num_rows() << "\")";
+      throw std::runtime_error(error_message.str());
+   }
+   elements[pos_y][pos_x] = element;
+   return true;
+}
+
 float Table::get_x()
 {
    return x;
