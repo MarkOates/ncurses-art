@@ -204,6 +204,54 @@ TEST(TableTest, get_elements__returns_a_copy_of_the_elements)
    ASSERT_EQ(expected_elements, menu.get_elements());
 }
 
+TEST(TableTest, get_element_at__returns_the_element_at_a_given_coordinate)
+{
+   Table menu(0, 0, { { "a", "b" }, { "c", "d" }, { "e", "f" } });
+
+   ASSERT_EQ("a", menu.get_element_at(0, 0));
+   ASSERT_EQ("b", menu.get_element_at(1, 0));
+   ASSERT_EQ("d", menu.get_element_at(1, 1));
+   ASSERT_EQ("f", menu.get_element_at(1, 2));
+}
+
+TEST(TableTest, get_element_at__with_an_x_value_less_than_0_raises_an_exception)
+{
+   Table menu(0, 0, { { "a", "b" }, { "c", "d" }, { "e", "f" } });
+
+   std::string expected_error_message = "Table [get_element_at] error: x cannot be less than 0";
+   ASSERT_THROW_WITH_MESSAGE(menu.get_element_at(-1, 0), std::runtime_error, expected_error_message);
+}
+
+TEST(TableTest, get_element_at__with_an_y_value_less_than_0_raises_an_exception)
+{
+   Table menu(0, 0, { { "a", "b" }, { "c", "d" }, { "e", "f" } });
+
+   std::string expected_error_message = "Table [get_element_at] error: y cannot be less than 0";
+   ASSERT_THROW_WITH_MESSAGE(menu.get_element_at(0, -1), std::runtime_error, expected_error_message);
+}
+
+TEST(TableTest, get_element_at__with_an_x_value_greater_than_or_equal_to_the_number_of_columns_raises_an_exception)
+{
+   Table menu(0, 0, { { "a", "b" }, { "c", "d" }, { "e", "f" } });
+
+   std::string expected_error_message_1 = "[Table::get_element_at error]: x (value: \"2\") cannot be greater than or equal the number of cols (value: \"2\")";
+   ASSERT_THROW_WITH_MESSAGE(menu.get_element_at(menu.get_num_cols(), 0), std::runtime_error, expected_error_message_1);
+
+   std::string expected_error_message_2 = "[Table::get_element_at error]: x (value: \"3\") cannot be greater than or equal the number of cols (value: \"2\")";
+   ASSERT_THROW_WITH_MESSAGE(menu.get_element_at(menu.get_num_cols()+1, 0), std::runtime_error, expected_error_message_2);
+}
+
+TEST(TableTest, get_element_at__with_an_y_value_greater_than_or_equal_to_the_number_of_columns_raises_an_exception)
+{
+   Table menu(0, 0, { { "a", "b" }, { "c", "d" }, { "e", "f" } });
+
+   std::string expected_error_message_1 = "[Table::get_element_at error]: y (value: \"3\") cannot be greater than or equal the number of rows (value: \"3\")";
+   ASSERT_THROW_WITH_MESSAGE(menu.get_element_at(0, menu.get_num_rows()), std::runtime_error, expected_error_message_1);
+
+   std::string expected_error_message_2 = "[Table::get_element_at error]: y (value: \"4\") cannot be greater than or equal the number of rows (value: \"3\")";
+   ASSERT_THROW_WITH_MESSAGE(menu.get_element_at(0, menu.get_num_rows()+1), std::runtime_error, expected_error_message_2);
+}
+
 TEST(TableTest, can_get_the_number_of_columns)
 {
    Table menu(0, 0, {});

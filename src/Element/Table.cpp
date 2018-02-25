@@ -92,6 +92,25 @@ std::vector<std::vector<std::string>> Table::get_elements()
    return elements;
 }
 
+std::string Table::get_element_at(int x, int y)
+{
+   if (x < 0) throw std::runtime_error("Table [get_element_at] error: x cannot be less than 0");
+   if (y < 0) throw std::runtime_error("Table [get_element_at] error: y cannot be less than 0");
+   if (x >= get_num_cols())
+   {
+      std::stringstream error_message;
+      error_message << "[Table::get_element_at error]: x (value: \"" << x << "\") cannot be greater than or equal the number of cols (value: \"" << get_num_cols() << "\")";
+      throw std::runtime_error(error_message.str());
+   }
+   if (y >= get_num_rows())
+   {
+      std::stringstream error_message;
+      error_message << "[Table::get_element_at error]: y (value: \"" << y << "\") cannot be greater than or equal the number of rows (value: \"" << get_num_rows() << "\")";
+      throw std::runtime_error(error_message.str());
+   }
+   return elements[y][x];
+}
+
 int Table::get_num_rows()
 {
    return elements.size();

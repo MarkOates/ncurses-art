@@ -28,6 +28,7 @@ public:
    int get_cursor_pos_x();
    int get_cursor_pos_y();
    std::vector<std::vector<std::string>> get_elements();
+   std::string get_element_at(int x, int y);
    int get_num_rows();
    int get_num_cols();
    void move_cursor_up();
