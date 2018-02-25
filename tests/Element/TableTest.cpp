@@ -196,6 +196,14 @@ TEST(TableTest, when_setting_the_cursor_pos_y_will_modulo_the_position_if_gt_num
    ASSERT_EQ(1, menu.get_cursor_pos_y());
 }
 
+TEST(TableTest, get_elements__returns_a_copy_of_the_elements)
+{
+   std::vector<std::vector<std::string>> expected_elements = { { "a", "b" }, { "c", "d" }, { "e", "f" } };
+   Table menu(0, 0, expected_elements);
+
+   ASSERT_EQ(expected_elements, menu.get_elements());
+}
+
 TEST(TableTest, can_get_the_number_of_columns)
 {
    Table menu(0, 0, {});
