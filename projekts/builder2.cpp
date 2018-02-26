@@ -38,6 +38,7 @@ public:
 #define MOVE_MENU_ITEM_DOWN "move_menu_item_down"
 #define MOVE_MENU_ITEM_LEFT "move_menu_item_left"
 #define MOVE_MENU_ITEM_RIGHT "move_menu_item_right"
+#define MAKE_CLEAN "make_clean"
 #define COMPILE_OBJECT "COMPILE_OBJECT"
 #define COMPILE_TEST "COMPILE_TEST"
 #define COMPILE_EXAMPLE "COMPILE_EXAMPLE"
@@ -210,6 +211,7 @@ void initialize()
    mappings['j'] = MOVE_MENU_ITEM_DOWN;
    mappings['h'] = MOVE_MENU_ITEM_LEFT;
    mappings['l'] = MOVE_MENU_ITEM_RIGHT;
+   mappings['c'] = MAKE_CLEAN;
    mappings['\n'] = COMPILE_SELECTED_COLUMN;
 
    events[EVENT_PROGRAM_INITIALIZED] = []{
@@ -225,6 +227,11 @@ void initialize()
    };
    events[MOVE_MENU_ITEM_RIGHT] = []{
       find_table("table").move_cursor_right();
+   };
+   events[MAKE_CLEAN] = []{
+      std::stringstream system_command;
+      system_command << "make clean > foobar.txt";
+      system(system_command.str().c_str());
    };
    events[COMPILE_OBJECT] = []{
       Table &table = find_table("table");
