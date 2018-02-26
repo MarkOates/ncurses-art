@@ -31,31 +31,6 @@ public:
    std::string get_obj_binary() { return std::string("obj/") + basename + ".o"; }
    std::string get_test_binary() { return std::string("bin/tests/") + basename + "Test"; }
    std::string get_example_binary() { return std::string("bin/examples/") + basename + "Example"; }
-
-   std::string get_obj_compile_notifier_str()
-   {
-      std::stringstream str;
-      str << basename << "_OBJECT_COMPILE";
-      return str.str();
-   }
-   std::string get_test_compile_notifier_str()
-   {
-      std::stringstream str;
-      str << basename << "_TEST_COMPILE";
-      return str.str();
-   }
-   std::string get_test_run_notifier_str()
-   {
-      std::stringstream str;
-      str << basename << "_TEST_RUN";
-      return str.str();
-   }
-   std::string get_example_compile_notifier_str()
-   {
-      std::stringstream str;
-      str << basename << "_EXAMPLE_COMPILE";
-      return str.str();
-   }
 };
 
 
@@ -104,12 +79,6 @@ enum color_names
    COLOR_FAILURE,
 };
 
-/*
-      case COMPILE_OBJECT_COLUMN:  emit_event(COMPILE_OBJECT); break;
-      case COMPILE_TEST_COLUMN:    emit_event(COMPILE_TEST); break;
-      case RUN_TEST_COLUMN:        emit_event(RUN_TEST); break;
-      case COMPILE_EXAMPLE_COLUMN: emit_event(COMPILE_EXAMPLE); break;
-*/
 
 int compile_obj_thread(std::string object_basename)
 {
@@ -217,15 +186,12 @@ void initialize()
    std::string txt = get_file_contents();
    object_basenames = split_string(txt, "\n");
 
-   int menu_y = 2;
    std::vector<std::vector<std::string>> elements;
-   create_table("table", 10, menu_y + 20);
+   create_table("table", 10, 5);
 
    int i=0;
    for (auto &object_basename : object_basenames)
    {
-      int column_offset = 40;
-      int column_width = 20;
       ObjectSrcComponents object_src_components(object_basename, "Blast");
       std::vector<std::string> element = {
          object_basename,
@@ -302,7 +268,6 @@ void initialize()
 
       ObjectSrcComponents object_src_components(object_basename, "Blast");
 
-      //Table &table = find_table("table");
       int row = get_row_for_basename(object_basename);
       int column = COMPILE_EXAMPLE_COLUMN;
       table.set_element(column, row, "[_]");
