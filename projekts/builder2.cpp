@@ -7,10 +7,11 @@
 std::string find_project_basenames_command = std::string("find ./src/* | sed 's/\\.\\/src\\///g' | sed 's/\\.cpp$//g' > ") + TMP_OUTFILE;
 
 
-#define COMPILE_OBJECT_COLUMN 1
-#define COMPILE_TEST_COLUMN 2
-#define RUN_TEST_COLUMN 3
-#define COMPILE_EXAMPLE_COLUMN 4
+#define COMPILE_DEPENDENCIES_COLUMN 1
+#define COMPILE_OBJECT_COLUMN 2
+#define COMPILE_TEST_COLUMN 3
+#define RUN_TEST_COLUMN 4
+#define COMPILE_EXAMPLE_COLUMN 5
 
 class ObjectSrcComponents
 {
@@ -39,6 +40,7 @@ public:
 #define MOVE_MENU_ITEM_LEFT "move_menu_item_left"
 #define MOVE_MENU_ITEM_RIGHT "move_menu_item_right"
 #define MAKE_CLEAN "make_clean"
+#define COMPILE_DEPENDENCIES "COMPILE_DEPENDENCIES"
 #define COMPILE_OBJECT "COMPILE_OBJECT"
 #define COMPILE_TEST "COMPILE_TEST"
 #define COMPILE_EXAMPLE "COMPILE_EXAMPLE"
@@ -196,6 +198,7 @@ void initialize()
       ObjectSrcComponents object_src_components(object_basename, "Blast");
       std::vector<std::string> element = {
          object_basename,
+         "[deps compiled]",
          "[obj compile]",
          "[test compile]",
          "[test pass]",
@@ -290,10 +293,11 @@ void initialize()
       switch (table.get_cursor_pos_x())
       {
       case 0: break; // column 0 is the object_basename
-      case COMPILE_OBJECT_COLUMN:  emit_event(COMPILE_OBJECT); break;
-      case COMPILE_TEST_COLUMN:    emit_event(COMPILE_TEST); break;
-      case RUN_TEST_COLUMN:        emit_event(RUN_TEST); break;
-      case COMPILE_EXAMPLE_COLUMN: emit_event(COMPILE_EXAMPLE); break;
+      case COMPILE_DEPENDENCIES_COLUMN: emit_event(COMPILE_DEPENDENCIES); break;
+      case COMPILE_OBJECT_COLUMN:       emit_event(COMPILE_OBJECT); break;
+      case COMPILE_TEST_COLUMN:         emit_event(COMPILE_TEST); break;
+      case RUN_TEST_COLUMN:             emit_event(RUN_TEST); break;
+      case COMPILE_EXAMPLE_COLUMN:      emit_event(COMPILE_EXAMPLE); break;
       default:
          {
             std::stringstream error_message;
