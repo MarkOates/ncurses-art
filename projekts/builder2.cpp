@@ -57,18 +57,18 @@ public:
       return str.str();
    }
 
-   Text &get_obj_compile_notifier() {
-      return find_text(get_obj_compile_notifier_str());
-   }
-   Text &get_test_compile_notifier() {
-      return find_text(get_test_compile_notifier_str());
-   }
-   Text &get_test_run_notifier() {
-      return find_text(get_test_run_notifier_str());
-   }
-   Text &get_example_compile_notifier() {
-      return find_text(get_example_compile_notifier_str());
-   }
+   //Text &get_obj_compile_notifier() {
+      //return find_text(get_obj_compile_notifier_str());
+   //}
+   //Text &get_test_compile_notifier() {
+      //return find_text(get_test_compile_notifier_str());
+   //}
+   //Text &get_test_run_notifier() {
+      //return find_text(get_test_run_notifier_str());
+   //}
+   //Text &get_example_compile_notifier() {
+      //return find_text(get_example_compile_notifier_str());
+   //}
 };
 
 
@@ -121,20 +121,20 @@ int compile_obj_thread(std::string object_basename)
    std::stringstream system_command;
    system_command << "make " << object_src_components.get_obj_binary() << " > foobar.txt";
    int return_status = system(system_command.str().c_str());
-   Text &t = object_src_components.get_obj_compile_notifier();
+   //Text &t = object_src_components.get_obj_compile_notifier();
    Table &table = find_table("table");
    int row = get_row_for_basename(object_basename);
    int column = COMPILE_OBJECT_COLUMN;
 
    if (return_status == 0)
    {
-      t.color(COLOR_SUCCESS).set_text("[*]");
-      table.set_element(column, row, "[.*.]");
+      //t.color(COLOR_SUCCESS).set_text("[*]");
+      table.set_element(column, row, "[*]");
    }
    else
    {
-      t.color(COLOR_FAILURE).set_text("[x]");
-      table.set_element(column, row, "[.x.]");
+      //t.color(COLOR_FAILURE).set_text("[x]");
+      table.set_element(column, row, "[x]");
    }
 
    return 0;
@@ -147,20 +147,20 @@ int compile_test_thread(std::string object_basename)
    std::stringstream system_command;
    system_command << "make " << object_src_components.get_test_binary() << " > foobar.txt";
    int return_status = system(system_command.str().c_str());
-   Text &t = object_src_components.get_test_compile_notifier();
+   //Text &t = object_src_components.get_test_compile_notifier();
    Table &table = find_table("table");
    int row = get_row_for_basename(object_basename);
    int column = COMPILE_TEST_COLUMN;
 
    if (return_status == 0)
    {
-      t.color(COLOR_SUCCESS).set_text("[*]");
-      table.set_element(column, row, "[.*.]");
+      //t.color(COLOR_SUCCESS).set_text("[*]");
+      table.set_element(column, row, "[*]");
    }
    else
    {
-      t.color(COLOR_FAILURE).set_text("[x]");
-      table.set_element(column, row, "[.x.]");
+      //t.color(COLOR_FAILURE).set_text("[x]");
+      table.set_element(column, row, "[x]");
    }
 
    return 0;
@@ -173,20 +173,20 @@ int run_test_thread(std::string object_basename)
    std::stringstream system_command;
    system_command << object_src_components.get_test_binary() << " > foobar.txt";
    int return_status = system(system_command.str().c_str());
-   Text &t = object_src_components.get_test_run_notifier();
+   //Text &t = object_src_components.get_test_run_notifier();
    Table &table = find_table("table");
    int row = get_row_for_basename(object_basename);
    int column = RUN_TEST_COLUMN;
 
    if (return_status == 0)
    {
-      t.color(COLOR_SUCCESS).set_text("[*]");
-      table.set_element(column, row, "[.*.]");
+      //t.color(COLOR_SUCCESS).set_text("[*]");
+      table.set_element(column, row, "[*]");
    }
    else
    {
-      t.color(COLOR_FAILURE).set_text("[x]");
-      table.set_element(column, row, "[.x.]");
+      //t.color(COLOR_FAILURE).set_text("[x]");
+      table.set_element(column, row, "[x]");
    }
 
    return 0;
@@ -199,20 +199,20 @@ int example_compile_thread(std::string object_basename)
    std::stringstream system_command;
    system_command << "make " << object_src_components.get_example_binary() << " > foobar.txt";
    int return_status = system(system_command.str().c_str());
-   Text &t = object_src_components.get_example_compile_notifier();
+   //Text &t = object_src_components.get_example_compile_notifier();
    Table &table = find_table("table");
    int row = get_row_for_basename(object_basename);
    int column = COMPILE_EXAMPLE_COLUMN;
 
    if (return_status == 0)
    {
-      t.color(COLOR_SUCCESS).set_text("[*]");
-      table.set_element(column, row, "[.*.]");
+      //t.color(COLOR_SUCCESS).set_text("[*]");
+      table.set_element(column, row, "[*]");
    }
    else
    {
-      t.color(COLOR_FAILURE).set_text("[x]");
-      table.set_element(column, row, "[.x.]");
+      //t.color(COLOR_FAILURE).set_text("[x]");
+      table.set_element(column, row, "[x]");
    }
 
    return 0;
@@ -234,7 +234,7 @@ void initialize()
    object_basenames = split_string(txt, "\n");
 
    int menu_y = 2;
-   create_menu("objects", 10, menu_y).set_options(object_basenames);
+   //create_menu("objects", 10, menu_y).set_options(object_basenames);
    std::vector<std::vector<std::string>> elements;
    create_table("table", 10, menu_y + 20);
 
@@ -244,10 +244,10 @@ void initialize()
       int column_offset = 40;
       int column_width = 20;
       ObjectSrcComponents object_src_components(object_basename, "Blast");
-      create_text(object_src_components.get_obj_compile_notifier_str(), column_offset+column_width*0, menu_y+i).set_text("[object compile]");
-      create_text(object_src_components.get_test_compile_notifier_str(), column_offset+column_width*1, menu_y+i).set_text("[test compile]");
-      create_text(object_src_components.get_test_run_notifier_str(), column_offset+column_width*2, menu_y+i).set_text("[test passes]");
-      create_text(object_src_components.get_example_compile_notifier_str(), column_offset+column_width*3, menu_y+i).set_text("[example compiles]");
+      //create_text(object_src_components.get_obj_compile_notifier_str(), column_offset+column_width*0, menu_y+i).set_text("[object compile]");
+      //create_text(object_src_components.get_test_compile_notifier_str(), column_offset+column_width*1, menu_y+i).set_text("[test compile]");
+      //create_text(object_src_components.get_test_run_notifier_str(), column_offset+column_width*2, menu_y+i).set_text("[test passes]");
+      //create_text(object_src_components.get_example_compile_notifier_str(), column_offset+column_width*3, menu_y+i).set_text("[example compiles]");
       std::vector<std::string> element = {
          object_basename,
          "[obj compile]",
@@ -286,32 +286,52 @@ void initialize()
    events[COMPILE_OBJECT] = []{
       std::string object_basename = find_menu("objects").current_selection();
       ObjectSrcComponents object_src_components(object_basename, "Blast");
-      Text &t = object_src_components.get_obj_compile_notifier();
-      t.color(COLOR_PROCESSING).set_text("[_]");
+      //Text &t = object_src_components.get_obj_compile_notifier();
+      //t.color(COLOR_PROCESSING).set_text("[_]");
+
+      Table &table = find_table("table");
+      int row = get_row_for_basename(object_basename);
+      int column = COMPILE_OBJECT_COLUMN;
+      table.set_element(column, row, "[_]");
 
       std::thread(compile_obj_thread, object_basename).detach();
    };
    events[COMPILE_TEST] = []{
       std::string object_basename = find_menu("objects").current_selection();
       ObjectSrcComponents object_src_components(object_basename, "Blast");
-      Text &t = object_src_components.get_test_compile_notifier();
-      t.color(COLOR_PROCESSING).set_text("[_]");
+      //Text &t = object_src_components.get_test_compile_notifier();
+      //t.color(COLOR_PROCESSING).set_text("[_]");
+
+      Table &table = find_table("table");
+      int row = get_row_for_basename(object_basename);
+      int column = COMPILE_TEST_COLUMN;
+      table.set_element(column, row, "[_]");
 
       std::thread(compile_test_thread, object_basename).detach();
    };
    events[RUN_TEST] = []{
       std::string object_basename = find_menu("objects").current_selection();
       ObjectSrcComponents object_src_components(object_basename, "Blast");
-      Text &t = object_src_components.get_test_run_notifier();
-      t.color(COLOR_PROCESSING).set_text("[_]");
+      //Text &t = object_src_components.get_test_run_notifier();
+      //t.color(COLOR_PROCESSING).set_text("[_]");
+
+      Table &table = find_table("table");
+      int row = get_row_for_basename(object_basename);
+      int column = RUN_TEST_COLUMN;
+      table.set_element(column, row, "[_]");
 
       std::thread(run_test_thread, object_basename).detach();
    };
    events[COMPILE_EXAMPLE] = []{
       std::string object_basename = find_menu("objects").current_selection();
       ObjectSrcComponents object_src_components(object_basename, "Blast");
-      Text &t = object_src_components.get_example_compile_notifier();
-      t.color(COLOR_PROCESSING).set_text("[_]");
+      //Text &t = object_src_components.get_example_compile_notifier();
+      //t.color(COLOR_PROCESSING).set_text("[_]");
+
+      Table &table = find_table("table");
+      int row = get_row_for_basename(object_basename);
+      int column = COMPILE_EXAMPLE_COLUMN;
+      table.set_element(column, row, "[_]");
 
       std::thread(example_compile_thread, object_basename).detach();
    };
