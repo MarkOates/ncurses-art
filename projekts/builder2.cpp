@@ -56,19 +56,6 @@ public:
       str << basename << "_EXAMPLE_COMPILE";
       return str.str();
    }
-
-   //Text &get_obj_compile_notifier() {
-      //return find_text(get_obj_compile_notifier_str());
-   //}
-   //Text &get_test_compile_notifier() {
-      //return find_text(get_test_compile_notifier_str());
-   //}
-   //Text &get_test_run_notifier() {
-      //return find_text(get_test_run_notifier_str());
-   //}
-   //Text &get_example_compile_notifier() {
-      //return find_text(get_example_compile_notifier_str());
-   //}
 };
 
 
@@ -130,19 +117,16 @@ int compile_obj_thread(std::string object_basename)
    std::stringstream system_command;
    system_command << "make " << object_src_components.get_obj_binary() << " > foobar.txt";
    int return_status = system(system_command.str().c_str());
-   //Text &t = object_src_components.get_obj_compile_notifier();
    Table &table = find_table("table");
    int row = get_row_for_basename(object_basename);
    int column = COMPILE_OBJECT_COLUMN;
 
    if (return_status == 0)
    {
-      //t.color(COLOR_SUCCESS).set_text("[*]");
       table.set_element(column, row, "[*]");
    }
    else
    {
-      //t.color(COLOR_FAILURE).set_text("[x]");
       table.set_element(column, row, "[x]");
    }
 
@@ -156,19 +140,16 @@ int compile_test_thread(std::string object_basename)
    std::stringstream system_command;
    system_command << "make " << object_src_components.get_test_binary() << " > foobar.txt";
    int return_status = system(system_command.str().c_str());
-   //Text &t = object_src_components.get_test_compile_notifier();
    Table &table = find_table("table");
    int row = get_row_for_basename(object_basename);
    int column = COMPILE_TEST_COLUMN;
 
    if (return_status == 0)
    {
-      //t.color(COLOR_SUCCESS).set_text("[*]");
       table.set_element(column, row, "[*]");
    }
    else
    {
-      //t.color(COLOR_FAILURE).set_text("[x]");
       table.set_element(column, row, "[x]");
    }
 
@@ -182,19 +163,16 @@ int run_test_thread(std::string object_basename)
    std::stringstream system_command;
    system_command << object_src_components.get_test_binary() << " > foobar.txt";
    int return_status = system(system_command.str().c_str());
-   //Text &t = object_src_components.get_test_run_notifier();
    Table &table = find_table("table");
    int row = get_row_for_basename(object_basename);
    int column = RUN_TEST_COLUMN;
 
    if (return_status == 0)
    {
-      //t.color(COLOR_SUCCESS).set_text("[*]");
       table.set_element(column, row, "[*]");
    }
    else
    {
-      //t.color(COLOR_FAILURE).set_text("[x]");
       table.set_element(column, row, "[x]");
    }
 
@@ -208,19 +186,16 @@ int example_compile_thread(std::string object_basename)
    std::stringstream system_command;
    system_command << "make " << object_src_components.get_example_binary() << " > foobar.txt";
    int return_status = system(system_command.str().c_str());
-   //Text &t = object_src_components.get_example_compile_notifier();
    Table &table = find_table("table");
    int row = get_row_for_basename(object_basename);
    int column = COMPILE_EXAMPLE_COLUMN;
 
    if (return_status == 0)
    {
-      //t.color(COLOR_SUCCESS).set_text("[*]");
       table.set_element(column, row, "[*]");
    }
    else
    {
-      //t.color(COLOR_FAILURE).set_text("[x]");
       table.set_element(column, row, "[x]");
    }
 
@@ -243,7 +218,6 @@ void initialize()
    object_basenames = split_string(txt, "\n");
 
    int menu_y = 2;
-   //create_menu("objects", 10, menu_y).set_options(object_basenames);
    std::vector<std::vector<std::string>> elements;
    create_table("table", 10, menu_y + 20);
 
@@ -253,10 +227,6 @@ void initialize()
       int column_offset = 40;
       int column_width = 20;
       ObjectSrcComponents object_src_components(object_basename, "Blast");
-      //create_text(object_src_components.get_obj_compile_notifier_str(), column_offset+column_width*0, menu_y+i).set_text("[object compile]");
-      //create_text(object_src_components.get_test_compile_notifier_str(), column_offset+column_width*1, menu_y+i).set_text("[test compile]");
-      //create_text(object_src_components.get_test_run_notifier_str(), column_offset+column_width*2, menu_y+i).set_text("[test passes]");
-      //create_text(object_src_components.get_example_compile_notifier_str(), column_offset+column_width*3, menu_y+i).set_text("[example compiles]");
       std::vector<std::string> element = {
          object_basename,
          "[obj compile]",
@@ -279,11 +249,9 @@ void initialize()
    events[EVENT_PROGRAM_INITIALIZED] = []{
    };
    events[MOVE_MENU_ITEM_UP] = []{
-      //find_menu("objects").move_cursor_up();
       find_table("table").move_cursor_up();
    };
    events[MOVE_MENU_ITEM_DOWN] = []{
-      //find_menu("objects").move_cursor_down();
       find_table("table").move_cursor_down();
    };
    events[MOVE_MENU_ITEM_LEFT] = []{
@@ -296,10 +264,7 @@ void initialize()
       Table &table = find_table("table");
       std::string object_basename = get_row_basename(table.get_cursor_pos_y());
 
-      //std::string object_basename = find_menu("objects").current_selection();
       ObjectSrcComponents object_src_components(object_basename, "Blast");
-      //Text &t = object_src_components.get_obj_compile_notifier();
-      //t.color(COLOR_PROCESSING).set_text("[_]");
 
       int row = get_row_for_basename(object_basename);
       int column = COMPILE_OBJECT_COLUMN;
@@ -311,10 +276,7 @@ void initialize()
       Table &table = find_table("table");
       std::string object_basename = get_row_basename(table.get_cursor_pos_y());
 
-      //std::string object_basename = find_menu("objects").current_selection();
       ObjectSrcComponents object_src_components(object_basename, "Blast");
-      //Text &t = object_src_components.get_test_compile_notifier();
-      //t.color(COLOR_PROCESSING).set_text("[_]");
 
       int row = get_row_for_basename(object_basename);
       int column = COMPILE_TEST_COLUMN;
@@ -326,10 +288,7 @@ void initialize()
       Table &table = find_table("table");
       std::string object_basename = get_row_basename(table.get_cursor_pos_y());
 
-      //std::string object_basename = find_menu("objects").current_selection();
       ObjectSrcComponents object_src_components(object_basename, "Blast");
-      //Text &t = object_src_components.get_test_run_notifier();
-      //t.color(COLOR_PROCESSING).set_text("[_]");
 
       int row = get_row_for_basename(object_basename);
       int column = RUN_TEST_COLUMN;
@@ -341,10 +300,7 @@ void initialize()
       Table &table = find_table("table");
       std::string object_basename = get_row_basename(table.get_cursor_pos_y());
 
-      //std::string object_basename = find_menu("objects").current_selection();
       ObjectSrcComponents object_src_components(object_basename, "Blast");
-      //Text &t = object_src_components.get_example_compile_notifier();
-      //t.color(COLOR_PROCESSING).set_text("[_]");
 
       //Table &table = find_table("table");
       int row = get_row_for_basename(object_basename);
@@ -358,7 +314,6 @@ void initialize()
       std::string object_basename = get_row_basename(table.get_cursor_pos_y());
 
       std::string leftmost_column_value = table.get_element_at(0, table.get_cursor_pos_y());
-      //std::string object_basename = find_menu("objects").current_selection();
 
       switch (table.get_cursor_pos_x())
       {
