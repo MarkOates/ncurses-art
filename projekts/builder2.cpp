@@ -100,6 +100,15 @@ int get_row_for_basename(std::string basename)
    return -1;
 }
 
+std::string get_row_basename(int row)
+{
+   Table &t = find_table("table");
+   if (row < 0) throw std::runtime_error("[get_row_basename error]: row can not be less than 0");
+   if (row >= t.get_num_rows()) throw std::runtime_error("[get_row_basename error]: row can not be greater than the number of rows");
+
+   return t.get_elements()[row][0];
+}
+
 
 enum color_names
 {
@@ -270,11 +279,11 @@ void initialize()
    events[EVENT_PROGRAM_INITIALIZED] = []{
    };
    events[MOVE_MENU_ITEM_UP] = []{
-      find_menu("objects").move_cursor_up();
+      //find_menu("objects").move_cursor_up();
       find_table("table").move_cursor_up();
    };
    events[MOVE_MENU_ITEM_DOWN] = []{
-      find_menu("objects").move_cursor_down();
+      //find_menu("objects").move_cursor_down();
       find_table("table").move_cursor_down();
    };
    events[MOVE_MENU_ITEM_LEFT] = []{
@@ -284,12 +293,14 @@ void initialize()
       find_table("table").move_cursor_right();
    };
    events[COMPILE_OBJECT] = []{
-      std::string object_basename = find_menu("objects").current_selection();
+      Table &table = find_table("table");
+      std::string object_basename = get_row_basename(table.get_cursor_pos_y());
+
+      //std::string object_basename = find_menu("objects").current_selection();
       ObjectSrcComponents object_src_components(object_basename, "Blast");
       //Text &t = object_src_components.get_obj_compile_notifier();
       //t.color(COLOR_PROCESSING).set_text("[_]");
 
-      Table &table = find_table("table");
       int row = get_row_for_basename(object_basename);
       int column = COMPILE_OBJECT_COLUMN;
       table.set_element(column, row, "[_]");
@@ -297,12 +308,14 @@ void initialize()
       std::thread(compile_obj_thread, object_basename).detach();
    };
    events[COMPILE_TEST] = []{
-      std::string object_basename = find_menu("objects").current_selection();
+      Table &table = find_table("table");
+      std::string object_basename = get_row_basename(table.get_cursor_pos_y());
+
+      //std::string object_basename = find_menu("objects").current_selection();
       ObjectSrcComponents object_src_components(object_basename, "Blast");
       //Text &t = object_src_components.get_test_compile_notifier();
       //t.color(COLOR_PROCESSING).set_text("[_]");
 
-      Table &table = find_table("table");
       int row = get_row_for_basename(object_basename);
       int column = COMPILE_TEST_COLUMN;
       table.set_element(column, row, "[_]");
@@ -310,12 +323,14 @@ void initialize()
       std::thread(compile_test_thread, object_basename).detach();
    };
    events[RUN_TEST] = []{
-      std::string object_basename = find_menu("objects").current_selection();
+      Table &table = find_table("table");
+      std::string object_basename = get_row_basename(table.get_cursor_pos_y());
+
+      //std::string object_basename = find_menu("objects").current_selection();
       ObjectSrcComponents object_src_components(object_basename, "Blast");
       //Text &t = object_src_components.get_test_run_notifier();
       //t.color(COLOR_PROCESSING).set_text("[_]");
 
-      Table &table = find_table("table");
       int row = get_row_for_basename(object_basename);
       int column = RUN_TEST_COLUMN;
       table.set_element(column, row, "[_]");
@@ -323,12 +338,15 @@ void initialize()
       std::thread(run_test_thread, object_basename).detach();
    };
    events[COMPILE_EXAMPLE] = []{
-      std::string object_basename = find_menu("objects").current_selection();
+      Table &table = find_table("table");
+      std::string object_basename = get_row_basename(table.get_cursor_pos_y());
+
+      //std::string object_basename = find_menu("objects").current_selection();
       ObjectSrcComponents object_src_components(object_basename, "Blast");
       //Text &t = object_src_components.get_example_compile_notifier();
       //t.color(COLOR_PROCESSING).set_text("[_]");
 
-      Table &table = find_table("table");
+      //Table &table = find_table("table");
       int row = get_row_for_basename(object_basename);
       int column = COMPILE_EXAMPLE_COLUMN;
       table.set_element(column, row, "[_]");
@@ -337,8 +355,10 @@ void initialize()
    };
    events[COMPILE_SELECTED_COLUMN] = []{
       Table &table = find_table("table");
+      std::string object_basename = get_row_basename(table.get_cursor_pos_y());
+
       std::string leftmost_column_value = table.get_element_at(0, table.get_cursor_pos_y());
-      std::string object_basename = find_menu("objects").current_selection();
+      //std::string object_basename = find_menu("objects").current_selection();
 
       switch (table.get_cursor_pos_x())
       {
