@@ -12,6 +12,7 @@ std::string find_project_basenames_command = std::string("find ./src/* | sed 's/
 #define COMPILE_TEST_COLUMN 3
 #define RUN_TEST_COLUMN 4
 #define COMPILE_EXAMPLE_COLUMN 5
+#define RUN_EXAMPLE_COLUMN 6
 
 class ObjectSrcComponents
 {
@@ -45,6 +46,7 @@ public:
 #define COMPILE_TEST "COMPILE_TEST"
 #define COMPILE_EXAMPLE "COMPILE_EXAMPLE"
 #define COMPILE_SELECTED_COLUMN "COMPILE_SELECTED_COLUMN"
+#define RUN_EXAMPLE "RUN_EXAMPLE"
 #define RUN_TEST "RUN_TEST"
 
 
@@ -203,6 +205,7 @@ void initialize()
          "[test compile]",
          "[test pass]",
          "[example compile]",
+         "[run example]",
          };
       elements.push_back(element);
       i++;
@@ -284,6 +287,23 @@ void initialize()
 
       std::thread(example_compile_thread, object_basename).detach();
    };
+   events[RUN_EXAMPLE] = []{
+      Table &table = find_table("table");
+      std::string object_basename = get_row_basename(table.get_cursor_pos_y());
+
+      ObjectSrcComponents object_src_components(object_basename, "Blast");
+
+      int row = get_row_for_basename(object_basename);
+      int column = RUN_EXAMPLE_COLUMN;
+      table.set_element(column, row, "[_]");
+
+      std::stringstream command;
+      command << object_src_components.get_example_binary();
+
+      def_prog_mode(); endwin();
+      system(command.str().c_str());
+      refresh();
+   };
    events[COMPILE_SELECTED_COLUMN] = []{
       Table &table = find_table("table");
       std::string object_basename = get_row_basename(table.get_cursor_pos_y());
@@ -298,6 +318,7 @@ void initialize()
       case COMPILE_TEST_COLUMN:         emit_event(COMPILE_TEST); break;
       case RUN_TEST_COLUMN:             emit_event(RUN_TEST); break;
       case COMPILE_EXAMPLE_COLUMN:      emit_event(COMPILE_EXAMPLE); break;
+      case RUN_EXAMPLE_COLUMN:          emit_event(RUN_EXAMPLE); break;
       default:
          {
             std::stringstream error_message;
