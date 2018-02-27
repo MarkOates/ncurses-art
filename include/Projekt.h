@@ -14,6 +14,8 @@
 
 #define TMP_OUTFILE "/tmp/out.txt.tmp"
 
+std::vector<std::string> args;
+
 class Projekt : public Scene
 {
 public:
@@ -26,8 +28,10 @@ public:
 
 Projekt::~Projekt() {}
 
-int main(int, char**)
+int main(int argc, char **argv)
 {
+   for (int i=0; i<argc; i++) args.push_back(argv[i]);
+
    AppController app_controller;
    app_controller.initialize();
    Projekt projekt;
