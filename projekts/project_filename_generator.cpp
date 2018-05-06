@@ -75,6 +75,8 @@ public:
          extracted = extracted.substr(0, found);
          found = extracted.rfind("Test");
          extracted = extracted.substr(0, found);
+         found = extracted.rfind("_test");
+         extracted = extracted.substr(0, found);
          return std::make_pair("test file", extracted);
       }
       else if (filename.compare(0, 9, "examples/") == 0)
@@ -83,6 +85,8 @@ public:
          std::size_t found = extracted.find_first_of(".");
          extracted = extracted.substr(0, found);
          found = extracted.rfind("Example");
+         extracted = extracted.substr(0, found);
+         found = extracted.rfind("_example");
          extracted = extracted.substr(0, found);
          return std::make_pair("example file", extracted);
       }
@@ -100,6 +104,8 @@ public:
          extracted = extracted.substr(0, found);
          found = extracted.rfind("Test");
          extracted = extracted.substr(0, found);
+         found = extracted.rfind("_test");
+         extracted = extracted.substr(0, found);
          return std::make_pair("bin/test file", extracted);
       }
       else if (filename.compare(0, 13, "bin/examples/") == 0)
@@ -108,6 +114,8 @@ public:
          std::size_t found = extracted.find_first_of(".");
          extracted = extracted.substr(0, found);
          found = extracted.rfind("Example");
+         extracted = extracted.substr(0, found);
+         found = extracted.rfind("_example");
          extracted = extracted.substr(0, found);
          return std::make_pair("bin/example file", extracted);
       }
