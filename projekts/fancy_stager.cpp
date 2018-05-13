@@ -7,6 +7,7 @@
 #define COMMAND_REBUILD_MENU "rebuild_menu"
 #define REFRESH_TEXT_DISPLAY "refresh_text_display"
 #define YANK_SELECTED_TEXT "YANK_SELECTED_TEXT"
+#define COPY_GIT_ADD_PATCH_COMMAND "COPY_GIT_ADD_PATCH_COMMAND"
 
 class GitStatusLineDeducer
 {
@@ -132,6 +133,7 @@ bool Projekt::process_input(char ch)
    case 10: emit_event(COMMAND_FLIP_STAGING); break;
    case 'q': emit_event(EVENT_ABORT_PROGRAM); break;
    case 'y': emit_event(YANK_SELECTED_TEXT); break;
+   case 'p': emit_event(COPY_GIT_ADD_PATCH_COMMAND); break;
    default: return false; break;
    }
    return true;
@@ -162,6 +164,14 @@ bool Projekt::process_event(std::string e)
       GitStatusLineDeducer git_status_line_deducer(menu);
       std::stringstream command;
       command << "printf \"" << git_status_line_deducer.parse_filename() << "\" | pbcopy";
+      system(command.str().c_str());
+   }
+   if (e == COPY_GIT_ADD_PATCH_COMMAND)
+   {
+      Menu &menu = find_menu("main_menu");
+      GitStatusLineDeducer git_status_line_deducer(menu);
+      std::stringstream command;
+      command << "printf \"git add --patch " << git_status_line_deducer.parse_filename() << "\" | pbcopy";
       system(command.str().c_str());
    }
    else if (e == REFRESH_TEXT_DISPLAY)
