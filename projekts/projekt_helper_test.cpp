@@ -39,7 +39,7 @@ std::string compose_failed_assertion(std::string test_name, std::vector<std::str
    return ss.str();
 }
 
-bool assert(Projekt *projekt, std::string name, std::vector<std::string> expected, std::vector<std::string> actual)
+bool my_assert(Projekt *projekt, std::string name, std::vector<std::string> expected, std::vector<std::string> actual)
 {
    if (expected != actual)
    {
@@ -49,7 +49,7 @@ bool assert(Projekt *projekt, std::string name, std::vector<std::string> expecte
    return true;
 }
 
-bool assert(Projekt *projekt, std::string name, std::string expected, std::string actual)
+bool my_assert(Projekt *projekt, std::string name, std::string expected, std::string actual)
 {
    if (expected != actual)
    {
@@ -101,7 +101,7 @@ bool Projekt::process_event(std::string e)
       std::string expected_text = "initial textfoo";
       std::string returned_text = text.get_text();
 
-      assert(this, TEST_APPEND_TEXT, expected_text, returned_text);
+      my_assert(this, TEST_APPEND_TEXT, expected_text, returned_text);
 
       emit_event(MESSAGE_FINISHED_TEST);
    }
@@ -112,7 +112,7 @@ bool Projekt::process_event(std::string e)
       std::vector<std::string> actual = split_string(str, " ");
       std::vector<std::string> expected = {"This", "is", "a", "string"};
 
-      assert(this, TEST_SPLIT_STRING, expected, actual);
+      my_assert(this, TEST_SPLIT_STRING, expected, actual);
 
       emit_event(MESSAGE_FINISHED_TEST);
    }
