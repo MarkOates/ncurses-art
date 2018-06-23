@@ -7,6 +7,7 @@
 #define COMMAND_REBUILD_MENU "rebuild_menu"
 #define REFRESH_TEXT_DISPLAY "refresh_text_display"
 #define YANK_SELECTED_TEXT "YANK_SELECTED_TEXT"
+#define GIT_CHECKOUT_BRANCH_COMMAND "GIT_CHECKOUT_BRANCH_COMMAND"
 #define COPY_GIT_ADD_PATCH_COMMAND "COPY_GIT_ADD_PATCH_COMMAND"
 
 // trim from start
@@ -42,7 +43,8 @@ bool Projekt::process_input(char ch)
    case 'k': emit_event(MOVE_CURSOR_UP); break;
    // case 10: emit_event(COMMAND_FLIP_STAGING); break; // ENTER
    case 'q': emit_event(EVENT_ABORT_PROGRAM); break;
-    case 'y': emit_event(YANK_SELECTED_TEXT); break;
+   case 'y': emit_event(YANK_SELECTED_TEXT); break;
+   case 'c': emit_event(GIT_CHECKOUT_BRANCH_COMMAND); break;
    // case 'p': emit_event(COPY_GIT_ADD_PATCH_COMMAND); break;
    default: return false; break;
    }
@@ -77,6 +79,15 @@ bool Projekt::process_event(std::string e)
       std::string trimmed = trim(menu.current_selection());
       std::stringstream command;
       command << "printf \"" << trimmed << "\" | pbcopy";
+      system(command.str().c_str());
+   }
+   if (e == GIT_CHECKOUT_BRANCH_COMMAND)
+   {
+      Menu &menu = find_menu("main_menu");
+      //GitStatusLineDeducer git_status_line_deducer(menu);
+      std::string trimmed = trim(menu.current_selection());
+      std::stringstream command;
+      command << "printf \"git checkout " << trimmed << "\" | pbcopy";
       system(command.str().c_str());
    }
    //if (e == COPY_GIT_ADD_PATCH_COMMAND)
