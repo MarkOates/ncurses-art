@@ -94,6 +94,7 @@ bool Projekt::process_event(std::string e)
       //int next_file_line = git_status_line_deducer.find_next_file_line();
       //if (next_file_line != -1) menu.set_cursor_pos(next_file_line);
       //else menu.move_cursor_down();
+      menu.set_y(menu.get_y()-1);
       menu.move_cursor_down();
       //emit_event(REFRESH_TEXT_DISPLAY);
    }
@@ -104,6 +105,7 @@ bool Projekt::process_event(std::string e)
       //int previous_file_line = git_status_line_deducer.find_previous_file_line();
       //if (previous_file_line != -1) menu.set_cursor_pos(previous_file_line);
       //else menu.move_cursor_up();
+      menu.set_y(menu.get_y()+1);
       menu.move_cursor_up();
       //emit_event(REFRESH_TEXT_DISPLAY);
    }
@@ -116,8 +118,8 @@ bool Projekt::process_event(std::string e)
       std::vector<std::string> tokens = split_string(txt, "\n");
       Menu &menu = find_menu("main_menu");
       menu.set_options(tokens);
-      menu.set_x(COLS/2 - menu.get_width());
-      menu.set_y(LINES/2 - menu.get_height());
+      menu.set_x(COLS/2 - menu.get_width()/2);
+      menu.set_y(LINES/2 - 3);
    }
    return true;
 }
