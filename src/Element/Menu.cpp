@@ -8,14 +8,23 @@ Menu::Menu(float x, float y, std::vector<std::string> options)
    : ElementBase("Menu")
    , x(x)
    , y(y)
+   , width(0)
    , options(options)
    , cursor_pos(0)
    , styles(0)
 {
+   update_width();
 }
 
 Menu::~Menu()
 {
+}
+
+void Menu::update_width()
+{
+   int width = 0;
+   for (unsigned i=0; i<options.size(); i++)
+      if (options[i].length() > width) width = options[i].length();
 }
 
 void Menu::set_x(float x)
@@ -45,6 +54,7 @@ bool Menu::set_options(std::vector<std::string> options)
 {
    this->options = options;
    cursor_pos = 0;
+   update_width();
    return true;
 }
 
@@ -56,6 +66,16 @@ float Menu::get_x()
 float Menu::get_y()
 {
    return y;
+}
+
+float Menu::get_width()
+{
+   return width;
+}
+
+float Menu::get_height()
+{
+   return options.size();
 }
 
 int Menu::get_cursor_pos()
@@ -86,13 +106,7 @@ std::string Menu::current_selection()
 
 void Menu::draw()
 {
-   int largest_length = 0;
-   for (unsigned i=0; i<options.size(); i++)
-   {
-      if (options[i].length() > largest_length) largest_length = options[i].length();
-   }
-
-   Rectangle rectangle(x-3, y-1, largest_length+6, options.size()+2);
+   Rectangle rectangle(x-3, y-1, get_width()+6, get_height()+2);
    rectangle.set_styles(styles);
    rectangle.draw();
 

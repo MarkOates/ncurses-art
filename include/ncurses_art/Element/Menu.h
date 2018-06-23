@@ -7,10 +7,12 @@
 class Menu : public ElementBase
 {
 private:
-   float x, y;
+   float x, y, width;
    std::vector<std::string> options;
    int cursor_pos;
    int styles;
+
+   void update_width();
 
 public:
    Menu(float x, float y, std::vector<std::string> options = {});
@@ -25,6 +27,8 @@ public:
 
    float get_x();
    float get_y();
+   float get_width();
+   float get_height();
    int get_cursor_pos();
    int get_num_options();
    void move_cursor_up();
