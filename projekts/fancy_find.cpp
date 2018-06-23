@@ -3,7 +3,6 @@
 
 #include <ncurses.h>
 
-#define COMMAND_FLIP_STAGING "flip_staging"
 #define COMMAND_REBUILD_MENU "rebuild_menu"
 #define REFRESH_TEXT_DISPLAY "refresh_text_display"
 #define YANK_SELECTED_TEXT "YANK_SELECTED_TEXT"
@@ -57,16 +56,17 @@ bool Projekt::process_event(std::string e)
    {
       init_color(20, (int)(255.0/255.0*1000), (int)(175.0/255.0*1000), 0);
       //init_color(21, (int)(175.0/255.0*1000), 0, (int)(255.0/255.0*1000));
-      //init_color(22, (int)(96.0/255.0*1000), 0, (int)(128.0/255.0*1000));
+      init_color(22, 0, (int)(96.0/255.0*1000), (int)(128.0/255.0*1000));
       //init_color(23, (int)(175.0/255.0*1000), 0, (int)(96.0/255.0*1000));
       init_color(24, 0, 0, 0);
-      init_pair(1, COLOR_BLACK, 20);
-      init_pair(2, COLOR_BLACK, 20);
-      init_pair(3, COLOR_BLACK, 21);
-      init_pair(4, 24, 22);
-      init_pair(5, COLOR_MAGENTA, 23);
+      init_pair(22, COLOR_BLACK, 22);
+      //init_pair(2, COLOR_BLACK, 20);
+      //init_pair(3, COLOR_BLACK, 21);
+      //init_pair(4, 24, 22);
+      //init_pair(5, COLOR_MAGENTA, 23);
 
-      create_menu("main_menu").set_styles(COLOR_PAIR(1));
+      //create_menu("text").set_styles(COLOR_PAIR(22));
+      create_menu("main_menu").set_styles(COLOR_PAIR(22));
       create_text("body_text", 80, 3).set_styles(COLOR_PAIR(2));
 
       emit_event(COMMAND_REBUILD_MENU);
@@ -123,7 +123,8 @@ bool Projekt::process_event(std::string e)
    else if (e == COMMAND_REBUILD_MENU)
    {
       std::stringstream ss;
-      ss << "git branch --sort=-committerdate > \"" << TMP_OUTFILE << "\"";
+      std::string unsanitized_input = args[1];
+      ss << "git grep -n --untracked --heading --break \"" << unsanitized_input << "\" > \"" << TMP_OUTFILE << "\"";
       system(ss.str().c_str());
       std::string txt = get_file_contents();
       std::vector<std::string> tokens = split_string(txt, "\n");
