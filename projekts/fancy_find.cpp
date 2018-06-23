@@ -130,8 +130,8 @@ bool Projekt::process_event(std::string e)
       std::vector<std::string> tokens = split_string(txt, "\n");
       Menu &menu = find_menu("main_menu");
       menu.set_options(tokens);
-      menu.set_x(COLS/2 - menu.get_width()/2);
-      menu.set_y(LINES/2 - 3);
+      menu.set_x(COLS/4);
+      menu.set_y(5);
    }
    return true;
 }
