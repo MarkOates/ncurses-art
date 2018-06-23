@@ -114,7 +114,10 @@ bool Projekt::process_event(std::string e)
       system(ss.str().c_str());
       std::string txt = get_file_contents();
       std::vector<std::string> tokens = split_string(txt, "\n");
-      find_menu("main_menu").set_options(tokens);
+      Menu &menu = find_menu("main_menu");
+      menu.set_options(tokens);
+      menu.set_x(COLS/2 - menu.get_width());
+      menu.set_y(LINES/2 - menu.get_height());
    }
    return true;
 }
