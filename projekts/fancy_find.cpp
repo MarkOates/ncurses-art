@@ -192,6 +192,10 @@ public:
       : buffer("")
    {}
 
+   std::string get_buffer_text()
+   {
+      return buffer;
+   }
    bool empty() { return buffer.empty(); }
    bool append(char ch) { buffer.append(1, ch); return true; }
    void pop_back()
@@ -274,6 +278,7 @@ bool Projekt::process_event(std::string e)
       //create_menu("text").set_styles(COLOR_PAIR(22));
       create_menu("main_menu").set_styles(COLOR_PAIR(22));
       create_text("input_mode_text", 2, 2).set_styles(COLOR_PAIR(22));
+      create_text("input_buffer", 2, 5).set_styles(COLOR_PAIR(20));
       create_text("body_text", 80, 3).set_styles(COLOR_PAIR(2));
 
       emit_event(COMMAND_REBUILD_MENU);
@@ -309,6 +314,11 @@ bool Projekt::process_event(std::string e)
       //command << "printf \"git add --patch " << git_status_line_deducer.parse_filename() << "\" | pbcopy";
       //system(command.str().c_str());
    //}
+   else if (e == INPUT_BUFFER_CHANGED)
+   {
+      Text &text = find_text("input_buffer");
+      text.set_text(input_buffer.get_buffer_text());
+   }
    else if (e == MOVE_CURSOR_DOWN)
    {
       Menu &menu = find_menu("main_menu");
