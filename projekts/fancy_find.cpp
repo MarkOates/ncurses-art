@@ -56,6 +56,37 @@ public:
    }
 };
 
+
+class StateManager
+{
+private:
+   std::string state;
+
+public:
+   StateManager()
+      : state("")
+   {}
+   ~StateManager()
+   {}
+
+   void set_state(std::string state)
+   {
+      this->state = state;
+   }
+   std::string get_state()
+   {
+      return state;
+   }
+   bool is_state(std::string state)
+   {
+      return this->state == state;
+   }
+};
+
+
+StateManager state_manager();
+
+
 // trim from start
 std::string ltrim(std::string &s) {
    s.erase(s.begin(), std::find_if(s.begin(), s.end(), std::not1(std::ptr_fun<int, int>(std::isspace))));
@@ -80,22 +111,49 @@ std::string trim(std::string s)
 }
 
 
+class InputToActionEmitterInterface
+{
+protected:
+   char input_ch;
+
+public:
+   InputToActionEmitterInterface(char input_ch) : input_ch(input_ch) {}
+   virtual ~InputToActionEmitterInterface() {}
+   virtual void emit() = 0;
+};
+
+
+class NormalModeInputToAction : private InputToActionEmitterInterface
+{
+public:
+   NormalModeInputToAction(char input_ch)
+      : InputToActionEmitterInterface(input_ch)
+   {}
+
+   virtual void emit() override
+   {
+      switch(input_ch)
+      {
+         case 'j': emit_event(MOVE_CURSOR_DOWN); break;
+         case 'k': emit_event(MOVE_CURSOR_UP); break;
+         case 'q': emit_event(EVENT_ABORT_PROGRAM); break;
+         case 'y': emit_event(YANK_SELECTED_TEXT); break;
+         case 'c': emit_event(GIT_CHECKOUT_BRANCH_COMMAND); break;
+         default: break;
+      }
+   }
+};
+
+
 Projekt::Projekt() { current_project = this; }
 bool Projekt::process_input(char ch)
 {
-   switch(ch)
-   {
-   case 'j': emit_event(MOVE_CURSOR_DOWN); break;
-   case 'k': emit_event(MOVE_CURSOR_UP); break;
-   // case 10: emit_event(COMMAND_FLIP_STAGING); break; // ENTER
-   case 'q': emit_event(EVENT_ABORT_PROGRAM); break;
-   case 'y': emit_event(YANK_SELECTED_TEXT); break;
-   case 'c': emit_event(GIT_CHECKOUT_BRANCH_COMMAND); break;
-   // case 'p': emit_event(COPY_GIT_ADD_PATCH_COMMAND); break;
-   default: return false; break;
-   }
+   NormalModeInputToAction normal_mode_input_to_action(ch);
+   normal_mode_input_to_action.emit();
+
    return true;
 }
+
 
 bool Projekt::process_event(std::string e)
 {
