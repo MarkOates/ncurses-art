@@ -10,6 +10,7 @@
 #define COPY_GIT_ADD_PATCH_COMMAND "COPY_GIT_ADD_PATCH_COMMAND"
 #define COMMAND_SWITCH_TO_INPUT_MODE "COMMAND_SWITCH_TO_INPUT_MODE"
 #define COMMAND_SWITCH_TO_NORMAL_MODE "COMMAND_SWITCH_TO_NORMAL_MODE"
+#define INPUT_BUFFER_CHANGED "INPUT_BUFFER_CHANGED"
 
 class GitGrepCommand
 {
@@ -181,6 +182,59 @@ public:
 };
 
 
+class InputBuffer
+{
+private:
+   std::string buffer;
+
+public:
+   InputBuffer()
+      : buffer("")
+   {}
+
+   bool empty() { return buffer.empty(); }
+   bool append(char ch) { buffer.append(1, ch); return true; }
+   void pop_back()
+   {
+      if (buffer.empty()) throw std::runtime_error("cannot pop_back on an empty buffer");
+      buffer.erase(buffer.size() - 1);
+   }
+};
+
+InputBuffer input_buffer;
+
+
+class InputBufferInputToAction : private InputToActionEmitterInterface
+{
+private:
+   InputBuffer *input_buffer;
+
+public:
+   InputBufferInputToAction(char input_ch, InputBuffer *input_buffer)
+      : InputToActionEmitterInterface(input_ch)
+      , input_buffer(input_buffer)
+   {}
+
+   virtual bool emit() override
+   {
+      if (!input_buffer) throw std::runtime_error("nil buffer");
+
+      if (input_ch == 127) // backspace
+      {
+         if (!input_buffer->empty()) input_buffer->pop_back();
+         emit_event(INPUT_BUFFER_CHANGED);
+         return true;
+      }
+      else
+      {
+         input_buffer->append(input_ch);
+         emit_event(INPUT_BUFFER_CHANGED);
+         return true;
+      }
+   }
+};
+
+
 Projekt::Projekt() { current_project = this; }
 bool Projekt::process_input(char ch)
 {
@@ -191,6 +245,11 @@ bool Projekt::process_input(char ch)
    {
       NormalModeInputToAction normal_mode_input_to_action(ch);
       if (normal_mode_input_to_action.emit()) return true;
+   }
+   else if (state_manager.is_state(STATE_INPUT))
+   {
+      InputBufferInputToAction input_buffer_input_to_action(ch, &input_buffer);
+      if (input_buffer_input_to_action.emit()) return true;
    }
 
    return false;
