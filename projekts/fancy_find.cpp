@@ -63,8 +63,8 @@ private:
    std::string state;
 
 public:
-   StateManager()
-      : state("")
+   StateManager(std::string state="")
+      : state(state)
    {}
    ~StateManager()
    {}
@@ -84,7 +84,11 @@ public:
 };
 
 
-StateManager state_manager();
+std::string STATE_NORMAL = "normal";
+std::string STATE_INPUT = "input";
+
+
+StateManager state_manager(STATE_NORMAL);
 
 
 // trim from start
@@ -148,8 +152,11 @@ public:
 Projekt::Projekt() { current_project = this; }
 bool Projekt::process_input(char ch)
 {
-   NormalModeInputToAction normal_mode_input_to_action(ch);
-   normal_mode_input_to_action.emit();
+   if (state_manager.is_state(STATE_NORMAL))
+   {
+      NormalModeInputToAction normal_mode_input_to_action(ch);
+      normal_mode_input_to_action.emit();
+   }
 
    return true;
 }
