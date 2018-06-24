@@ -282,7 +282,7 @@ bool Projekt::process_event(std::string e)
       create_text("body_text", 80, 3).set_styles(COLOR_PAIR(2));
 
       emit_event(COMMAND_REBUILD_MENU);
-      emit_event(COMMAND_SWITCH_TO_NORMAL_MODE);
+      emit_event(COMMAND_SWITCH_TO_INPUT_MODE);
       emit_event(MOVE_CURSOR_DOWN);
    }
    else if (e == YANK_SELECTED_TEXT)
@@ -299,12 +299,14 @@ bool Projekt::process_event(std::string e)
       state_manager.set_state(STATE_INPUT);
       Text &text = find_text("input_mode_text");
       text.set_text(STATE_INPUT);
+      emit_event(COMMAND_REBUILD_MENU);
    }
    else if (e == COMMAND_SWITCH_TO_NORMAL_MODE)
    {
       state_manager.set_state(STATE_NORMAL);
       Text &text = find_text("input_mode_text");
       text.set_text(STATE_NORMAL);
+      emit_event(COMMAND_REBUILD_MENU);
    }
    //if (e == COPY_GIT_ADD_PATCH_COMMAND)
    //{
@@ -344,7 +346,7 @@ bool Projekt::process_event(std::string e)
    else if (e == COMMAND_REBUILD_MENU)
    {
       std::stringstream ss;
-      GitGrepCommand git_grep_command(args[1]);
+      GitGrepCommand git_grep_command(input_buffer.get_buffer_text());
       ss << git_grep_command.get_command() << " > \"" << TMP_OUTFILE << "\"";
       system(ss.str().c_str());
       std::string txt = get_file_contents();
