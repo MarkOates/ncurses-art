@@ -9,6 +9,53 @@
 #define GIT_CHECKOUT_BRANCH_COMMAND "GIT_CHECKOUT_BRANCH_COMMAND"
 #define COPY_GIT_ADD_PATCH_COMMAND "COPY_GIT_ADD_PATCH_COMMAND"
 
+class GitGrepCommand
+{
+private:
+   std::string search_text;
+
+public:
+   GitGrepCommand(std::string search_text)
+   : search_text(search_text)
+   {
+   }
+   ~GitGrepCommand() {}
+
+   std::string get_command()
+   {
+      std::stringstream ss;
+      ss << "git grep -n --untracked --heading --break \"" << search_text << "\"";
+      return ss.str();
+   }
+};
+
+
+class GitGrepLineDeducer
+{
+private:
+   GitGrepCommand *git_grep_command;
+   std::string line;
+
+public:
+   GitGrepLineDeducer(GitGrepCommand *git_grep_command, std::string line)
+      : git_grep_command(git_grep_command)
+      , line(line)
+   {
+   }
+   ~GitGrepLineDeducer() {}
+
+   std::string get_filename()
+   {
+      static std::string filename = "";
+      return "";
+   }
+   std::string get_line_number()
+   {
+      static std::string line_number = "";
+      return "";
+   }
+};
+
 // trim from start
 std::string ltrim(std::string &s) {
    s.erase(s.begin(), std::find_if(s.begin(), s.end(), std::not1(std::ptr_fun<int, int>(std::isspace))));
@@ -123,8 +170,8 @@ bool Projekt::process_event(std::string e)
    else if (e == COMMAND_REBUILD_MENU)
    {
       std::stringstream ss;
-      std::string unsanitized_input = args[1];
-      ss << "git grep -n --untracked --heading --break \"" << unsanitized_input << "\" > \"" << TMP_OUTFILE << "\"";
+      GitGrepCommand git_grep_command(args[1]);
+      ss << git_grep_command.get_command() << " > \"" << TMP_OUTFILE << "\"";
       system(ss.str().c_str());
       std::string txt = get_file_contents();
       std::vector<std::string> tokens = split_string(txt, "\n");
