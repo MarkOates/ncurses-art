@@ -6,8 +6,10 @@
 #define COMMAND_REBUILD_MENU "rebuild_menu"
 #define REFRESH_TEXT_DISPLAY "refresh_text_display"
 #define YANK_SELECTED_TEXT "YANK_SELECTED_TEXT"
-#define GIT_CHECKOUT_BRANCH_COMMAND "GIT_CHECKOUT_BRANCH_COMMAND"
 #define COPY_GIT_ADD_PATCH_COMMAND "COPY_GIT_ADD_PATCH_COMMAND"
+#define COPY_GIT_ADD_PATCH_COMMAND "COPY_GIT_ADD_PATCH_COMMAND"
+#define COMMAND_SWITCH_TO_INPUT_MODE "COMMAND_SWITCH_TO_INPUT_MODE"
+#define COMMAND_SWITCH_TO_NORMAL_MODE "COMMAND_SWITCH_TO_NORMAL_MODE"
 
 class GitGrepCommand
 {
@@ -88,7 +90,7 @@ std::string STATE_NORMAL = "normal";
 std::string STATE_INPUT = "input";
 
 
-StateManager state_manager(STATE_NORMAL);
+StateManager state_manager;
 
 
 // trim from start
@@ -123,7 +125,7 @@ protected:
 public:
    InputToActionEmitterInterface(char input_ch) : input_ch(input_ch) {}
    virtual ~InputToActionEmitterInterface() {}
-   virtual void emit() = 0;
+   virtual bool emit() = 0;
 };
 
 
@@ -134,17 +136,47 @@ public:
       : InputToActionEmitterInterface(input_ch)
    {}
 
-   virtual void emit() override
+   virtual bool emit() override
    {
       switch(input_ch)
       {
-         case 'j': emit_event(MOVE_CURSOR_DOWN); break;
-         case 'k': emit_event(MOVE_CURSOR_UP); break;
-         case 'q': emit_event(EVENT_ABORT_PROGRAM); break;
-         case 'y': emit_event(YANK_SELECTED_TEXT); break;
-         case 'c': emit_event(GIT_CHECKOUT_BRANCH_COMMAND); break;
+         case 'j': emit_event(MOVE_CURSOR_DOWN); return true; break;
+         case 'k': emit_event(MOVE_CURSOR_UP); return true; break;
+         case 'q': emit_event(EVENT_ABORT_PROGRAM); return true; break;
+         case 'y': emit_event(YANK_SELECTED_TEXT); return true; break;
+         default: return true; break;
+      }
+
+      return false;
+   }
+};
+
+
+class GlobalStateSwitcherInputToAction : private InputToActionEmitterInterface
+{
+private:
+   StateManager *state_manager;
+
+public:
+   GlobalStateSwitcherInputToAction(char input_ch, StateManager *state_manager)
+      : InputToActionEmitterInterface(input_ch)
+      , state_manager(state_manager)
+   {}
+
+   virtual bool emit() override
+   {
+      switch(input_ch)
+      {
+         case '\n':
+            // Assume there are only two possible states
+            if (state_manager->is_state(STATE_NORMAL)) emit_event(COMMAND_SWITCH_TO_INPUT_MODE);
+            else if (state_manager->is_state(STATE_INPUT)) emit_event(COMMAND_SWITCH_TO_NORMAL_MODE);
+            return true;
+            break;
          default: break;
       }
+
+      return false;
    }
 };
 
@@ -152,13 +184,16 @@ public:
 Projekt::Projekt() { current_project = this; }
 bool Projekt::process_input(char ch)
 {
+   GlobalStateSwitcherInputToAction global_state_switcher_input_to_action(ch, &state_manager);
+   if (global_state_switcher_input_to_action.emit()) return true;
+
    if (state_manager.is_state(STATE_NORMAL))
    {
       NormalModeInputToAction normal_mode_input_to_action(ch);
-      normal_mode_input_to_action.emit();
+      if (normal_mode_input_to_action.emit()) return true;
    }
 
-   return true;
+   return false;
 }
 
 
@@ -179,12 +214,14 @@ bool Projekt::process_event(std::string e)
 
       //create_menu("text").set_styles(COLOR_PAIR(22));
       create_menu("main_menu").set_styles(COLOR_PAIR(22));
+      create_text("input_mode_text", 2, 2).set_styles(COLOR_PAIR(22));
       create_text("body_text", 80, 3).set_styles(COLOR_PAIR(2));
 
       emit_event(COMMAND_REBUILD_MENU);
+      emit_event(COMMAND_SWITCH_TO_NORMAL_MODE);
       emit_event(MOVE_CURSOR_DOWN);
    }
-   if (e == YANK_SELECTED_TEXT)
+   else if (e == YANK_SELECTED_TEXT)
    {
       Menu &menu = find_menu("main_menu");
       //GitStatusLineDeducer git_status_line_deducer(menu);
@@ -193,14 +230,17 @@ bool Projekt::process_event(std::string e)
       command << "printf \"" << trimmed << "\" | pbcopy";
       system(command.str().c_str());
    }
-   if (e == GIT_CHECKOUT_BRANCH_COMMAND)
+   else if (e == COMMAND_SWITCH_TO_INPUT_MODE)
    {
-      Menu &menu = find_menu("main_menu");
-      //GitStatusLineDeducer git_status_line_deducer(menu);
-      std::string trimmed = trim(menu.current_selection());
-      std::stringstream command;
-      command << "printf \"git checkout " << trimmed << "\" | pbcopy";
-      system(command.str().c_str());
+      state_manager.set_state(STATE_INPUT);
+      Text &text = find_text("input_mode_text");
+      text.set_text(STATE_INPUT);
+   }
+   else if (e == COMMAND_SWITCH_TO_NORMAL_MODE)
+   {
+      state_manager.set_state(STATE_NORMAL);
+      Text &text = find_text("input_mode_text");
+      text.set_text(STATE_NORMAL);
    }
    //if (e == COPY_GIT_ADD_PATCH_COMMAND)
    //{
