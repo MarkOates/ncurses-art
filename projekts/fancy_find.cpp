@@ -24,6 +24,11 @@ public:
    }
    ~GitGrepCommand() {}
 
+   bool has_search_text()
+   {
+      return !search_text.empty();
+   }
+
    std::string get_command()
    {
       std::stringstream ss;
@@ -345,12 +350,21 @@ bool Projekt::process_event(std::string e)
    }
    else if (e == COMMAND_REBUILD_MENU)
    {
-      std::stringstream ss;
       GitGrepCommand git_grep_command(input_buffer.get_buffer_text());
-      ss << git_grep_command.get_command() << " > \"" << TMP_OUTFILE << "\"";
-      system(ss.str().c_str());
-      std::string txt = get_file_contents();
-      std::vector<std::string> tokens = split_string(txt, "\n");
+      std::vector<std::string> tokens;
+      if (git_grep_command.has_search_text())
+      {
+         std::string command = git_grep_command.get_command();
+         std::stringstream ss;
+         ss << command << " > \"" << TMP_OUTFILE << "\"";
+         system(ss.str().c_str());
+         std::string txt = get_file_contents();
+         tokens = split_string(txt, "\n");
+      }
+      else
+      {
+         tokens = split_string("[empty search text]", "\n");
+      }
       Menu &menu = find_menu("main_menu");
       menu.set_options(tokens);
       menu.set_x(COLS/4);
