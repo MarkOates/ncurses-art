@@ -36,6 +36,20 @@ std::vector<std::string> split(const std::string &s, char delim = ' ') {
    return elems;
 }
 
+std::string join(std::vector<std::string> tokens, std::string delim)
+{
+   std::stringstream result;
+   bool last = false;
+
+   for (unsigned i=0; i<tokens.size(); i++)
+   {
+      result << tokens[i];
+      if (i==tokens.size()-1) last = true;
+      if (!last) result << delim;
+   }
+
+   return result.str();
+}
 
 std::vector<std::string> args;
 
@@ -60,6 +74,16 @@ public:
       : named_arg(named_arg)
       , default_value(default_value)
    {}
+
+   std::string get_named_arg()
+   {
+      return named_arg;
+   }
+
+   std::string get_default_value()
+   {
+      return default_value;
+   }
 
    friend std::ostream & operator<< (std::ostream &out, NamedArg const &named_arg)
    {
@@ -154,6 +178,26 @@ public:
       return camel_case_name;
    }
 
+   std::string get_interface_name()
+   {
+      return interface_name;
+   }
+
+   std::string get_folder_name()
+   {
+      return folder_name;
+   }
+
+   std::vector<NamedArg> get_attr_readers_and_named_args()
+   {
+      return attr_readers_and_named_args;
+   }
+
+   std::vector<Method> get_methods()
+   {
+      return methods;
+   }
+
    friend std::ostream & operator<< (std::ostream &out, Class const &klass)
    {
       out << std::string(tab_count, ' ') << "- CLASS definition (" << klass.camel_case_name << ")" << std::endl;
@@ -193,12 +237,101 @@ public:
    {
       std::stringstream result;
 
+      std::vector<std::string> in_code_blocks = {
+         generate_attr_reader_line(),
+         generate_initializer_line(),
+      };
+
+      std::vector<std::string> method_lines = generate_methods_line();
+
+      for (auto &method_line : method_lines) in_code_blocks.push_back(method_line);
+
       result << "class " << klass.get_camel_case_name() << std::endl;
+      result << join(in_code_blocks, "\n");
       result << "end";
 
       return result.str();
    }
+
+private:
+
+   std::string generate_attr_reader_line()
+   {
+      std::stringstream result;
+
+      if (has_attr_accessors())
+      {
+         std::vector<NamedArg> named_args = klass.get_attr_readers_and_named_args();
+         result << "  attr_reader ";
+         std::vector<std::string> named_args_as_symbols;
+
+         for (auto &named_arg : named_args) { named_args_as_symbols.push_back(std::string(":") + named_arg.get_named_arg()); }
+         result << join(named_args_as_symbols, ", ") << std::endl;
+      }
+
+      return result.str();
+   }
+
+   std::string generate_initializer_line()
+   {
+      std::stringstream result;
+
+      if (has_attr_accessors())
+      {
+         std::vector<NamedArg> named_args = klass.get_attr_readers_and_named_args();
+         result << "  def initializer(";
+         std::vector<std::string> named_args_as_symbols;
+
+         for (auto &named_arg : named_args) { named_args_as_symbols.push_back(named_arg.get_named_arg() + ":"); }
+         result << join(named_args_as_symbols, ", ");
+         result << ")" << std::endl;
+         for (auto &named_arg : named_args)
+         {
+            std::string arg = named_arg.get_named_arg();
+            result << "    @" << arg << " = " << arg << std::endl;
+         }
+         result << "  end" << std::endl;
+      }
+
+      return result.str();
+   }
+
+   std::vector<std::string> generate_methods_line()
+   {
+      std::vector<std::string> result;
+
+      if (has_methods())
+      {
+         std::vector<Method> methods = klass.get_methods();
+
+         for (auto &method : methods)
+         {
+            std::stringstream method_result;
+            method_result << "  def " << method.get_name() << "(...)" << std::endl;
+            method_result << "  end" << std::endl;
+
+            result.push_back(method_result.str());
+         }
+      }
+
+      return result;
+   }
+
+   bool has_attr_accessors()
+   {
+      return !klass.get_attr_readers_and_named_args().empty();
+   }
+
+   bool has_methods()
+   {
+      return !klass.get_methods().empty();
+   }
 };
+
+
+// component
+   // dependency
+   // expected usage of the dependency
 
 
 class CommandLineArgumentParser
@@ -345,7 +478,8 @@ int main(int argc, char** argv)
    CommandLineArguemntToClassConverter converter(parser);
    Class klass = converter.get_class();
 
-   std::cout << klass;
+   ClassContentGenerator generator(klass);
+   std::cout << generator.get_generated_content();
 
    return 0;
 }
