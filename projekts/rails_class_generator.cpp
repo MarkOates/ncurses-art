@@ -145,15 +145,68 @@ public:
 };
 
 
+class CommandLineFlaggedArgDeducer
+{
+private:
+   std::vector<std::string> command_line_args;
+
+public:
+   CommandLineFlaggedArgDeducer(std::vector<std::string> command_line_args)
+      : command_line_args(command_line_args)
+   {}
+
+   std::vector<std::vector<std::string>> get_flagged_args(std::string flag)
+   {
+      std::vector<std::vector<std::string>> results;
+
+      std::vector<int> positions = find_flag_positions(flag);
+      for (int i=0; i<positions.size(); i++)
+      {
+         results.push_back(get_args_within_flag(i));
+      }
+      return results;
+   }
+
+private:
+
+   std::vector<int> find_flag_positions(std::string flag) // flag_value might be something like "-f"
+   {
+      std::vector<int> positions;
+      for (int i=0; i<command_line_args.size(); i++) { if (command_line_args[i] == flag) positions.push_back(i); }
+      return positions;
+   }
+
+   std::vector<std::string> get_args_within_flag(int arg_position) // flag_value might be something like "-f"
+   {
+      std::vector<std::string> args;
+      for (int i=(arg_position+1); i<command_line_args.size(); i++)
+      {
+         if (is_flag(command_line_args[i])) break;
+         else args.push_back(command_line_args[i]);
+      }
+      return args;
+   }
+
+   bool is_flag(std::string potential_flag_value)
+   {
+      if (potential_flag_value.size() < 2) return false;
+      if (potential_flag_value[0] == '-') return true;
+      return false;
+   }
+};
+
+
 class CommandLineArgumentParser
 {
 private:
    const std::string UNSET = "[unset]";
    std::vector<std::string> command_line_args;
+   CommandLineFlaggedArgDeducer command_line_flagged_arg_deducer;
 
 public:
    CommandLineArgumentParser(std::vector<std::string> command_line_args)
       : command_line_args(command_line_args)
+      , command_line_flagged_arg_deducer(command_line_args)
    {}
 
    std::string get_camel_case_name()
@@ -223,6 +276,14 @@ end
 // rg ClassName -i InterfaceName -f services -n Hamster -a named_arg_1 named_arg_2 -m method_name(method_named_arg)
 
 
+void sloppy(CommandLineFlaggedArgDeducer &deducer, std::string flag_name)
+{
+   std::vector<std::vector<std::string>> results = deducer.get_flagged_args(flag_name);
+   std::cout << flag_name << std::endl;
+   for (auto &result : results) { for (auto &found_arg : result) { std::cout << "  -:" << found_arg << std::endl; } }
+}
+
+
 int main(int argc, char** argv)
 {
    for (int i=0; i<argc; i++) args.push_back(argv[i]);
@@ -238,11 +299,21 @@ int main(int argc, char** argv)
       "-m", "method_name", "method_named_arg:'another_default'",
    };
 
-   CommandLineArgumentParser parser(parser_args);
-   CommandLineArguemntToClassConverter converter(parser);
-   Class klass = converter.get_class();
 
-   std::cout << klass;
+   CommandLineFlaggedArgDeducer deducer(parser_args);
+   sloppy(deducer, "-c");
+   sloppy(deducer, "-i");
+   sloppy(deducer, "-f");
+   sloppy(deducer, "-n");
+   sloppy(deducer, "-a");
+   sloppy(deducer, "-m");
+
+
+   //CommandLineArgumentParser parser(parser_args);
+   //CommandLineArguemntToClassConverter converter(parser);
+   //Class klass = converter.get_class();
+
+   //std::cout << klass;
 
    return 0;
 }
