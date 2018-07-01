@@ -468,8 +468,8 @@ private:
    std::pair<std::string, std::string> const FOLDER_FLAG = { "-f", "the folder in which the class is located" };
    std::pair<std::string, std::string> const MODULE_NAME_FLAG = { "-n", "module name that encapsulates the class" };
    std::pair<std::string, std::string> const ATTR_READERS_AND_NAMED_ARGS_FLAG = { "-a", "initializer args (also attr_readers)" };
-   std::pair<std::string, std::string> const METHOD_FLAG = { "-m", "method.  format: [class_name named_arg:'optional_default_value' named_arg2]" };
-   std::pair<std::string, std::string> const HELP_FLAG = { "-?", "help.  You're here." };
+   std::pair<std::string, std::string> const METHOD_FLAG = { "-m", "method. format: [class_name named_arg:'optional_default_value' named_arg2]" };
+   std::pair<std::string, std::string> const HELP_FLAG = { "--help", "help. You're here." };
 
    const std::vector<std::pair<std::string, std::string>> flags = {
       CLASS_NAME_FLAG,
@@ -489,7 +489,7 @@ public:
 
    bool is_requesting_help()
    {
-      return deducer.has_flag("-?");
+      return deducer.has_flag(HELP_FLAG.first);
    }
 
    std::string get_help()
@@ -506,7 +506,7 @@ public:
       for (auto &flag : flags)
       {
          std::string flag_flag = flag.first;
-         result << "   " << pad(flag_flag, 6, ' ') << flag.second << std::endl;
+         result << "   " << pad(flag_flag, 9, ' ') << flag.second << std::endl;
       }
       result << "" << std::endl;
       result << "" << std::endl;
@@ -573,7 +573,10 @@ public:
 
       std::vector<NamedArg> named_args = {};
       std::vector<std::vector<std::string>> named_args_args = command_line_argument_parser.get_attr_readers_and_named_args_arg();
-      std::vector<std::string> first_named_arg = named_args_args[0];
+      std::vector<std::string> first_named_arg = {};
+      if (!named_args_args.empty()) first_named_arg = named_args_args[0];
+
+      //std::vector<std::string> first_named_arg = {};
 
       for (auto &named_arg_arg : first_named_arg) named_args.push_back(NamedArg::make_from_string(named_arg_arg));
 
@@ -632,10 +635,9 @@ int main(int argc, char** argv)
       "-a", "named_arg_1", "named_arg_2:'default_value'",
       "-m", "method_name", "method_named_arg:'another_default'",
       "-m", "another_method_name", "another_method_named_arg:'another_default'",
-      "-?", "another_method_name", "another_method_named_arg:'another_default'",
    };
 
-   CommandLineArgumentParser parser(parser_args);
+   CommandLineArgumentParser parser(args);
 
    if (parser.is_requesting_help())
    {
