@@ -649,9 +649,19 @@ int main(int argc, char** argv)
    CommandLineArguemntToClassConverter converter(parser);
    Class klass = converter.get_class();
 
+   std::cout << std::endl;
+   std::cout << std::endl;
+   std::cout << "SOURCE FILE:" << std::endl;
+   std::cout << std::endl;
+   std::cout << std::endl;
    ClassContentGenerator generator(klass);
    std::cout << generator.get_generated_content();
 
+   std::cout << std::endl;
+   std::cout << std::endl;
+   std::cout << "TEST FILE:" << std::endl;
+   std::cout << std::endl;
+   std::cout << std::endl;
    ClassTestContentGenerator test_generator(klass);
    std::cout << test_generator.get_generated_content();
 
