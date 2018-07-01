@@ -36,6 +36,48 @@ std::vector<std::string> split(const std::string &s, char delim = ' ') {
    return elems;
 }
 
+std::string to_camel_case(std::string camelString)
+{
+   for (int x = 0; x < camelString.length(); x++)
+   {
+      if (camelString[x] == '_'){
+         std::string tempString = camelString.substr(x + 1, 1);
+         transform(tempString.begin(), tempString.end(), tempString.begin(), toupper);
+         camelString.erase(x, 2);
+         camelString.insert(x, tempString);
+      }
+   }
+
+   return camelString;
+}
+
+#include <algorithm>
+#include <iostream>
+#include <cctype>
+
+//bool all_caps(const std::string &s) {
+   //return std::none_of(s.begin(), s.end(), ::islower);
+//}
+
+// Convert lowerCamelCase and UpperCamelCase strings to lower_with_underscore.
+std::string to_snake_case(std::string camelCase) {
+   std::string str(1, tolower(camelCase[0]));
+
+   // First place underscores between contiguous lower and upper case letters.
+   // For example, `_LowerCamelCase` becomes `_Lower_Camel_Case`.
+   for (auto it = camelCase.begin() + 1; it != camelCase.end(); ++it) {
+      if (isupper(*it) && *(it-1) != '_' && islower(*(it-1))) {
+         str += "_";
+      }
+      str += *it;
+   }
+
+   // Then convert it to lower case.
+   std::transform(str.begin(), str.end(), str.begin(), ::tolower);
+
+   return str;
+}
+
 std::string join(std::vector<std::string> tokens, std::string delim)
 {
    std::stringstream result;
@@ -253,7 +295,7 @@ public:
 
       result << "class " << klass.get_camel_case_name() << std::endl;
       result << join(in_code_blocks, "\n");
-      result << "end";
+      result << "end" << std::endl;
 
       return result.str();
    }
@@ -328,6 +370,64 @@ private:
       }
 
       return result;
+   }
+
+   bool has_attr_accessors()
+   {
+      return !klass.get_attr_readers_and_named_args().empty();
+   }
+
+   bool has_methods()
+   {
+      return !klass.get_methods().empty();
+   }
+};
+
+class ClassTestContentGenerator
+{
+private:
+   Class &klass;
+
+public:
+   ClassTestContentGenerator(Class &klass)
+      : klass(klass)
+   {}
+
+   std::string get_generated_content()
+   {
+      std::stringstream result;
+
+      std::vector<std::string> in_code_blocks = {
+         generate_class_in_question_convience_method()
+      };
+
+      for (auto &method : klass.get_methods()) in_code_blocks.push_back(generate_method_test(method));
+
+      result << "require 'test_helper'" << std::endl;
+      result << std::endl;
+      result << "class " << klass.get_camel_case_name() << "Test < ActiveSupport::TestCase" << std::endl;
+      result << join(in_code_blocks, "\n");
+      result << "end" << std::endl;
+
+      return result.str();
+   }
+
+private:
+
+   std::string generate_class_in_question_convience_method()
+   {
+      std::stringstream result;
+      result << "  def " << to_snake_case(klass.get_camel_case_name()) << std::endl;
+      result << "  end" << std::endl;
+      return result.str();
+   }
+
+   std::string generate_method_test(Method &method)
+   {
+      std::stringstream result;
+      result << "  test '#" << method.get_name() << " does a thing' do" << std::endl;
+      result << "  end" << std::endl;
+      return result.str();
    }
 
    bool has_attr_accessors()
@@ -493,6 +593,9 @@ int main(int argc, char** argv)
 
    ClassContentGenerator generator(klass);
    std::cout << generator.get_generated_content();
+
+   ClassTestContentGenerator test_generator(klass);
+   std::cout << test_generator.get_generated_content();
 
    return 0;
 }
