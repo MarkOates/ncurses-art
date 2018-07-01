@@ -43,6 +43,9 @@ std::vector<std::string> args;
 
 int tab_count = 0;
 
+#include "lib/command_line_argument_parser.h"
+
+
 // ==============================================================================
 
 
@@ -101,10 +104,7 @@ public:
       out << std::string(tab_count, ' ') << "- METHOD definition (" << method.name << ")" << std::endl;
       tab_count += 3;
       out << std::string(tab_count, ' ') << "- name: " << method.name << std::endl;
-      for (auto &named_arg : method.named_args)
-      {
-         out << std::string(tab_count, ' ') << named_arg << std::endl;
-      }
+      for (auto &named_arg : method.named_args) { out << named_arg; }
       tab_count -= 3;
 
       return out;
@@ -151,7 +151,7 @@ public:
 
    std::string get_camel_case_name()
    {
-      return "[CamelCaseNameNotImplemented]";
+      return camel_case_name;
    }
 
    friend std::ostream & operator<< (std::ostream &out, Class const &klass)
@@ -161,8 +161,14 @@ public:
       out << std::string(tab_count, ' ') << "- camel_case_name: " << klass.camel_case_name << std::endl;
       out << std::string(tab_count, ' ') << "- interface_name: " << klass.interface_name << std::endl;
       out << std::string(tab_count, ' ') << "- folder_name: " << klass.folder_name << std::endl;
-      out << std::string(tab_count, ' ') << "- attr_readers_and_named_args: " << "steam not implemented" << std::endl;
+      out << std::string(tab_count, ' ') << "- attr_readers_and_named_args: " << std::endl;
+      tab_count += 3;
+      for (auto &attr_readers_and_named_arg : klass.attr_readers_and_named_args) { out << attr_readers_and_named_arg; }
+      tab_count -= 3;
+      out << std::string(tab_count, ' ') << "- methods: " << std::endl;
+      tab_count += 3;
       for (auto &method : klass.methods) { out << method; }
+      tab_count -= 3;
 
       tab_count -= 3;
 
@@ -195,63 +201,12 @@ public:
 };
 
 
-class CommandLineFlaggedArgDeducer
-{
-private:
-   std::vector<std::string> command_line_args;
-
-public:
-   CommandLineFlaggedArgDeducer(std::vector<std::string> command_line_args)
-      : command_line_args(command_line_args)
-   {}
-
-   std::vector<std::vector<std::string>> get_flagged_args(std::string flag)
-   {
-      std::vector<std::vector<std::string>> results;
-
-      std::vector<int> positions = find_flag_positions(flag);
-      for (int i=0; i<positions.size(); i++)
-      {
-         results.push_back(get_args_within_flag(positions[i]));
-      }
-      return results;
-   }
-
-private:
-
-   std::vector<int> find_flag_positions(std::string flag) // flag_value might be something like "-f"
-   {
-      std::vector<int> positions;
-      for (int i=0; i<command_line_args.size(); i++) { if (command_line_args[i] == flag) positions.push_back(i); }
-      return positions;
-   }
-
-   std::vector<std::string> get_args_within_flag(int arg_position) // flag_value might be something like "-f"
-   {
-      std::vector<std::string> args;
-      for (int i=(arg_position+1); i<command_line_args.size(); i++)
-      {
-         if (is_flag(command_line_args[i])) break;
-         else args.push_back(command_line_args[i]);
-      }
-      return args;
-   }
-
-   bool is_flag(std::string potential_flag_value)
-   {
-      if (potential_flag_value.size() < 2) return false;
-      if (potential_flag_value[0] == '-') return true;
-      return false;
-   }
-};
-
-
 class CommandLineArgumentParser
 {
 private:
    const std::string UNSET = "[unset]";
    std::vector<std::string> command_line_args;
-   CommandLineFlaggedArgDeducer deducer;
+   Blast::CommandLineFlaggedArgumentsParser deducer;
 
    std::string const CLASS_NAME_FLAG = "-c";
    std::string const INTERFACE_FLAG = "-i";
@@ -294,7 +249,7 @@ public:
       return args[0][0];
    }
 
-   std::vector<std::vector<std::string>> get_attr_readers_and_named_args()
+   std::vector<std::vector<std::string>> get_attr_readers_and_named_args_arg()
    {
       return deducer.get_flagged_args(ATTR_READERS_AND_NAMED_ARGS_FLAG);
    }
@@ -323,12 +278,17 @@ public:
       std::vector<std::vector<std::string>> method_args = command_line_argument_parser.get_methods_args();
       for (auto &method_arg : method_args) { methods.push_back(Method::make_from_args(method_arg)); }
 
+      std::vector<NamedArg> named_args = {};
+      std::vector<std::vector<std::string>> named_args_args = command_line_argument_parser.get_attr_readers_and_named_args_arg();
+      std::vector<std::string> first_named_arg = named_args_args[0];
+
+      for (auto &named_arg_arg : first_named_arg) named_args.push_back(NamedArg::make_from_string(named_arg_arg));
+
       return Class(
          command_line_argument_parser.get_camel_case_name_arg(),
          command_line_argument_parser.get_interface_name_arg(),
          command_line_argument_parser.get_folder_name_arg(),
-         {},
-         //NamedArg::make_from_string(command_line_argument_parser.get_attr_readers_and_named_args()),
+         named_args,
          methods
       );
    }
@@ -381,7 +341,6 @@ int main(int argc, char** argv)
       "-m", "another_method_name", "another_method_named_arg:'another_default'",
    };
 
-
    CommandLineArgumentParser parser(parser_args);
    CommandLineArguemntToClassConverter converter(parser);
    Class klass = converter.get_class();
@@ -390,4 +349,5 @@ int main(int argc, char** argv)
 
    return 0;
 }
+
 
