@@ -16,7 +16,30 @@ void ___replace(std::string& str, std::string from, std::string to)
    }
 }
 
+#include <string>
+#include <sstream>
+#include <vector>
+#include <iterator>
+
+template<typename Out>
+void split(const std::string &s, char delim, Out result) {
+   std::stringstream ss(s);
+   std::string item;
+   while (std::getline(ss, item, delim)) {
+      *(result++) = item;
+   }
+}
+
+std::vector<std::string> split(const std::string &s, char delim = ' ') {
+   std::vector<std::string> elems;
+   split(s, delim, std::back_inserter(elems));
+   return elems;
+}
+
+
 std::vector<std::string> args;
+
+
 
 int tab_count = 0;
 
@@ -44,6 +67,17 @@ public:
       tab_count -= 3;
 
       return out;
+   }
+
+   static NamedArg make_from_string(std::string string)
+   {
+      std::vector<std::string> tokens = split(string);
+      if (tokens.empty()) throw std::runtime_error("tokens is empty");
+
+      std::string arg_name = tokens[0];
+      std::string default_value = (tokens.size() < 2) ? "" : tokens[1];
+
+      return NamedArg(arg_name, default_value);
    }
 };
 
@@ -218,8 +252,9 @@ public:
 
    std::string get_camel_case_name_arg()
    {
-      if (command_line_args.empty()) throw std::runtime_error("CommandLineArgumentParser required class name is missing");
-      return command_line_args[0];
+      std::vector<std::vector<std::string>> args = deducer.get_flagged_args(CLASS_NAME_FLAG);
+      if (args.empty()) throw std::runtime_error("CommandLineArgumentParser required class name (-c) flag is missing");
+      return args[0][0];
    }
 
    std::string get_interface_name_arg()
@@ -318,8 +353,8 @@ int main(int argc, char** argv)
    std::vector<std::string> parser_args = {
       "-c", "ClassName",
       "-i", "InterfaceName",
-      "-f", "services",
-      "-n", "Hamster",
+      "-f", "folder_name",
+      "-n", "ModuleName",
       "-a", "named_arg_1", "named_arg_2:'default_value'",
       "-m", "method_name", "method_named_arg:'another_default'",
       "-m", "another_method_name", "another_method_named_arg:'another_default'",
