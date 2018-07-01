@@ -162,7 +162,7 @@ public:
       std::vector<int> positions = find_flag_positions(flag);
       for (int i=0; i<positions.size(); i++)
       {
-         results.push_back(get_args_within_flag(i));
+         results.push_back(get_args_within_flag(positions[i]));
       }
       return results;
    }
@@ -201,24 +201,57 @@ class CommandLineArgumentParser
 private:
    const std::string UNSET = "[unset]";
    std::vector<std::string> command_line_args;
-   CommandLineFlaggedArgDeducer command_line_flagged_arg_deducer;
+   CommandLineFlaggedArgDeducer deducer;
+
+   std::string const CLASS_NAME_FLAG = "-c";
+   std::string const INTERFACE_FLAG = "-i";
+   std::string const FOLDER_FLAG = "-f";
+   std::string const MODULE_NAME_FLAG = "-n";
+   std::string const ATTR_READERS_AND_NAMED_ARGS_FLAG = "-a";
+   std::string const METHOD_FLAG = "-m";
 
 public:
    CommandLineArgumentParser(std::vector<std::string> command_line_args)
       : command_line_args(command_line_args)
-      , command_line_flagged_arg_deducer(command_line_args)
+      , deducer(command_line_args)
    {}
 
-   std::string get_camel_case_name()
+   std::string get_camel_case_name_arg()
    {
       if (command_line_args.empty()) throw std::runtime_error("CommandLineArgumentParser required class name is missing");
       return command_line_args[0];
    }
 
-   std::string get_interface_name() { return UNSET; }
-   std::string get_folder_name() { return UNSET; }
-   std::vector<NamedArg> get_attr_readers_and_named_args() { return {}; }
-   std::vector<Method> get_methods() { return {}; }
+   std::string get_interface_name_arg()
+   {
+      std::vector<std::vector<std::string>> args = deducer.get_flagged_args(INTERFACE_FLAG);
+      if (args.empty()) return "";
+      return args[0][0];
+   }
+
+   std::string get_folder_name_arg()
+   {
+      std::vector<std::vector<std::string>> args = deducer.get_flagged_args(FOLDER_FLAG);
+      if (args.empty()) return "";
+      return args[0][0];
+   }
+
+   std::string get_module_name_arg()
+   {
+      std::vector<std::vector<std::string>> args = deducer.get_flagged_args(MODULE_NAME_FLAG);
+      if (args.empty()) return "";
+      return args[0][0];
+   }
+
+   std::vector<std::vector<std::string>> get_attr_readers_and_named_args()
+   {
+      return deducer.get_flagged_args(ATTR_READERS_AND_NAMED_ARGS_FLAG);
+   }
+
+   std::vector<std::vector<std::string>> get_methods_args()
+   {
+      return deducer.get_flagged_args(METHOD_FLAG);
+   }
 };
 
 
@@ -236,11 +269,11 @@ public:
    Class get_class()
    {
       return Class(
-         command_line_argument_parser.get_camel_case_name(),
-         command_line_argument_parser.get_interface_name(),
-         command_line_argument_parser.get_folder_name(),
-         command_line_argument_parser.get_attr_readers_and_named_args(),
-         command_line_argument_parser.get_methods()
+         command_line_argument_parser.get_camel_case_name_arg(),
+         command_line_argument_parser.get_interface_name_arg(),
+         command_line_argument_parser.get_folder_name_arg()
+         //command_line_argument_parser.get_attr_readers_and_named_args(),
+         //command_line_argument_parser.get_methods()
       );
    }
 };
@@ -276,14 +309,6 @@ end
 // rg ClassName -i InterfaceName -f services -n Hamster -a named_arg_1 named_arg_2 -m method_name(method_named_arg)
 
 
-void sloppy(CommandLineFlaggedArgDeducer &deducer, std::string flag_name)
-{
-   std::vector<std::vector<std::string>> results = deducer.get_flagged_args(flag_name);
-   std::cout << flag_name << std::endl;
-   for (auto &result : results) { for (auto &found_arg : result) { std::cout << "  -:" << found_arg << std::endl; } }
-}
-
-
 int main(int argc, char** argv)
 {
    for (int i=0; i<argc; i++) args.push_back(argv[i]);
@@ -297,23 +322,15 @@ int main(int argc, char** argv)
       "-n", "Hamster",
       "-a", "named_arg_1", "named_arg_2:'default_value'",
       "-m", "method_name", "method_named_arg:'another_default'",
+      "-m", "another_method_name", "another_method_named_arg:'another_default'",
    };
 
 
-   CommandLineFlaggedArgDeducer deducer(parser_args);
-   sloppy(deducer, "-c");
-   sloppy(deducer, "-i");
-   sloppy(deducer, "-f");
-   sloppy(deducer, "-n");
-   sloppy(deducer, "-a");
-   sloppy(deducer, "-m");
+   CommandLineArgumentParser parser(parser_args);
+   CommandLineArguemntToClassConverter converter(parser);
+   Class klass = converter.get_class();
 
-
-   //CommandLineArgumentParser parser(parser_args);
-   //CommandLineArguemntToClassConverter converter(parser);
-   //Class klass = converter.get_class();
-
-   //std::cout << klass;
+   std::cout << klass;
 
    return 0;
 }
