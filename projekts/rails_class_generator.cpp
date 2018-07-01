@@ -71,7 +71,7 @@ public:
 
    static NamedArg make_from_string(std::string string)
    {
-      std::vector<std::string> tokens = split(string);
+      std::vector<std::string> tokens = split(string, ':');
       if (tokens.empty()) throw std::runtime_error("tokens is empty");
 
       std::string arg_name = tokens[0];
@@ -89,6 +89,8 @@ private:
    std::vector<NamedArg> named_args;
 
 public:
+   std::string get_name() { return name; }
+
    Method(std::string name, std::vector<NamedArg> named_args)
       : name(name)
       , named_args(named_args)
@@ -106,6 +108,20 @@ public:
       tab_count -= 3;
 
       return out;
+   }
+
+   static Method make_from_args(std::vector<std::string> method_string_args)
+   {
+      if (method_string_args.empty()) throw std::runtime_error("method_string_args is empty and required for methods");
+
+      std::string name = method_string_args[0];
+      std::vector<std::string> named_arg_args(method_string_args.begin()+1, method_string_args.end());
+
+      std::vector<NamedArg> named_args = {};
+
+      for (auto &named_arg_arg : named_arg_args) named_args.push_back(NamedArg::make_from_string(named_arg_arg));
+
+      return Method(method_string_args[0], named_args);
    }
 };
 
@@ -145,8 +161,8 @@ public:
       out << std::string(tab_count, ' ') << "- camel_case_name: " << klass.camel_case_name << std::endl;
       out << std::string(tab_count, ' ') << "- interface_name: " << klass.interface_name << std::endl;
       out << std::string(tab_count, ' ') << "- folder_name: " << klass.folder_name << std::endl;
-      out << std::string(tab_count, ' ') << "- attr_readers_and_named_args: " << "stream not implemented" << std::endl;
-      out << std::string(tab_count, ' ') << "- methods: " << "stream not implemented" << std::endl;
+      out << std::string(tab_count, ' ') << "- attr_readers_and_named_args: " << "steam not implemented" << std::endl;
+      for (auto &method : klass.methods) { out << method; }
 
       tab_count -= 3;
 
@@ -303,12 +319,17 @@ public:
 
    Class get_class()
    {
+      std::vector<Method> methods;
+      std::vector<std::vector<std::string>> method_args = command_line_argument_parser.get_methods_args();
+      for (auto &method_arg : method_args) { methods.push_back(Method::make_from_args(method_arg)); }
+
       return Class(
          command_line_argument_parser.get_camel_case_name_arg(),
          command_line_argument_parser.get_interface_name_arg(),
-         command_line_argument_parser.get_folder_name_arg()
-         //command_line_argument_parser.get_attr_readers_and_named_args(),
-         //command_line_argument_parser.get_methods()
+         command_line_argument_parser.get_folder_name_arg(),
+         {},
+         //NamedArg::make_from_string(command_line_argument_parser.get_attr_readers_and_named_args()),
+         methods
       );
    }
 };
