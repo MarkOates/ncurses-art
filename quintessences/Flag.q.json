@@ -1,0 +1,49 @@
+{
+  "class": "Flag",
+  "parent_classes": [],
+  "namespaces": [],
+  "properties" : [
+    {
+      "name": "flag",
+      "type": "std::string",
+      "constructor_arg" : true,
+      "init_with": "\"\"",
+      "getter" : true
+    },
+    {
+      "name": "arguments",
+      "type": "std::vector<std::string>",
+      "constructor_arg" : true,
+      "init_with": "{}",
+      "getter" : true
+    },
+    {
+      "name": "description",
+      "type": "std::string",
+      "constructor_arg" : true,
+      "init_with": "\"[description not provided]\"",
+      "getter" : true
+    }
+  ],
+  "dependencies" : [
+    {
+      "symbol" : "std::string",
+      "headers" : [ "string" ],
+      "include_directories" : [ "foodir" ],
+      "linked_libraries" : [ "foolib" ]
+    },
+    {
+      "symbol" : "std::vector<std::string>",
+      "headers" : [ "string" , "vector" ],
+      "include_directories" : [ "foodir" ],
+      "linked_libraries" : [ "foolib" ]
+    },
+    {
+      "symbol" : "DiceRoller",
+      "headers" : [ "Blast/DiceRoller.hpp" ],
+      "include_directories" : [ "~/Repos/blast" ],
+      "linked_libraries" : [ "foolink" ]
+    }
+  ]
+}
+
