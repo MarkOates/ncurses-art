@@ -123,6 +123,11 @@ public:
       , named_args(named_args)
    {}
 
+   std::vector<NamedArg> get_named_args()
+   {
+      return named_args;
+   }
+
    friend std::ostream & operator<< (std::ostream &out, Method const &method)
    {
       out << std::string(tab_count, ' ') << "- METHOD definition (" << method.name << ")" << std::endl;
@@ -307,7 +312,15 @@ private:
          for (auto &method : methods)
          {
             std::stringstream method_result;
-            method_result << "  def " << method.get_name() << "(...)" << std::endl;
+
+            std::stringstream args_result;
+            std::vector<NamedArg> named_args = method.get_named_args();
+            std::vector<std::string> named_args_as_symbols;
+
+            for (auto &named_arg : named_args) { named_args_as_symbols.push_back(named_arg.get_named_arg() + std::string(":")); }
+            args_result << join(named_args_as_symbols, ", ");
+
+            method_result << "  def " << method.get_name() << "(" << args_result.str() << ")" << std::endl;
             method_result << "  end" << std::endl;
 
             result.push_back(method_result.str());
