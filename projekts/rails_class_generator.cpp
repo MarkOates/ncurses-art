@@ -21,6 +21,15 @@ void ___replace(std::string& str, std::string from, std::string to)
 #include <vector>
 #include <iterator>
 
+// The generic approach
+template<typename T>
+std::string pad(std::basic_string<T> string, typename std::basic_string<T>::size_type n, T c)
+{
+   std::string s = string;
+   if (n > s.length()) s.append(n - s.length(), c);
+   return s;
+}
+
 template<typename Out>
 void split(const std::string &s, char delim, Out result) {
    std::stringstream ss(s);
@@ -454,12 +463,23 @@ private:
    std::vector<std::string> command_line_args;
    Blast::CommandLineFlaggedArgumentsParser deducer;
 
-   std::string const CLASS_NAME_FLAG = "-c";
-   std::string const INTERFACE_FLAG = "-i";
-   std::string const FOLDER_FLAG = "-f";
-   std::string const MODULE_NAME_FLAG = "-n";
-   std::string const ATTR_READERS_AND_NAMED_ARGS_FLAG = "-a";
-   std::string const METHOD_FLAG = "-m";
+   std::pair<std::string, std::string> const CLASS_NAME_FLAG = { "-c", "class name" };
+   std::pair<std::string, std::string> const INTERFACE_FLAG = { "-i", "interface (or parent class)" };
+   std::pair<std::string, std::string> const FOLDER_FLAG = { "-f", "the folder in which the class is located" };
+   std::pair<std::string, std::string> const MODULE_NAME_FLAG = { "-n", "module name that encapsulates the class" };
+   std::pair<std::string, std::string> const ATTR_READERS_AND_NAMED_ARGS_FLAG = { "-a", "initializer args (also attr_readers)" };
+   std::pair<std::string, std::string> const METHOD_FLAG = { "-m", "method.  format: [class_name named_arg:'optional_default_value' named_arg2]" };
+   std::pair<std::string, std::string> const HELP_FLAG = { "-?", "help.  You're here." };
+
+   const std::vector<std::pair<std::string, std::string>> flags = {
+      CLASS_NAME_FLAG,
+      INTERFACE_FLAG,
+      FOLDER_FLAG,
+      MODULE_NAME_FLAG,
+      ATTR_READERS_AND_NAMED_ARGS_FLAG,
+      METHOD_FLAG,
+      HELP_FLAG
+   };
 
 public:
    CommandLineArgumentParser(std::vector<std::string> command_line_args)
@@ -467,42 +487,69 @@ public:
       , deducer(command_line_args)
    {}
 
+   bool is_requesting_help()
+   {
+      return deducer.has_flag("-?");
+   }
+
+   std::string get_help()
+   {
+      std::stringstream result;
+
+      result << "" << std::endl;
+      result << "RAILS CLASS GENERATOR" << std::endl;
+      result << "" << std::endl;
+      result << "Description:" << std::endl;
+      result << "Generates a Ruby class file with some pattern symatics." << std::endl;
+      result << "" << std::endl;
+      result << "Options:" << std::endl;
+      for (auto &flag : flags)
+      {
+         std::string flag_flag = flag.first;
+         result << "   " << pad(flag_flag, 6, ' ') << flag.second << std::endl;
+      }
+      result << "" << std::endl;
+      result << "" << std::endl;
+
+      return result.str();
+   }
+
    std::string get_camel_case_name_arg()
    {
-      std::vector<std::vector<std::string>> args = deducer.get_flagged_args(CLASS_NAME_FLAG);
+      std::vector<std::vector<std::string>> args = deducer.get_flagged_args(CLASS_NAME_FLAG.first);
       if (args.empty()) throw std::runtime_error("CommandLineArgumentParser required class name (-c) flag is missing");
       return args[0][0];
    }
 
    std::string get_interface_name_arg()
    {
-      std::vector<std::vector<std::string>> args = deducer.get_flagged_args(INTERFACE_FLAG);
+      std::vector<std::vector<std::string>> args = deducer.get_flagged_args(INTERFACE_FLAG.first);
       if (args.empty()) return "";
       return args[0][0];
    }
 
    std::string get_folder_name_arg()
    {
-      std::vector<std::vector<std::string>> args = deducer.get_flagged_args(FOLDER_FLAG);
+      std::vector<std::vector<std::string>> args = deducer.get_flagged_args(FOLDER_FLAG.first);
       if (args.empty()) return "";
       return args[0][0];
    }
 
    std::string get_module_name_arg()
    {
-      std::vector<std::vector<std::string>> args = deducer.get_flagged_args(MODULE_NAME_FLAG);
+      std::vector<std::vector<std::string>> args = deducer.get_flagged_args(MODULE_NAME_FLAG.first);
       if (args.empty()) return "";
       return args[0][0];
    }
 
    std::vector<std::vector<std::string>> get_attr_readers_and_named_args_arg()
    {
-      return deducer.get_flagged_args(ATTR_READERS_AND_NAMED_ARGS_FLAG);
+      return deducer.get_flagged_args(ATTR_READERS_AND_NAMED_ARGS_FLAG.first);
    }
 
    std::vector<std::vector<std::string>> get_methods_args()
    {
-      return deducer.get_flagged_args(METHOD_FLAG);
+      return deducer.get_flagged_args(METHOD_FLAG.first);
    }
 };
 
@@ -585,9 +632,18 @@ int main(int argc, char** argv)
       "-a", "named_arg_1", "named_arg_2:'default_value'",
       "-m", "method_name", "method_named_arg:'another_default'",
       "-m", "another_method_name", "another_method_named_arg:'another_default'",
+      "-?", "another_method_name", "another_method_named_arg:'another_default'",
    };
 
    CommandLineArgumentParser parser(parser_args);
+
+   if (parser.is_requesting_help())
+   {
+      std::cout << parser.get_help();
+      return 0;
+   }
+
+
    CommandLineArguemntToClassConverter converter(parser);
    Class klass = converter.get_class();
 
@@ -599,5 +655,3 @@ int main(int argc, char** argv)
 
    return 0;
 }
-
-

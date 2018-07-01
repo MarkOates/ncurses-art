@@ -18,7 +18,7 @@ namespace Blast
       CommandLineFlaggedArgumentsParser(std::vector<std::string> command_line_args);
       ~CommandLineFlaggedArgumentsParser();
 
-      bool is_flag_present(std::string flag);
+      bool has_flag(std::string flag);
       std::vector<std::vector<std::string>> get_flagged_args(std::string flag);
 
    private:
@@ -50,12 +50,12 @@ CommandLineFlaggedArgumentsParser::~CommandLineFlaggedArgumentsParser()
 {}
 
 
-bool CommandLineFlaggedArgumentsParser::is_flag_present(std::string flag)
+bool CommandLineFlaggedArgumentsParser::has_flag(std::string flag)
 {
    if (!is_flag(flag))
    {
       std::stringstream error_message;
-      error_message << "[CommandLineFlaggedArgumentsParser::is_flag_present] error: \"" << flag << "\" is not a valid formatted flag; It must start with '-' character.";
+      error_message << "[CommandLineFlaggedArgumentsParser::has_flag] error: \"" << flag << "\" is not a valid formatted flag; It must start with '-' character.";
       throw std::runtime_error(error_message.str());
    }
 
