@@ -392,6 +392,7 @@ private:
    }
 };
 
+
 class ClassTestContentGenerator
 {
 private:
@@ -486,6 +487,11 @@ public:
       : command_line_args(command_line_args)
       , deducer(command_line_args)
    {}
+
+   bool without_args()
+   {
+      return command_line_args.size() <= 1;
+   }
 
    bool is_requesting_help()
    {
@@ -625,21 +631,9 @@ int main(int argc, char** argv)
 {
    for (int i=0; i<argc; i++) args.push_back(argv[i]);
 
-   // rg -c ClassName -i InterfaceName -f services -n Hamster -a named_arg_1 named_arg_2 -m method_name(method_named_arg)
-
-   std::vector<std::string> parser_args = {
-      "-c", "ClassName",
-      "-i", "InterfaceName",
-      "-f", "folder_name",
-      "-n", "ModuleName",
-      "-a", "named_arg_1", "named_arg_2:'default_value'",
-      "-m", "method_name", "method_named_arg:'another_default'",
-      "-m", "another_method_name", "another_method_named_arg:'another_default'",
-   };
-
    CommandLineArgumentParser parser(args);
 
-   if (parser.is_requesting_help())
+   if (parser.without_args() || parser.is_requesting_help())
    {
       std::cout << parser.get_help();
       return 0;
