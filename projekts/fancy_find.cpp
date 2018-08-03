@@ -197,6 +197,10 @@ public:
       : buffer("")
    {}
 
+   void set_buffer_text(std::string text)
+   {
+      buffer = text;
+   }
    std::string get_buffer_text()
    {
       return buffer;
@@ -286,9 +290,21 @@ bool Projekt::process_event(std::string e)
       create_text("input_buffer", 2, 5).set_styles(COLOR_PAIR(20));
       create_text("body_text", 80, 3).set_styles(COLOR_PAIR(2));
 
-      emit_event(COMMAND_REBUILD_MENU);
-      emit_event(COMMAND_SWITCH_TO_INPUT_MODE);
-      emit_event(MOVE_CURSOR_DOWN);
+      if (args.size() <= 1) // no args were provided
+      {
+         emit_event(COMMAND_REBUILD_MENU);
+         emit_event(COMMAND_SWITCH_TO_INPUT_MODE);
+         emit_event(MOVE_CURSOR_DOWN);
+      }
+      else // args were passed on initialization
+      {
+         std::string initial_args_text = args[1];
+         input_buffer.set_buffer_text(initial_args_text);
+         emit_event(INPUT_BUFFER_CHANGED);
+         emit_event(COMMAND_REBUILD_MENU);
+         emit_event(COMMAND_SWITCH_TO_NORMAL_MODE);
+         emit_event(MOVE_CURSOR_DOWN);
+      }
    }
    else if (e == YANK_SELECTED_TEXT)
    {
