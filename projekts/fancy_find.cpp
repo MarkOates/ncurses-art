@@ -274,11 +274,11 @@ bool Projekt::process_event(std::string e)
    if (e == EVENT_PROGRAM_INITIALIZED)
    {
       init_color(20, (int)(255.0/255.0*1000), (int)(175.0/255.0*1000), 0);
-      //init_color(21, (int)(175.0/255.0*1000), 0, (int)(255.0/255.0*1000));
+      init_color(21, (int)(175.0/255.0*1000), 0, (int)(255.0/255.0*1000));
       init_color(22, 0, (int)(96.0/255.0*1000), (int)(128.0/255.0*1000));
-      //init_color(23, (int)(175.0/255.0*1000), 0, (int)(96.0/255.0*1000));
+      init_color(23, (int)(175.0/255.0*1000), 0, (int)(96.0/255.0*1000));
       init_color(24, 0, 0, 0);
-      init_pair(22, COLOR_BLACK, 22);
+      init_pair(22, COLOR_BLACK, 20);
       //init_pair(2, COLOR_BLACK, 20);
       //init_pair(3, COLOR_BLACK, 21);
       //init_pair(4, 24, 22);
