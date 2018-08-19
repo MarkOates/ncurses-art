@@ -40,11 +40,6 @@ std::vector<ElementBase *> &Scene::get_elements()
    return elements;
 }
 
-WINDOW *Scene::get_window()
-{
-   return app_controller->get_window();
-}
-
 void Scene::draw()
 {
    erase();

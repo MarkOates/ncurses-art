@@ -1,9 +1,8 @@
 #include <ncurses_art/Element/WcharText.hpp>
 
 
-WcharText::WcharText(WINDOW *window, std::wstring text, float x, float y, float align_x)
+WcharText::WcharText(std::wstring text, float x, float y, float align_x)
    : ElementBase("WcharText")
-   , window(window)
    , text(text)
    , x(x)
    , y(y)

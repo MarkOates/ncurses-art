@@ -166,10 +166,10 @@ Text &create_text(std::string name="", int x=0, int y=0, float align_x=0)
    return (*text);
 }
 
-WcharText &create_wchar_text(WINDOW *window, std::string name="", int x=0, int y=0, float align_x=0)
+WcharText &create_wchar_text(std::string name="", int x=0, int y=0, float align_x=0)
 {
    if (!current_project) throw std::runtime_error("Cannot create a text, current_project is not set");
-   WcharText *text = new WcharText(window, L"", x, y, align_x);
+   WcharText *text = new WcharText(L"", x, y, align_x);
    current_project->get_elements().push_back(text);
    last_element().set_name(name);
    return (*text);

@@ -13,7 +13,7 @@ void initialize()
    init_color(21, (int)(175.0/255.0*1000), 0, (int)(255.0/255.0*1000));
    init_pair(3, COLOR_BLACK, 21);
 
-   create_wchar_text(current_project->get_window(), WCHAR_TEXT, 10, 21);
+   create_wchar_text(WCHAR_TEXT, 10, 21);
    create_text(TEXT, 10, 20);
    create_frame(FRAME, 20, 30, 80, 7).set_styles(COLOR_PAIR(3));
 
@@ -34,7 +34,7 @@ void initialize()
       }
       row += 1;
       c += increment;
-      create_wchar_text(current_project->get_window(), name.str(), 10, row);
+      create_wchar_text(name.str(), 10, row);
       find_wchar_text(name.str()).set_text(wstr);
       //find_wchar_text(name.str()).set_text(L"Hello wchar world!\nYay for you");
    }

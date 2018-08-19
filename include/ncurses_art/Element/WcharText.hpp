@@ -7,13 +7,12 @@
 class WcharText : public ElementBase
 {
 private:
-   WINDOW *window;
    std::wstring text;
    float x, y, align_x;
    int styles;
 
 public:
-   WcharText(WINDOW *window, std::wstring text, float x, float y, float align_x=0.0);
+   WcharText(std::wstring text, float x, float y, float align_x=0.0);
    ~WcharText();
 
    bool set_text(std::wstring text);

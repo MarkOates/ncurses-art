@@ -23,7 +23,6 @@ public:
    virtual bool process_event(std::string event);
 
    std::vector<ElementBase *> &get_elements();
-   WINDOW *get_window();
 
    void draw() override;
 };

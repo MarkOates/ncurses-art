@@ -1,11 +1,11 @@
 #include <ncurses_art/Screen.h>
 
+#include <ncurses.h>
 #include <locale.h>
 #include <wchar.h>
 
 Screen::Screen()
    : initialized(false)
-   , window(window)
 {
 }
 
@@ -22,7 +22,7 @@ bool Screen::initialize()
    if (initialized) return true;
 
    setlocale(LC_ALL, "");
-   window = initscr();
+   initscr();
    cbreak();
    start_color();
 
