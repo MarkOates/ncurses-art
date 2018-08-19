@@ -3,6 +3,7 @@
 #include <ncurses_art/Element/ElementBase.h>
 #include <string>
 #include <vector>
+#include <ncurses.h>
 
 class AppController;
 
@@ -22,6 +23,7 @@ public:
    virtual bool process_event(std::string event);
 
    std::vector<ElementBase *> &get_elements();
+   WINDOW *get_window();
 
    void draw() override;
 };

@@ -39,6 +39,15 @@ std::vector<Text *> texts()
    return results;
 }
 
+std::vector<WcharText *> wchar_texts()
+{
+   if (!current_project) throw std::runtime_error("Cannot retrieve wchar_texts on a nullptr current_project");
+   std::vector<WcharText *> results;
+   for (ElementBase *element : current_project->get_elements())
+      if (element->is_type("WcharText")) results.push_back(static_cast<WcharText *>(element));
+   return results;
+}
+
 std::vector<TextInput *> text_inputs()
 {
    if (!current_project) throw std::runtime_error("Cannot retrieve text_inputs on a nullptr current_project");
@@ -97,6 +106,16 @@ Text &find_text(std::string name)
    throw std::runtime_error(error_message.str());
 }
 
+WcharText &find_wchar_text(std::string name)
+{
+   std::vector<WcharText *> results;
+   for (WcharText *text : wchar_texts()) if (text->is_name(name)) return *text;
+
+   std::stringstream error_message;
+   error_message << "Cannot find wchar_text with the name \"" << name << "\"";
+   throw std::runtime_error(error_message.str());
+}
+
 TextInput &find_text_input(std::string name)
 {
    std::vector<TextInput *> results;
@@ -142,6 +161,15 @@ Text &create_text(std::string name="", int x=0, int y=0, float align_x=0)
 {
    if (!current_project) throw std::runtime_error("Cannot create a text, current_project is not set");
    Text *text = new Text("", x, y, align_x);
+   current_project->get_elements().push_back(text);
+   last_element().set_name(name);
+   return (*text);
+}
+
+WcharText &create_wchar_text(WINDOW *window, std::string name="", int x=0, int y=0, float align_x=0)
+{
+   if (!current_project) throw std::runtime_error("Cannot create a text, current_project is not set");
+   WcharText *text = new WcharText(window, L"", x, y, align_x);
    current_project->get_elements().push_back(text);
    last_element().set_name(name);
    return (*text);

@@ -101,9 +101,9 @@ void WcharText::draw()
    int yy = 0;
    for (auto &line : ___split_wstring(text, L"\n"))
    {
-      ___replace_tabs(line);
+      //___replace_tabs(line);
       int max_characters = (int)(screen_width - x_pos);
-      mvwaddnstr(window, (int)y + yy++, (int)x_pos, (const char *)line.c_str(), max_characters);
+      mvaddnwstr((int)y + yy++, (int)x_pos, line.c_str(), max_characters);
    }
    attroff(styles);
 }

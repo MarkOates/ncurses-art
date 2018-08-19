@@ -20,6 +20,7 @@ public:
    AppController();
    ~AppController();
 
+   WINDOW *get_window();
    void initialize();
    void set_scene(Scene *scene);
    void emit_event(std::string event);

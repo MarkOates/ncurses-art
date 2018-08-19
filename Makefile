@@ -6,6 +6,8 @@ LIBS_ROOT=/Users/markoates/Repos
 GOOGLE_TEST_DIR=$(LIBS_ROOT)/googletest
 GOOGLE_TEST_LIB_DIR=$(GOOGLE_TEST_DIR)/build/googlemock/gtest
 GOOGLE_TEST_INCLUDE_DIR=$(GOOGLE_TEST_DIR)/googletest/include
+NCURSES_INCLUDE_DIR=/usr/local/opt/ncurses/include
+NCURSES_LIB_DIR=/usr/local/opt/ncurses/lib
 
 
 # this is the directory of the project (it's auto_generated)
@@ -36,14 +38,14 @@ projekts: $(PROJEKT_EXECUTABLES)
 
 bin/%: projekts/%.cpp $(OBJECTS)
 	@printf "compiling program \e[1m\e[36m$<\033[0m..."
-	@g++ -std=gnu++11 -Wall -Wuninitialized -Weffc++ $(OBJECTS) $< -o $@ -I./include -l$(NCURSES_LIB)
+	@g++ -std=gnu++11 -Wall -Wuninitialized -Weffc++ $(OBJECTS) $< -o $@ -I./include -I$(NCURSES_INCLUDE_DIR) -L$(NCURSES_LIB_DIR) -l$(NCURSES_LIB) -D_XOPEN_SOURCE_EXTENDED
 	@echo "done. Executable at \033[1m\033[32m$@\033[0m"
 
 
 
 bin/$(PROJECT_NAME_SNAKE_CASE): programs/$(PROJECT_NAME_SNAKE_CASE).cpp $(OBJECTS)
 	@printf "compiling program \e[1m\e[36m$<\033[0m..."
-	@g++ -std=gnu++11 -Wall -Wuninitialized -Weffc++ $(OBJECTS) $< -o $@ -I./include -l$(NCURSES_LIB)
+	g++ -std=gnu++11 -Wall -Wuninitialized -Weffc++ $(OBJECTS) $< -o $@ -I./include -I$(NCURSES_INCLUDE_DIR) -L$(NCURSES_LIB_DIR) -l$(NCURSES_LIB) -D_XOPEN_SOURCE_EXTENDED
 	@echo "done. Executable at \033[1m\033[32m$@\033[0m"
 
 
@@ -60,7 +62,7 @@ run_tests: tests
 obj/%.o: src/%.cpp
 	@mkdir -p $(@D)
 	@printf "compiling object for \e[1m\e[34m$<\033[0m...\n"
-	@g++ -c -std=gnu++11 -Wall -Wuninitialized -Weffc++ $< -o $@ -I./include
+	@g++ -c -std=gnu++11 -Wall -Wuninitialized -Weffc++ $< -o $@ -I./include -I$(NCURSES_INCLUDE_DIR) -L$(NCURSES_LIB_DIR) -l$(NCURSES_LIB) -D_XOPEN_SOURCE_EXTENDED
 	@echo "done. object at \033[1m\033[32m$@\033[0m"
 
 

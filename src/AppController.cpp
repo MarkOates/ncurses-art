@@ -39,6 +39,10 @@ void AppController::initialize()
    emit_event(EVENT_PROGRAM_INITIALIZED);
 }
 
+WINDOW *AppController::get_window()
+{
+}
+
 void AppController::set_scene(Scene *scene)
 {
    this->scene = scene;
