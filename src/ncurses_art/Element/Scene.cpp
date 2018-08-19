@@ -1,5 +1,5 @@
-#include <ncurses_art/Element/Scene.h>
-#include <ncurses_art/AppController.h>
+#include <ncurses_art/Element/Scene.hpp>
+#include <ncurses_art/AppController.hpp>
 
 #include <ncurses.h>
 

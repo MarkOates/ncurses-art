@@ -1,4 +1,4 @@
-#include <ncurses_art/Element/Text.h>
+#include <ncurses_art/Element/Text.hpp>
 
 #include <ncurses.h>
 

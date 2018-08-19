@@ -1,4 +1,4 @@
-#include <ncurses_art/Screen.h>
+#include <ncurses_art/Screen.hpp>
 
 #include <ncurses.h>
 #include <locale.h>

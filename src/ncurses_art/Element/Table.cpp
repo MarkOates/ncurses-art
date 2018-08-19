@@ -1,7 +1,7 @@
-#include <ncurses_art/Element/Table.h>
+#include <ncurses_art/Element/Table.hpp>
 
-#include <ncurses_art/Element/Rectangle.h>
-#include <ncurses_art/Element/Text.h>
+#include <ncurses_art/Element/Rectangle.hpp>
+#include <ncurses_art/Element/Text.hpp>
 #include <curses.h>
 #include <sstream>
 

@@ -1,7 +1,7 @@
 #pragma once
 
-#include <ncurses_art/EventQueue.h>
-#include <ncurses_art/Screen.h>
+#include <ncurses_art/EventQueue.hpp>
+#include <ncurses_art/Screen.hpp>
 
 class Scene;
 

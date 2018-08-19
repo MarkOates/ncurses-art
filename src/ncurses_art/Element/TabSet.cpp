@@ -1,4 +1,4 @@
-#include <ncurses_art/Element/TabSet.h>
+#include <ncurses_art/Element/TabSet.hpp>
 
 #include <ncurses.h>
 

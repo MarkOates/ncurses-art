@@ -1,4 +1,4 @@
-#include <ncurses_art/Element/Frame.h>
+#include <ncurses_art/Element/Frame.hpp>
 
 #include <ncurses.h>
 

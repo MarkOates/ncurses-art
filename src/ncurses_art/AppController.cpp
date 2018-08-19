@@ -1,9 +1,9 @@
-#include <ncurses_art/AppController.h>
+#include <ncurses_art/AppController.hpp>
 
-#include <ncurses_art/Element/Scene.h>
-#include <ncurses_art/Element/Text.h>
-#include <ncurses_art/EventTypes.h>
-#include <ncurses_art/Screen.h>
+#include <ncurses_art/Element/Scene.hpp>
+#include <ncurses_art/Element/Text.hpp>
+#include <ncurses_art/EventTypes.hpp>
+#include <ncurses_art/Screen.hpp>
 #include <ncurses.h>
 #include <stdexcept>
 #include <sstream>

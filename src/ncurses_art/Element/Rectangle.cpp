@@ -1,4 +1,4 @@
-#include <ncurses_art/Element/Rectangle.h>
+#include <ncurses_art/Element/Rectangle.hpp>
 
 #include <ncurses.h>
 

@@ -1,7 +1,7 @@
-#include <ncurses_art/Element/Menu.h>
+#include <ncurses_art/Element/Menu.hpp>
 
-#include <ncurses_art/Element/Rectangle.h>
-#include <ncurses_art/Element/Text.h>
+#include <ncurses_art/Element/Rectangle.hpp>
+#include <ncurses_art/Element/Text.hpp>
 #include <curses.h>
 
 Menu::Menu(float x, float y, std::vector<std::string> options)

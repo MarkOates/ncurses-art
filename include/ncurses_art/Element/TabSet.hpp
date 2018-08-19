@@ -1,6 +1,6 @@
 #pragma once
 
-#include <ncurses_art/Element/ElementBase.h>
+#include <ncurses_art/Element/ElementBase.hpp>
 #include <string>
 #include <vector>
 

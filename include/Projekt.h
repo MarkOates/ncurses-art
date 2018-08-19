@@ -1,17 +1,17 @@
-#include <ncurses_art/AppController.h>
+#include <ncurses_art/AppController.hpp>
 
-#include <ncurses_art/Element/ElementBase.h>
-#include <ncurses_art/Element/Frame.h>
-#include <ncurses_art/Element/HeaderBar.h>
-#include <ncurses_art/Element/Menu.h>
-#include <ncurses_art/Element/Rectangle.h>
-#include <ncurses_art/Element/Scene.h>
-#include <ncurses_art/Element/Table.h>
-#include <ncurses_art/Element/TabSet.h>
-#include <ncurses_art/Element/Text.h>
-#include <ncurses_art/Element/TextInput.h>
+#include <ncurses_art/Element/ElementBase.hpp>
+#include <ncurses_art/Element/Frame.hpp>
+#include <ncurses_art/Element/HeaderBar.hpp>
+#include <ncurses_art/Element/Menu.hpp>
+#include <ncurses_art/Element/Rectangle.hpp>
+#include <ncurses_art/Element/Scene.hpp>
+#include <ncurses_art/Element/Table.hpp>
+#include <ncurses_art/Element/TabSet.hpp>
+#include <ncurses_art/Element/Text.hpp>
+#include <ncurses_art/Element/TextInput.hpp>
 #include <ncurses_art/Element/WcharText.hpp>
-#include <ncurses_art/EventTypes.h>
+#include <ncurses_art/EventTypes.hpp>
 
 #define TMP_OUTFILE "/tmp/out.txt.tmp"
 

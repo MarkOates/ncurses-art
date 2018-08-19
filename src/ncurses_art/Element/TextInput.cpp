@@ -1,7 +1,7 @@
-#include <ncurses_art/Element/TextInput.h>
+#include <ncurses_art/Element/TextInput.hpp>
 
-#include <ncurses_art/Element/Frame.h>
-#include <ncurses_art/Element/Text.h>
+#include <ncurses_art/Element/Frame.hpp>
+#include <ncurses_art/Element/Text.hpp>
 
 TextInput::TextInput(float x, float y, std::string label, float width)
    : ElementBase("TextInput")

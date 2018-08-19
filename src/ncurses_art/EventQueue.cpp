@@ -1,4 +1,4 @@
-#include <ncurses_art/EventQueue.h>
+#include <ncurses_art/EventQueue.hpp>
 
 EventQueue::EventQueue()
 {
