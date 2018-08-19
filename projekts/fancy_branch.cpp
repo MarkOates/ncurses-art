@@ -25,8 +25,6 @@ std::string rtrim(std::string &s) {
 // trim from both ends
 std::string trim(std::string s)
 {
-   //return ltrim(rtrim(s));
-   //return ltrim(rtrim(s));
    std::string s1 = s;
    std::string s2 = rtrim(s1);
    std::string s3 = ltrim(s2);
@@ -41,11 +39,9 @@ bool Projekt::process_input(char ch)
    {
    case 'j': emit_event(MOVE_CURSOR_DOWN); break;
    case 'k': emit_event(MOVE_CURSOR_UP); break;
-   // case 10: emit_event(COMMAND_FLIP_STAGING); break; // ENTER
    case 'q': emit_event(EVENT_ABORT_PROGRAM); break;
    case 'y': emit_event(YANK_SELECTED_TEXT); break;
    case 'c': emit_event(GIT_CHECKOUT_BRANCH_COMMAND); break;
-   // case 'p': emit_event(COPY_GIT_ADD_PATCH_COMMAND); break;
    default: return false; break;
    }
    return true;
@@ -55,7 +51,6 @@ bool Projekt::process_event(std::string e)
 {
    if (e == EVENT_PROGRAM_INITIALIZED)
    {
-      //init_color(20, (int)(255.0/255.0*1000), (int)(175.0/255.0*1000), 0);
       init_color(21, (int)(175.0/255.0*1000), 0, (int)(255.0/255.0*1000));
       init_color(22, (int)(96.0/255.0*1000), 0, (int)(128.0/255.0*1000));
       init_color(23, (int)(175.0/255.0*1000), 0, (int)(96.0/255.0*1000));
@@ -75,7 +70,6 @@ bool Projekt::process_event(std::string e)
    if (e == YANK_SELECTED_TEXT)
    {
       Menu &menu = find_menu("main_menu");
-      //GitStatusLineDeducer git_status_line_deducer(menu);
       std::string trimmed = trim(menu.current_selection());
       std::stringstream command;
       command << "printf \"" << trimmed << "\" | pbcopy";
@@ -84,41 +78,22 @@ bool Projekt::process_event(std::string e)
    if (e == GIT_CHECKOUT_BRANCH_COMMAND)
    {
       Menu &menu = find_menu("main_menu");
-      //GitStatusLineDeducer git_status_line_deducer(menu);
       std::string trimmed = trim(menu.current_selection());
       std::stringstream command;
       command << "printf \"git checkout " << trimmed << "\" | pbcopy";
       system(command.str().c_str());
    }
-   //if (e == COPY_GIT_ADD_PATCH_COMMAND)
-   //{
-      //Menu &menu = find_menu("main_menu");
-      //GitStatusLineDeducer git_status_line_deducer(menu);
-      //std::stringstream command;
-      //command << "printf \"git add --patch " << git_status_line_deducer.parse_filename() << "\" | pbcopy";
-      //system(command.str().c_str());
-   //}
    else if (e == MOVE_CURSOR_DOWN)
    {
       Menu &menu = find_menu("main_menu");
-      //GitStatusLineDeducer git_status_line_deducer(menu);
-      //int next_file_line = git_status_line_deducer.find_next_file_line();
-      //if (next_file_line != -1) menu.set_cursor_pos(next_file_line);
-      //else menu.move_cursor_down();
       menu.set_y(menu.get_y()-1);
       menu.move_cursor_down();
-      //emit_event(REFRESH_TEXT_DISPLAY);
    }
    else if (e == MOVE_CURSOR_UP)
    {
       Menu &menu = find_menu("main_menu");
-      //GitStatusLineDeducer git_status_line_deducer(menu);
-      //int previous_file_line = git_status_line_deducer.find_previous_file_line();
-      //if (previous_file_line != -1) menu.set_cursor_pos(previous_file_line);
-      //else menu.move_cursor_up();
       menu.set_y(menu.get_y()+1);
       menu.move_cursor_up();
-      //emit_event(REFRESH_TEXT_DISPLAY);
    }
    else if (e == COMMAND_REBUILD_MENU)
    {
