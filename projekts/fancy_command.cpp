@@ -91,6 +91,7 @@ bool Projekt::process_event(std::string e)
          "bin/rails db:migrate",
          "bin/rails db:rollback",
          "bin/rails db:drop db:create db:migrate",
+         "bin/rails generate migration ",
          "",
          "mysql -u root ",
          "",
