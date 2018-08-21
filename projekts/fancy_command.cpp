@@ -88,11 +88,13 @@ bool Projekt::process_event(std::string e)
    else if (e == BUILD_COMMAND_MENU)
    {
       std::vector<std::string> tokens = {
-         "mysql -u root ",
-         "",
          "bin/rails db:migrate",
          "bin/rails db:rollback",
          "bin/rails db:drop db:create db:migrate",
+         "",
+         "mysql -u root ",
+         "",
+         "git commit --allow-empty -m \"Kick shipit\"",
       };
       Menu &menu = find_menu("main_menu");
       menu.set_options(tokens);
