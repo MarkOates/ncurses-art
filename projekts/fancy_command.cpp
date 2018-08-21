@@ -27,6 +27,17 @@ std::string trim(std::string s)
    return s3;
 }
 
+// replace characters in a string
+void ___replace(std::string& str, std::string from, std::string to)
+{
+   size_t start_pos = 0;
+   while((start_pos = str.find(from, start_pos)) != std::string::npos) {
+      str.replace(start_pos, from.length(), to);
+      start_pos += to.length();
+   }
+}
+
+
 
 Projekt::Projekt() { current_project = this; }
 bool Projekt::process_input(char ch)
@@ -56,8 +67,10 @@ bool Projekt::process_event(std::string e)
    {
       Menu &menu = find_menu("main_menu");
       std::string trimmed = trim(menu.current_selection());
+      std::string quite_sanitized = trimmed;
+      ___replace(quite_sanitized, "\"", "\\\"");
       std::stringstream command;
-      command << "printf \"" << trimmed << "\" | pbcopy";
+      command << "printf \"" << quite_sanitized << "\" | pbcopy";
       system(command.str().c_str());
    }
    else if (e == MOVE_CURSOR_DOWN)
