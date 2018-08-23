@@ -97,6 +97,8 @@ bool Projekt::process_event(std::string e)
          "mysql -u root ",
          "",
          "git commit --allow-empty -m \"Kick shipit\"",
+         "",
+         "git push origin -f name-of-your-branch:staging",
       };
       Menu &menu = find_menu("main_menu");
       menu.set_options(tokens);
