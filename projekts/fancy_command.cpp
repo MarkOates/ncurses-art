@@ -99,6 +99,10 @@ bool Projekt::process_event(std::string e)
          "git commit --allow-empty -m \"Kick shipit\"",
          "",
          "git push origin -f name-of-your-branch:staging",
+         "",
+         "yarn run build",
+         "yarn run lint",
+         "yarn run test",
       };
       Menu &menu = find_menu("main_menu");
       menu.set_options(tokens);
