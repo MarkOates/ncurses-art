@@ -103,6 +103,8 @@ bool Projekt::process_event(std::string e)
          "yarn run build",
          "yarn run lint",
          "yarn run test",
+         "",
+         "ps aux | grep sewing | grep node_modules | awk \"{print $2}\" | xargs kill",
       };
       Menu &menu = find_menu("main_menu");
       menu.set_options(tokens);
