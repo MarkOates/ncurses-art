@@ -69,6 +69,7 @@ bool Projekt::process_event(std::string e)
       std::string trimmed = trim(menu.current_selection());
       std::string quite_sanitized = trimmed;
       ___replace(quite_sanitized, "\"", "\\\"");
+      ___replace(quite_sanitized, "$", "\\$");
       std::stringstream command;
       command << "printf \"" << quite_sanitized << "\" | pbcopy";
       system(command.str().c_str());
