@@ -105,6 +105,8 @@ bool Projekt::process_event(std::string e)
          "yarn run test",
          "",
          "ps aux | grep sewing | grep node_modules | awk \"{print $2}\" | xargs kill",
+         "",
+         "mysql -u root -h stock-photos.railgun stock-photos_development",
       };
       Menu &menu = find_menu("main_menu");
       menu.set_options(tokens);
