@@ -108,6 +108,8 @@ bool Projekt::process_event(std::string e)
          "ps aux | grep sewing | grep node_modules | awk \"{print $2}\" | xargs kill",
          "",
          "mysql -u root -h stock-photos.railgun stock-photos_development",
+         "",
+         "cat /etc/nginx/includes/common_config.conf", // check values of common config
       };
       Menu &menu = find_menu("main_menu");
       menu.set_options(tokens);
