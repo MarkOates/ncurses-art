@@ -99,6 +99,7 @@ bool Projekt::process_event(std::string e)
          "",
          "git commit --allow-empty -m \"Kick shipit\"",
          "",
+         "git checkout [HASH_OR_BRANCH_NAME] -- [NAME_OF_FILE]",
          "git push origin -f name-of-your-branch:staging",
          "",
          "yarn run build",
