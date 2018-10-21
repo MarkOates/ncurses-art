@@ -4,6 +4,7 @@
 #include <ncurses.h>
 
 #define BUILD_COMMAND_MENU "command_build_menu"
+#define JUMP_TO_NEXT_SECTION "JUMP_TO_NEXT_SECTION"
 #define YANK_SELECTED_TEXT "yank_selected_text"
 
 // trim from start
@@ -39,6 +40,40 @@ void ___replace(std::string& str, std::string from, std::string to)
 
 
 
+class GitCurrentBranchExtractor
+{
+private:
+
+public:
+   GitCurrentBranchExtractor() {}
+   ~GitCurrentBranchExtractor() {}
+
+   std::string get_current_branch()
+   {
+      std::string get_current_branch_command = "git branch | grep \\* | cut -d ' ' -f2";
+
+      std::stringstream ss;
+      ss << get_current_branch_command << " > \"" << TMP_OUTFILE << "\"";
+      system(ss.str().c_str());
+      std::string txt = get_file_contents();
+      std::vector<std::string> tokens = split_string(txt, "\n");
+
+      return tokens[0];
+   }
+};
+
+
+
+bool current_selection_is_header(Menu &menu)
+{
+   std::string current_selection = menu.current_selection();
+   if (current_selection.length() <= 4) return false;
+   if (current_selection.substr(0, 4) == "----") return true;
+   return false;
+}
+
+
+
 Projekt::Projekt() { current_project = this; }
 bool Projekt::process_input(char ch)
 {
@@ -48,6 +83,7 @@ bool Projekt::process_input(char ch)
    case 'k': emit_event(MOVE_CURSOR_UP); break;
    case 'q': emit_event(EVENT_ABORT_PROGRAM); break;
    case 'y': emit_event(YANK_SELECTED_TEXT); break;
+   case '\t': emit_event(JUMP_TO_NEXT_SECTION); break;
    default: return false; break;
    }
    return true;
@@ -86,32 +122,54 @@ bool Projekt::process_event(std::string e)
       menu.set_y(menu.get_y()+1);
       menu.move_cursor_up();
    }
+   else if (e == JUMP_TO_NEXT_SECTION)
+   {
+      Menu &menu = find_menu("main_menu");
+      unsigned jump_limit = 100;
+      for (unsigned i=0; i<jump_limit; i++)
+      {
+         menu.set_y(menu.get_y()-1);
+         menu.move_cursor_down();
+         if (current_selection_is_header(menu)) break;
+      }
+   }
    else if (e == BUILD_COMMAND_MENU)
    {
+      GitCurrentBranchExtractor extractor;
+      std::string current_git_branch = extractor.get_current_branch();
+      //tokens.push_back(current_git_branch);
+
       std::vector<std::string> tokens = {
-         "bin/rails db:migrate",
-         "bin/rails db:rollback",
-         "bin/rails db:drop db:create db:migrate",
-         "bin/rails db:seed",
-         "bin/rails generate migration ",
-         "",
-         "mysql -u root ",
-         "",
-         "git commit --allow-empty -m \"Kick shipit\"",
-         "",
-         "git checkout [HASH_OR_BRANCH_NAME] -- [NAME_OF_FILE]",
-         "git push origin -f name-of-your-branch:staging",
-         "",
-         "yarn run build",
-         "yarn run lint",
-         "yarn run test",
-         "",
-         "ps aux | grep sewing | grep node_modules | awk \"{print $2}\" | xargs kill",
-         "",
-         "mysql -u root -h stock-photos.railgun stock-photos_development",
-         "",
-         "cat /etc/nginx/includes/common_config.conf", // check values of common config
+          "----- RAILS MIGRATIONS -----",
+          "bin/rails db:migrate",
+          "bin/rails db:rollback",
+          "bin/rails db:drop db:create db:migrate",
+          "bin/rails db:seed",
+          "",
+          "----- RAILS GENERATORS -----",
+          "bin/rails generate migration ",
+          "",
+          "----- SYSTEM -----",
+          "mysql -u root -h stock-photos.railgun stock-photos_development",
+          "mysql -u root ",
+          "ps aux | grep sewing | grep node_modules | awk \"{print $2}\" | "
+          "xargs kill",
+          "",
+          "----- GIT -----",
+          "git commit --allow-empty -m \"Kick shipit\"",
+          "git checkout [HASH_OR_BRANCH_NAME] -- [NAME_OF_FILE]",
+          std::string("git push origin -f ") + current_git_branch + ":staging",
+          "",
+          "----- YARN -----",
+          "yarn run build",
+          "yarn run lint",
+          "yarn run test",
+          "",
+          "----- NGINX -----",
+          "cat /etc/nginx/includes/common_config.conf", // check values of
+                                                        // common config
       };
+
       Menu &menu = find_menu("main_menu");
       menu.set_options(tokens);
       menu.set_x(COLS/2 - menu.get_width()/2);
