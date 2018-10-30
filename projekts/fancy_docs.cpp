@@ -28,6 +28,46 @@ std::string trim(std::string s)
 }
 
 
+
+class TokenBuilder
+{
+private:
+   std::string title;
+   std::string link;
+
+public:
+   const std::string DELIMITER = " - ";
+
+   TokenBuilder(std::string title, std::string link)
+      : title(title)
+      , link(link)
+   {}
+
+   std::string get_link() { return link; }
+   std::string get_title() { return title; }
+
+   std::string build_show_string() { return title + DELIMITER + link; }
+};
+
+
+class TokenExtractor
+{
+private:
+   std::string string;
+
+public:
+   TokenExtractor(std::string string)
+      : string(string)
+   {}
+
+   std::string infer_link()
+   {
+      // TODO
+   }
+};
+
+
+
 Projekt::Projekt() { current_project = this; }
 bool Projekt::process_input(char ch)
 {
@@ -77,6 +117,10 @@ bool Projekt::process_event(std::string e)
       std::vector<std::string> tokens = {
          "Interview Training - https://docs.google.com/document/d/1kcREoyed0YBP5gIJot4i6Vs-gjttFFT_V0DNtB5jXaY/edit",
          "",
+         "Stages of Unicorn Project - https://vault.shopify.com/gsd#1-the-basics-projects-and-people_projects_project-flows",
+         "Authme - https://authme.shopify.io/",
+         "Kibana - https://stock-photos-es6-kibana.shopifycloud.com/",
+         "Coaches Corner - https://session.shopify.io/a/coaching/",
       };
       Menu &menu = find_menu("main_menu");
       menu.set_options(tokens);
