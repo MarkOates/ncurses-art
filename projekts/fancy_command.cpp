@@ -144,6 +144,7 @@ bool Projekt::process_event(std::string e)
           "bin/rails db:migrate",
           "bin/rails db:rollback",
           "bin/rails db:drop db:create db:migrate",
+          "bin/rails db:drop db:create db:migrate; bin/rails db:seed",
           "bin/rails db:seed",
           "",
           "----- RAILS GENERATORS -----",

@@ -121,6 +121,12 @@ bool Projekt::process_event(std::string e)
          "Authme - https://authme.shopify.io/",
          "Kibana - https://stock-photos-es6-kibana.shopifycloud.com/",
          "Coaches Corner - https://session.shopify.io/a/coaching/",
+         "RnD Levels of Impact - https://vault.shopify.com/RnD-Titles-and-Levels-of-Impact",
+         "",
+         "Ruby Koans - http://rubykoans.com/",
+         "Desk Directory - https://shopify.officespacesoftware.com/visual-directory",
+         "League - https://app.league.com",
+         "Workday - https://wd3.myworkday.com/shopify/d/home.htmld",
       };
       Menu &menu = find_menu("main_menu");
       menu.set_options(tokens);
