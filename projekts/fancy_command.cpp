@@ -159,6 +159,7 @@ bool Projekt::process_event(std::string e)
           "----- GIT -----",
           "git commit --allow-empty -m \"Kick shipit\"",
           "git checkout [HASH_OR_BRANCH_NAME] -- [NAME_OF_FILE]",
+          "git diff-tree --no-commit-id --name-only -r [HASH_OR_BRANCH_NAME]",
           std::string("git push origin -f ") + current_git_branch + ":staging",
           "",
           "----- YARN -----",
