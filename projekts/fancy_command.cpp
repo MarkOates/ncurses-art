@@ -169,6 +169,9 @@ bool Projekt::process_event(std::string e)
           "----- NGINX -----",
           "cat /etc/nginx/includes/common_config.conf", // check values of
                                                         // common config
+          "",
+          "----- SPLUNK -----",
+          "source=\"gke-stock-photos-production\" application=\"stock-photos-production\" kube_container=\"web\" | stats count by remote_ip | sort -count",
       };
 
       Menu &menu = find_menu("main_menu");
