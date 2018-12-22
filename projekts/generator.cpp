@@ -5,6 +5,17 @@
 #include <vector>
 
 
+
+std::string const GITIGNORE_FILE_CONTENT = R"END(
+bin/*
+!bin/data/*
+.DS_Store
+obj/*
+.DS_Store
+)END";
+
+
+
 std::string makefile_template = R"END(
 LIBS_ROOT=/Users/markoates/Repos
 ALLEGRO_INCLUDE_DIR=$(LIBS_ROOT)/allegro5/build/include
@@ -217,6 +228,11 @@ int main(int argc, char **argv)
    std::ofstream outfile2(build_file_filename);
    std::string build_file_content = build_file_template;
    outfile2 << build_file_content;
+   outfile.close();
+
+   std::string gitignore_file_filename = generator.get_project_name() + "/.gitignore";
+   std::ofstream outfile3(gitignore_file_filename);
+   outfile3 << GITIGNORE_FILE_CONTENT;
    outfile.close();
 
    system((std::string("chmod +x ") + build_file_filename).c_str());
