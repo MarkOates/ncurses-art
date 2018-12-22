@@ -6,6 +6,34 @@
 
 
 
+std::string const PROGRAM_RUNNER_FILE_CONTENT = R"END(
+parent_classes: []
+properties: []
+namespaces: []
+functions:
+  - name: run
+    type: void
+    parameters: []
+    body: |
+      std::cout << "Hello World!" << std::endl;
+function_body_symbol_dependencies: [ 'std::cout', 'std::endl' ]
+dependencies:
+  - symbol: std::cout
+    headers: [ 'iostream' ]
+    include_directories: []
+    linked_libraries: []
+  - symbol: std::endl
+    headers: [ 'iostream' ]
+    include_directories: []
+    linked_libraries: []
+  - symbol: void
+    headers: []
+    include_directories: []
+    linked_libraries: []
+)END";
+
+
+
 std::string const GITIGNORE_FILE_CONTENT = R"END(
 bin/*
 !bin/data/*
@@ -14,6 +42,17 @@ obj/*
 .DS_Store
 )END";
 
+
+
+std::string main_file_content_template = R"END(
+#include <ProgramRunner.hpp>
+
+int main(int argc, char **argv)
+{
+   ProgramRunner().run();
+   return 0;
+}
+)END";
 
 
 std::string makefile_template = R"END(
@@ -149,7 +188,7 @@ fresh:
 
 
 std::string build_file_template = R"END(#!/bin/bash
-find quintessence/*.json | xargs ../blast/bin/programs/quintessence
+find quintessence/*.yml | xargs ../blast/bin/programs/quintessence_from_yaml && make
 )END";
 
 
@@ -234,6 +273,17 @@ int main(int argc, char **argv)
    std::ofstream outfile3(gitignore_file_filename);
    outfile3 << GITIGNORE_FILE_CONTENT;
    outfile.close();
+
+   std::ofstream outfile4(generator.get_project_name() + "/quintessence/ProgramRunner.q.yml");
+   std::string program_runner_quintessence_file_content = PROGRAM_RUNNER_FILE_CONTENT;
+   outfile4 << program_runner_quintessence_file_content;
+   outfile4.close();
+
+   std::ofstream outfile5(generator.get_project_name() + "/programs/main.cpp");
+   std::string main_file_content = main_file_content_template;
+   ___replace(main_file_content, "[[PROJECT_NAME]]", generator.get_project_name());
+   outfile5 << main_file_content;
+   outfile5.close();
 
    system((std::string("chmod +x ") + build_file_filename).c_str());
 
