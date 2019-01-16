@@ -127,6 +127,7 @@ bool Projekt::process_event(std::string e)
          "Desk Directory - https://shopify.officespacesoftware.com/visual-directory",
          "League - https://app.league.com",
          "Workday - https://wd3.myworkday.com/shopify/d/home.htmld",
+         "Rails Generators - https://railsguides.net/advanced-rails-model-generators/",
          "",
          "Distance to the Frontline - https://vault.shopify.com/Platform/Distance-to-the-frontline",
       };
