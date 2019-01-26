@@ -20,29 +20,18 @@ public:
 
 
 std::string const PROGRAM_RUNNER_FILE_CONTENT = R"END(
-parent_classes: []
-properties: []
-namespaces: []
 functions:
   - name: run
     type: void
-    parameters: []
     body: |
       std::cout << "Hello World!" << std::endl;
 function_body_symbol_dependencies: [ 'std::cout', 'std::endl' ]
 dependencies:
   - symbol: std::cout
     headers: [ 'iostream' ]
-    include_directories: []
-    linked_libraries: []
   - symbol: std::endl
     headers: [ 'iostream' ]
-    include_directories: []
-    linked_libraries: []
   - symbol: void
-    headers: []
-    include_directories: []
-    linked_libraries: []
 )END";
 
 
