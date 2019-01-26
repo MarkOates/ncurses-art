@@ -19,8 +19,7 @@ public:
 
 
 
-std::string const PROGRAM_RUNNER_FILE_CONTENT = R"END(
-functions:
+std::string const PROGRAM_RUNNER_FILE_CONTENT = R"END(functions:
   - name: run
     type: void
     body: |
