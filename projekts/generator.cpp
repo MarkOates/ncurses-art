@@ -26,11 +26,11 @@ std::string const PROGRAM_RUNNER_FILE_CONTENT = R"END(functions:
       std::cout << "Hello World!" << std::endl;
 function_body_symbol_dependencies: [ 'std::cout', 'std::endl' ]
 dependencies:
+  - symbol: void
   - symbol: std::cout
     headers: [ 'iostream' ]
   - symbol: std::endl
     headers: [ 'iostream' ]
-  - symbol: void
 )END";
 
 
