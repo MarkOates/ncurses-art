@@ -6,6 +6,19 @@
 
 
 
+class ConsoleOutputter
+{
+public:
+   ConsoleOutputter() {}
+   ~ConsoleOutputter() {}
+   void output_line(std::string message)
+   {
+      std::cout << message << std::endl;
+   }
+};
+
+
+
 std::string const PROGRAM_RUNNER_FILE_CONTENT = R"END(
 parent_classes: []
 properties: []
@@ -44,12 +57,13 @@ obj/*
 
 
 
+std::string PROGRAM_RUNNER_CLASS_NAME = "ProgramRunner";
 std::string main_file_content_template = R"END(
-#include <ProgramRunner.hpp>
+#include <[[PROGRAM_RUNNER_CLASS_NAME]].hpp>
 
 int main(int argc, char **argv)
 {
-   ProgramRunner().run();
+   [[PROGRAM_RUNNER_CLASS_NAME]]().run();
    return 0;
 }
 )END";
@@ -245,6 +259,7 @@ int main(int argc, char **argv)
    if (args.size() <= 1) throw std::runtime_error("You must pass a project name");
 
    Generator generator(argv[1]);
+   ConsoleOutputter console_output;
 
    system(generator.get_command_for_make_dir().c_str());
    system(generator.mkprojdir("bin").c_str());
@@ -274,7 +289,11 @@ int main(int argc, char **argv)
    outfile3 << GITIGNORE_FILE_CONTENT;
    outfile.close();
 
-   std::ofstream outfile4(generator.get_project_name() + "/quintessence/ProgramRunner.q.yml");
+   std::stringstream program_runner_path_name;
+   program_runner_path_name << generator.get_project_name();
+   program_runner_path_name << "/quintessence/" << PROGRAM_RUNNER_CLASS_NAME << ".q.yml";
+
+   std::ofstream outfile4(program_runner_path_name.str());
    std::string program_runner_quintessence_file_content = PROGRAM_RUNNER_FILE_CONTENT;
    outfile4 << program_runner_quintessence_file_content;
    outfile4.close();
@@ -282,10 +301,21 @@ int main(int argc, char **argv)
    std::ofstream outfile5(generator.get_project_name() + "/programs/main.cpp");
    std::string main_file_content = main_file_content_template;
    ___replace(main_file_content, "[[PROJECT_NAME]]", generator.get_project_name());
+   ___replace(main_file_content, "[[PROGRAM_RUNNER_CLASS_NAME]]", PROGRAM_RUNNER_CLASS_NAME);
    outfile5 << main_file_content;
    outfile5.close();
 
    system((std::string("chmod +x ") + build_file_filename).c_str());
+
+   std::stringstream finish_message;
+   finish_message << "✅ Project files under \"" << generator.get_project_name() << "/\" generated." << std::endl;
+   finish_message << "📝 Once in the \"" << generator.get_project_name() << "\" directory, use the \"./build\" "
+                  << "script to generate and build the first source files "
+                  << "(\"quintessence/" << PROGRAM_RUNNER_CLASS_NAME << ".q.yml\")." << std::endl;
+
+   console_output.output_line(finish_message.str());
+
+   std::runtime_error("You must pass a project name");
 
    return 0;
 }
