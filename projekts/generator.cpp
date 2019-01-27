@@ -190,7 +190,7 @@ fresh:
 
 
 std::string build_file_template = R"END(#!/bin/bash
-find quintessence/*.yml | xargs ../blast/bin/programs/quintessence_from_yaml && make
+find . -path "./quintessence/*.yml" | xargs ../blast/bin/programs/quintessence_from_yaml && make
 )END";
 
 
