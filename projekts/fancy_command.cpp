@@ -177,6 +177,7 @@ bool Projekt::process_event(std::string e)
           "",
           "----- SPLUNK -----",
           "source=\"gke-stock-photos-production\" application=\"stock-photos-production\" kube_container=\"web\" | stats count by remote_ip | sort -count",
+          "source=\"gke-stock-photos-production\" application=\"stock-photos-production\" kube_container=\"web\" status=429 | stats count by remote_ip, user_agent, controller, action | sort -count",
       };
 
       Menu &menu = find_menu("main_menu");
