@@ -45,6 +45,19 @@ obj/*
 
 
 
+std::string TEST_RUNNER_CLASS_NAME = "TestRunner";
+std::string const TEST_RUNNER_FILE_CONTENT = R"END(
+#include <gtest/gtest.h>
+
+int main(int argc, char **argv)
+{
+   ::testing::InitGoogleTest(&argc, argv);
+   return RUN_ALL_TESTS();
+}
+)END";
+
+
+
 std::string PROGRAM_RUNNER_CLASS_NAME = "ProgramRunner";
 std::string main_file_content_template = R"END(
 #include <[[PROGRAM_RUNNER_CLASS_NAME]].hpp>
@@ -128,7 +141,7 @@ bin/$(PROJECT_BINARY_NAME): programs/$(PROJECT_BINARY_NAME).cpp $(OBJECTS)
 
 
 
-tests: $(INDIVIDUAL_TEST_EXECUTABLES) bin/tests/test_runner
+tests: $(INDIVIDUAL_TEST_EXECUTABLES) bin/tests/[[TEST_RUNNER_CLASS_NAME]]
 
 
 
@@ -153,18 +166,18 @@ obj/tests/%.o: tests/%.cpp $(OBJECTS)
 
 
 
-bin/tests/%: obj/tests/%.o obj/tests/test_runner.o
+bin/tests/%: obj/tests/%.o obj/tests/[[TEST_RUNNER_CLASS_NAME]].o
 	@mkdir -p $(@D)
 	@printf "compiling standalone test \e[1m\e[36m$<\033[0m...\n"
-	g++ -std=gnu++11 -Wall -Wuninitialized -Weffc++ $(OBJECTS) $< obj/tests/test_runner.o -o $@ -l$(GOOGLE_TEST_LIBS) -I./include -I$(GOOGLE_TEST_INCLUDE_DIR) -L$(GOOGLE_TEST_LIB_DIR) $(ALLEGRO_LIBS_LINK_ARGS)
+	g++ -std=gnu++11 -Wall -Wuninitialized -Weffc++ $(OBJECTS) $< obj/tests/[[TEST_RUNNER_CLASS_NAME]].o -o $@ -l$(GOOGLE_TEST_LIBS) -I./include -I$(GOOGLE_TEST_INCLUDE_DIR) -L$(GOOGLE_TEST_LIB_DIR) $(ALLEGRO_LIBS_LINK_ARGS)
 	@echo "done. Executable at \033[1m\033[32m$@\033[0m"
 
 
 
-bin/tests/test_runner: $(TEST_OBJECTS) obj/tests/test_runner.o
+bin/tests/[[TEST_RUNNER_CLASS_NAME]]: $(TEST_OBJECTS) obj/tests/[[TEST_RUNNER_CLASS_NAME]].o
 	@mkdir -p $(@D)
 	@printf "compiling test_runer \e[1m\e[36m$<\033[0m...\n"
-	g++ -std=gnu++11 -Wall -Wuninitialized -Weffc++ $(OBJECTS) obj/tests/test_runner.o $< -o $@ -l$(GOOGLE_TEST_LIBS) -I./include -I$(GOOGLE_TEST_INCLUDE_DIR) -L$(GOOGLE_TEST_LIB_DIR) $(ALLEGRO_LIBS_LINK_ARGS)
+	g++ -std=gnu++11 -Wall -Wuninitialized -Weffc++ $(OBJECTS) obj/tests/[[TEST_RUNNER_CLASS_NAME]].o $< -o $@ -l$(GOOGLE_TEST_LIBS) -I./include -I$(GOOGLE_TEST_INCLUDE_DIR) -L$(GOOGLE_TEST_LIB_DIR) $(ALLEGRO_LIBS_LINK_ARGS)
 	@echo "done. Executable at \033[1m\033[32m$@\033[0m"
 
 
@@ -184,7 +197,7 @@ fresh:
 	make -j8
 	make examples -j8
 	make tests -j8
-	bin/tests/test_runner
+	bin/tests/[[TEST_RUNNER_CLASS_NAME]]
 )END";
 
 
@@ -263,6 +276,7 @@ int main(int argc, char **argv)
    std::ofstream outfile(generator.get_project_name() + "/Makefile");
    std::string makefile_content = makefile_template;
    ___replace(makefile_content, "[[PROJECT_NAME]]", generator.get_project_name());
+   ___replace(makefile_content, "[[TEST_RUNNER_CLASS_NAME]]", TEST_RUNNER_CLASS_NAME);
    outfile << makefile_content;
    outfile.close();
 
@@ -292,6 +306,10 @@ int main(int argc, char **argv)
    ___replace(main_file_content, "[[PROGRAM_RUNNER_CLASS_NAME]]", PROGRAM_RUNNER_CLASS_NAME);
    outfile5 << main_file_content;
    outfile5.close();
+
+   std::ofstream outfile6(generator.get_project_name() + "/tests/" + TEST_RUNNER_CLASS_NAME + ".cpp");
+   outfile6 << TEST_RUNNER_FILE_CONTENT;
+   outfile6.close();
 
    system((std::string("chmod +x ") + build_file_filename).c_str());
 
