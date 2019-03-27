@@ -21,16 +21,8 @@ public:
 
 std::string const PROGRAM_RUNNER_FILE_CONTENT = R"END(functions:
   - name: run
-    type: void
-    body: |
-      std::cout << "Hello World!" << std::endl;
-function_body_symbol_dependencies: [ 'std::cout', 'std::endl' ]
-dependencies:
-  - symbol: void
-  - symbol: std::cout
-    headers: [ 'iostream' ]
-  - symbol: std::endl
-    headers: [ 'iostream' ]
+    type: std::string
+    body: return "Hello World!";
 )END";
 
 
