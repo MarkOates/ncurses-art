@@ -22,7 +22,7 @@ public:
 std::string const PROGRAM_RUNNER_FILE_CONTENT = R"END(functions:
   - name: run
     type: std::string
-    body: return "Hello World!";
+    body: return "Hello Buddy!";
 )END";
 
 
@@ -60,6 +60,22 @@ int main(int argc, char **argv)
    return 0;
 }
 )END";
+
+
+
+std::string PROGRAM_RUNNER_TEST_FILE_CONTENT = R"END(
+#include <gtest/gtest.h>
+
+#include <[[PROGRAM_RUNNER_CLASS_NAME]].hpp>
+
+TEST([[PROGRAM_RUNNER_CLASS_NAME]]Test, run__returns_the_expected_response)
+{
+   [[PROGRAM_RUNNER_CLASS_NAME]] program_runner;
+   std::string expected_string = "Hello World!";
+   EXPECT_EQ(expected_string, program_runner.run());
+}
+)END";
+
 
 
 std::string makefile_template = R"END(
@@ -302,6 +318,12 @@ int main(int argc, char **argv)
    std::ofstream outfile6(generator.get_project_name() + "/tests/" + TEST_RUNNER_CLASS_NAME + ".cpp");
    outfile6 << TEST_RUNNER_FILE_CONTENT;
    outfile6.close();
+
+   std::ofstream outfile7(generator.get_project_name() + "/tests/" + PROGRAM_RUNNER_CLASS_NAME + "Test.cpp");
+   std::string program_runner_test_file_content = PROGRAM_RUNNER_TEST_FILE_CONTENT;
+   ___replace(program_runner_test_file_content, "[[PROGRAM_RUNNER_CLASS_NAME]]", PROGRAM_RUNNER_CLASS_NAME);
+   outfile7 << program_runner_test_file_content;
+   outfile7.close();
 
    system((std::string("chmod +x ") + build_file_filename).c_str());
 
