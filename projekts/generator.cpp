@@ -37,6 +37,21 @@ obj/*
 
 
 
+std::string const RERUN_SCRIPT_FILENAME = "rr";
+std::string const RERUN_SCRIPT_CONTENT = R"END(
+#!/bin/bash
+if [ "$#" == "0" ]
+then
+  echo "Error: You must provide an argument, which should be a name of a component."
+  echo "Example: \"./rr ProgramRunner\""
+else
+  chruby 2.5.1
+  rerun -c "./build && make ./bin/tests/$@Test && ./bin/tests/$@Test && ./bin/tests/$@Test" -p "**/$@{Test.cpp,.q.*}"
+fi
+)END";
+
+
+
 std::string TEST_RUNNER_CLASS_NAME = "TestRunner";
 std::string const TEST_RUNNER_FILE_CONTENT = R"END(
 #include <gtest/gtest.h>
@@ -324,6 +339,12 @@ int main(int argc, char **argv)
    ___replace(program_runner_test_file_content, "[[PROGRAM_RUNNER_CLASS_NAME]]", PROGRAM_RUNNER_CLASS_NAME);
    outfile7 << program_runner_test_file_content;
    outfile7.close();
+
+   std::string rerun_script_filename = generator.get_project_name() + "/rr";
+   std::ofstream outfile8(rerun_script_filename);
+   outfile8 << RERUN_SCRIPT_CONTENT;
+   outfile8.close();
+   system((std::string("chmod +x ") + rerun_script_filename).c_str());
 
    system((std::string("chmod +x ") + build_file_filename).c_str());
 
