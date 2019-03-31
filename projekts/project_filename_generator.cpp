@@ -38,6 +38,10 @@ Output flags:
 -T test binary
 -e example filename
 -E example binary
+
+Examples:
+
+$> bin/project_filename_generator -x include/MyProject/Models/User.hpp
 )END";
 
 
@@ -169,7 +173,7 @@ int main(int argc, char **argv)
 
    std::string basename = "";
 
-   if (arguments.empty()) { std::cout << help_text << std::endl; return 0; }
+   if (arguments.size() <= 1) { std::cout << help_text << std::endl; return 0; }
 
    bool underscores = false;
 
