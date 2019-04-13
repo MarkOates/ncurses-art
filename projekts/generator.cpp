@@ -350,6 +350,11 @@ int main(int argc, char **argv)
 
    std::stringstream finish_message;
    finish_message << "✅ Project files under \"" << generator.get_project_name() << "/\" generated." << std::endl;
+   finish_message << "⚠️ Important: You should now generate your first component by first cd-ing into your " << std::endl;
+   finish_message << "project directory (\"cd " << generator.get_project_name() << "\") and running the command:" << std::endl;
+   finish_message << std::endl;
+   finish_message << "  ../ncurses-art/bin/component_generator NameOfYourComponent" << std::endl;
+   finish_message << std::endl;
    finish_message << "📝 Once in the \"" << generator.get_project_name() << "\" directory, use the rerun \"./rr\" "
                   << "script in a separate terminal window to develop your component.  It will run the \"./build\" script "
                   << "to generate and build the first source files from the "
