@@ -314,14 +314,14 @@ int main(int argc, char **argv)
    outfile3 << GITIGNORE_FILE_CONTENT;
    outfile.close();
 
-   std::stringstream program_runner_path_name;
-   program_runner_path_name << generator.get_project_name();
-   program_runner_path_name << "/quintessence/" << PROGRAM_RUNNER_CLASS_NAME << ".q.yml";
+   //std::stringstream program_runner_path_name;
+   //program_runner_path_name << generator.get_project_name();
+   //program_runner_path_name << "/quintessence/" << PROGRAM_RUNNER_CLASS_NAME << ".q.yml";
 
-   std::ofstream outfile4(program_runner_path_name.str());
-   std::string program_runner_quintessence_file_content = PROGRAM_RUNNER_FILE_CONTENT;
-   outfile4 << program_runner_quintessence_file_content;
-   outfile4.close();
+   //std::ofstream outfile4(program_runner_path_name.str());
+   //std::string program_runner_quintessence_file_content = PROGRAM_RUNNER_FILE_CONTENT;
+   //outfile4 << program_runner_quintessence_file_content;
+   //outfile4.close();
 
    std::ofstream outfile5(generator.get_project_name() + "/programs/main.cpp");
    std::string main_file_content = main_file_content_template;
@@ -334,11 +334,11 @@ int main(int argc, char **argv)
    outfile6 << TEST_RUNNER_FILE_CONTENT;
    outfile6.close();
 
-   std::ofstream outfile7(generator.get_project_name() + "/tests/" + PROGRAM_RUNNER_CLASS_NAME + "Test.cpp");
-   std::string program_runner_test_file_content = PROGRAM_RUNNER_TEST_FILE_CONTENT;
-   ___replace(program_runner_test_file_content, "[[PROGRAM_RUNNER_CLASS_NAME]]", PROGRAM_RUNNER_CLASS_NAME);
-   outfile7 << program_runner_test_file_content;
-   outfile7.close();
+   //std::ofstream outfile7(generator.get_project_name() + "/tests/" + PROGRAM_RUNNER_CLASS_NAME + "Test.cpp");
+   //std::string program_runner_test_file_content = PROGRAM_RUNNER_TEST_FILE_CONTENT;
+   //___replace(program_runner_test_file_content, "[[PROGRAM_RUNNER_CLASS_NAME]]", PROGRAM_RUNNER_CLASS_NAME);
+   //outfile7 << program_runner_test_file_content;
+   //outfile7.close();
 
    std::string rerun_script_filename = generator.get_project_name() + "/rr";
    std::ofstream outfile8(rerun_script_filename);
