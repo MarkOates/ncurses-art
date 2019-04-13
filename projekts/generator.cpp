@@ -350,9 +350,12 @@ int main(int argc, char **argv)
 
    std::stringstream finish_message;
    finish_message << "✅ Project files under \"" << generator.get_project_name() << "/\" generated." << std::endl;
-   finish_message << "📝 Once in the \"" << generator.get_project_name() << "\" directory, use the \"./build\" "
-                  << "script to generate and build the first source files "
-                  << "(\"quintessence/" << PROGRAM_RUNNER_CLASS_NAME << ".q.yml\")." << std::endl;
+   finish_message << "📝 Once in the \"" << generator.get_project_name() << "\" directory, use the rerun \"./rr\" "
+                  << "script in a separate terminal window to develop your component.  It will run the \"./build\" script "
+                  << "to generate and build the first source files from the "
+                  << "quintessence/ directory (\"quintessence/" << PROGRAM_RUNNER_CLASS_NAME << ".q.yml\"). "
+                  << "as well as build and run the test file \"tests/" << PROGRAM_RUNNER_CLASS_NAME << "Test.cpp\" for the "
+                  << "component." << std::endl;
 
    console_output.output_line(finish_message.str());
 
@@ -360,5 +363,3 @@ int main(int argc, char **argv)
 
    return 0;
 }
-
-
