@@ -5,6 +5,7 @@
 
 #define BUILD_COMMAND_MENU "command_build_menu"
 #define YANK_SELECTED_TEXT "yank_selected_text"
+#define YANK_OPEN_COMMAND "yank_open_command"
 
 // trim from start
 std::string ltrim(std::string &s) {
@@ -78,6 +79,7 @@ bool Projekt::process_input(char ch)
    case 'k': emit_event(MOVE_CURSOR_UP); break;
    case 'q': emit_event(EVENT_ABORT_PROGRAM); break;
    case 'y': emit_event(YANK_SELECTED_TEXT); break;
+   case 'o': emit_event(YANK_OPEN_COMMAND); break;
    default: return false; break;
    }
    return true;
@@ -92,6 +94,25 @@ bool Projekt::process_event(std::string e)
       create_menu("main_menu").set_styles(COLOR_PAIR(1));
 
       emit_event(BUILD_COMMAND_MENU);
+   }
+   if (e == YANK_OPEN_COMMAND)
+   {
+      Menu &menu = find_menu("main_menu");
+      std::string trimmed = trim(menu.current_selection());
+      std::vector<std::string> tokens = split_string(trimmed, TokenBuilder::DELIMITER);
+      if (tokens.size() == 2)
+      {
+         TokenBuilder token_builder(tokens[0], tokens[1]);
+         std::stringstream command;
+         command << "printf \"open " << token_builder.get_link() << "\" | pbcopy";
+         system(command.str().c_str());
+      }
+      else
+      {
+         std::stringstream error_message;
+         error_message << "Cannot extract token from line \"" << trimmed << "\"";
+         throw std::runtime_error(error_message.str());
+      }
    }
    if (e == YANK_SELECTED_TEXT)
    {
