@@ -36,7 +36,7 @@ private:
    std::string link;
 
 public:
-   const std::string DELIMITER = " - ";
+   static const std::string DELIMITER;
 
    TokenBuilder(std::string title, std::string link)
       : title(title)
@@ -48,6 +48,7 @@ public:
 
    std::string build_show_string() { return title + DELIMITER + link; }
 };
+const std::string TokenBuilder::DELIMITER = " - ";
 
 
 class TokenExtractor
@@ -96,9 +97,20 @@ bool Projekt::process_event(std::string e)
    {
       Menu &menu = find_menu("main_menu");
       std::string trimmed = trim(menu.current_selection());
-      std::stringstream command;
-      command << "printf \"" << trimmed << "\" | pbcopy";
-      system(command.str().c_str());
+      std::vector<std::string> tokens = split_string(trimmed, TokenBuilder::DELIMITER);
+      if (tokens.size() == 2)
+      {
+         TokenBuilder token_builder(tokens[0], tokens[1]);
+         std::stringstream command;
+         command << "printf \"" << token_builder.get_link() << "\" | pbcopy";
+         system(command.str().c_str());
+      }
+      else
+      {
+         std::stringstream error_message;
+         error_message << "Cannot extract token from line \"" << trimmed << "\"";
+         throw std::runtime_error(error_message.str());
+      }
    }
    else if (e == MOVE_CURSOR_DOWN)
    {
