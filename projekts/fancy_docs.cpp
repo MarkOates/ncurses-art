@@ -115,21 +115,21 @@ bool Projekt::process_event(std::string e)
    else if (e == BUILD_COMMAND_MENU)
    {
       std::vector<std::string> tokens = {
-         "Interview Training - https://docs.google.com/document/d/1kcREoyed0YBP5gIJot4i6Vs-gjttFFT_V0DNtB5jXaY/edit",
+         TokenBuilder("Interview Training", "https://docs.google.com/document/d/1kcREoyed0YBP5gIJot4i6Vs-gjttFFT_V0DNtB5jXaY/edit").build_show_string(),
          "",
-         "Stages of Unicorn Project - https://vault.shopify.com/gsd#1-the-basics-projects-and-people_projects_project-flows",
-         "Authme - https://authme.shopify.io/",
-         "Kibana - https://stock-photos-es6-kibana.shopifycloud.com/",
-         "Coaches Corner - https://session.shopify.io/a/coaching/",
-         "RnD Levels of Impact - https://vault.shopify.com/RnD-Titles-and-Levels-of-Impact",
+         TokenBuilder("Stages of Unicorn Project", "https://vault.shopify.com/gsd#1-the-basics-projects-and-people_projects_project-flows").build_show_string(),
+         TokenBuilder("Authme", "https://authme.shopify.io/").build_show_string(),
+         TokenBuilder("Kibana", "https://stock-photos-es6-kibana.shopifycloud.com").build_show_string(),
+         TokenBuilder("Coaches Corner", "https://session.shopify.io/a/coaching/").build_show_string(),
+         TokenBuilder("RnD Levels of Impact", "https://vault.shopify.com/RnD-Titles-and-Levels-of-Impact").build_show_string(),
          "",
-         "Ruby Koans - http://rubykoans.com/",
-         "Desk Directory - https://shopify.officespacesoftware.com/visual-directory",
-         "League - https://app.league.com",
-         "Workday - https://wd3.myworkday.com/shopify/d/home.htmld",
-         "Rails Generators - https://railsguides.net/advanced-rails-model-generators/",
+         TokenBuilder("Ruby Koans", "http://rubykoans.com/").build_show_string(),
+         TokenBuilder("Desk Directory", "https://shopify.officespacesoftware.com/visual-directory").build_show_string(),
+         TokenBuilder("League", "https://app.league.com").build_show_string(),
+         TokenBuilder("Workday", "https://wd3.myworkday.com/shopify/d/home.htmld").build_show_string(),
+         TokenBuilder("Rails Generators", "https://railsguides.net/advanced-rails-model-generators/").build_show_string(),
          "",
-         "Distance to the Frontline - https://vault.shopify.com/Platform/Distance-to-the-frontline",
+         TokenBuilder("Distance to the Frontline", "https://vault.shopify.com/Platform/Distance-to-the-frontline").build_show_string(),
       };
       Menu &menu = find_menu("main_menu");
       menu.set_options(tokens);
