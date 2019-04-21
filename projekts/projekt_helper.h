@@ -157,10 +157,10 @@ Table &create_table(std::string name="", int x=0, int y=0, std::vector<std::vect
    return (*table);
 }
 
-Text &create_text(std::string name="", int x=0, int y=0, float align_x=0)
+Text &create_text(std::string name="", int x=0, int y=0, float align_x=0, float align_y=0)
 {
    if (!current_project) throw std::runtime_error("Cannot create a text, current_project is not set");
-   Text *text = new Text("", x, y, align_x);
+   Text *text = new Text("", x, y, align_x, align_y);
    current_project->get_elements().push_back(text);
    last_element().set_name(name);
    return (*text);
