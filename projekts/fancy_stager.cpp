@@ -1,6 +1,8 @@
 #include <Projekt.h>
 #include "projekt_helper.h"
 
+#include <map>
+
 #include <ncurses.h>
 
 #define COMMAND_FLIP_STAGING "flip_staging"
@@ -9,6 +11,16 @@
 #define YANK_SELECTED_TEXT "YANK_SELECTED_TEXT"
 #define COPY_GIT_ADD_PATCH_COMMAND "COPY_GIT_ADD_PATCH_COMMAND"
 #define COPY_RAILS_TEST_COMMAND "COPY_RAILS_TEST_COMMAND"
+
+std::map<char, std::string> command_mapping = {
+   { 'j', MOVE_CURSOR_DOWN },
+   { 'k', MOVE_CURSOR_UP },
+   { 10, COMMAND_FLIP_STAGING },
+   { 'q', EVENT_ABORT_PROGRAM },
+   { 'y', YANK_SELECTED_TEXT },
+   { 'p', COPY_GIT_ADD_PATCH_COMMAND },
+   { 't', COPY_RAILS_TEST_COMMAND },
+};
 
 class GitStatusLineDeducer
 {
@@ -127,17 +139,9 @@ public:
 Projekt::Projekt() { current_project = this; }
 bool Projekt::process_input(char ch)
 {
-   switch(ch)
-   {
-   case 'j': emit_event(MOVE_CURSOR_DOWN); break;
-   case 'k': emit_event(MOVE_CURSOR_UP); break;
-   case 10: emit_event(COMMAND_FLIP_STAGING); break;
-   case 'q': emit_event(EVENT_ABORT_PROGRAM); break;
-   case 'y': emit_event(YANK_SELECTED_TEXT); break;
-   case 'p': emit_event(COPY_GIT_ADD_PATCH_COMMAND); break;
-   case 't': emit_event(COPY_RAILS_TEST_COMMAND); break;
-   default: return false; break;
-   }
+   auto found = command_mapping.find(ch);
+   if (found == command_mapping.end()) return false;
+   emit_event(found->second);
    return true;
 }
 bool Projekt::process_event(std::string e)
