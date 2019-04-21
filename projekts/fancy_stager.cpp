@@ -12,6 +12,7 @@
 #define YANK_SELECTED_TEXT "YANK_SELECTED_TEXT"
 #define COPY_GIT_ADD_PATCH_COMMAND "COPY_GIT_ADD_PATCH_COMMAND"
 #define COPY_RAILS_TEST_COMMAND "COPY_RAILS_TEST_COMMAND"
+#define COPY_VIM_EDIT_COMMAND "copy_vim_edit_command"
 
 std::map<char, std::string> command_mapping = {
    { 'j', MOVE_CURSOR_DOWN },
@@ -21,6 +22,7 @@ std::map<char, std::string> command_mapping = {
    { 'y', YANK_SELECTED_TEXT },
    { 'p', COPY_GIT_ADD_PATCH_COMMAND },
    { 't', COPY_RAILS_TEST_COMMAND },
+   { 'v', COPY_VIM_EDIT_COMMAND },
 };
 
 std::string compose_command_mapping_text(std::map<char, std::string> &command_mapping)
@@ -204,6 +206,14 @@ bool Projekt::process_event(std::string e)
       GitStatusLineDeducer git_status_line_deducer(menu);
       std::stringstream command;
       command << "printf \"bin/rails test " << git_status_line_deducer.parse_filename() << "\" | pbcopy";
+      system(command.str().c_str());
+   }
+   else if (e == COPY_VIM_EDIT_COMMAND)
+   {
+      Menu &menu = find_menu("main_menu");
+      GitStatusLineDeducer git_status_line_deducer(menu);
+      std::stringstream command;
+      command << "printf \"vi " << git_status_line_deducer.parse_filename() << "\" | pbcopy";
       system(command.str().c_str());
    }
    else if (e == REFRESH_TEXT_DISPLAY)
