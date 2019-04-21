@@ -7,6 +7,7 @@
 
 #define COMMAND_FLIP_STAGING "flip_staging"
 #define COMMAND_REBUILD_MENU "rebuild_menu"
+#define BUILD_COMMAND_LIST "build command list"
 #define REFRESH_TEXT_DISPLAY "refresh_text_display"
 #define YANK_SELECTED_TEXT "YANK_SELECTED_TEXT"
 #define COPY_GIT_ADD_PATCH_COMMAND "COPY_GIT_ADD_PATCH_COMMAND"
@@ -21,6 +22,21 @@ std::map<char, std::string> command_mapping = {
    { 'p', COPY_GIT_ADD_PATCH_COMMAND },
    { 't', COPY_RAILS_TEST_COMMAND },
 };
+
+std::string compose_command_mapping_text(std::map<char, std::string> &command_mapping)
+{
+   std::stringstream result;
+   for (auto &command_map : command_mapping)
+   {
+      result
+         << command_map.first
+         << " - "
+         << command_map.second
+         << std::endl;
+         ;
+   }
+   return result.str();
+}
 
 class GitStatusLineDeducer
 {
@@ -160,7 +176,9 @@ bool Projekt::process_event(std::string e)
       init_pair(5, COLOR_MAGENTA, 23);
       create_menu("main_menu").set_styles(COLOR_PAIR(1));
       create_text("body_text", 80, 3).set_styles(COLOR_PAIR(2));
+      create_text("command_list_text", 130, 20, 0.0, 1.0).set_styles(COLOR_PAIR(5));
 
+      emit_event(BUILD_COMMAND_LIST);
       emit_event(COMMAND_REBUILD_MENU);
       emit_event(MOVE_CURSOR_DOWN);
    }
@@ -283,6 +301,11 @@ bool Projekt::process_event(std::string e)
          //<< git_status_line_deducer.parse_filename() << std::endl;
       //ofs.close();
       //throwit("COMMAND_FLIP_STAGING not supported yet");
+   }
+   else if (e == BUILD_COMMAND_LIST)
+   {
+      std::string command_mapping_string = compose_command_mapping_text(command_mapping);
+      find_text("command_list_text").set_text(command_mapping_string);
    }
    else if (e == COMMAND_REBUILD_MENU)
    {
