@@ -7,11 +7,11 @@ class Text : public ElementBase
 {
 private:
    std::string text;
-   float x, y, align_x;
+   float x, y, align_x, align_y;
    int styles;
 
 public:
-   Text(std::string text, float x, float y, float align_x=0.0);
+   Text(std::string text, float x, float y, float align_x=0.0, float align_y=0.0);
    ~Text();
 
    bool set_text(std::string text);

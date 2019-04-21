@@ -2,12 +2,13 @@
 
 #include <ncurses.h>
 
-Text::Text(std::string text, float x, float y, float align_x)
+Text::Text(std::string text, float x, float y, float align_x, float align_y)
    : ElementBase("Text")
    , text(text)
    , x(x)
    , y(y)
    , align_x(align_x)
+   , align_y(align_y)
    , styles(0)
 {
 }
@@ -97,11 +98,13 @@ void Text::draw()
    float x_pos = x - (str_width * align_x);
    attron(styles);
    int yy = 0;
-   for (auto &line : ___split_string(text, "\n"))
+   std::vector<std::string> lines = ___split_string(text, "\n");
+   float y_pos = y - lines.size() * align_y;
+   for (auto &line : lines)
    {
       ___replace_tabs(line);
       int max_characters = (int)(screen_width - x_pos);
-      mvaddnstr((int)y + yy++, (int)x_pos, line.c_str(), max_characters);
+      mvaddnstr((int)y_pos + yy++, (int)x_pos, line.c_str(), max_characters);
    }
    attroff(styles);
 }
