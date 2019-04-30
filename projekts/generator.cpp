@@ -59,7 +59,7 @@ else
 
   rerun_command="${commands[0]} && ${commands[1]} && ${commands[2]} && ${commands[3]}"
 
-  rerun -c $rerun_command -p "**/$@{test.cpp,_test.cpp,.q.*}"
+  rerun -c $rerun_command -p "**/$@{Test.cpp,_test.cpp,.q.*}"
 fi
 )END";
 
