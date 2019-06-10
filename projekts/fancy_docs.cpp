@@ -153,6 +153,7 @@ bool Projekt::process_event(std::string e)
          TokenBuilder("Stages of Unicorn Project", "https://vault.shopify.com/gsd#1-the-basics-projects-and-people_projects_project-flows").build_show_string(),
          TokenBuilder("Authme", "https://authme.shopify.io/").build_show_string(),
          TokenBuilder("Kibana", "https://stock-photos-es6-kibana.shopifycloud.com").build_show_string(),
+         TokenBuilder("Internal Partners", "https://partners.shopify.com/internal").build_show_string(),
          TokenBuilder("Coaches Corner", "https://session.shopify.io/a/coaching/").build_show_string(),
          TokenBuilder("RnD Levels of Impact", "https://vault.shopify.com/RnD-Titles-and-Levels-of-Impact").build_show_string(),
          "",
