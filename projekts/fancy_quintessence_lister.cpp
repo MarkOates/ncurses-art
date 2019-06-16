@@ -10,6 +10,7 @@
 std::map<char, std::string> command_mapping = {
    { 'j', MOVE_CURSOR_DOWN },
    { 'k', MOVE_CURSOR_UP },
+   { 'q', EVENT_ABORT_PROGRAM },
 };
 
 
