@@ -7,7 +7,8 @@
 
 // actions
 #define REFRESH_TEXT_DISPLAY "refresh_text_display"
-#define BUILD_MENU "build_menu"
+#define BUILD_PROJECT_MENU "build_project_menu"
+#define CHOOSE_CURRENT_MENU_ITEM "choose_current_menu_item"
 
 // constants
 #define PROJECT_MENU "project_menu"
@@ -20,6 +21,7 @@ std::map<char, std::string> command_mapping = {
    { 'j', MOVE_CURSOR_DOWN },
    { 'k', MOVE_CURSOR_UP },
    { 'q', EVENT_ABORT_PROGRAM },
+   { 10,  CHOOSE_CURRENT_MENU_ITEM },
 };
 
 
@@ -52,9 +54,9 @@ bool Projekt::process_event(std::string e)
       create_text("body_text", 80, 3).set_styles(COLOR_PAIR(2));
       create_text("command_list_text", 130, 20, 0.0, 1.0).set_styles(COLOR_PAIR(5));
 
-      emit_event(BUILD_MENU);
+      emit_event(BUILD_PROJECT_MENU);
    }
-   else if (e == BUILD_MENU)
+   else if (e == BUILD_PROJECT_MENU)
    {
       std::vector<std::string> options = ProjectListBuilder().get_directories();
       project_menu.set_options(options);
@@ -66,6 +68,10 @@ bool Projekt::process_event(std::string e)
    else if (e == MOVE_CURSOR_UP)
    {
       project_menu.move_cursor_up();
+   }
+   else if (e == CHOOSE_CURRENT_MENU_ITEM)
+   {
+      //project_menu.move_cursor_up();
    }
    else
    {
