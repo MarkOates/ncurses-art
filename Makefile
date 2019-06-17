@@ -50,8 +50,7 @@ bin/$(PROJECT_NAME_SNAKE_CASE): programs/$(PROJECT_NAME_SNAKE_CASE).cpp $(OBJECT
 
 
 
-#tests: $(INDIVIDUAL_TEST_EXECUTABLES) bin/test_runner
-tests: bin/test_runner
+tests: $(INDIVIDUAL_TEST_EXECUTABLES) bin/test_runner
 
 
 
@@ -76,7 +75,7 @@ obj/tests/%.o: tests/%.cpp $(OBJECTS)
 
 
 
-obj/test_runner.o: programs/test_runner.cpp
+obj/programs/test_runner.o: programs/test_runner.cpp
 	@mkdir -p $(@D)
 	@printf "compiling test obj file \e[1m\e[36m$<\033[0m...\n"
 	@g++ -c -std=gnu++11 -Wall -Wuninitialized -Weffc++ $< -o $@ -I$(GOOGLE_TEST_INCLUDE_DIR)
