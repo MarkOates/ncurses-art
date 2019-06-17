@@ -23,6 +23,9 @@ std::map<char, std::string> command_mapping = {
 };
 
 
+#include <ProjectListBuilder.hpp>
+
+
 Projekt::Projekt() { current_project = this; }
 bool Projekt::process_input(char ch)
 {
@@ -53,11 +56,7 @@ bool Projekt::process_event(std::string e)
    }
    else if (e == BUILD_MENU)
    {
-      std::vector<std::string> options = {
-         "option 1",
-         "option 2",
-         "option 3",
-      };
+      std::vector<std::string> options = ProjectListBuilder().get_directories();
       project_menu.set_options(options);
    }
    else if (e == MOVE_CURSOR_DOWN)
