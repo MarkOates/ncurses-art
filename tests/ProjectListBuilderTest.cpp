@@ -13,8 +13,6 @@ TEST(ProjectListBuilderTest, get_directories__returns_a_list_of_folders_in_the_d
       "beebot",
       "99bottles-1",
       "gmail-api",
-      "ThisIsMyGeneratedThingDelete",
-      "EraseMe",
       "ueli",
       "vim-testing",
       "HomeServer",
