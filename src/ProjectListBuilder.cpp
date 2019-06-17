@@ -18,7 +18,7 @@ ProjectListBuilder::~ProjectListBuilder()
 
 std::string ProjectListBuilder::run()
 {
-return "Hello Buddy!";
+return "Hello World!";
 }
 
 

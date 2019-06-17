@@ -23,7 +23,6 @@ std::map<char, std::string> command_mapping = {
 };
 
 
-
 Projekt::Projekt() { current_project = this; }
 bool Projekt::process_input(char ch)
 {
