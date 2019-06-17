@@ -2,6 +2,7 @@
 
 
 #include <string>
+#include <vector>
 
 
 class ProjectListBuilder
@@ -13,7 +14,8 @@ public:
    ~ProjectListBuilder();
 
 
-std::string run();
+std::vector<std::string> list();
+std::vector<std::string> get_directories(std::string s);
 };
 
 

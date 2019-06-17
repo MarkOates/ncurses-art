@@ -1,4 +1,15 @@
 functions:
-  - name: run
-    type: std::string
-    body: return "Hello World!";
+  - name: list
+    type: std::vector<std::string>
+    body: |
+      std::vector<std::string> result = {};
+      result = { "Hello World!", "Hello Buddy!" };
+      return result;
+  - name: get_directories
+    type: std::vector<std::string>
+    parameters:
+      - name: s
+        type: std::string
+        default_argument: ""
+    body: |
+      return { "" };
