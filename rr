@@ -1,0 +1,23 @@
+
+#!/bin/bash
+
+yellow='\033[1;33m'
+reset_text='\033[0m'
+
+if [ "$#" == "0" ]
+then
+  echo "Error: You must provide an argument, which should be a name of a component."
+  echo "Example: \"./rr ProgramRunner\""
+else
+  chruby 2.5.1
+  declare -a commands=(
+    "echo \"\n$yellow===== STAGE 0: Compose componets from all yamls =====$reset_text\n\"; ./build"
+    "echo \"\n$yellow===== STAGE 1: Make all the components =====$reset_text\n\"; make"
+    "echo \"\n$yellow===== STAGE 2: Make the test for this component =====$reset_text\n\"; make ./bin/tests/$@Test"
+    "echo \"\n$yellow===== STAGE 3: Run the test for this component =====$reset_text\n\"; ./bin/tests/$@Test"
+  )
+
+  rerun_command="${commands[0]} && ${commands[1]} && ${commands[2]} && ${commands[3]}"
+
+  rerun -c $rerun_command -p "**/$@{Test.cpp,_test.cpp,.q.*}"
+fi
