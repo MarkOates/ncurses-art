@@ -9,11 +9,11 @@ Menu::Menu(float x, float y, std::vector<std::string> options)
    , x(x)
    , y(y)
    , width(0)
-   , options(options)
+   , options({})
    , cursor_pos(0)
    , styles(0)
 {
-   update_width();
+   set_options(options);
 }
 
 Menu::~Menu()
@@ -22,9 +22,9 @@ Menu::~Menu()
 
 void Menu::update_width()
 {
-   int width = 0;
-   for (unsigned i=0; i<options.size(); i++)
-      if (options[i].length() > width) width = options[i].length();
+   this->width = 0;
+   for (auto &option : options)
+      if (option.length() > this->width) this->width = option.length();
 }
 
 void Menu::set_x(float x)
