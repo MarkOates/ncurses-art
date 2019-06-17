@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include <ncurses_art/Element/HeaderBar.h>
+#include <ncurses_art/Element/HeaderBar.hpp>
 
 TEST(HeaderBarTest, can_be_created)
 {

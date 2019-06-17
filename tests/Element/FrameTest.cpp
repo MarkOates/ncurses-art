@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include <ncurses_art/Element/Frame.h>
+#include <ncurses_art/Element/Frame.hpp>
 
 TEST(FrameTest, can_be_created)
 {

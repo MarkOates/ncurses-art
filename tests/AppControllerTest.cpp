@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include <ncurses_art/AppController.h>
+#include <ncurses_art/AppController.hpp>
 
 TEST(AppControllerTest, can_be_created)
 {

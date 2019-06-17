@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include <ncurses_art/Element/TextInput.h>
+#include <ncurses_art/Element/TextInput.hpp>
 
 TEST(TextInputTest, can_be_created)
 {

@@ -50,7 +50,8 @@ bin/$(PROJECT_NAME_SNAKE_CASE): programs/$(PROJECT_NAME_SNAKE_CASE).cpp $(OBJECT
 
 
 
-tests: $(INDIVIDUAL_TEST_EXECUTABLES) bin/test_runner
+#tests: $(INDIVIDUAL_TEST_EXECUTABLES) bin/test_runner
+tests: bin/test_runner
 
 
 

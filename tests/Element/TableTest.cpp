@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include <ncurses_art/Element/Table.h>
+#include <ncurses_art/Element/Table.hpp>
 
 #define ASSERT_THROW_WITH_MESSAGE(code, raised_exception_type, raised_exception_message) \
    try { code; FAIL() << "Expected " # raised_exception_type; } \

@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include <ncurses_art/EventQueue.h>
+#include <ncurses_art/EventQueue.hpp>
 
 TEST(EventQueueTest, can_be_created)
 {

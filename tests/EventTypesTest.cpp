@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include <ncurses_art/EventTypes.h>
+#include <ncurses_art/EventTypes.hpp>
 
 TEST(EventTypesTest, constants_contain_the_expected_values)
 {

@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include <ncurses_art/Element/Scene.h>
+#include <ncurses_art/Element/Scene.hpp>
 
 TEST(SceneTest, can_be_created)
 {

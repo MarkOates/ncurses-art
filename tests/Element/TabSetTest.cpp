@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include <ncurses_art/Element/TabSet.h>
+#include <ncurses_art/Element/TabSet.hpp>
 
 TEST(TabSetTest, can_be_created)
 {

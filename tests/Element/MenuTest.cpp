@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include <ncurses_art/Element/Menu.h>
+#include <ncurses_art/Element/Menu.hpp>
 
 TEST(MenuTest, can_be_created)
 {
@@ -132,14 +132,14 @@ TEST(MenuTest, when_setting_the_cursor_pos_will_modulo_the_position_if_gt_number
 TEST(MenuTest, height_returns_the_number_of_options)
 {
    Menu menu(0, 0, { "Option1", "Option2", "Option3", "Option4" });
-   ASSERT_EQ(4, menu.get_height())
+   ASSERT_EQ(4, menu.get_height());
 }
 
 TEST(MenuTest, width_returns_the_width_of_the_longest_line_from_the_options)
 {
    Menu menu(0, 0, { "Option1", "Option that is 55 characters long", "Option3" });
-   ASSERT_EQ(55, menu.get_width());
+   ASSERT_EQ(33, menu.get_width());
 
    menu.set_options({ "Option1", "Option that is more than 76 characters long", "Option3" });
-   ASSERT_EQ(77, menu.get_width());
+   ASSERT_EQ(43, menu.get_width());
 }
