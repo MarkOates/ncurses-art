@@ -1,3 +1,8 @@
+properties:
+  - name: repos_directory
+    type: std::string
+    init_with: "\"/Users/markoates/Repos\""
+    getter: true
 functions:
   - name: list
     type: std::vector<std::string>
@@ -7,9 +12,33 @@ functions:
       return result;
   - name: get_directories
     type: std::vector<std::string>
-    parameters:
-      - name: s
-        type: std::string
-        default_argument: ""
     body: |
-      return { "" };
+      std::vector<std::string> result = {};
+      const char* PATH = get_repos_directory().c_str();
+      DIR *dir = opendir(PATH);
+      struct dirent *entry = readdir(dir);
+      while (entry != NULL)
+      {
+          if (entry->d_type == DT_DIR)
+          {
+             std::string name = entry->d_name;
+             if (name == ".") {}
+             else if (name == "..") {}
+             else { result.push_back(name); }
+          }
+
+          entry = readdir(dir);
+      }
+      closedir(dir);
+      return result;
+function_body_symbol_dependencies:
+  - opendir
+  - readdir
+  - DIR
+dependencies:
+  - symbol: readdir
+    headers: [ 'dirent.h', 'stdio.h' ]
+  - symbol: DIR
+    headers: [ 'dirent.h', 'stdio.h' ]
+  - symbol: opendir
+    headers: [ 'dirent.h', 'stdio.h' ]
