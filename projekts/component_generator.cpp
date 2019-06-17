@@ -69,20 +69,20 @@ public:
       : project_name(project_name)
    {}
 
-   std::string get_project_name()
+   std::string get_component_name()
    {
       return project_name;
    }
    std::string get_quintessence_filename()
    {
       std::stringstream ss;
-      ss << "quintessence/" << get_project_name() << ".q.yml";
+      ss << "quintessence/" << get_component_name() << ".q.yml";
       return ss.str();
    }
    std::string get_test_filename()
    {
       std::stringstream ss;
-      ss << "tests/" << get_project_name() << "Test.cpp";
+      ss << "tests/" << get_component_name() << "Test.cpp";
       return ss.str();
    }
    std::string get_command_for_make_dir()
@@ -145,7 +145,7 @@ int main(int argc, char **argv)
    outfile4 << PROGRAM_RUNNER_FILE_CONTENT;
    outfile4.close();
 
-   std::string PROGRAM_RUNNER_CLASS_NAME = generator.get_project_name();
+   std::string PROGRAM_RUNNER_CLASS_NAME = generator.get_component_name();
 
    std::string program_runner_test_file_content = PROGRAM_RUNNER_TEST_FILE_CONTENT;
    ___replace(program_runner_test_file_content, "[[PROGRAM_RUNNER_CLASS_NAME]]", PROGRAM_RUNNER_CLASS_NAME);
