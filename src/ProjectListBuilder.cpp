@@ -28,14 +28,6 @@ std::string ProjectListBuilder::get_repos_directory()
 }
 
 
-std::vector<std::string> ProjectListBuilder::list()
-{
-std::vector<std::string> result = {};
-result = { "Hello World!", "Hello Buddy!" };
-return result;
-
-}
-
 std::vector<std::string> ProjectListBuilder::get_directories()
 {
 std::vector<std::string> result = {};

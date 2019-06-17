@@ -4,12 +4,6 @@ properties:
     init_with: "\"/Users/markoates/Repos\""
     getter: true
 functions:
-  - name: list
-    type: std::vector<std::string>
-    body: |
-      std::vector<std::string> result = {};
-      result = { "Hello World!", "Hello Buddy!" };
-      return result;
   - name: get_directories
     type: std::vector<std::string>
     body: |
