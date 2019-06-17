@@ -12,12 +12,16 @@
 // constants
 #define PROJECT_MENU "project_menu"
 
+// convenience macros
+#define project_menu (find_menu(PROJECT_MENU))
+
 
 std::map<char, std::string> command_mapping = {
    { 'j', MOVE_CURSOR_DOWN },
    { 'k', MOVE_CURSOR_UP },
    { 'q', EVENT_ABORT_PROGRAM },
 };
+
 
 
 Projekt::Projekt() { current_project = this; }
@@ -55,18 +59,15 @@ bool Projekt::process_event(std::string e)
          "option 2",
          "option 3",
       };
-      Menu &menu = find_menu(PROJECT_MENU);
-      menu.set_options(options);
+      project_menu.set_options(options);
    }
    else if (e == MOVE_CURSOR_DOWN)
    {
-      Menu &menu = find_menu(PROJECT_MENU);
-      menu.move_cursor_down();
+      project_menu.move_cursor_down();
    }
    else if (e == MOVE_CURSOR_UP)
    {
-      Menu &menu = find_menu(PROJECT_MENU);
-      menu.move_cursor_up();
+      project_menu.move_cursor_up();
    }
    else
    {
