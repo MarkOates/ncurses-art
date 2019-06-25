@@ -3,7 +3,8 @@
 #include <algorithm>
 #include <ctime>
 
-#include "question_and_quiz.hpp"
+#include "Question.hpp"
+#include "Quiz.hpp"
 
 
 #define INITIALIZE "INITIALIZE"
