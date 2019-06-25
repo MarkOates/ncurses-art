@@ -8,5 +8,8 @@ properties:
     getter: true
 functions:
   - name: load
-    type: void
-    body: return;
+    type: bool
+    body: return true;
+dependencies:
+  - symbol: Quiz*
+    headers: [ 'Quiz.hpp' ]
