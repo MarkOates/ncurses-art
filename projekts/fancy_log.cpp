@@ -74,6 +74,9 @@ public:
 #define COPY_INTERACTIVE_REBASE_COMMAND "copy_interactive_rebase_command"
 #define COPY_FANCY_FIXUP_COMMAND "copy_fancy_fixup_command"
 #define TOGGLE_MENU_PLACEMENT "toggle_menu_placement"
+#define COPY_FILES_COMMAND "copy_files_command"
+
+
 
 
 //GitLogFormat git_log_format({ AUTHOR_NAME, AUTHOR_DATE, ABBREVIATED_COMMIT_HASH, SUBJECT });
@@ -120,6 +123,7 @@ bool Projekt::process_input(char input_ch)
    case 'y': emit_event(COPY_CURRENT_HASH_TO_CLIPBOARD); break;
    case 'r': emit_event(COPY_INTERACTIVE_REBASE_COMMAND); break;
    case 'f': emit_event(COPY_FANCY_FIXUP_COMMAND); break;
+   case 'i': emit_event(COPY_FILES_COMMAND); break;
    case 10: emit_event(CHOOSE_CURRENT_MENU_ITEM); break;
    case '\t': emit_event(TOGGLE_MENU_PLACEMENT); break;
    default: return false; break;
@@ -172,6 +176,18 @@ bool Projekt::process_event(std::string event)
       Menu &menu = find_menu("main_menu");
       if (menu.get_x() == MENU_OUT_POS) menu.set_x(MENU_DOCKED_POS);
       else menu.set_x(MENU_OUT_POS);
+   }
+   else if (event == COPY_FILES_COMMAND)
+   {
+      std::string selection_text = find_menu("main_menu").current_selection();
+      std::string command_token = git_log_format.extract_component(selection_text, ABBREVIATED_COMMIT_HASH);
+      std::stringstream command;
+
+      command << "git diff-tree --no-commit-id --name-only -r " << command_token << " > \"" << TMP_OUTFILE << "\"";
+      system(command.str().c_str());
+
+      std::string command_output = get_file_contents();
+      find_text("body_text").set_text(command_output);
    }
    else if (event == SET_DIFF_TEXT)
    {
