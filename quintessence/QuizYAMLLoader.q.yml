@@ -1,4 +1,12 @@
-functions:
-  - name: run
+properties:
+  - name: quiz
+    type: Quiz*
+    init_with: nullptr
+  - name: yaml_filename
     type: std::string
-    body: return "Hello Buddy!";
+    init_with: ""
+    getter: true
+functions:
+  - name: load
+    type: void
+    body: return;
