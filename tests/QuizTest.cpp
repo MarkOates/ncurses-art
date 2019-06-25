@@ -3,9 +3,23 @@
 
 #include <Quiz.hpp>
 
-TEST(QuizTest, run__returns_the_expected_response)
+TEST(QuizTest, can_be_created)
 {
-   Quiz program_runner;
-   std::string expected_string = "Hello World!";
-   EXPECT_EQ(expected_string, program_runner.run());
+   Quiz quiz;
+}
+
+TEST(QuizTest, with_questions_returns_them)
+{
+   std::vector<Question> questions = { {"A"}, {"B"}, {"C"}, {"D"}, {"E"}, {"F"}, {"G"} };
+
+   Quiz quiz(questions);
+   //EXPECT_EQ(questions, quiz.get_questions());
+}
+
+TEST(QuizTest, shuffle_questions__will_randomly_shuffle_the_questions)
+{
+   std::vector<Question> questions = { {"A"}, {"B"}, {"C"}, {"D"}, {"E"}, {"F"}, {"G"} };
+
+   Quiz quiz(questions);
+   quiz.shuffle_questions();
 }

@@ -1,13 +1,28 @@
 properties:
   - name: questions
     type: std::vector<Question>
+    constructor_arg: true
     init_with: "{}"
     getter: true
     setter: true
 functions:
   - name: shuffle_questions
     type: void
-    body: return;
+    body: |
+      std::random_device rd;
+      std::mt19937 g(rd());
+      std::shuffle(questions.begin(), questions.end(), g);
+      std::shuffle(questions.begin(), questions.end(), g);
+function_body_symbol_dependencies:
+  - std::random_device
+  - std::mt19937
+  - std::shuffle
 dependencies:
   - symbol: std::vector<Question>
     headers: [ 'vector', 'Question.hpp' ]
+  - symbol: std::random_device
+    headers: [ 'random' ]
+  - symbol: std::mt19937
+    headers: [ 'random' ]
+  - symbol: std::shuffle
+    headers: [ 'algorithm' ]

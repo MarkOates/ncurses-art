@@ -1,13 +1,15 @@
 
 
 #include <Quiz.hpp>
+#include <random>
+#include <random>
+#include <algorithm>
 
 
 
 
-
-Quiz::Quiz()
-   : questions({})
+Quiz::Quiz(std::vector<Question> questions)
+   : questions(questions)
 {
 }
 
@@ -31,7 +33,11 @@ std::vector<Question> Quiz::get_questions()
 
 void Quiz::shuffle_questions()
 {
-return;
+std::random_device rd;
+std::mt19937 g(rd());
+std::shuffle(questions.begin(), questions.end(), g);
+std::shuffle(questions.begin(), questions.end(), g);
+
 }
 
 

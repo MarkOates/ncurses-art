@@ -11,7 +11,7 @@ private:
    std::vector<Question> questions;
 
 public:
-   Quiz();
+   Quiz(std::vector<Question> questions={});
    ~Quiz();
 
    void set_questions(std::vector<Question> questions);
