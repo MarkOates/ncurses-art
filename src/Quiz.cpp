@@ -7,6 +7,7 @@
 
 
 Quiz::Quiz()
+   : questions({})
 {
 }
 
@@ -16,9 +17,21 @@ Quiz::~Quiz()
 }
 
 
-std::string Quiz::run()
+void Quiz::set_questions(std::vector<Question> questions)
 {
-return "Hello Buddy!";
+   this->questions = questions;
+}
+
+
+std::vector<Question> Quiz::get_questions()
+{
+   return questions;
+}
+
+
+void Quiz::shuffle_questions()
+{
+return;
 }
 
 

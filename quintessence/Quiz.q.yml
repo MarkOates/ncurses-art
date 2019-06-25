@@ -1,4 +1,13 @@
+properties:
+  - name: questions
+    type: std::vector<Question>
+    init_with: "{}"
+    getter: true
+    setter: true
 functions:
-  - name: run
-    type: std::string
-    body: return "Hello Buddy!";
+  - name: shuffle_questions
+    type: void
+    body: return;
+dependencies:
+  - symbol: std::vector<Question>
+    headers: [ 'vector', 'Question.hpp' ]
