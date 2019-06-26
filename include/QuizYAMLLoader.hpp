@@ -3,6 +3,7 @@
 
 #include <Quiz.hpp>
 #include <string>
+#include <yaml-cpp/yaml.h>
 
 
 class QuizYAMLLoader
@@ -18,6 +19,7 @@ public:
 
    std::string get_yaml_filename();
 bool load();
+std::string get_type_string(YAML::Node node=YAML::Node());
 };
 
 

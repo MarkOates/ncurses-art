@@ -10,6 +10,26 @@ functions:
   - name: load
     type: bool
     body: return true;
+  - name: get_type_string
+    type: std::string
+    parameters:
+      - name: node
+        type: YAML::Node
+        default_argument: "YAML::Node()"
+    body: |
+     switch (node.Type())
+     {
+       case YAML::NodeType::Null: return "Null"; break;
+       case YAML::NodeType::Scalar: return "Scalar"; break;
+       case YAML::NodeType::Sequence: return "Sequence"; break;
+       case YAML::NodeType::Map: return "Map"; break;
+       case YAML::NodeType::Undefined: return "Undefined"; break;
+     }
+     return "[NO_TYPE_DEFINED_ERROR]";
 dependencies:
   - symbol: Quiz*
     headers: [ 'Quiz.hpp' ]
+  - symbol: YAML::Node
+    headers: [ 'yaml-cpp/yaml.h' ]
+    include_directories: [ 'yaml-cpp/include' ]
+    linked_directories: [ 'yaml-cpp/build' ]

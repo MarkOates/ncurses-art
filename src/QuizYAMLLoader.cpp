@@ -29,4 +29,18 @@ bool QuizYAMLLoader::load()
 return true;
 }
 
+std::string QuizYAMLLoader::get_type_string(YAML::Node node)
+{
+switch (node.Type())
+{
+  case YAML::NodeType::Null: return "Null"; break;
+  case YAML::NodeType::Scalar: return "Scalar"; break;
+  case YAML::NodeType::Sequence: return "Sequence"; break;
+  case YAML::NodeType::Map: return "Map"; break;
+  case YAML::NodeType::Undefined: return "Undefined"; break;
+}
+return "[NO_TYPE_DEFINED_ERROR]";
+
+}
+
 
