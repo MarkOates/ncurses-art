@@ -13,12 +13,12 @@ private:
    std::string yaml_filename;
 
 public:
-   QuizYAMLLoader();
+   QuizYAMLLoader(Quiz* quiz=nullptr, std::string yaml_filename="");
    ~QuizYAMLLoader();
 
 
    std::string get_yaml_filename();
-YAML::Node load();
+bool load();
 std::string get_type_string(YAML::Node node=YAML::Node());
 };
 

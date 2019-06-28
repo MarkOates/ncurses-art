@@ -2,14 +2,24 @@ properties:
   - name: quiz
     type: Quiz*
     init_with: nullptr
+    constructor_arg: true
   - name: yaml_filename
     type: std::string
-    init_with: ""
+    init_with: "\"\""
+    constructor_arg: true
     getter: true
 functions:
   - name: load
-    type: YAML::Node
-    body: return YAML::Load("Hello World!");
+    type: bool
+    body: |
+      quiz->set_questions({
+         { "The speed limit approaching a school crosswalk is",
+           "",
+           "15 mph",
+           { "20 mph", "25 mph" }
+         },
+       });
+      return true;
   - name: get_type_string
     type: std::string
     parameters:
