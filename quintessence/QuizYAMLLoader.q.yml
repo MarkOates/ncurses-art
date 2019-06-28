@@ -12,13 +12,30 @@ functions:
   - name: load
     type: bool
     body: |
-      quiz->set_questions({
-         { "The speed limit approaching a school crosswalk is",
-           "",
-           "15 mph",
-           { "20 mph", "25 mph" }
-         },
-       });
+      YAML::Node loaded_file = YAML::LoadFile(yaml_filename);
+      YAML::Node questions_within_yaml = loaded_file["questions"];
+
+      std::vector<Question> questions;
+
+      for(YAML::const_iterator it=questions_within_yaml.begin(); it!=questions_within_yaml.end(); ++it)
+      {
+        YAML::Node answers = it->second;
+        std::string first_answer_str = answers[0].as<std::string>();
+        std::vector<std::string> wrong_answers;
+        for (int i=1; i<answers.size(); i++)
+        {
+          wrong_answers.push_back(answers[i].as<std::string>());
+        }
+
+        questions.push_back({
+          it->first.as<std::string>(),
+          "",
+          first_answer_str,
+          wrong_answers,
+        });
+      }
+
+      quiz->set_questions(questions);
       return true;
   - name: get_type_string
     type: std::string

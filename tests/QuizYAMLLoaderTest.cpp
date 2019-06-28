@@ -26,7 +26,7 @@ TEST(QuizYAMLLoaderTest, load__opens_a_file)
 
 TEST(QuizYAMLLoaderTest, load__opens_the_contents_of_the_expected_test_file)
 {
-   std::string quiz_filename = "test/fixtures/quiz.yml";
+   std::string quiz_filename = "tests/fixtures/quiz.yml";
    Quiz quiz;
    
    QuizYAMLLoader quiz_yaml_loader(&quiz, quiz_filename);
@@ -42,7 +42,7 @@ TEST(QuizYAMLLoaderTest, load__opens_the_contents_of_the_expected_test_file)
 
    std::vector<Question> actual_quiz_questions = quiz.get_questions();
 
-   EXPECT_EQ(1, actual_quiz_questions.size());
+   EXPECT_EQ(2, actual_quiz_questions.size());
 
    Question first_question = actual_quiz_questions[0];
 
@@ -50,4 +50,18 @@ TEST(QuizYAMLLoaderTest, load__opens_the_contents_of_the_expected_test_file)
    EXPECT_EQ(expected_question.get_image_filename(), first_question.get_image_filename());
    EXPECT_EQ(expected_question.get_correct_answer(), first_question.get_correct_answer());
    EXPECT_EQ(expected_question.get_incorrect_answers(), first_question.get_incorrect_answers());
+
+   Question expected_second_question{
+      "The Pythagorean Theorem is",
+      "",
+      "a^2 + b^2 = c^2",
+      { "E = MC^2", "1 = 1" },
+   };
+
+   Question second_question = actual_quiz_questions[1];
+
+   EXPECT_EQ(expected_second_question.get_question(), second_question.get_question());
+   EXPECT_EQ(expected_second_question.get_image_filename(), second_question.get_image_filename());
+   EXPECT_EQ(expected_second_question.get_correct_answer(), second_question.get_correct_answer());
+   EXPECT_EQ(expected_second_question.get_incorrect_answers(), second_question.get_incorrect_answers());
 }
