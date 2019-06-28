@@ -5,6 +5,7 @@
 
 #include "Question.hpp"
 #include "Quiz.hpp"
+#include "QuizYAMLLoader.hpp"
 
 
 #define INITIALIZE "INITIALIZE"

@@ -24,9 +24,9 @@ std::string QuizYAMLLoader::get_yaml_filename()
 }
 
 
-bool QuizYAMLLoader::load()
+YAML::Node QuizYAMLLoader::load()
 {
-return true;
+return YAML::Load("Hello World!");
 }
 
 std::string QuizYAMLLoader::get_type_string(YAML::Node node)

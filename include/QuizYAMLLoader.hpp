@@ -18,7 +18,7 @@ public:
 
 
    std::string get_yaml_filename();
-bool load();
+YAML::Node load();
 std::string get_type_string(YAML::Node node=YAML::Node());
 };
 

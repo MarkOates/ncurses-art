@@ -8,8 +8,8 @@ properties:
     getter: true
 functions:
   - name: load
-    type: bool
-    body: return true;
+    type: YAML::Node
+    body: return YAML::Load("Hello World!");
   - name: get_type_string
     type: std::string
     parameters:
