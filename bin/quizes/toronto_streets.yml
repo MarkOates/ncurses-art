@@ -1,0 +1,36 @@
+questions:
+  What is the next major street East of Bathurst St?:
+    - Spadina Ave
+    - University Ave
+    - Beverly St (Turns into St. George at College)
+    - Bay Street
+  What is the next major street East of Spadina Ave?:
+    - University Ave
+    - Beverly St (Turns into St. George at College)
+    - Bay Street
+    - Younge Street
+  What is the next major street East of University Ave?:
+    - Beverly St (Turns into St. George at College)
+    - Bay Street
+    - Younge Street
+    - Church Street
+  What is the next major street East of Beverly St?:
+    - Bay Street
+    - Younge Street
+    - Church Street
+    - Jarvis Street
+  What is the next major street East of Bay Street?:
+    - Younge Street
+    - Church Street
+    - Jarvis Street
+    - Sherbourne Street
+  What is the next major street East of Yongue Street?:
+    - Church Street
+    - Jarvis Street
+    - Sherbourne Street
+    - Parliament Street
+  What is the next major street East of Church Street?:
+    - Jarvis Street
+    - Sherbourne Street
+    - Parliament Street
+    - Bathurst Street
