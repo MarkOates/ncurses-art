@@ -3,6 +3,9 @@
 
 #include <QuizYAMLLoader.hpp>
 
+// Tip: Examples of cpp-yaml testing techniques here:
+// https://github.com/jbeder/yaml-cpp/blob/master/test/node/node_test.cpp
+
 TEST(QuizYAMLLoaderTest, get_type_string__returns_the_expected_value)
 {
    QuizYAMLLoader quiz_yaml_loader;
