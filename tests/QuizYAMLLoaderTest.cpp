@@ -14,16 +14,6 @@ TEST(QuizYAMLLoaderTest, get_type_string__returns_the_expected_value)
    EXPECT_EQ("Sequence", quiz_yaml_loader.get_type_string(node));
 }
 
-TEST(QuizYAMLLoaderTest, load__opens_a_file)
-{
-   //QuizYAMLLoader quiz_yaml_loader;
-
-   //YAML::Node response = quiz_yaml_loader.load();
-   //YAML::Node expected_response = YAML::Load("Hello World!");
-
-   //EXPECT_EQ(expected_response.as<std::string>(), response.as<std::string>());
-}
-
 TEST(QuizYAMLLoaderTest, load__opens_the_contents_of_the_expected_test_file)
 {
    std::string quiz_filename = "tests/fixtures/quiz.yml";
