@@ -80,9 +80,13 @@ public:
 
    void initialize()
    {
-      create_input("upstream", 40, 20, "Upstream:");
-      create_input("title", 40, 24, "Title:");
-      create_input("description", 40, 28, "Description:");
+      int x = 40;
+      int y = 20;
+      int vertical_spacing = 4;
+
+      create_input("upstream", x, y + vertical_spacing * 0, "Upstream:");
+      create_input("title", x, y + vertical_spacing * 1, "Title:");
+      create_input("description", x, y + vertical_spacing * 2, "Description:");
 
       create_menu("input_selector", 0, 2).set_options({ "upstream", "title", "description", SUBMIT_FORM });
    }
