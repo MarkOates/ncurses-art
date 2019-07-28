@@ -74,8 +74,13 @@ void hide_buffer()
 
 class InputForm
 {
+private:
+   std::vector<std::pair<std::string, std::string>> input_elements;
+
 public:
-   InputForm() {}
+   InputForm(std::vector<std::pair<std::string, std::string>> input_elements = {})
+      : input_elements(input_elements)
+   {}
    virtual ~InputForm() {}
 
    void initialize()
@@ -84,11 +89,13 @@ public:
       int y = 20;
       int vertical_spacing = 4;
 
-      std::vector<std::pair<std::string, std::string>> input_elements = {
-         { "upstream",    "Upstream:" },
-         { "title",       "Title:" },
-         { "description", "Description:" },
-      };
+      //std::vector<std::pair<std::string, std::string>> input_elements = {
+         //{ "upstream",    "Upstream:" },
+         //{ "title",       "Title:" },
+         //{ "description", "Description:" },
+      //};
+
+      std::vector<std::string> menu_options;
 
       int y_cursor = y;
       for (auto &input_element : input_elements)
@@ -98,9 +105,13 @@ public:
 
          create_input(input_name, x, y_cursor, input_label);
          y_cursor += vertical_spacing;
+
+         menu_options.push_back(input_name);
       }
 
-      create_menu("input_selector", 0, 2).set_options({ "upstream", "title", "description", SUBMIT_FORM });
+      menu_options.push_back(SUBMIT_FORM);
+
+      create_menu("input_selector", 0, 2).set_options(menu_options);
    }
 
    virtual void submit()
@@ -115,7 +126,12 @@ public:
 
 std::map<char, std::string> mappings;
 std::map<std::string, void(*)()> events;
-InputForm input_form;
+InputForm input_form({
+   { "upstream",    "Upstream:" },
+   { "title",       "Title:" },
+   { "description", "Description:" },
+});
+
 
 Projekt::Projekt()
 {
