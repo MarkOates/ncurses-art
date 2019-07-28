@@ -84,9 +84,21 @@ public:
       int y = 20;
       int vertical_spacing = 4;
 
-      create_input("upstream", x, y + vertical_spacing * 0, "Upstream:");
-      create_input("title", x, y + vertical_spacing * 1, "Title:");
-      create_input("description", x, y + vertical_spacing * 2, "Description:");
+      std::vector<std::pair<std::string, std::string>> input_elements = {
+         { "upstream",    "Upstream:" },
+         { "title",       "Title:" },
+         { "description", "Description:" },
+      };
+
+      int y_cursor = y;
+      for (auto &input_element : input_elements)
+      {
+         std::string input_name = std::get<0>(input_element);
+         std::string input_label = std::get<1>(input_element);
+
+         create_input(input_name, x, y_cursor, input_label);
+         y_cursor += vertical_spacing;
+      }
 
       create_menu("input_selector", 0, 2).set_options({ "upstream", "title", "description", SUBMIT_FORM });
    }
