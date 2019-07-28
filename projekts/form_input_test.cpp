@@ -81,8 +81,8 @@ public:
    void initialize()
    {
       create_input("upstream", 40, 20, "Upstream:");
-      create_input("title", 40, 25, "Title:");
-      create_input("description", 40, 30, "Description:");
+      create_input("title", 40, 24, "Title:");
+      create_input("description", 40, 28, "Description:");
 
       create_menu("input_selector", 0, 2).set_options({ "upstream", "title", "description", SUBMIT_FORM });
    }
