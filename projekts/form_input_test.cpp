@@ -89,12 +89,6 @@ public:
       int y = 20;
       int vertical_spacing = 4;
 
-      //std::vector<std::pair<std::string, std::string>> input_elements = {
-         //{ "upstream",    "Upstream:" },
-         //{ "title",       "Title:" },
-         //{ "description", "Description:" },
-      //};
-
       std::vector<std::string> menu_options;
 
       int y_cursor = y;
