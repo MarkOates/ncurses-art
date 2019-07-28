@@ -103,11 +103,11 @@ InputForm input_form;
 
 Projekt::Projekt()
 {
-   input_form.initialize();
-
    current_project = this;
    create_text(":state", 0, 3).set_text("normal");
    
+   input_form.initialize();
+
    init_color(20, (int)(175.0/255.0*1000), (int)(175.0/255.0*1000), (int)(255.0/255.0*1000));
    init_color(21, (int)(175.0/255.0*1000), 0, (int)(255.0/255.0*1000));
    init_color(22, (int)(32.0/255.0*1000), (int)(32.0/255.0*1000), (int)(32.0/255.0*1000));
@@ -156,6 +156,7 @@ Projekt::Projekt()
       //submit_command << "git push origin ${BRANCH_NAME};";
       //submit_command << get_input_val("title");
       //system("UPSTREAM=Shopify/stock-photos:master; echo \"${UPSTREAM}\" > asdfasdf.txt");
+      ::emit_event(EVENT_ABORT_PROGRAM);
    };
 
    mappings['q'] = EVENT_ABORT_PROGRAM;
