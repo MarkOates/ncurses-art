@@ -238,7 +238,9 @@ fresh:
 
 
 std::string build_file_template = R"END(#!/bin/bash
-find . -path "./quintessence/*.yml" | xargs ../blast/bin/programs/quintessence_from_yaml
+executable_filename=../blast/bin/programs/quintessence_from_yaml
+[ -f $executable_filename ] && echo "Found" || echo "The needed executable $executable_filename was not found"
+find . -path "./quintessence/*.yml" | xargs $executable_filename
 )END";
 
 
