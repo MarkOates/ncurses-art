@@ -142,6 +142,7 @@ TEST_OBJECTS := $(TEST_SOURCES:tests/%.cpp=obj/tests/%.o)
 INDIVIDUAL_TEST_EXECUTABLES := $(TEST_SOURCES:tests/%.cpp=bin/tests/%)
 ALLEGRO_LIBS_LINK_ARGS := $(ALLEGRO_LIBS:%=-l%)
 ALLEGRO_LIBS_LINK_MAIN_ARGS := $(ALLEGRO_LIBS_MAIN:%=-l%)
+ALL_COMPILED_EXECUTABLES_IN_BIN := $(shell find bin/**/* -perm +111 -type f)
 
 
 
@@ -221,10 +222,8 @@ bin/tests/[[TEST_RUNNER_CLASS_NAME]]: $(TEST_OBJECTS) obj/tests/[[TEST_RUNNER_CL
 clean:
 	-rm -rdf obj/
 	-rm $(OBJECTS)
-	-rm $(PROGRAMS)
-	-rm $(EXAMPLES)
 	-rm $(TEST_OBJECTS)
-	-rm $(INDIVIDUAL_TEST_EXECUTABLES)
+	-rm $(ALL_COMPILED_EXECUTABLES_IN_BIN)
 
 
 
