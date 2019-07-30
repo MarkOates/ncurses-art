@@ -33,6 +33,7 @@ TEST_SOURCES := $(shell find tests -name '*.cpp')
 TEST_OBJECTS := $(TEST_SOURCES:tests/%.cpp=obj/tests/%.o)
 INDIVIDUAL_TEST_EXECUTABLES := $(TEST_SOURCES:tests/%.cpp=bin/tests/%)
 PROJEKT_EXECUTABLES := $(PROJEKTS:projekts/%.cpp=bin/%)
+ALL_COMPILED_EXECUTABLES_IN_BIN := $(shell find bin/**/* -perm +111 -type f)
 
 
 
@@ -107,6 +108,7 @@ bin/test_runner: programs/test_runner.cpp $(TEST_OBJECTS)
 clean:
 	-rm -rdf obj/
 	-rm $(PROGRAM_EXECUTABLES)
+	-rm $(ALL_COMPILED_EXECUTABLES_IN_BIN)
 
 
 
