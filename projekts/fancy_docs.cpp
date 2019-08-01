@@ -164,6 +164,7 @@ bool Projekt::process_event(std::string e)
          TokenBuilder("Rails Generators", "https://railsguides.net/advanced-rails-model-generators/").build_show_string(),
          "",
          TokenBuilder("Distance to the Frontline", "https://vault.shopify.com/Platform/Distance-to-the-frontline").build_show_string(),
+         TokenBuilder("Technical Track Q&A", "https://docs.google.com/document/d/1zsP9eLGFxbWVWCy2U1Y-_kOo_BYnhhWgwVenJEX6sYc/edit#heading=h.4zmidi9p6z7b").build_show_string(),
       };
       Menu &menu = find_menu("main_menu");
       menu.set_options(tokens);
