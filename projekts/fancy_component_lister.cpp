@@ -77,14 +77,6 @@ bool Projekt::process_event(std::string e)
       command << "printf \"" << trimmed << "\" | pbcopy";
       system(command.str().c_str());
    }
-   if (e == GIT_CHECKOUT_BRANCH_COMMAND)
-   {
-      Menu &menu = find_menu("main_menu");
-      std::string trimmed = trim(menu.current_selection());
-      std::stringstream command;
-      command << "printf \"git checkout " << trimmed << "\" | pbcopy";
-      system(command.str().c_str());
-   }
    else if (e == MOVE_CURSOR_DOWN)
    {
       Menu &menu = find_menu("main_menu");
@@ -109,6 +101,14 @@ bool Projekt::process_event(std::string e)
       menu.set_options(tokens);
       menu.set_x(COLS/2 - menu.get_width()/2);
       menu.set_y(LINES/2 - 3);
+   }
+   if (e == GIT_CHECKOUT_BRANCH_COMMAND)
+   {
+      Menu &menu = find_menu("main_menu");
+      std::string trimmed = trim(menu.current_selection());
+      std::stringstream command;
+      command << "printf \"git checkout " << trimmed << "\" | pbcopy";
+      system(command.str().c_str());
    }
    return true;
 }
