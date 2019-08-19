@@ -9,7 +9,7 @@
 #define COMMAND_REBUILD_MENU "rebuild_menu"
 #define REFRESH_TEXT_DISPLAY "refresh_text_display"
 #define YANK_SELECTED_TEXT "YANK_SELECTED_TEXT"
-#define GIT_CHECKOUT_BRANCH_COMMAND "GIT_CHECKOUT_BRANCH_COMMAND"
+#define BEEBOT_SETUP_BLAST_COMPONENT_COMMAND "BEEBOT_SETUP_BLAST_COMPONENT_COMMAND"
 #define COPY_GIT_ADD_PATCH_COMMAND "COPY_GIT_ADD_PATCH_COMMAND"
 
 // trim from start
@@ -43,7 +43,7 @@ bool Projekt::process_input(char ch)
    case 'k': emit_event(MOVE_CURSOR_UP); break;
    case 'q': emit_event(EVENT_ABORT_PROGRAM); break;
    case 'y': emit_event(YANK_SELECTED_TEXT); break;
-   case 'c': emit_event(GIT_CHECKOUT_BRANCH_COMMAND); break;
+   case 'c': emit_event(BEEBOT_SETUP_BLAST_COMPONENT_COMMAND); break;
    default: return false; break;
    }
    return true;
@@ -102,7 +102,7 @@ bool Projekt::process_event(std::string e)
       menu.set_x(COLS/2 - menu.get_width()/2);
       menu.set_y(LINES/2 - 3);
    }
-   if (e == GIT_CHECKOUT_BRANCH_COMMAND)
+   if (e == BEEBOT_SETUP_BLAST_COMPONENT_COMMAND)
    {
       Menu &menu = find_menu("main_menu");
       std::string trimmed = trim(menu.current_selection());
