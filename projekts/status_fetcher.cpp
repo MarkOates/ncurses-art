@@ -33,6 +33,7 @@ void initialize()
          { "HomeServer",    GithubRepoStatusFetcher("HomeServer") },
          { "beebot",        GithubRepoStatusFetcher("beebot") },
          { "allegro_flare", GithubRepoStatusFetcher("allegro_flare") },
+         { "disclife",      GithubRepoStatusFetcher("disclife") },
          { "me",            GithubRepoStatusFetcher("me", "~") },
          { ".dotfiles",     GithubRepoStatusFetcher(".dotfiles") },
       };
