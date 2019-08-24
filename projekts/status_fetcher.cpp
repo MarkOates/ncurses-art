@@ -15,6 +15,9 @@ void initialize()
    mappings['h'] = MOVE_CURSOR_LEFT;
    mappings['l'] = MOVE_CURSOR_RIGHT;
 
+   //std::string repo = args[0];
+   std::string repo = "ncurses-art";
+
    events[INITIALIZE_SCENE] = []{
    };
    events[MOVE_CURSOR_UP] = []{

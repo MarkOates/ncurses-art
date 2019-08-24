@@ -1,4 +1,29 @@
+properties:
+  - name: command
+    type: std::string
+    init_with: "\"git status -uno\""
 functions:
   - name: run
     type: std::string
     body: return "Hello Buddy!";
+  - name: has_untracked_files
+    type: bool
+    body: return false;
+  - name: has_file_changes
+    type: bool
+    body: return false;
+  - name: has_new_files
+    type: bool
+    body: return false;
+  - name: is_the_local_repo_ahead
+    type: bool
+    body: return false;
+  - name: is_the_local_repo_behind
+    type: bool
+    body: return false;
+  - name: how_far_behind_is_the_repo
+    type: bool
+    body: return false;
+  - name: how_ahead_is_the_repo
+    type: bool
+    body: return false;
