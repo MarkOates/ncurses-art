@@ -11,6 +11,7 @@
 GithubRepoStatusFetcher::GithubRepoStatusFetcher(std::string repo_name, std::string repos_directory)
    : last_captured_output("")
    , git_status_command("git status -uno -u")
+   , git_branch_count_command("git branch | wc -l")
    , repo_name(repo_name)
    , repos_directory(repos_directory)
    , only_poll_once(true)
@@ -39,6 +40,12 @@ std::string GithubRepoStatusFetcher::get_last_captured_output()
 std::string GithubRepoStatusFetcher::get_git_status_command()
 {
    return git_status_command;
+}
+
+
+std::string GithubRepoStatusFetcher::get_git_branch_count_command()
+{
+   return git_branch_count_command;
 }
 
 

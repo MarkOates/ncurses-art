@@ -14,6 +14,7 @@ class GithubRepoStatusFetcher
 private:
    std::string last_captured_output;
    std::string git_status_command;
+   std::string git_branch_count_command;
    std::string repo_name;
    std::string repos_directory;
    bool only_poll_once;
@@ -27,6 +28,7 @@ public:
 
    std::string get_last_captured_output();
    std::string get_git_status_command();
+   std::string get_git_branch_count_command();
    std::string get_repo_name();
    std::string get_repos_directory();
    bool get_only_poll_once();

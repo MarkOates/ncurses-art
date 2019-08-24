@@ -6,6 +6,10 @@ properties:
     type: std::string
     init_with: "\"git status -uno -u\""
     getter: true
+  - name: git_branch_count_command
+    type: std::string
+    init_with: "\"git branch | wc -l\""
+    getter: true
   - name: repo_name
     getter: true
     init_with: "\"blast\""
