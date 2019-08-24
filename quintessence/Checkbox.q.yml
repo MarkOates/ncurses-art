@@ -1,0 +1,15 @@
+parameters:
+  - name: name
+    type: std::string
+    getter: true
+  - name: frame
+    type: Frame
+  - name: label_text
+    type: Text
+  - name: checkbox_is_checked
+    type: bool
+functions:
+  - name: run
+    type: std::string
+    body: return "Hello Buddy!";
+  - name: render

@@ -76,10 +76,12 @@ class InputForm
 {
 private:
    std::vector<std::pair<std::string, std::string>> input_elements;
+   int cursor_pos;
 
 public:
    InputForm(std::vector<std::pair<std::string, std::string>> input_elements = {})
       : input_elements(input_elements)
+      , cursor_pos(0)
    {}
    virtual ~InputForm() {}
 
@@ -195,6 +197,8 @@ Projekt::Projekt()
    create_text(":input_buffer", 0, 3).set_text("");
    texts().back()->set_styles(COLOR_PAIR(1));
 }
+
+#include <ncurses_art/Element/CharacterInput.hpp>
 
 bool Projekt::process_input(char input_ch)
 {
