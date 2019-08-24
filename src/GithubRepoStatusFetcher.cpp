@@ -119,6 +119,16 @@ return last_captured_output_contains_string(string_to_find);
 
 }
 
+int GithubRepoStatusFetcher::get_branch_count()
+{
+std::stringstream command;
+command << "(cd " << get_repos_directory() << "/" << get_repo_name() << " && git fetch && " << get_git_branch_count_command() << ")";
+std::string command_output = execute_command(command.str().c_str());
+int result = atoi(command_output.c_str());
+return result;
+
+}
+
 bool GithubRepoStatusFetcher::have_the_local_and_remote_repos_diverged()
 {
 poll_status();
