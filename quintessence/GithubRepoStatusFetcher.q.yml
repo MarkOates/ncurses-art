@@ -4,7 +4,7 @@ properties:
     getter: true
   - name: git_status_command
     type: std::string
-    init_with: "\"git status -uno\""
+    init_with: "\"git status -uno -u\""
     getter: true
   - name: repo_name
     getter: true
@@ -98,7 +98,7 @@ functions:
     type: std::string
     body: |
       std::stringstream result;
-      result << "(cd " << get_repos_directory() << "/" << get_repo_name() << " && git fetch && git status -uno -u)";
+      result << "(cd " << get_repos_directory() << "/" << get_repo_name() << " && git fetch && " << get_git_status_command() << ")";
       return result.str();
 
   - name: execute_command

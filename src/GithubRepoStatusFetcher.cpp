@@ -10,7 +10,7 @@
 
 GithubRepoStatusFetcher::GithubRepoStatusFetcher(std::string repo_name, std::string repos_directory)
    : last_captured_output("")
-   , git_status_command("git status -uno")
+   , git_status_command("git status -uno -u")
    , repo_name(repo_name)
    , repos_directory(repos_directory)
    , only_poll_once(true)
@@ -100,7 +100,7 @@ bool GithubRepoStatusFetcher::is_the_local_repo_ahead()
 {
 poll_status();
 std::string string_to_find = "Your branch is ahead of 'origin/master' by";
-return last_captured_output_contains_string(string_to_find) || have_the_local_and_remote_repos_diverged();
+return last_captured_output_contains_string(string_to_find);
 
 }
 
@@ -108,7 +108,7 @@ bool GithubRepoStatusFetcher::is_the_local_repo_behind()
 {
 poll_status();
 std::string string_to_find = "Your branch is behind 'origin/master' by";
-return last_captured_output_contains_string(string_to_find) || have_the_local_and_remote_repos_diverged();
+return last_captured_output_contains_string(string_to_find);
 
 }
 
@@ -140,7 +140,7 @@ return true;
 std::string GithubRepoStatusFetcher::full_command()
 {
 std::stringstream result;
-result << "(cd " << get_repos_directory() << "/" << get_repo_name() << " && git fetch && git status -uno -u)";
+result << "(cd " << get_repos_directory() << "/" << get_repo_name() << " && git fetch && " << get_git_status_command() << ")";
 return result.str();
 
 }
