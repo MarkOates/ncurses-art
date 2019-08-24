@@ -125,7 +125,7 @@ return true;
 std::string GithubRepoStatusFetcher::full_command()
 {
 std::stringstream result;
-result << "(cd " << get_repos_directory() << "/" << get_repo_name() << " && git status -uno -u)";
+result << "(cd " << get_repos_directory() << "/" << get_repo_name() << " && git fetch && git status -uno -u)";
 return result.str();
 
 }

@@ -5,7 +5,7 @@
 
 TEST(GithubRepoStatusFetcherTest, run__returns_the_expected_response)
 {
-   GithubRepoStatusFetcher fetcher;
+   GithubRepoStatusFetcher fetcher("hexagon");
    EXPECT_EQ(true, fetcher.is_the_repo_in_sync_with_remote());
 }
 
