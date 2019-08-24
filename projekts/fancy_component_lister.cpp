@@ -91,22 +91,23 @@ bool Projekt::process_event(std::string e)
    else if (e == COMMAND_REBUILD_MENU)
    {
       std::stringstream ss;
-      ss << "find quintessence/**/*.yml" << " >\"" << TMP_OUTFILE << "\"";
+      //ss << "find quintessence/**/*.yml" << " > \"" << TMP_OUTFILE << "\"";
+      ss << "find quintessence/**/*.yml" << " > \"" << TMP_OUTFILE << "\"";
       //ss << "git branch --sort=-committerdate > \"" << TMP_OUTFILE << "\"";
       system(ss.str().c_str());
       std::string txt = get_file_contents();
       std::vector<std::string> tokens = split_string(txt, "\n");
-      Menu &menu = find_menu("main_menu");
-      menu.set_options(tokens);
-      menu.set_x(COLS/2 - menu.get_width()/2);
-      menu.set_y(LINES/2 - 3);
+      //Menu &menu = find_menu("main_menu");
+      //menu.set_options(tokens);
+      //menu.set_x(COLS/2 - menu.get_width()/2);
+      //menu.set_y(LINES/2 - 3);
    }
    if (e == BEEBOT_SETUP_BLAST_COMPONENT_COMMAND)
    {
       Menu &menu = find_menu("main_menu");
       std::string trimmed = trim(menu.current_selection());
       std::stringstream command;
-      command << "printf \"git checkout " << trimmed << "\" | pbcopy";
+      command << "printf \"ruby ~/Repos/beebot/lib/runner.rb setup_blast_component\" | pbcopy"; // should be replaced with an environment variable and std::getenv
       system(command.str().c_str());
    }
    return true;
