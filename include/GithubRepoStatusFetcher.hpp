@@ -14,6 +14,7 @@ class GithubRepoStatusFetcher
 private:
    std::string last_captured_output;
    std::string git_status_command;
+   std::string repos_directory;
    std::string repo_name;
 
 public:
@@ -21,8 +22,11 @@ public:
    ~GithubRepoStatusFetcher();
 
 
+   std::string get_last_captured_output();
    std::string get_git_status_command();
+   std::string get_repos_directory();
    std::string get_repo_name();
+bool local_repo_exists();
 bool has_untracked_files();
 bool has_file_changes();
 bool has_new_files();

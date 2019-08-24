@@ -1,15 +1,28 @@
 properties:
   - name: last_captured_output
     type: std::string
+    getter: true
   - name: git_status_command
     type: std::string
     init_with: "\"git status -uno\""
     getter: true
+  - name: repos_directory
+    type: std::string
+    getter: true
+    init_with: "\"~/Repos\""
   - name: repo_name
     getter: true
     init_with: "\"blast\""
     constructor_arg: true
 functions:
+  - name: local_repo_exists
+    type: bool
+    body: |
+      poll_status();
+      // TODO: modify this function so it can rely on captured std::err output
+      // std::string string_to_find = "cd: no such file or directory";
+      return !get_last_captured_output().empty();
+
   - name: has_untracked_files
     type: bool
     body: throw std::runtime_error("not implemented"); return false;
@@ -28,6 +41,7 @@ functions:
       poll_status();
       std::string string_to_find = "Your branch is up to date with 'origin/master'";
       return last_captured_output_contains_string(string_to_find);
+      return true;
 
   - name: is_the_local_repo_ahead
     type: bool
@@ -69,7 +83,7 @@ functions:
     type: std::string
     body: |
       std::stringstream result;
-      result << "(cd ~/Repos/" << repo_name << " && git status -uno)";
+      result << "(cd " << get_repos_directory() << "/" << get_repo_name() << " && git status -uno)";
       return result.str();
 
   - name: execute_command

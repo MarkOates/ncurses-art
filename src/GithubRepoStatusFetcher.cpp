@@ -11,6 +11,7 @@
 GithubRepoStatusFetcher::GithubRepoStatusFetcher(std::string repo_name)
    : last_captured_output("")
    , git_status_command("git status -uno")
+   , repos_directory("~/Repos")
    , repo_name(repo_name)
 {
 }
@@ -21,9 +22,21 @@ GithubRepoStatusFetcher::~GithubRepoStatusFetcher()
 }
 
 
+std::string GithubRepoStatusFetcher::get_last_captured_output()
+{
+   return last_captured_output;
+}
+
+
 std::string GithubRepoStatusFetcher::get_git_status_command()
 {
    return git_status_command;
+}
+
+
+std::string GithubRepoStatusFetcher::get_repos_directory()
+{
+   return repos_directory;
 }
 
 
@@ -32,6 +45,15 @@ std::string GithubRepoStatusFetcher::get_repo_name()
    return repo_name;
 }
 
+
+bool GithubRepoStatusFetcher::local_repo_exists()
+{
+poll_status();
+// TODO: modify this function so it can rely on captured std::err output
+// std::string string_to_find = "cd: no such file or directory";
+return !get_last_captured_output().empty();
+
+}
 
 bool GithubRepoStatusFetcher::has_untracked_files()
 {
@@ -53,6 +75,7 @@ bool GithubRepoStatusFetcher::is_the_repo_in_sync_with_remote()
 poll_status();
 std::string string_to_find = "Your branch is up to date with 'origin/master'";
 return last_captured_output_contains_string(string_to_find);
+return true;
 
 }
 
@@ -97,7 +120,7 @@ return true;
 std::string GithubRepoStatusFetcher::full_command()
 {
 std::stringstream result;
-result << "(cd ~/Repos/" << repo_name << " && git status -uno)";
+result << "(cd " << get_repos_directory() << "/" << get_repo_name() << " && git status -uno)";
 return result.str();
 
 }
