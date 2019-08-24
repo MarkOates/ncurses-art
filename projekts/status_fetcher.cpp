@@ -34,6 +34,7 @@ void initialize()
          { "beebot",        GithubRepoStatusFetcher("beebot") },
          { "allegro_flare", GithubRepoStatusFetcher("allegro_flare") },
          { "me",            GithubRepoStatusFetcher("me", "~") },
+         { ".dotfiles",     GithubRepoStatusFetcher(".dotfiles") },
       };
    };
    events[REFRESH_STATUSES] = []{
@@ -45,6 +46,9 @@ void initialize()
 
       for (auto &status : statuses)
       {
+         std::cout << "processing \"" << status.first << "\"" << std::endl;
+
+         result_text << std::endl;
          result_text << status.first << std::endl;
          result_text << "  " << check_it("exists locally", status.second.local_repo_exists()) << std::endl;
          result_text << "  " << check_it("in sync with remote", status.second.is_the_repo_in_sync_with_remote()) << std::endl;
