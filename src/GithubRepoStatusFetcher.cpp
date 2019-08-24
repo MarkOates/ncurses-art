@@ -62,12 +62,15 @@ throw std::runtime_error("not implemented"); return false;
 
 bool GithubRepoStatusFetcher::has_file_changes()
 {
-throw std::runtime_error("not implemented"); return false;
+poll_status(); std::string string_to_find = "Changes not staged for commit:"; return last_captured_output_contains_string(string_to_find);
 }
 
 bool GithubRepoStatusFetcher::has_new_files()
 {
-throw std::runtime_error("not implemented"); return false;
+poll_status();
+std::string string_to_find = "Untracked files:";
+return last_captured_output_contains_string(string_to_find);
+
 }
 
 bool GithubRepoStatusFetcher::is_the_repo_in_sync_with_remote()
@@ -75,7 +78,6 @@ bool GithubRepoStatusFetcher::is_the_repo_in_sync_with_remote()
 poll_status();
 std::string string_to_find = "Your branch is up to date with 'origin/master'";
 return last_captured_output_contains_string(string_to_find);
-return true;
 
 }
 
@@ -89,7 +91,10 @@ return last_captured_output_contains_string(string_to_find);
 
 bool GithubRepoStatusFetcher::is_the_local_repo_behind()
 {
-throw std::runtime_error("not implemented"); return false;
+poll_status();
+std::string string_to_find = "Your branch is behind 'origin/master' by";
+return last_captured_output_contains_string(string_to_find);
+
 }
 
 bool GithubRepoStatusFetcher::how_far_behind_is_the_repo()
@@ -120,7 +125,7 @@ return true;
 std::string GithubRepoStatusFetcher::full_command()
 {
 std::stringstream result;
-result << "(cd " << get_repos_directory() << "/" << get_repo_name() << " && git status -uno)";
+result << "(cd " << get_repos_directory() << "/" << get_repo_name() << " && git status -uno -u)";
 return result.str();
 
 }
