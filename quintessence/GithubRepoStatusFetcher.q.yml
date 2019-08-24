@@ -6,13 +6,14 @@ properties:
     type: std::string
     init_with: "\"git status -uno\""
     getter: true
+  - name: repo_name
+    getter: true
+    init_with: "\"blast\""
+    constructor_arg: true
   - name: repos_directory
     type: std::string
     getter: true
     init_with: "\"~/Repos\""
-  - name: repo_name
-    getter: true
-    init_with: "\"blast\""
     constructor_arg: true
 functions:
   - name: local_repo_exists

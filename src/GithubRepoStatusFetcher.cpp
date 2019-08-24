@@ -8,11 +8,11 @@
 
 
 
-GithubRepoStatusFetcher::GithubRepoStatusFetcher(std::string repo_name)
+GithubRepoStatusFetcher::GithubRepoStatusFetcher(std::string repo_name, std::string repos_directory)
    : last_captured_output("")
    , git_status_command("git status -uno")
-   , repos_directory("~/Repos")
    , repo_name(repo_name)
+   , repos_directory(repos_directory)
 {
 }
 
@@ -34,15 +34,15 @@ std::string GithubRepoStatusFetcher::get_git_status_command()
 }
 
 
-std::string GithubRepoStatusFetcher::get_repos_directory()
-{
-   return repos_directory;
-}
-
-
 std::string GithubRepoStatusFetcher::get_repo_name()
 {
    return repo_name;
+}
+
+
+std::string GithubRepoStatusFetcher::get_repos_directory()
+{
+   return repos_directory;
 }
 
 
