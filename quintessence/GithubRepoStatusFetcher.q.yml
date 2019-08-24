@@ -23,10 +23,6 @@ functions:
       // std::string string_to_find = "cd: no such file or directory";
       return !get_last_captured_output().empty();
 
-  - name: has_untracked_files
-    type: bool
-    body: throw std::runtime_error("not implemented"); return false;
-
   - name: has_file_changes
     type: bool
     body:
@@ -34,7 +30,7 @@ functions:
       std::string string_to_find = "Changes not staged for commit:";
       return last_captured_output_contains_string(string_to_find);
 
-  - name: has_new_files
+  - name: has_untracked_files
     type: bool
     body: |
       poll_status();
@@ -61,14 +57,6 @@ functions:
       poll_status();
       std::string string_to_find = "Your branch is behind 'origin/master' by";
       return last_captured_output_contains_string(string_to_find);
-
-  - name: how_far_behind_is_the_repo
-    type: bool
-    body: throw std::runtime_error("not implemented"); return false;
-
-  - name: how_ahead_is_the_repo
-    type: bool
-    body: throw std::runtime_error("not implemented"); return false;
 
   - name: last_captured_output_contains_string
     type: bool

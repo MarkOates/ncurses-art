@@ -55,17 +55,12 @@ return !get_last_captured_output().empty();
 
 }
 
-bool GithubRepoStatusFetcher::has_untracked_files()
-{
-throw std::runtime_error("not implemented"); return false;
-}
-
 bool GithubRepoStatusFetcher::has_file_changes()
 {
 poll_status(); std::string string_to_find = "Changes not staged for commit:"; return last_captured_output_contains_string(string_to_find);
 }
 
-bool GithubRepoStatusFetcher::has_new_files()
+bool GithubRepoStatusFetcher::has_untracked_files()
 {
 poll_status();
 std::string string_to_find = "Untracked files:";
@@ -95,16 +90,6 @@ poll_status();
 std::string string_to_find = "Your branch is behind 'origin/master' by";
 return last_captured_output_contains_string(string_to_find);
 
-}
-
-bool GithubRepoStatusFetcher::how_far_behind_is_the_repo()
-{
-throw std::runtime_error("not implemented"); return false;
-}
-
-bool GithubRepoStatusFetcher::how_ahead_is_the_repo()
-{
-throw std::runtime_error("not implemented"); return false;
 }
 
 bool GithubRepoStatusFetcher::last_captured_output_contains_string(std::string string_to_find)

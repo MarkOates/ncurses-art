@@ -45,15 +45,15 @@ TEST(GithubRepoStatusFetcherTest, has_file_changes__returns_false_if_there_are_f
    EXPECT_EQ(false, fetcher.has_file_changes());
 }
 
-TEST(GithubRepoStatusFetcherTest, has_new_files__returns_true_if_new_files_are_present_in_the_repo)
+TEST(GithubRepoStatusFetcherTest, has_untracked_files__returns_true_if_untracked_files_are_present_in_the_repo)
 {
    GithubRepoStatusFetcher fetcher("ncurses-art");
-   EXPECT_EQ(true, fetcher.has_new_files());
+   EXPECT_EQ(true, fetcher.has_untracked_files());
 }
 
-TEST(GithubRepoStatusFetcherTest, has_new_files__returns_false_if_new_files_are_present_in_the_repo)
+TEST(GithubRepoStatusFetcherTest, has_untracked_files__returns_false_if_untracked_files_are_present_in_the_repo)
 {
    GithubRepoStatusFetcher fetcher("blast");
-   EXPECT_EQ(false, fetcher.has_new_files());
+   EXPECT_EQ(false, fetcher.has_untracked_files());
 }
 
