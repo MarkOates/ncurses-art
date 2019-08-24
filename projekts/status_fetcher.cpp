@@ -40,6 +40,9 @@ void initialize()
       Text &text = find_text("output");
 
       std::stringstream result_text;
+
+      result_text << "Important note - this tool does not check the status of *branches* within the repos" << std::endl << std::endl;
+
       for (auto &status : statuses)
       {
          result_text << status.first << std::endl;
