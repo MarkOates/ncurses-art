@@ -33,37 +33,6 @@ std::string GithubRepoStatusFetcher::get_repo_name()
 }
 
 
-bool GithubRepoStatusFetcher::poll_status()
-{
-last_captured_output = execute_command(full_command().c_str());
-return true;
-
-}
-
-std::string GithubRepoStatusFetcher::execute_command(const char* cmd)
-{
-// TODO: This should be replaced with Blast::ShellCommandExecutor
-std::array<char, 128> buffer;
-std::string result;
-std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(cmd, "r"), pclose);
-if (!pipe) {
-    throw std::runtime_error("popen() failed!");
-}
-while (fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr) {
-    result += buffer.data();
-}
-return result;
-
-}
-
-std::string GithubRepoStatusFetcher::full_command()
-{
-std::stringstream result;
-result << "(cd ~/Repos/" << repo_name << " && git status -uno)";
-return result.str();
-
-}
-
 bool GithubRepoStatusFetcher::has_untracked_files()
 {
 throw std::runtime_error("not implemented"); return false;
@@ -79,10 +48,11 @@ bool GithubRepoStatusFetcher::has_new_files()
 throw std::runtime_error("not implemented"); return false;
 }
 
-std::string GithubRepoStatusFetcher::is_the_repo_in_sync_with_remote()
+bool GithubRepoStatusFetcher::is_the_repo_in_sync_with_remote()
 {
 poll_status();
-return last_captured_output;
+std::string string_to_find = "Your branch is up to date with 'origin/master'";
+return last_captured_output_contains_string(string_to_find);
 
 }
 
@@ -104,6 +74,45 @@ throw std::runtime_error("not implemented"); return false;
 bool GithubRepoStatusFetcher::how_ahead_is_the_repo()
 {
 throw std::runtime_error("not implemented"); return false;
+}
+
+bool GithubRepoStatusFetcher::last_captured_output_contains_string(std::string string_to_find)
+{
+std::size_t found = last_captured_output.find(string_to_find);
+if (found!=std::string::npos) return true;
+return false;
+
+}
+
+bool GithubRepoStatusFetcher::poll_status()
+{
+last_captured_output = execute_command(full_command().c_str());
+return true;
+
+}
+
+std::string GithubRepoStatusFetcher::full_command()
+{
+std::stringstream result;
+result << "(cd ~/Repos/" << repo_name << " && git status -uno)";
+return result.str();
+
+}
+
+std::string GithubRepoStatusFetcher::execute_command(const char* cmd)
+{
+// TODO: This should be replaced with Blast::ShellCommandExecutor
+std::array<char, 128> buffer;
+std::string result;
+std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(cmd, "r"), pclose);
+if (!pipe) {
+    throw std::runtime_error("popen() failed!");
+}
+while (fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr) {
+    result += buffer.data();
+}
+return result;
+
 }
 
 
