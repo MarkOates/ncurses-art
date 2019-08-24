@@ -42,6 +42,7 @@ return true;
 
 std::string GithubRepoStatusFetcher::execute_command(const char* cmd)
 {
+// TODO: This should be replaced with Blast::ShellCommandExecutor
 std::array<char, 128> buffer;
 std::string result;
 std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(cmd, "r"), pclose);
@@ -65,17 +66,17 @@ return result.str();
 
 bool GithubRepoStatusFetcher::has_untracked_files()
 {
-raise std::runtime_error("not implemented"); return false;
+throw std::runtime_error("not implemented"); return false;
 }
 
 bool GithubRepoStatusFetcher::has_file_changes()
 {
-raise std::runtime_error("not implemented"); return false;
+throw std::runtime_error("not implemented"); return false;
 }
 
 bool GithubRepoStatusFetcher::has_new_files()
 {
-raise std::runtime_error("not implemented"); return false;
+throw std::runtime_error("not implemented"); return false;
 }
 
 std::string GithubRepoStatusFetcher::is_the_repo_in_sync_with_remote()
@@ -87,22 +88,22 @@ return last_captured_output;
 
 bool GithubRepoStatusFetcher::is_the_local_repo_ahead()
 {
-raise std::runtime_error("not implemented"); return false;
+throw std::runtime_error("not implemented"); return false;
 }
 
 bool GithubRepoStatusFetcher::is_the_local_repo_behind()
 {
-raise std::runtime_error("not implemented"); return false;
+throw std::runtime_error("not implemented"); return false;
 }
 
 bool GithubRepoStatusFetcher::how_far_behind_is_the_repo()
 {
-raise std::runtime_error("not implemented"); return false;
+throw std::runtime_error("not implemented"); return false;
 }
 
 bool GithubRepoStatusFetcher::how_ahead_is_the_repo()
 {
-raise std::runtime_error("not implemented"); return false;
+throw std::runtime_error("not implemented"); return false;
 }
 
 

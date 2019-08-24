@@ -21,6 +21,7 @@ functions:
         type: const char*
         default_argument: ""
     body: |
+      // TODO: This should be replaced with Blast::ShellCommandExecutor
       std::array<char, 128> buffer;
       std::string result;
       std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(cmd, "r"), pclose);
@@ -39,13 +40,13 @@ functions:
       return result.str();
   - name: has_untracked_files
     type: bool
-    body: raise std::runtime_error("not implemented"); return false;
+    body: throw std::runtime_error("not implemented"); return false;
   - name: has_file_changes
     type: bool
-    body: raise std::runtime_error("not implemented"); return false;
+    body: throw std::runtime_error("not implemented"); return false;
   - name: has_new_files
     type: bool
-    body: raise std::runtime_error("not implemented"); return false;
+    body: throw std::runtime_error("not implemented"); return false;
   - name: is_the_repo_in_sync_with_remote
     type: std::string
     body: |
@@ -53,16 +54,16 @@ functions:
       return last_captured_output;
   - name: is_the_local_repo_ahead
     type: bool
-    body: raise std::runtime_error("not implemented"); return false;
+    body: throw std::runtime_error("not implemented"); return false;
   - name: is_the_local_repo_behind
     type: bool
-    body: raise std::runtime_error("not implemented"); return false;
+    body: throw std::runtime_error("not implemented"); return false;
   - name: how_far_behind_is_the_repo
     type: bool
-    body: raise std::runtime_error("not implemented"); return false;
+    body: throw std::runtime_error("not implemented"); return false;
   - name: how_ahead_is_the_repo
     type: bool
-    body: raise std::runtime_error("not implemented"); return false;
+    body: throw std::runtime_error("not implemented"); return false;
 function_body_symbol_dependencies:
   - std::stringstream
   - std::cerr
