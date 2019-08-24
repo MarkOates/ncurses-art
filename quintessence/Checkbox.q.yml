@@ -12,4 +12,3 @@ functions:
   - name: run
     type: std::string
     body: return "Hello Buddy!";
-  - name: render
