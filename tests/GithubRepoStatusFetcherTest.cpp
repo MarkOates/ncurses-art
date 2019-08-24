@@ -6,8 +6,7 @@
 TEST(GithubRepoStatusFetcherTest, run__returns_the_expected_response)
 {
    GithubRepoStatusFetcher fetcher;
-   std::string expected_string = "Hello World!";
-   EXPECT_EQ(expected_string, program_runner.run());
+   EXPECT_EQ("asdf", fetcher.is_the_repo_in_sync_with_remote());
 }
 
 // when no repo is present, raises exception
