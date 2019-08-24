@@ -16,16 +16,21 @@ private:
    std::string git_status_command;
    std::string repo_name;
    std::string repos_directory;
+   bool only_poll_once;
+   bool status_polled;
 
 public:
    GithubRepoStatusFetcher(std::string repo_name="blast", std::string repos_directory="~/Repos");
    ~GithubRepoStatusFetcher();
 
+   void set_status_polled(bool status_polled);
 
    std::string get_last_captured_output();
    std::string get_git_status_command();
    std::string get_repo_name();
    std::string get_repos_directory();
+   bool get_only_poll_once();
+   bool get_status_polled();
 bool local_repo_exists();
 bool has_file_changes();
 bool has_untracked_files();

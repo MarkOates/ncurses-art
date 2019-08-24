@@ -13,12 +13,20 @@ GithubRepoStatusFetcher::GithubRepoStatusFetcher(std::string repo_name, std::str
    , git_status_command("git status -uno")
    , repo_name(repo_name)
    , repos_directory(repos_directory)
+   , only_poll_once(true)
+   , status_polled(false)
 {
 }
 
 
 GithubRepoStatusFetcher::~GithubRepoStatusFetcher()
 {
+}
+
+
+void GithubRepoStatusFetcher::set_status_polled(bool status_polled)
+{
+   this->status_polled = status_polled;
 }
 
 
@@ -43,6 +51,18 @@ std::string GithubRepoStatusFetcher::get_repo_name()
 std::string GithubRepoStatusFetcher::get_repos_directory()
 {
    return repos_directory;
+}
+
+
+bool GithubRepoStatusFetcher::get_only_poll_once()
+{
+   return only_poll_once;
+}
+
+
+bool GithubRepoStatusFetcher::get_status_polled()
+{
+   return status_polled;
 }
 
 
@@ -102,7 +122,9 @@ return false;
 
 bool GithubRepoStatusFetcher::poll_status()
 {
+if (get_only_poll_once() && get_status_polled()) return true;
 last_captured_output = execute_command(full_command().c_str());
+set_status_polled(true);
 return true;
 
 }
