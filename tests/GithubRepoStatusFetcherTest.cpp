@@ -57,3 +57,15 @@ TEST(GithubRepoStatusFetcherTest, has_untracked_files__returns_false_if_untracke
    EXPECT_EQ(false, fetcher.has_untracked_files());
 }
 
+TEST(GithubRepoStatusFetcherTest, have_the_local_and_remote_repos_diverged__returns_true_if_branches_have_diverged)
+{
+   GithubRepoStatusFetcher fetcher("blast");
+   EXPECT_EQ(true, fetcher.have_the_local_and_remote_repos_diverged());
+}
+
+TEST(GithubRepoStatusFetcherTest, have_the_local_and_remote_repos_diverged__returns_false_if_branches_have_not_diverged)
+{
+   GithubRepoStatusFetcher fetcher("ncurses-art");
+   EXPECT_EQ(false, fetcher.have_the_local_and_remote_repos_diverged());
+}
+

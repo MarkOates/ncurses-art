@@ -100,7 +100,7 @@ bool GithubRepoStatusFetcher::is_the_local_repo_ahead()
 {
 poll_status();
 std::string string_to_find = "Your branch is ahead of 'origin/master' by";
-return last_captured_output_contains_string(string_to_find);
+return last_captured_output_contains_string(string_to_find) || have_the_local_and_remote_repos_diverged();
 
 }
 
@@ -108,6 +108,14 @@ bool GithubRepoStatusFetcher::is_the_local_repo_behind()
 {
 poll_status();
 std::string string_to_find = "Your branch is behind 'origin/master' by";
+return last_captured_output_contains_string(string_to_find) || have_the_local_and_remote_repos_diverged();
+
+}
+
+bool GithubRepoStatusFetcher::have_the_local_and_remote_repos_diverged()
+{
+poll_status();
+std::string string_to_find = "Your branch and 'origin/master' have diverged";
 return last_captured_output_contains_string(string_to_find);
 
 }

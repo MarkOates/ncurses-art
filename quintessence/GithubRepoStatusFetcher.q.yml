@@ -68,6 +68,13 @@ functions:
       std::string string_to_find = "Your branch is behind 'origin/master' by";
       return last_captured_output_contains_string(string_to_find);
 
+  - name: have_the_local_and_remote_repos_diverged
+    type: bool
+    body: |
+      poll_status();
+      std::string string_to_find = "Your branch and 'origin/master' have diverged";
+      return last_captured_output_contains_string(string_to_find);
+
   - name: last_captured_output_contains_string
     type: bool
     parameters:

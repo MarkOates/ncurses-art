@@ -37,6 +37,7 @@ bool has_untracked_files();
 bool is_the_repo_in_sync_with_remote();
 bool is_the_local_repo_ahead();
 bool is_the_local_repo_behind();
+bool have_the_local_and_remote_repos_diverged();
 bool last_captured_output_contains_string(std::string string_to_find);
 bool poll_status();
 std::string full_command();
