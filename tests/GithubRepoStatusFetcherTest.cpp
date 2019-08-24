@@ -69,12 +69,6 @@ TEST(GithubRepoStatusFetcherTest, have_the_local_and_remote_repos_diverged__retu
    EXPECT_EQ(false, fetcher.have_the_local_and_remote_repos_diverged());
 }
 
-TEST(GithubRepoStatusFetcherTest, have_the_local_and_remote_repos_diverged__returns_false_if_branches_have_not_diverged)
-{
-   GithubRepoStatusFetcher fetcher("ncurses-art");
-   EXPECT_EQ(false, fetcher.have_the_local_and_remote_repos_diverged());
-}
-
 TEST(GithubRepoStatusFetcherTest, branch_count__returns_the_number_of_branches_in_the_repo)
 {
    GithubRepoStatusFetcher fetcher("fullscore");
