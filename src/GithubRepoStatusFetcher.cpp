@@ -8,10 +8,10 @@
 
 
 
-GithubRepoStatusFetcher::GithubRepoStatusFetcher()
+GithubRepoStatusFetcher::GithubRepoStatusFetcher(std::string repo_name)
    : last_captured_output("")
    , git_status_command("git status -uno")
-   , repo_name("blast")
+   , repo_name(repo_name)
 {
 }
 
@@ -58,7 +58,10 @@ return last_captured_output_contains_string(string_to_find);
 
 bool GithubRepoStatusFetcher::is_the_local_repo_ahead()
 {
-throw std::runtime_error("not implemented"); return false;
+poll_status();
+std::string string_to_find = "Your branch is ahead of 'origin/master' by";
+return last_captured_output_contains_string(string_to_find);
+
 }
 
 bool GithubRepoStatusFetcher::is_the_local_repo_behind()

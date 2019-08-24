@@ -17,7 +17,7 @@ private:
    std::string repo_name;
 
 public:
-   GithubRepoStatusFetcher();
+   GithubRepoStatusFetcher(std::string repo_name="blast");
    ~GithubRepoStatusFetcher();
 
 

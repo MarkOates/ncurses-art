@@ -8,6 +8,7 @@ properties:
   - name: repo_name
     getter: true
     init_with: "\"blast\""
+    constructor_arg: true
 functions:
   - name: has_untracked_files
     type: bool
@@ -30,7 +31,10 @@ functions:
 
   - name: is_the_local_repo_ahead
     type: bool
-    body: throw std::runtime_error("not implemented"); return false;
+    body: |
+      poll_status();
+      std::string string_to_find = "Your branch is ahead of 'origin/master' by";
+      return last_captured_output_contains_string(string_to_find);
 
   - name: is_the_local_repo_behind
     type: bool
