@@ -26,11 +26,14 @@ void initialize()
       create_text("output");
 
       statuses = {
-         { "ncurses-art", GithubRepoStatusFetcher("ncurses-art") },
-         { "blast",       GithubRepoStatusFetcher("blast") },
-         { "fullscore",   GithubRepoStatusFetcher("fullscore") },
-         { "beebot",      GithubRepoStatusFetcher("beebot") },
-         { "allegro_flare",      GithubRepoStatusFetcher("allegro_flare") },
+         { "ncurses-art",   GithubRepoStatusFetcher("ncurses-art") },
+         { "blast",         GithubRepoStatusFetcher("blast") },
+         { "fullscore",     GithubRepoStatusFetcher("fullscore") },
+         { "hexagon",       GithubRepoStatusFetcher("hexagon") },
+         { "HomeServer",    GithubRepoStatusFetcher("HomeServer") },
+         { "beebot",        GithubRepoStatusFetcher("beebot") },
+         { "allegro_flare", GithubRepoStatusFetcher("allegro_flare") },
+         { "me",            GithubRepoStatusFetcher("me", "~") },
       };
    };
    events[REFRESH_STATUSES] = []{
@@ -40,6 +43,7 @@ void initialize()
       for (auto &status : statuses)
       {
          result_text << status.first << std::endl;
+         result_text << "  " << check_it("exists locally", status.second.local_repo_exists()) << std::endl;
          result_text << "  " << check_it("in sync with remote", status.second.is_the_repo_in_sync_with_remote()) << std::endl;
          result_text << "  " << check_it("has no changed files", !status.second.has_file_changes()) << std::endl;
          result_text << "  " << check_it("has no untracked files", !status.second.has_untracked_files()) << std::endl;
