@@ -9,14 +9,16 @@
 #define INITIALIZE_SCENE "INITIALIZE_SCENE"
 #define REFRESH_STATUSES "REFRESH_STATUSES"
 
+#define PROPERTY_DELIMITER ": "
+
 std::map<std::string, GithubRepoStatusFetcher> statuses = {};
 
 std::string check_it(std::string label, bool check)
 {
    std::stringstream result;
    result << label;
-   if (check) result << " - ✓ yes";
-   else result << " - ✗ no";
+   if (check) result << PROPERTY_DELIMITER << "✓ yes";
+   else result << PROPERTY_DELIMITER << "✗ no";
    return result.str();
 }
 
@@ -50,11 +52,22 @@ void initialize()
          std::cout << "processing \"" << status.first << "\"" << std::endl;
 
          result_text << std::endl;
+
+         bool exists_locally = status.second.local_repo_exists();
+         bool in_sync = status.second.is_the_repo_in_sync_with_remote();
+         bool has_no_changed_files = !status.second.has_file_changes();
+         bool has_no_untracked_files = !status.second.has_untracked_files();
+
+         std::string status_icon = "🔹 clean";
+         if (!exists_locally || !in_sync) status_icon = "🔺 unsynced";
+         if (!has_no_changed_files || !has_no_untracked_files) status_icon = "🔸 some cluttered files";
+
          result_text << status.first << std::endl;
-         result_text << "  " << check_it("exists locally", status.second.local_repo_exists()) << std::endl;
-         result_text << "  " << check_it("in sync with remote", status.second.is_the_repo_in_sync_with_remote()) << std::endl;
-         result_text << "  " << check_it("has no changed files", !status.second.has_file_changes()) << std::endl;
-         result_text << "  " << check_it("has no untracked files", !status.second.has_untracked_files()) << std::endl;
+         result_text << "  status" << PROPERTY_DELIMITER << status_icon << std::endl;
+         result_text << "  " << check_it("exists locally", exists_locally) << std::endl;
+         result_text << "  " << check_it("in sync with remote", in_sync) << std::endl;
+         result_text << "  " << check_it("has no changed files", has_no_changed_files) << std::endl;
+         result_text << "  " << check_it("has no untracked files", has_no_untracked_files) << std::endl;
       }
 
       text.set_text(result_text.str());
