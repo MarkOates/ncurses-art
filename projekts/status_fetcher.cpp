@@ -19,7 +19,13 @@ void initialize()
    std::string repo = "ncurses-art";
 
    events[INITIALIZE_SCENE] = []{
+      std::stringstream ss;
+      ss << "git diff > \"" << TMP_OUTFILE << "\"";
+      system(ss.str().c_str());
+      emit_event(LOAD_FILE_COMMAND);
+      find_text("body_text").set_text(get_file_contents());
    };
+
    events[MOVE_CURSOR_UP] = []{
    };
    events[MOVE_CURSOR_DOWN] = []{

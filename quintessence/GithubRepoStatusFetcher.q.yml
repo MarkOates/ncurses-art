@@ -1,7 +1,15 @@
 properties:
+  - name: tmp_outfile
+    type: std::string
+    ini_with: "\"/tmp/out_github_status_fetcher.txt.tmp\""
+    getter: true
+  - name: initialized
+    type: bool
+    init_with: "false"
   - name: command
     type: std::string
     init_with: "\"git status -uno\""
+    getter: true
 functions:
   - name: run
     type: std::string
@@ -15,6 +23,22 @@ functions:
   - name: has_new_files
     type: bool
     body: return false;
+  - name: is_the_repo_in_sync_with_remote
+    type: bool
+    body: |
+      #//std::stringstream ss;
+      #//ss << get_command() << " > \"" << get_tmp_outfile() << "\"";
+      std::stringstream command_output;
+      command_output << get_command() << " > \"" << get_tmp_outfile() << "\"";
+      system(command_output.str().c_str());
+
+      //emit_event(LOAD_FILE_COMMAND);
+      //find_text("body_text").set_text(get_file_contents());
+
+      //bool result = false;
+      //std::stringstream command_output;
+      #// command_output << get_command() << " > \"" << get_tmp_outfile() << "\"";
+      #// return result;
   - name: is_the_local_repo_ahead
     type: bool
     body: return false;
@@ -27,3 +51,46 @@ functions:
   - name: how_ahead_is_the_repo
     type: bool
     body: return false;
+  - name: _set_cwd
+    type: bool
+    body: |
+      if (initialized) return initialized;
+
+      if (!al_init()) std::cerr << "al_init() failed" << std::endl;
+
+      ALLEGRO_PATH *resource_path = al_get_standard_path(ALLEGRO_RESOURCES_PATH);
+      al_change_directory(al_path_cstr(resource_path, ALLEGRO_NATIVE_PATH_SEP));
+      al_destroy_path(resource_path);
+      return true;
+function_body_symbol_dependencies:
+  - std::stringstream
+  - std::cerr
+  - std::endl
+  - al_init()
+  - al_get_standard_path()
+  - al_change_directory()
+  - al_destroy_path()
+  - al_path_cstr()
+  - ALLEGRO_RESOURCES_PATH
+  - ALLEGRO_NATIVE_PATH_SEP
+dependencies:
+  - symbol: std::stringstream
+    headers: [ 'sstream' ]
+  - symbol: std::cerr
+    headers: [ 'iostream' ]
+  - symbol: std::endl
+    headers: [ 'iostream' ]
+  - symbol: al_init()
+    headers: [ 'allegro5/allegro.h' ]
+  - symbol: al_get_standard_path()
+    headers: [ 'allegro5/allegro.h' ]
+  - symbol: al_change_directory()
+    headers: [ 'allegro5/allegro.h' ]
+  - symbol: al_destroy_path()
+    headers: [ 'allegro5/allegro.h' ]
+  - symbol: al_path_cstr()
+    headers: [ 'allegro5/allegro.h' ]
+  - symbol: ALLEGRO_RESOURCES_PATH
+    headers: [ 'allegro5/allegro.h' ]
+  - symbol: ALLEGRO_NATIVE_PATH_SEP
+    headers: [ 'allegro5/allegro.h' ]
