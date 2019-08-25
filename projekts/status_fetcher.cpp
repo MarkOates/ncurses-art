@@ -13,6 +13,18 @@
 
 std::map<std::string, GithubRepoStatusFetcher> statuses = {};
 
+std::string diamond_it(std::string label, int number)
+{
+   std::stringstream result;
+   bool check = number == 1;
+   result << label;
+   if (check) result << PROPERTY_DELIMITER << "🔹 ";
+   else result << PROPERTY_DELIMITER << "🔸 ";
+   result << number;
+
+   return result.str();
+}
+
 std::string check_it(std::string label, bool check)
 {
    std::stringstream result;
@@ -57,6 +69,7 @@ void initialize()
          bool in_sync = status.second.is_the_repo_in_sync_with_remote();
          bool has_no_changed_files = !status.second.has_file_changes();
          bool has_no_untracked_files = !status.second.has_untracked_files();
+         int num_local_branches = status.second.get_branch_count();
 
          std::string status_icon = "🔹 clean";
          if (!exists_locally || !in_sync) status_icon = "🔺 unsynced";
@@ -65,6 +78,7 @@ void initialize()
          result_text << status.first << std::endl;
          result_text << "  status" << PROPERTY_DELIMITER << status_icon << std::endl;
          result_text << "  " << check_it("exists locally", exists_locally) << std::endl;
+         result_text << "  " << diamond_it("num local branches", num_local_branches) << std::endl;
          result_text << "  " << check_it("in sync with remote", in_sync) << std::endl;
          result_text << "  " << check_it("has no changed files", has_no_changed_files) << std::endl;
          result_text << "  " << check_it("has no untracked files", has_no_untracked_files) << std::endl;
