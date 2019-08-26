@@ -17,12 +17,18 @@
 #define SAVE_SCORE "SAVE_SCORE"
 #define LOAD_SCORE "LOAD_SCORE"
 
-class Cursor;
-class Score;
+#include "../../MusicCompDeadSimple/include/Actions.hpp"
+
+//class Cursor;
+//class Score;
+//class Actions;
 
 void render(Score &score, Cursor &cursor)
 {
 }
+
+
+Actions actions;
 
 void initialize()
 {
@@ -57,44 +63,58 @@ void initialize()
    };
    events[CREATE_NOTE_AT_CURSOR] = []{
       find_text("text").set_text("create note at cursor!");
+      actions.create_note_at_cursor();
    };
    events[REMOVE_NOTE_AT_CURSOR] = []{
       find_text("text").set_text("remove note at cursor");
+      actions.remove_note_at_cursor();
    };
    events[CREATE_STAFF_AT_CURSOR] = []{
       find_text("text").set_text("create_staff_at_cursor");
+      actions.create_staff_at_cursor();
    };
    events[REMOVE_STAFF_AT_CURSOR] = []{
       find_text("text").set_text("remove_staff_at_cursor");
+      actions.remove_staff_at_cursor();
    };
    events[MOVE_CURSOR_UP] = []{
       find_text("text").set_text("move_cursor_up");
+      actions.move_cursor_up();
    };
    events[MOVE_CURSOR_DOWN] = []{
       find_text("text").set_text("move cursor down");
+      actions.move_cursor_down();
    };
    events[MOVE_CURSOR_LEFT] = []{
       find_text("text").set_text("move cursor left");
+      actions.move_cursor_left();
    };
    events[MOVE_CURSOR_RIGHT] = []{
       find_text("text").set_text("move cursor right");
+      actions.move_cursor_right();
    };
    events[MOVE_CAMERA_UP] = []{
       find_text("text").set_text("move camera up");
+      actions.move_camera_up();
    };
    events[MOVE_CAMERA_DOWN] = []{
       find_text("text").set_text("move camera down");
+      actions.move_camera_down();
    };
    events[MOVE_CAMERA_LEFT] = []{
       find_text("text").set_text("move camera left");
+      actions.move_camera_left();
    };
    events[MOVE_CAMERA_RIGHT] = []{
       find_text("text").set_text("move camera right");
+      actions.move_camera_right();
    };
    events[SAVE_SCORE] = []{
       find_text("text").set_text("save score!");
+      actions.save_score();
    };
    events[LOAD_SCORE] = []{
       find_text("text").set_text("load score!");
+      actions.load_score();
    };
 }
