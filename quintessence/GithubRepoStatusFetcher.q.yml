@@ -10,6 +10,10 @@ properties:
     type: std::string
     init_with: "\"git branch | wc -l\""
     getter: true
+  - name: git_current_branch_command
+    type: std::string
+    init_with: "\"git branch | grep \* | cut -d ' ' -f2"\""
+    getter: true
   - name: repo_name
     getter: true
     init_with: "\"blast\""
