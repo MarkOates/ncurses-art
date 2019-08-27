@@ -12,7 +12,7 @@ properties:
     getter: true
   - name: git_current_branch_command
     type: std::string
-    init_with: "\"git branch | grep \* | cut -d ' ' -f2"\""
+    init_with: "\"git branch | grep \\* | cut -d ' ' -f2\""
     getter: true
   - name: component_quintessence_filenames_command
     type: std::vector<std::string>

@@ -74,4 +74,3 @@ TEST(GithubRepoStatusFetcherTest, branch_count__returns_the_number_of_branches_i
    GithubRepoStatusFetcher fetcher("fullscore");
    EXPECT_EQ(2, fetcher.get_branch_count());
 }
-
