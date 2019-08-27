@@ -1,4 +1,3 @@
-
 #!/bin/bash
 
 yellow='\033[1;33m'
@@ -11,13 +10,22 @@ then
 else
   chruby 2.5.1
   declare -a commands=(
-    "echo \"\n$yellow===== STAGE 0: Compose componets from all yamls =====$reset_text\n\"; ./build"
-    "echo \"\n$yellow===== STAGE 1: Make all the components =====$reset_text\n\"; make"
-    "echo \"\n$yellow===== STAGE 2: Make the test for this component =====$reset_text\n\"; make ./bin/tests/$@Test"
-    "echo \"\n$yellow===== STAGE 3: Run the test for this component =====$reset_text\n\"; ./bin/tests/$@Test"
+    "echo \"\n$yellow===== STAGE 0: Compose componets from all quintessence files =====$reset_text\n\""
+    "./build"
+    "echo \"\n$yellow===== STAGE 1: Make all the components =====$reset_text\n\""
+    "make objects"
+    "echo \"\n$yellow===== STAGE 4: Make the test for this component =====$reset_text\n\""
+    "make ./bin/tests/$@Test"
+    "echo \"\n$yellow===== STAGE 5: Run the test for this component =====$reset_text\n\""
+    "./bin/tests/$@Test"
+    "echo \"\n$yellow===== STAGE 2: Make all the programs =====$reset_text\n\""
+    "make programs"
+    "echo \"\n$yellow===== STAGE 3: Make all the example programs =====$reset_text\n\""
+    "make examples"
+    "echo \"\n$yellow===================== 🀫 Finished! 🀫 =====================$reset_text\n\"" \
   )
 
-  rerun_command="${commands[0]} && ${commands[1]} && ${commands[2]} && ${commands[3]}"
+  rerun_command="${commands[0]} && ${commands[1]} && ${commands[2]} && ${commands[3]} && ${commands[4]} && ${commands[5]} && ${commands[6]} && ${commands[7]} && ${commands[8]} && ${commands[9]} && ${commands[10]} && ${commands[11]} && ${commands[12]}"
 
   rerun -c $rerun_command -p "**/$@{Test.cpp,_test.cpp,.q.*}"
 fi
