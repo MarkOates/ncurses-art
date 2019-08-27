@@ -12,10 +12,10 @@ properties:
     getter: true
   - name: git_current_branch_command
     type: std::string
-    init_with: "\"git branch | grep \\* | cut -d ' ' -f2\""
+    init_with: "\"git branch | grep \\\\* | cut -d ' ' -f2\""
     getter: true
   - name: component_quintessence_filenames_command
-    type: std::vector<std::string>
+    type: std::string
     init_with: "\"find quintessence -name '*.q.yml'\""
     getter: true
   - name: repo_name
@@ -93,11 +93,9 @@ functions:
     type: std::vector<std::string>
     body: |
       std::stringstream command;
-      command << "(cd " << get_repos_directory() << "/" << get_repo_name() << " && " << component_quintessence_filenames_command() << ")";
+      command << "(cd " << get_repos_directory() << "/" << get_repo_name() << " && " << get_component_quintessence_filenames_command() << ")";
       std::string command_output = execute_command(command.str().c_str());
-      #split
-      int result = atoi(command_output.c_str());
-      return result;
+      return StringSplitter(command_output, '\n').split();
 
   - name: have_the_local_and_remote_repos_diverged
     type: bool
@@ -151,10 +149,13 @@ functions:
       }
       return result;
 function_body_symbol_dependencies:
+  - StringSplitter
   - std::stringstream
   - std::cerr
   - std::endl
 dependencies:
+  - symbol: StringSplitter
+    headers: [ 'StringSplitter.hpp' ]
   - symbol: std::stringstream
     headers: [ 'sstream' ]
   - symbol: std::cerr

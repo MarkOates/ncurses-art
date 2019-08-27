@@ -1,6 +1,7 @@
 
 
 #include <GithubRepoStatusFetcher.hpp>
+#include <StringSplitter.hpp>
 #include <sstream>
 #include <iostream>
 #include <iostream>
@@ -12,7 +13,7 @@ GithubRepoStatusFetcher::GithubRepoStatusFetcher(std::string repo_name, std::str
    : last_captured_output("")
    , git_status_command("git status -uno -u")
    , git_branch_count_command("git branch | wc -l")
-   , git_current_branch_command("git branch | grep \* | cut -d ' ' -f2")
+   , git_current_branch_command("git branch | grep \\* | cut -d ' ' -f2")
    , component_quintessence_filenames_command("find quintessence -name '*.q.yml'")
    , repo_name(repo_name)
    , repos_directory(repos_directory)
@@ -57,7 +58,7 @@ std::string GithubRepoStatusFetcher::get_git_current_branch_command()
 }
 
 
-std::vector<std::string> GithubRepoStatusFetcher::get_component_quintessence_filenames_command()
+std::string GithubRepoStatusFetcher::get_component_quintessence_filenames_command()
 {
    return component_quintessence_filenames_command;
 }
@@ -146,11 +147,9 @@ return result;
 std::vector<std::string> GithubRepoStatusFetcher::get_quintessence_filenames()
 {
 std::stringstream command;
-command << "(cd " << get_repos_directory() << "/" << get_repo_name() << " && " << component_quintessence_filenames_command() << ")";
+command << "(cd " << get_repos_directory() << "/" << get_repo_name() << " && " << get_component_quintessence_filenames_command() << ")";
 std::string command_output = execute_command(command.str().c_str());
-#split
-int result = atoi(command_output.c_str());
-return result;
+return StringSplitter(command_output, '\n').split();
 
 }
 
