@@ -1,0 +1,17 @@
+properties:
+  - name: string
+    type: std::string
+    init_with: "\"\""
+    constructor_arg: true
+  - name: delimiter
+    type: char
+    init_with: "' '"
+    constructor_arg: true
+functions:
+  - name: split
+    type: "std::vector<std::string>"
+    body: "std::vector<std::string> elems;\n auto result = std::back_inserter(elems);\n std::stringstream ss(string);\n std::string item;\n while (std::getline(ss, item, delimiter)) { *(result++) = item; }\n return elems;\n "
+function_body_symbol_dependencies: [ "std::stringstream" , "std::vector<std::string>" ]
+dependencies:
+  - symbol: char
+    headers: []
