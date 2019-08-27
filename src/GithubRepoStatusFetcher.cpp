@@ -144,6 +144,14 @@ return result;
 
 }
 
+std::string GithubRepoStatusFetcher::get_current_branch_name()
+{
+std::stringstream command;
+command << "(cd " << get_repos_directory() << "/" << get_repo_name() << " && git fetch && " << get_git_current_branch_command() << ")";
+return execute_command(command.str().c_str());
+
+}
+
 std::vector<std::string> GithubRepoStatusFetcher::get_quintessence_filenames()
 {
 std::stringstream command;

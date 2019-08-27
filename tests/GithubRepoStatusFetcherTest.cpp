@@ -74,3 +74,27 @@ TEST(GithubRepoStatusFetcherTest, branch_count__returns_the_number_of_branches_i
    GithubRepoStatusFetcher fetcher("fullscore");
    EXPECT_EQ(2, fetcher.get_branch_count());
 }
+
+TEST(GithubRepoStatusFetcherTest, get_current_branch_name__returns_the_branch_that_is_currently_active_in_the_repo)
+{
+   std::string expected_current_branch_name = "my-extra-branch\n";
+   GithubRepoStatusFetcher fetcher("fullscore");
+   EXPECT_EQ(expected_current_branch_name, fetcher.get_current_branch_name());
+}
+
+TEST(GithubRepoStatusFetcherTest, get_quintessence_filenames__returns_a_list_of_components)
+{
+   std::vector<std::string> expected_quintessence_files = {
+      "quintessence/GithubRepoStatusFetcher.q.yml",
+      "quintessence/ProjectListBuilder.q.yml",
+      "quintessence/Checkbox.q.yml",
+      "quintessence/Quiz.q.yml",
+      "quintessence/ProjectComponentListBuilder.q.yml",
+      "quintessence/LivenessCheck.q.yml",
+      "quintessence/QuizYAMLLoader.q.yml",
+      "quintessence/Question.q.yml",
+      "quintessence/StringSplitter.q.yml",
+   };
+   GithubRepoStatusFetcher fetcher("ncurses-art");
+   EXPECT_EQ(expected_quintessence_files, fetcher.get_quintessence_filenames());
+}

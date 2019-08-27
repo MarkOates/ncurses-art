@@ -89,6 +89,13 @@ functions:
       int result = atoi(command_output.c_str());
       return result;
 
+  - name: get_current_branch_name
+    type: std::string
+    body: |
+      std::stringstream command;
+      command << "(cd " << get_repos_directory() << "/" << get_repo_name() << " && git fetch && " << get_git_current_branch_command() << ")";
+      return execute_command(command.str().c_str());
+
   - name: get_quintessence_filenames
     type: std::vector<std::string>
     body: |
