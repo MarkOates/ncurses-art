@@ -284,10 +284,21 @@ bool Projekt::process_event(std::string e)
       //init_pair(4, 24, 22);
       //init_pair(5, COLOR_MAGENTA, 23);
 
+std::stringstream ss;
+ss <<
+"░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░" << std::endl <<
+"░░░░░░░█▀▀ █▀▀█ █▀▀▄ █▀▀ █ ░█ ░░█▀▀ ░▀ ░█▀▀▄░█▀▀▄░█▀▀ █▀▀█ ░░░░░░" << std::endl <<
+"░░░░░░░█▀▀ █▄▄█ █ ░█ █ ░░█▄▄█ ░░█▀▀ ▀█▀ █ ░█ █ ░█ █▀▀ █▄▄▀ ░░░░░░" << std::endl <<
+"░░░░░░░▀ ░ ▀ ░▀ ▀ ░▀ ▀▀▀ ▄▄▄█ ░░▀ ░░▀▀▀ ▀ ░▀ ▀▀▀  ▀▀▀ ▀ ▀▀ ░░░░░░" << std::endl <<
+"░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░" << std::endl <<
+std::endl;
+
       //create_menu("text").set_styles(COLOR_PAIR(22));
       create_menu("main_menu").set_styles(COLOR_PAIR(22));
-      create_text("input_mode_text", 2, 2).set_styles(COLOR_PAIR(22));
-      create_text("input_buffer", 2, 5).set_styles(COLOR_PAIR(20));
+      create_text("title", 2, 2).set_styles(COLOR_PAIR(22));
+      find_text("title").set_text(ss.str());
+      create_text("input_mode_text", 2, 8).set_styles(COLOR_PAIR(22));
+      create_text("input_buffer", 2, 10).set_styles(COLOR_PAIR(20));
       create_text("body_text", 80, 3).set_styles(COLOR_PAIR(2));
 
       if (args.size() <= 1) // no args were provided
