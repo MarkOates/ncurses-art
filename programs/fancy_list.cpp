@@ -245,7 +245,9 @@ bool Projekt::process_event(std::string e)
       std::string current_git_branch = extractor.get_current_branch();
       //tokens.push_back(current_git_branch);
 
-      FancyList fancy_list("/Users/markoates/Repos/me/fancy_lists/fancy_commands.txt");
+      if (args.size() <= 1) std::runtime_error("Yeeeks! There must be an argument, a filename to the list you want to open.");
+
+      FancyList fancy_list(args[1]);
       std::vector<std::string> tokens = fancy_list.get_tokens();
 
       Menu &menu = find_menu("main_menu");
