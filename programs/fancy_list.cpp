@@ -224,6 +224,12 @@ bool Projekt::process_event(std::string e)
          command << "printf \"" << token_builder.get_link() << "\" | pbcopy";
          system(command.str().c_str());
       }
+      else if (tokens.size() == 1)
+      {
+         std::stringstream command;
+         command << "printf \"" << tokens[0] << "\" | pbcopy";
+         system(command.str().c_str());
+      }
       else
       {
          std::stringstream error_message;
