@@ -40,6 +40,45 @@ void ___replace(std::string& str, std::string from, std::string to)
 
 
 
+class TokenBuilder
+{
+private:
+   std::string title;
+   std::string link;
+
+public:
+   static const std::string DELIMITER;
+
+   TokenBuilder(std::string title, std::string link)
+      : title(title)
+      , link(link)
+   {}
+
+   std::string get_link() { return link; }
+   std::string get_title() { return title; }
+
+   std::string build_show_string() { return title + DELIMITER + link; }
+};
+const std::string TokenBuilder::DELIMITER = " - ";
+
+
+class TokenExtractor
+{
+private:
+   std::string string;
+
+public:
+   TokenExtractor(std::string string)
+      : string(string)
+   {}
+
+   std::string infer_link()
+   {
+      // TODO
+   }
+};
+
+
 class GitCurrentBranchExtractor
 {
 private:
