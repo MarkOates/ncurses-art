@@ -13,10 +13,6 @@ YAML_CPP_LIB_DIR=$(YAML_CPP_DIR)/build
 YAML_CPP_INCLUDE_DIR=$(YAML_CPP_DIR)/include
 
 
-# this is the directory of the project (it's auto_generated)
-PROJECT_DIR=$(LIBS_ROOT)/$(PROJECT_NAME_SNAKE_CASE)
-
-
 GOOGLE_TEST_LIBS=gtest
 NCURSES_LIB=ncurses
 YAML_CPP_LIBS=yaml-cpp
