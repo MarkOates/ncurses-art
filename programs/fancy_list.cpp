@@ -6,6 +6,7 @@
 #define BUILD_COMMAND_MENU "command_build_menu"
 #define JUMP_TO_NEXT_SECTION "JUMP_TO_NEXT_SECTION"
 #define YANK_SELECTED_TEXT "yank_selected_text"
+#define YANK_OPEN_COMMAND "yank_open_command"
 
 // trim from start
 std::string ltrim(std::string &s) {
@@ -123,6 +124,7 @@ bool Projekt::process_input(char ch)
    case 'q': emit_event(EVENT_ABORT_PROGRAM); break;
    case 'y': emit_event(YANK_SELECTED_TEXT); break;
    case '\t': emit_event(JUMP_TO_NEXT_SECTION); break;
+   case 'o': emit_event(YANK_OPEN_COMMAND); break;
    default: return false; break;
    }
    return true;
@@ -138,16 +140,43 @@ bool Projekt::process_event(std::string e)
 
       emit_event(BUILD_COMMAND_MENU);
    }
+   if (e == YANK_OPEN_COMMAND)
+   {
+      Menu &menu = find_menu("main_menu");
+      std::string trimmed = trim(menu.current_selection());
+      std::vector<std::string> tokens = split_string(trimmed, TokenBuilder::DELIMITER);
+      if (tokens.size() == 2)
+      {
+         TokenBuilder token_builder(tokens[0], tokens[1]);
+         std::stringstream command;
+         command << "printf \"open " << token_builder.get_link() << "\" | pbcopy";
+         system(command.str().c_str());
+      }
+      else
+      {
+         std::stringstream error_message;
+         error_message << "Cannot extract token from line \"" << trimmed << "\"";
+         throw std::runtime_error(error_message.str());
+      }
+   }
    if (e == YANK_SELECTED_TEXT)
    {
       Menu &menu = find_menu("main_menu");
       std::string trimmed = trim(menu.current_selection());
-      std::string quite_sanitized = trimmed;
-      ___replace(quite_sanitized, "\"", "\\\"");
-      ___replace(quite_sanitized, "$", "\\$");
-      std::stringstream command;
-      command << "printf \"" << quite_sanitized << "\" | pbcopy";
-      system(command.str().c_str());
+      std::vector<std::string> tokens = split_string(trimmed, TokenBuilder::DELIMITER);
+      if (tokens.size() == 2)
+      {
+         TokenBuilder token_builder(tokens[0], tokens[1]);
+         std::stringstream command;
+         command << "printf \"" << token_builder.get_link() << "\" | pbcopy";
+         system(command.str().c_str());
+      }
+      else
+      {
+         std::stringstream error_message;
+         error_message << "Cannot extract token from line \"" << trimmed << "\"";
+         throw std::runtime_error(error_message.str());
+      }
    }
    else if (e == MOVE_CURSOR_DOWN)
    {
@@ -179,51 +208,8 @@ bool Projekt::process_event(std::string e)
       //tokens.push_back(current_git_branch);
 
       std::vector<std::string> tokens = {
-          "----- RAILS MIGRATIONS -----",
-          "bin/rails db:migrate",
-          "bin/rails db:rollback",
-          "bin/rails db:drop db:create db:migrate",
-          "bin/rails db:drop db:create db:migrate; bin/rails db:seed",
-          "bin/rails db:seed",
-          "",
-          "----- RAILS DEVELOPMENT -----",
-          "rerun -c \"RAILS_ENV=test bundle exec ruby -Itest test/***_test.rb\"",
-          "",
-          "----- RAILS GENERATORS -----",
-          "bin/rails generate migration ",
-          "",
-          "----- SYSTEM -----",
-          "mysql -u root -h stock-photos.railgun stock-photos_development",
-          "mysql -u root ",
-          "ps aux | grep sewing | grep node_modules | awk \"{print $2}\" | "
-          "xargs kill",
-          "",
-          "----- GIT -----",
-          "git commit --allow-empty -m \"Kick shipit\"",
-          "git checkout [HASH_OR_BRANCH_NAME] -- [NAME_OF_FILE]",
-          "git diff-tree --no-commit-id --name-only -r [HASH_OR_BRANCH_NAME]",
-          "git remote -v",
-          "git remote set-url origin git@github.com:[USERNAME]/[REPOSITORY].git",
-          std::string("git push origin -f ") + current_git_branch + ":staging",
-          "",
-          "----- RUBY -----",
-          "ActiveJob::Base.queue_adapter.enqueued_jobs",
-          "Rails.application.routes.url_helpers.rails_admin_path",
-          "",
-          "----- YARN -----",
-          "yarn run build",
-          "yarn run lint",
-          "yarn run test",
-          "",
-          "----- NGINX -----",
-          "cat /etc/nginx/includes/common_config.conf", // check values of
-                                                        // common config
-          "",
-          "----- SPLUNK -----",
-          "source=\"gke-stock-photos-production\" application=\"stock-photos-production\" kube_container=\"web\" | stats count by remote_ip | sort -count",
-          "source=\"gke-stock-photos-production\" application=\"stock-photos-production\" kube_container=\"web\" status=429 | stats count by remote_ip, user_agent, controller, action | sort -count",
+         TokenBuilder("Label", "actual value to be copied").build_show_string(),
       };
-
       Menu &menu = find_menu("main_menu");
       menu.set_options(tokens);
       menu.set_x(10);
