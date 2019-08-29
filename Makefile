@@ -19,12 +19,12 @@ YAML_CPP_LIBS=yaml-cpp
 
 
 SOURCES := $(shell find src -name '*.cpp')
-PROGRAMS := $(shell find programs -name '*.cpp')
+PROGRAM_SOURCES := $(shell find programs -name '*.cpp')
 OBJECTS := $(SOURCES:src/%.cpp=obj/%.o)
 TEST_SOURCES := $(shell find tests -name '*.cpp')
 TEST_OBJECTS := $(TEST_SOURCES:tests/%.cpp=obj/tests/%.o)
 INDIVIDUAL_TEST_EXECUTABLES := $(TEST_SOURCES:tests/%.cpp=bin/tests/%)
-PROGRAM_EXECUTABLES := $(PROGRAMS:programs/%.cpp=bin/programs/%)
+PROGRAM_EXECUTABLES := $(PROGRAM_SOURCES:programs/%.cpp=bin/programs/%)
 ALL_COMPILED_EXECUTABLES_IN_BIN := $(shell find bin/**/* -perm +111 -type f)
 
 
