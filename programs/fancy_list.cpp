@@ -132,7 +132,7 @@ bool Projekt::process_event(std::string e)
 {
    if (e == EVENT_PROGRAM_INITIALIZED)
    {
-      init_color(25, (int)(255.0/255.0*1000), 0, 0);
+      init_color(25, (int)(255.0/255.0*1000), (int)(255.0/255.0*1000), (int)(255.0/255.0*1000));
       init_pair(1, COLOR_BLACK, 25);
       create_menu("main_menu").set_styles(COLOR_PAIR(1));
 
