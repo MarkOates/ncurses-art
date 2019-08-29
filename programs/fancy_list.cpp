@@ -76,8 +76,46 @@ public:
    std::string infer_link()
    {
       // TODO
+      return "";
    }
 };
+
+
+
+#include <string>
+#include <fstream>
+#include <streambuf>
+
+std::string get_file_contents(std::string filename)
+{
+   std::ifstream t(filename);
+   std::string str((std::istreambuf_iterator<char>(t)), std::istreambuf_iterator<char>());
+   return str;
+}
+
+
+
+class FancyList
+{
+private:
+   std::string filename;
+
+public:
+   FancyList(std::string filename) : filename(filename) {}
+   ~FancyList() {}
+
+   std::vector<std::string> get_tokens()
+   {
+      std::string file_contents = get_file_contents(filename);
+      std::vector<std::string> file_lines = split_string(file_contents, "\n");
+      //std::vector<std::string> tokens = {
+         //TokenBuilder("Label", "actual value to be copied").build_show_string(),
+      //};
+
+      return file_lines;
+   }
+};
+
 
 
 class GitCurrentBranchExtractor
@@ -207,9 +245,9 @@ bool Projekt::process_event(std::string e)
       std::string current_git_branch = extractor.get_current_branch();
       //tokens.push_back(current_git_branch);
 
-      std::vector<std::string> tokens = {
-         TokenBuilder("Label", "actual value to be copied").build_show_string(),
-      };
+      FancyList fancy_list("/Users/markoates/Repos/me/fancy_lists/fancy_commands.txt");
+      std::vector<std::string> tokens = fancy_list.get_tokens();
+
       Menu &menu = find_menu("main_menu");
       menu.set_options(tokens);
       menu.set_x(10);
