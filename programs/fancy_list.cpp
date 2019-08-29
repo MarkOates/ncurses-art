@@ -226,7 +226,7 @@ bool Projekt::process_event(std::string e)
 
       Menu &menu = find_menu("main_menu");
       menu.set_options(tokens);
-      menu.set_x(COLS/2 - menu.get_width()/2);
+      menu.set_x(10);
       menu.set_y(LINES/2 - 3);
    }
    return true;
