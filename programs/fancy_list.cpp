@@ -168,11 +168,26 @@ bool Projekt::process_input(char ch)
    return true;
 }
 
+std::string color_theme()
+{
+   if (args.size() <= 2) return "white";
+   return args[2];
+}
+
+
 bool Projekt::process_event(std::string e)
 {
    if (e == EVENT_PROGRAM_INITIALIZED)
    {
-      init_color(25, (int)(255.0/255.0*1000), (int)(255.0/255.0*1000), (int)(255.0/255.0*1000));
+      if (color_theme() == "red")
+      {
+         init_color(25, (int)(255.0/255.0*1000), 0, 0);
+      }
+      else
+      {
+         init_color(25, (int)(255.0/255.0*1000), (int)(255.0/255.0*1000), (int)(255.0/255.0*1000));
+      }
+
       init_pair(1, COLOR_BLACK, 25);
       create_menu("main_menu").set_styles(COLOR_PAIR(1));
 
