@@ -24,12 +24,12 @@ OBJECTS := $(SOURCES:src/%.cpp=obj/%.o)
 TEST_SOURCES := $(shell find tests -name '*.cpp')
 TEST_OBJECTS := $(TEST_SOURCES:tests/%.cpp=obj/tests/%.o)
 INDIVIDUAL_TEST_EXECUTABLES := $(TEST_SOURCES:tests/%.cpp=bin/tests/%)
-PROGRAM_EXECUTABLES := $(PROGRAM_SOURCES:programs/%.cpp=bin/programs/%)
+PROGRAMS := $(PROGRAM_SOURCES:programs/%.cpp=bin/programs/%)
 ALL_COMPILED_EXECUTABLES_IN_BIN := $(shell find bin/**/* -perm +111 -type f)
 
 
 
-programs: $(PROGRAM_EXECUTABLES)
+programs: $(PROGRAMS)
 
 
 
@@ -96,7 +96,7 @@ bin/tests/%: obj/tests/%.o obj/tests/test_runner.o
 
 clean:
 	-rm -rdf obj/
-	-rm $(PROGRAM_EXECUTABLES)
+	-rm $(PROGRAMS)
 	-rm $(ALL_COMPILED_EXECUTABLES_IN_BIN)
 
 
