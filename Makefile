@@ -54,7 +54,7 @@ endef
 
 
 
-.PHONY: main quintessence programs objects examples library tests test_runner
+.PHONY: main quintessence programs objects examples library tests run_tests
 
 
 
