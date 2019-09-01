@@ -1,0 +1,3 @@
+#!/bin/bash
+
+rerun -c "echo -en \"\033[93m\"; cat -n $1; echo -en \"\033[0m\"" -p "$1"
