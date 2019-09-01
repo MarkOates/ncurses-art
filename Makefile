@@ -10,9 +10,9 @@ GOOGLE_TEST_INCLUDE_DIR=$(GOOGLE_TEST_DIR)/googletest/include
 
 
 
-GOOGLE_TEST_LIBS=gtest
 NCURSES_LIB=ncurses
 YAML_CPP_LIBS=yaml-cpp
+GOOGLE_TEST_LIBS=gtest
 
 
 
