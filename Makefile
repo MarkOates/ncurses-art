@@ -1,4 +1,6 @@
 LIBS_ROOT=/Users/markoates/Repos
+ALLEGRO_INCLUDE_DIR=$(LIBS_ROOT)/allegro5/build/include
+ALLEGRO_LIB_DIR=$(LIBS_ROOT)/allegro5/build/lib
 NCURSES_INCLUDE_DIR=/usr/local/opt/ncurses/include
 NCURSES_LIB_DIR=/usr/local/opt/ncurses/lib
 YAML_CPP_DIR=$(LIBS_ROOT)/yaml-cpp
@@ -10,9 +12,11 @@ GOOGLE_TEST_INCLUDE_DIR=$(GOOGLE_TEST_DIR)/googletest/include
 
 
 
+ALLEGRO_LIBS=allegro_color allegro_font allegro_ttf allegro_dialog allegro_audio allegro_acodec allegro_primitives allegro_image allegro
+ALLEGRO_LIBS_MAIN=$(ALLEGRO_LIBS) allegro_main
+GOOGLE_TEST_LIBS=gtest
 NCURSES_LIB=ncurses
 YAML_CPP_LIBS=yaml-cpp
-GOOGLE_TEST_LIBS=gtest
 
 
 
