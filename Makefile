@@ -9,12 +9,10 @@ YAML_CPP_LIB_DIR=$(YAML_CPP_DIR)/build
 YAML_CPP_INCLUDE_DIR=$(YAML_CPP_DIR)/include
 
 
+
 GOOGLE_TEST_LIBS=gtest
 NCURSES_LIB=ncurses
 YAML_CPP_LIBS=yaml-cpp
-
-
-.PHONY: all clean main fresh
 
 
 
