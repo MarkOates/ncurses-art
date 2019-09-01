@@ -17,6 +17,7 @@ GOOGLE_TEST_LIBS=gtest
 
 
 SOURCES := $(shell find src -name '*.cpp')
+QUINTESSENCE_SOURCES := $(shell find quintessence -name '*.q.yml')
 PROGRAM_SOURCES := $(shell find programs -name '*.cpp')
 EXAMPLE_SOURCES := $(shell find examples -name '*.cpp')
 OBJECTS := $(SOURCES:src/%.cpp=obj/%.o)
@@ -58,7 +59,7 @@ main:
 
 
 
-quintessences: $(QINTESSENCE_SOURCES)
+quintessences: $(QUINTESSENCE_SOURCES)
 	@./build
 
 
