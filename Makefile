@@ -1,3 +1,5 @@
+PROJECT_NAME=ncurses-art
+VERSION_NUMBER=0.0.1
 LIBS_ROOT=/Users/markoates/Repos
 ALLEGRO_INCLUDE_DIR=$(LIBS_ROOT)/allegro5/build/include
 ALLEGRO_LIB_DIR=$(LIBS_ROOT)/allegro5/build/lib
@@ -29,6 +31,7 @@ OBJECTS := $(SOURCES:src/%.cpp=obj/%.o)
 PROGRAMS := $(PROGRAM_SOURCES:programs/%.cpp=bin/programs/%)
 EXAMPLES := $(EXAMPLE_SOURCES:examples/%.cpp=bin/examples/%)
 TEST_OBJECTS := $(TEST_SOURCES:tests/%.cpp=obj/tests/%.o)
+LIBRARY_NAME := lib/lib$(PROJECT_NAME)-$(VERSION_NUMBER).a
 INDIVIDUAL_TEST_EXECUTABLES := $(TEST_SOURCES:tests/%.cpp=bin/tests/%)
 ALL_COMPILED_EXECUTABLES_IN_BIN := $(shell find bin/**/* -perm +111 -type f)
 
@@ -60,6 +63,8 @@ main:
 	#@make tests
 	#$(call output_terminal_message,"Run the tests for all the components")
 	#@make run_tests
+	$(call output_terminal_message,"Build the library")
+	@make library
 	$(call output_terminal_message,"Make all the programs")
 	@make programs
 	$(call output_terminal_message,"Make all the example programs")
@@ -82,6 +87,10 @@ objects: $(OBJECTS)
 
 
 examples: $(EXAMPLES)
+
+
+
+library: $(LIBRARY_NAME)
 
 
 
@@ -115,6 +124,13 @@ obj/%.o: src/%.cpp
 	@printf "compiling object file \e[1m\e[34m$<\033[0m..."
 	@g++ -c -std=gnu++11 -Qunused-arguments -Wall -Wuninitialized -Weffc++ $< -o $@ -I./include -I$(NCURSES_INCLUDE_DIR) -L$(NCURSES_LIB_DIR) -l$(NCURSES_LIB) -I$(YAML_CPP_INCLUDE_DIR) -D_XOPEN_SOURCE_EXTENDED
 	@echo "done. object at \033[1m\033[32m$@\033[0m"
+
+
+
+$(LIBRARY_NAME): $(OBJECTS)
+	@printf "compiling library \e[1m\e[36m$@\033[0m..."
+	@ar rs $(LIBRARY_NAME) $^
+	@echo "done. Library file at \033[1m\033[32m$@\033[0m"
 
 
 
