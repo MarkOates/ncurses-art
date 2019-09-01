@@ -27,6 +27,40 @@ ALL_COMPILED_EXECUTABLES_IN_BIN := $(shell find bin/**/* -perm +111 -type f)
 
 
 
+TERMINAL_COLOR_YELLOW=\033[1;33m
+TERMINAL_COLOR_RESET=\033[0m
+
+
+
+define output_terminal_message
+	$(eval compteur=$(shell echo $$(($(compteur)+1))))
+	@echo "\n$(TERMINAL_COLOR_YELLOW)===== Stage $(compteur): $(1) =====$(TERMINAL_COLOR_RESET)\n"
+endef
+
+
+
+main:
+	$(call output_terminal_message,"Compose componets from all quintessence files")
+	@make quintessences
+	$(call output_terminal_message,"Make all the object files")
+	@make objects
+	#$(call output_terminal_message,"Make all the test files")
+	#@make tests
+	#$(call output_terminal_message,"Run the tests for all the components")
+	#@make run_tests
+	$(call output_terminal_message,"Make all the programs")
+	@make programs
+	$(call output_terminal_message,"Make all the example programs")
+	@make examples
+	$(call output_terminal_message,"================= FINISHED! ===================")
+
+
+
+quintessences: $(QINTESSENCE_SOURCES)
+	@./build
+
+
+
 programs: $(PROGRAMS)
 
 
