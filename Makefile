@@ -22,10 +22,10 @@ PROGRAM_SOURCES := $(shell find programs -name '*.cpp')
 EXAMPLE_SOURCES := $(shell find examples -name '*.cpp')
 TEST_SOURCES := $(shell find tests -name '*Test.cpp')
 OBJECTS := $(SOURCES:src/%.cpp=obj/%.o)
-TEST_OBJECTS := $(TEST_SOURCES:tests/%.cpp=obj/tests/%.o)
-INDIVIDUAL_TEST_EXECUTABLES := $(TEST_SOURCES:tests/%.cpp=bin/tests/%)
 PROGRAMS := $(PROGRAM_SOURCES:programs/%.cpp=bin/programs/%)
 EXAMPLES := $(EXAMPLE_SOURCES:examples/%.cpp=bin/examples/%)
+TEST_OBJECTS := $(TEST_SOURCES:tests/%.cpp=obj/tests/%.o)
+INDIVIDUAL_TEST_EXECUTABLES := $(TEST_SOURCES:tests/%.cpp=bin/tests/%)
 ALL_COMPILED_EXECUTABLES_IN_BIN := $(shell find bin/**/* -perm +111 -type f)
 
 
