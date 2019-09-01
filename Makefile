@@ -69,9 +69,21 @@ objects: $(OBJECTS)
 
 
 
+examples: $(EXAMPLES)
+
+
+
 bin/programs/%: programs/%.cpp $(OBJECTS)
 	@printf "compiling projekt \e[1m\e[36m$<\033[0m..."
 	@g++ -std=gnu++11 -Wall -Wuninitialized -Weffc++ $(OBJECTS) $< -o $@ -I./include -I$(NCURSES_INCLUDE_DIR) -L$(NCURSES_LIB_DIR) -l$(NCURSES_LIB) -I$(YAML_CPP_INCLUDE_DIR) -L$(YAML_CPP_LIB_DIR) -l$(YAML_CPP_LIBS) -D_XOPEN_SOURCE_EXTENDED
+	@echo "done. Executable at \033[1m\033[32m$@\033[0m"
+
+
+
+bin/examples/%: examples/%.cpp $(OBJECTS)
+	@mkdir -p $(@D)
+	@printf "compiling program \e[1m\e[36m$<\033[0m..."
+	@g++ -std=gnu++11 -Wall -Wuninitialized -Weffc++ $(OBJECTS) $< -o $@ -I./include -I$(ALLEGRO_INCLUDE_DIR) -L$(ALLEGRO_LIB_DIR) $(ALLEGRO_LIBS_LINK_ARGS) -I$(NCURSES_INCLUDE_DIR) -L$(NCURSES_LIB_DIR) -l$(NCURSES_LIB)
 	@echo "done. Executable at \033[1m\033[32m$@\033[0m"
 
 
