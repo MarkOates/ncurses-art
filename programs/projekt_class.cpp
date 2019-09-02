@@ -6,6 +6,10 @@
 
 
 
+class MyProjekt;
+
+
+
 class MyProject : public Projekt3
 {
 public:
