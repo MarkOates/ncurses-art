@@ -23,7 +23,8 @@ enum test_status
 
 #define PROPERTY_DELIMITER ": "
 
-std::map<std::string, GithubRepoStatusFetcher> statuses = {};
+std::map<std::string, bool (*)()> tests = {};
+
 
 std::string file_get_contents(std::string filename, bool raise_on_missing_file=true)
 {
@@ -67,6 +68,12 @@ bool run_chruby_test()
 }
 
 
+bool just_a_failing_test()
+{
+   return false;
+}
+
+
 std::string diamond_it(std::string label, int number)
 {
    std::stringstream result;
@@ -93,8 +100,10 @@ void initialize()
    events[INITIALIZE_SCENE] = []{
       create_text("output");
 
-      statuses = {
-         { "ncurses-art",   GithubRepoStatusFetcher("ncurses-art") },
+      tests = {
+         { "chruby is present", run_chruby_test },
+         { "terminal sessions are still open despite ./dotfile changes", just_a_failing_test },
+         { "project binaries are up-to-date despite project file changes", just_a_failing_test },
       };
    };
    events[REFRESH_STATUSES] = []{
@@ -102,9 +111,12 @@ void initialize()
 
       std::stringstream result_text;
 
-      result_text << "starting test \"" << "chruby is present" << "\"" << std::endl;
-      bool test_result = run_chruby_test();
-      result_text << "  test status: \"" << check_it("chruby is present", test_result) << "\"" << std::endl;
+      for (auto &test : tests)
+      {
+         result_text << "running \"" << test.first << "\"" << std::endl;
+         bool test_result = (*test.second)();
+         result_text << "   " << check_it("status", test_result) << std::endl;
+      }
       
       text.set_text(result_text.str());
    };
