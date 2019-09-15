@@ -49,7 +49,7 @@ $> bin/programs/project_filename_generator -bFoobar -t
 
 Passing along any project filename, and then obtaining the basename
 
-$> bin/project_filename_generator -xinclude/MyProject/Models/User.hpp -B
+$> bin/programs/project_filename_generator -xinclude/MyProject/Models/User.hpp -B
 )END";
 
 
