@@ -50,6 +50,7 @@ void initialize()
          { "disclife",      GithubRepoStatusFetcher("disclife") },
          { "me",            GithubRepoStatusFetcher("me") },
          { ".dotfiles",     GithubRepoStatusFetcher(".dotfiles") },
+         { "first_vim_plugin", GithubRepoStatusFetcher("first_vim_plugin") },
       };
    };
    events[REFRESH_STATUSES] = []{
