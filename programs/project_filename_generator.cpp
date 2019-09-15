@@ -31,6 +31,7 @@ Input flags:
 Output flags:
 
 -a return all
+-B basename
 -q quintessence filename
 -s source filename
 -S source binary
@@ -46,9 +47,9 @@ Setting the basename, and then obtaining a test filename
 
 $> bin/programs/project_filename_generator -bFoobar -t
 
-Extracting a basename, and then obtaining all the components files
+Passing along any project filename, and then obtaining the basename
 
-$> bin/project_filename_generator -xinclude/MyProject/Models/User.hpp -a
+$> bin/project_filename_generator -xinclude/MyProject/Models/User.hpp -B
 )END";
 
 
@@ -169,6 +170,7 @@ public:
       //, project_name(project_name)
    {}
 
+   std::string get_basename() { return basename; }
    std::string get_quintessence_filename() { return std::string("quintessence/") + basename + ".q.yml"; }
    std::string get_source_filename() { return std::string("src/") + basename + ".cpp"; }
    //std::string get_header_filename() { return std::string("include/") + project_name + "/" + basename + ".cpp"; }
@@ -213,6 +215,7 @@ int main(int argc, char **argv)
    {
       if (argument.compare(0, 3, "-a") == 0)
       {
+         std::cout << "-B: " << project_component_filenames.get_basename() << std::endl;
          std::cout << "-q: " << project_component_filenames.get_quintessence_filename() << std::endl;
          std::cout << "-s: " << project_component_filenames.get_source_filename() << std::endl;
          std::cout << "-S: " << project_component_filenames.get_obj_binary() << std::endl;
@@ -223,6 +226,7 @@ int main(int argc, char **argv)
          std::cout << "-E: " << project_component_filenames.get_example_binary() << std::endl;
          return 0;
       }
+      if (argument.compare(0, 3, "-B") == 0) { std::cout << project_component_filenames.get_basename(); return 0; }
       if (argument.compare(0, 3, "-q") == 0) { std::cout << project_component_filenames.get_quintessence_filename(); return 0; }
       if (argument.compare(0, 3, "-s") == 0) { std::cout << project_component_filenames.get_source_filename(); return 0; }
       if (argument.compare(0, 3, "-S") == 0) { std::cout << project_component_filenames.get_obj_binary(); return 0; }
