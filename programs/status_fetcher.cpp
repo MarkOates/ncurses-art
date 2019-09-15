@@ -40,16 +40,16 @@ void initialize()
       create_text("output");
 
       statuses = {
-         { "ncurses-art",   GithubRepoStatusFetcher("ncurses-art") },
-         { "blast",         GithubRepoStatusFetcher("blast") },
-         { "fullscore",     GithubRepoStatusFetcher("fullscore") },
-         { "hexagon",       GithubRepoStatusFetcher("hexagon") },
-         { "HomeServer",    GithubRepoStatusFetcher("HomeServer") },
-         { "beebot",        GithubRepoStatusFetcher("beebot") },
-         { "allegro_flare", GithubRepoStatusFetcher("allegro_flare") },
-         { "disclife",      GithubRepoStatusFetcher("disclife") },
-         { "me",            GithubRepoStatusFetcher("me") },
-         { ".dotfiles",     GithubRepoStatusFetcher(".dotfiles") },
+         { "ncurses-art",      GithubRepoStatusFetcher("ncurses-art") },
+         { "blast",            GithubRepoStatusFetcher("blast") },
+         { "fullscore",        GithubRepoStatusFetcher("fullscore") },
+         { "hexagon",          GithubRepoStatusFetcher("hexagon") },
+         { "HomeServer",       GithubRepoStatusFetcher("HomeServer") },
+         { "beebot",           GithubRepoStatusFetcher("beebot") },
+         { "allegro_flare",    GithubRepoStatusFetcher("allegro_flare") },
+         { "disclife",         GithubRepoStatusFetcher("disclife") },
+         { "me",               GithubRepoStatusFetcher("me") },
+         { ".dotfiles",        GithubRepoStatusFetcher(".dotfiles") },
          { "first_vim_plugin", GithubRepoStatusFetcher("first_vim_plugin") },
       };
    };
