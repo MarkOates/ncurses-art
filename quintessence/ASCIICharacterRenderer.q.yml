@@ -1,0 +1,62 @@
+functions:
+  - name: draw_character
+    parameters:
+      - name: letters
+        type: std::map<char, std::vector<std::string>>
+        default_argument: "{}"
+        default_argument: "'a'"
+      - name: c
+        type: char
+        default_argument: "'a'"
+      - name: x
+        type: int
+        default_argument: 0
+      - name: y
+        type: int
+        default_argument: 0
+    type: int
+    body: |
+      std::vector<std::string> letter = {};
+
+      if (letters.find(c) == letters.end())
+      {
+         letter = {
+            { "????" },
+            { "?  ?" },
+            { "?  ?" },
+            { "????" },
+         };
+      }
+      else
+      {
+         letter = letters[c];
+      }
+
+      int yy=0;
+      int letter_width = 0;
+      for (std::string &letter_line : letter)
+      {
+         if (letter_line.length() > letter_width) letter_width = letter_line.length();
+         mvaddnstr(y + yy, x, letter_line.c_str(), -1);
+         yy++;
+      }
+
+      return letter_width/3;               // I have *no* idea why, but the letters have a width 3x as long.
+function_body_symbol_dependencies:
+  - mvaddnstr
+  - std::map
+  - std::vector
+  - std::string
+dependencies:
+  - symbol: std::map<char, std::vector<std::string>>
+    headers: [ 'map', 'vector', 'string' ]
+  - symbol: std::map
+    headers: [ 'map' ]
+  - symbol: std::vector
+    headers: [ 'vector' ]
+  - symbol: std::string
+    headers: [ 'string' ]
+  - symbol: char
+    headers: []
+  - symbol: mvaddnstr
+    headers: [ 'ncurses.h' ]

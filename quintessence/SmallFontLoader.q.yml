@@ -1,0 +1,160 @@
+function_body_symbol_dependencies:
+  - std::map
+  - std::vector
+  - std::string
+dependencies:
+  - symbol: std::map<char, std::vector<std::string>>
+    headers: [ 'map', 'vector', 'string' ]
+  - symbol: std::vector
+    headers: [ 'vector' ]
+  - symbol: std::map
+    headers: [ 'map' ]
+functions:
+  - name: sanitize_string
+    type: std::string
+    parameters:
+      - name: unfiltered_phrase
+        type: std::string
+        default_argument: "\"\""
+    body: |
+      // make the phrase uppercase
+      std::string result;
+      return result;
+  - name: load
+    type: std::map<char, std::vector<std::string>>
+    body: |
+      std::string shade_chars_for_reference = " ░▒▓█▀▄▐▌";
+
+      std::map<char, std::vector<std::string>> letters = {
+        {
+           'A',
+           {
+             { "▄▀▀▄" },
+             { "█▄▄█" },
+             { "▀  ▀" },
+           }
+        },
+        {
+           'B',
+           {
+             { "█▀▀▄" },
+             { "█▀▀▄" },
+             { "▀▀▀ " },
+           }
+        },
+        {
+           'C',
+           {
+             { "▄▀▀" },
+             { "█  " },
+             { " ▀▀" },
+           }
+        },
+        {
+           'D',
+           {
+             { "█▀▀▄" },
+             { "█  █" },
+             { "▀▀▀ " },
+           }
+        },
+        {
+           'E',
+           {
+             { "█▀▀" },
+             { "█▀▀" },
+             { "▀▀▀" },
+           }
+        },
+        {
+           'F',
+           {
+        //std::string shade_chars_for_reference = " ░▒▓█▀▄";
+             { "█▀▀" },
+             { "█▀▀" },
+             { "▀  " },
+           }
+        },
+        {
+           'G',
+           {
+             { "▄▀▀▀" },
+             { "█ ▀█" },
+             { " ▀▀▀" },
+           }
+        },
+        {
+           'H',
+           {
+             { "█  █" },
+             { "█▀▀█" },
+             { "▀  ▀" },
+           }
+        },
+        {
+           'I',
+           {
+             { "▀█▀" },
+             { " █ " },
+             { "▀▀▀" },
+           }
+        },
+        {
+           'J',
+           {
+             { "   █" },
+             { "▄  █" },
+             { " ▀▀ " },
+           }
+        },
+        {
+           'K',
+           {
+             { "█ ▄▀" },
+             { "█▀▄ " },
+             { "▀  ▀" },
+           }
+        },
+        {
+           'L',
+           {
+             { "█  " },
+             { "█  " },
+             { "▀▀▀" },
+           }
+        },
+        {
+           'M',
+           {
+             { "█▄ ▄█" },
+             { "█ ▀ █" },
+             { "▀   ▀" },
+           }
+        },
+        {
+           'N',
+           {
+             { "█▄  █" },
+             { "█ ▀▄█" },
+             { "▀   ▀" },
+           }
+        },
+        {
+           'O',
+           {
+             { "▄▀▀▄" },
+             { "█  █" },
+             { " ▀▀ " },
+           }
+        },
+        {
+           'P',
+           {
+             { "█▀▀▄" },
+             { "█▄▄▀" },
+             { "▀   " },
+           }
+        },
+      };
+
+      return letters;
