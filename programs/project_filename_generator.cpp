@@ -31,6 +31,7 @@ Input flags:
 Output flags:
 
 -a return all
+-q quintessence filename
 -s source filename
 -S source binary
 -h header filename
@@ -41,7 +42,13 @@ Output flags:
 
 Examples:
 
-$> bin/project_filename_generator -x include/MyProject/Models/User.hpp
+Setting the basename, and then obtaining a test filename
+
+$> bin/programs/project_filename_generator -bFoobar -t
+
+Extracting a basename, and then obtaining all the components files
+
+$> bin/project_filename_generator -xinclude/MyProject/Models/User.hpp -a
 )END";
 
 
@@ -58,7 +65,14 @@ public:
    std::pair<std::string, std::string> extract_component()
    {
       std::pair<std::string, std::string> result = std::pair<std::string, std::string>("", "");
-      if (filename.compare(0, 4, "src/") == 0)
+      if (filename.compare(0, 13, "quintessence/") == 0)
+      {
+         std::string extracted = filename.substr(13);
+         std::size_t found = extracted.find_first_of(".q.yml");
+         extracted = extracted.substr(0, found);
+         return std::make_pair("quintessence file", extracted);
+      }
+      else if (filename.compare(0, 4, "src/") == 0)
       {
          std::string extracted = filename.substr(4);
          std::size_t found = extracted.find_first_of(".");
@@ -154,6 +168,8 @@ public:
       , underscores(underscores)
       //, project_name(project_name)
    {}
+
+   std::string get_quintessence_filename() { return std::string("quintessence/") + basename + ".q.yml"; }
    std::string get_source_filename() { return std::string("src/") + basename + ".cpp"; }
    //std::string get_header_filename() { return std::string("include/") + project_name + "/" + basename + ".cpp"; }
    std::string get_header_filename() { return std::string("include/") + basename + ".hpp"; }
@@ -197,6 +213,7 @@ int main(int argc, char **argv)
    {
       if (argument.compare(0, 3, "-a") == 0)
       {
+         std::cout << "-q: " << project_component_filenames.get_quintessence_filename() << std::endl;
          std::cout << "-s: " << project_component_filenames.get_source_filename() << std::endl;
          std::cout << "-S: " << project_component_filenames.get_obj_binary() << std::endl;
          std::cout << "-h: " << project_component_filenames.get_header_filename() << std::endl;
@@ -206,6 +223,7 @@ int main(int argc, char **argv)
          std::cout << "-E: " << project_component_filenames.get_example_binary() << std::endl;
          return 0;
       }
+      if (argument.compare(0, 3, "-q") == 0) { std::cout << project_component_filenames.get_quintessence_filename(); return 0; }
       if (argument.compare(0, 3, "-s") == 0) { std::cout << project_component_filenames.get_source_filename(); return 0; }
       if (argument.compare(0, 3, "-S") == 0) { std::cout << project_component_filenames.get_obj_binary(); return 0; }
       if (argument.compare(0, 3, "-h") == 0) { std::cout << project_component_filenames.get_header_filename(); return 0; }
