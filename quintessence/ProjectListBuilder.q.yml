@@ -25,10 +25,10 @@ functions:
       }
       closedir(dir);
       return result;
-function_body_symbol_dependencies:
-  - opendir
-  - readdir
-  - DIR
+    body_dependency_symbols:
+      - opendir
+      - readdir
+      - DIR
 dependencies:
   - symbol: readdir
     headers: [ 'dirent.h', 'stdio.h' ]

@@ -13,10 +13,10 @@ functions:
       std::mt19937 g(rd());
       std::shuffle(questions.begin(), questions.end(), g);
       std::shuffle(questions.begin(), questions.end(), g);
-function_body_symbol_dependencies:
-  - std::random_device
-  - std::mt19937
-  - std::shuffle
+    body_dependency_symbols:
+      - std::random_device
+      - std::mt19937
+      - std::shuffle
 dependencies:
   - symbol: std::vector<Question>
     headers: [ 'vector', 'Question.hpp' ]
