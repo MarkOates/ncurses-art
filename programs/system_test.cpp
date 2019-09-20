@@ -26,6 +26,7 @@ enum test_status
 std::map<std::string, bool (*)()> tests = {};
 
 
+
 std::string file_get_contents(std::string filename, bool raise_on_missing_file=true)
 {
    std::ifstream file(filename.c_str());
@@ -67,6 +68,13 @@ bool run_chruby_test()
    return found;
 }
 
+bool run_hexagon_app_package_test()
+{
+   std::string EXPECTED_HEXAGON_APP_PACKAGE_INFO_PLIST_FILENAME = "/Applications/hexagon.app/Contents/Info.plist";
+   std::string content = file_get_contents(EXPECTED_HEXAGON_APP_PACKAGE_INFO_PLIST_FILENAME, true);
+   return !content.empty();
+}
+
 
 bool just_a_failing_test()
 {
@@ -104,6 +112,7 @@ void initialize()
          { "chruby is present", run_chruby_test },
          { "terminal sessions are still open despite ./dotfile changes", just_a_failing_test },
          { "project binaries are up-to-date despite project file changes", just_a_failing_test },
+         { "the hexagon app package is installed in the Applications folder", run_hexagon_app_package_test },
       };
    };
    events[REFRESH_STATUSES] = []{
