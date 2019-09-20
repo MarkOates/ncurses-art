@@ -75,6 +75,11 @@ bool run_hexagon_app_package_test()
    return !content.empty();
 }
 
+bool check_hexagon_app_package_alias_test()
+{
+   return false;
+}
+
 
 bool just_a_failing_test()
 {
@@ -113,6 +118,7 @@ void initialize()
          { "terminal sessions are still open despite ./dotfile changes", just_a_failing_test },
          { "project binaries are up-to-date despite project file changes", just_a_failing_test },
          { "the hexagon app package is installed in the Applications folder", run_hexagon_app_package_test },
+         { "the hexagon app package executable is an alias to the local hexagon repo's executable", check_hexagon_app_package_alias_test },
       };
    };
    events[REFRESH_STATUSES] = []{
