@@ -93,15 +93,15 @@ std::string trim(const std::string& str,
 
 bool check_hexagon_app_package_alias_test()
 {
-   std::string expected_success_message = "symlink exists";
-   std::string symlink_check_command = "if [ -L \"/Applications/Hexagon.app\" ]; then echo \"symlink exists\"; else echo \"symlink does not exist\"; fi";
+   std::string success_message = "symlink exists";
+   std::string symlink_check_command = std::string("if [ -L \"/Applications/Hexagon.app\" ]; then echo \"") + success_message + "\"; else echo \"symlink does not exist\"; fi";
    std::string command_to_create_symlink = "ln -s /Users/markoates/Repos/hexagon/bin/programs/Hexagon.app ./Hexagon.app";
 
    ShellCommandExecutorWithCallback executor(symlink_check_command);
    std::string output = executor.execute();
    std::string trimmed_output = trim(output);
 
-   return trimmed_output == expected_success_message;
+   return trimmed_output == success_message;
 }
 
 
