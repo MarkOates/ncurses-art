@@ -1,6 +1,7 @@
 #include "Projekt2.h"
 
 #include <GithubRepoStatusFetcher.hpp>
+#include <ShellCommandExecutorWithCallback.hpp>
 #include <StringSplitter.hpp>
 
 #define MOVE_CURSOR_UP "MOVE_CURSOR_UP"
@@ -75,10 +76,32 @@ bool run_hexagon_app_package_test()
    return !content.empty();
 }
 
+
+std::string trim(const std::string& str,
+                 const std::string& whitespace = " \t\n\r")
+{
+    const auto strBegin = str.find_first_not_of(whitespace);
+    if (strBegin == std::string::npos)
+        return ""; // no content
+
+    const auto strEnd = str.find_last_not_of(whitespace);
+    const auto strRange = strEnd - strBegin + 1;
+
+    return str.substr(strBegin, strRange);
+}
+
+
 bool check_hexagon_app_package_alias_test()
 {
+   std::string expected_success_message = "symlink exists";
    std::string symlink_check_command = "if [ -L \"/Applications/Hexagon.app\" ]; then echo \"symlink exists\"; else echo \"symlink does not exist\"; fi";
-   return false;
+   std::string command_to_create_symlink = "ln -s /Users/markoates/Repos/hexagon/bin/programs/Hexagon.app ./Hexagon.app";
+
+   ShellCommandExecutorWithCallback executor(symlink_check_command);
+   std::string output = executor.execute();
+   std::string trimmed_output = trim(output);
+
+   return trimmed_output == expected_success_message;
 }
 
 
