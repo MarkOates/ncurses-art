@@ -70,13 +70,14 @@ bool run_chruby_test()
 
 bool run_hexagon_app_package_test()
 {
-   std::string EXPECTED_HEXAGON_APP_PACKAGE_INFO_PLIST_FILENAME = "/Applications/Hexagon.app/Contents/Info.plist";
+   std::string EXPECTED_HEXAGON_APP_PACKAGE_INFO_PLIST_FILENAME = "/Users/markoates/Repos/hexagon/bin/programs/Hexagon.app/Contents/Info.plist";
    std::string content = file_get_contents(EXPECTED_HEXAGON_APP_PACKAGE_INFO_PLIST_FILENAME, true);
    return !content.empty();
 }
 
 bool check_hexagon_app_package_alias_test()
 {
+   std::string symlink_check_command = "if [ -L \"/Applications/Hexagon.app\" ]; then echo \"symlink exists\"; else echo \"symlink does not exist\"; fi";
    return false;
 }
 
@@ -118,7 +119,7 @@ void initialize()
          { "terminal sessions are still open despite ./dotfile changes", just_a_failing_test },
          { "project binaries are up-to-date despite project file changes", just_a_failing_test },
          { "the hexagon app package is present in the hexagon repo", run_hexagon_app_package_test },
-         { "the hexagon app in the /Applications folder is an symlink to the local hexagon repo's executable", check_hexagon_app_package_alias_test },
+         { "the system's /Applications folder contains a symlink to the hexagon repo's app package", check_hexagon_app_package_alias_test },
       };
    };
    events[REFRESH_STATUSES] = []{
