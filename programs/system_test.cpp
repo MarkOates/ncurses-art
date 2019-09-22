@@ -70,7 +70,7 @@ bool run_chruby_test()
 
 bool run_hexagon_app_package_test()
 {
-   std::string EXPECTED_HEXAGON_APP_PACKAGE_INFO_PLIST_FILENAME = "/Applications/hexagon.app/Contents/Info.plist";
+   std::string EXPECTED_HEXAGON_APP_PACKAGE_INFO_PLIST_FILENAME = "/Applications/Hexagon.app/Contents/Info.plist";
    std::string content = file_get_contents(EXPECTED_HEXAGON_APP_PACKAGE_INFO_PLIST_FILENAME, true);
    return !content.empty();
 }
@@ -117,8 +117,8 @@ void initialize()
          { "chruby is present", run_chruby_test },
          { "terminal sessions are still open despite ./dotfile changes", just_a_failing_test },
          { "project binaries are up-to-date despite project file changes", just_a_failing_test },
-         { "the hexagon app package is installed in the Applications folder", run_hexagon_app_package_test },
-         { "the hexagon app package executable is an alias to the local hexagon repo's executable", check_hexagon_app_package_alias_test },
+         { "the hexagon app package is present in the hexagon repo", run_hexagon_app_package_test },
+         { "the hexagon app in the /Applications folder is an symlink to the local hexagon repo's executable", check_hexagon_app_package_alias_test },
       };
    };
    events[REFRESH_STATUSES] = []{
