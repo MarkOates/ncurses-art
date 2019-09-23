@@ -69,7 +69,8 @@ public:
       if (filename.compare(0, 13, "quintessence/") == 0)
       {
          std::string extracted = filename.substr(13);
-         std::size_t found = extracted.find_first_of(".q.yml");
+         std::string search_string = ".q.yml";
+         std::size_t found = extracted.rfind(search_string);
          extracted = extracted.substr(0, found);
          return std::make_pair("quintessence file", extracted);
       }
