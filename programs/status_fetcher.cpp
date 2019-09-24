@@ -78,11 +78,11 @@ void initialize()
 
          result_text << status.first << std::endl;
          result_text << "  status" << PROPERTY_DELIMITER << status_icon << std::endl;
-         result_text << "  " << check_it("exists locally", exists_locally) << std::endl;
-         result_text << "  " << diamond_it("num local branches", num_local_branches) << std::endl;
-         result_text << "  " << check_it("in sync with remote", in_sync) << std::endl;
-         result_text << "  " << check_it("has no changed files", has_no_changed_files) << std::endl;
-         result_text << "  " << check_it("has no untracked files", has_no_untracked_files) << std::endl;
+         if (!exists_locally) result_text << "  " << check_it("exists locally", exists_locally) << std::endl;
+         if (num_local_branches != 1) result_text << "  " << diamond_it("num local branches", num_local_branches) << std::endl;
+         if (!in_sync) result_text << "  " << check_it("in sync with remote", in_sync) << std::endl;
+         if (!has_no_changed_files) result_text << "  " << check_it("has no changed files", has_no_changed_files) << std::endl;
+         if (!has_no_untracked_files) result_text << "  " << check_it("has no untracked files", has_no_untracked_files) << std::endl;
       }
 
       text.set_text(result_text.str());
