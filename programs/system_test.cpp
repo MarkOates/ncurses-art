@@ -158,7 +158,7 @@ void initialize()
          { "the hexagon app package is present in the hexagon repo", run_hexagon_app_package_test },
          { "the system's /Applications folder contains a symlink to the hexagon repo's app package", check_hexagon_app_package_alias_test },
          { "the /Applications/Hexagon.app symlink points to the expected hexagon app package", check_hexagon_app_package_symlink_destination },
-         { "vim plugins have been updated (run \":BundleUpdate\" in vim) since version changes to first_vim_plugin", just_a_failing_test },
+         { "vim plugins have been updated (run \":PluginUpdate\" in vim) since version changes to first_vim_plugin", just_a_failing_test },
       };
    };
    events[REFRESH_STATUSES] = []{
