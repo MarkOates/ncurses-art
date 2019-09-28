@@ -105,6 +105,30 @@ bool check_hexagon_app_package_alias_test()
 }
 
 
+std::string get_head_sha_of_vim_plugin_first_vim_plugin()
+{
+   std::string command = "cd /Users/markoates/.vim/bundle/first_vim_plugin && git rev-parse HEAD";
+
+   ShellCommandExecutorWithCallback executor(command);
+   std::string output = executor.execute();
+   std::string trimmed_output = trim(output);
+
+   return trimmed_output;
+}
+
+
+std::string get_head_sha_of_first_vim_plugin_repo()
+{
+   std::string command = "cd /Users/markoates/Repos/first_vim_plugin && git rev-parse HEAD";
+
+   ShellCommandExecutorWithCallback executor(command);
+   std::string output = executor.execute();
+   std::string trimmed_output = trim(output);
+
+   return trimmed_output;
+}
+
+
 bool check_hexagon_app_package_symlink_destination()
 {
    std::string expected_destination = "/Users/markoates/Repos/hexagon/bin/Hexagon.app";
@@ -115,6 +139,14 @@ bool check_hexagon_app_package_symlink_destination()
    std::string trimmed_output = trim(output);
 
    return trimmed_output == expected_destination;
+}
+
+
+bool check_vim_plugins_are_in_sync_with_local_repos()
+{
+   std::string sha_from_plugin = get_head_sha_of_vim_plugin_first_vim_plugin();
+   std::string sha_from_local_repo = get_head_sha_of_first_vim_plugin_repo();
+   return sha_from_plugin == sha_from_local_repo;
 }
 
 
@@ -158,7 +190,7 @@ void initialize()
          { "the hexagon app package is present in the hexagon repo", run_hexagon_app_package_test },
          { "the system's /Applications folder contains a symlink to the hexagon repo's app package", check_hexagon_app_package_alias_test },
          { "the /Applications/Hexagon.app symlink points to the expected hexagon app package", check_hexagon_app_package_symlink_destination },
-         { "vim plugins have been updated (run \":PluginUpdate\" in vim) since version changes to first_vim_plugin", just_a_failing_test },
+         { "vim plugins have been updated (run \":PluginUpdate\" in vim) since version changes to first_vim_plugin", check_vim_plugins_are_in_sync_with_local_repos },
       };
    };
    events[REFRESH_STATUSES] = []{
