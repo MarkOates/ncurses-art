@@ -91,25 +91,25 @@ int main(int argc, char **argv)
       if (argument.compare(0, 3, "-a") == 0)
       {
          std::cout << "-B: " << project_component_filenames.get_basename() << std::endl;
-         std::cout << "-q: " << project_component_filenames.get_quintessence_filename() << std::endl;
-         std::cout << "-s: " << project_component_filenames.get_source_filename() << std::endl;
-         std::cout << "-S: " << project_component_filenames.get_obj_binary() << std::endl;
-         std::cout << "-h: " << project_component_filenames.get_header_filename() << std::endl;
-         std::cout << "-t: " << project_component_filenames.get_test_src_filename() << std::endl;
-         std::cout << "-T: " << project_component_filenames.get_test_binary() << std::endl;
-         std::cout << "-e: " << project_component_filenames.get_example_src_filename() << std::endl;
-         std::cout << "-E: " << project_component_filenames.get_example_binary() << std::endl;
+         std::cout << "-q: " << project_component_filenames.generate_quintessence_filename() << std::endl;
+         std::cout << "-s: " << project_component_filenames.generate_source_filename() << std::endl;
+         std::cout << "-S: " << project_component_filenames.generate_obj_binary() << std::endl;
+         std::cout << "-h: " << project_component_filenames.generate_header_filename() << std::endl;
+         std::cout << "-t: " << project_component_filenames.generate_test_src_filename() << std::endl;
+         std::cout << "-T: " << project_component_filenames.generate_test_binary() << std::endl;
+         std::cout << "-e: " << project_component_filenames.generate_example_src_filename() << std::endl;
+         std::cout << "-E: " << project_component_filenames.generate_example_binary() << std::endl;
          return 0;
       }
       if (argument.compare(0, 3, "-B") == 0) { std::cout << project_component_filenames.get_basename(); return 0; }
-      if (argument.compare(0, 3, "-q") == 0) { std::cout << project_component_filenames.get_quintessence_filename(); return 0; }
-      if (argument.compare(0, 3, "-s") == 0) { std::cout << project_component_filenames.get_source_filename(); return 0; }
-      if (argument.compare(0, 3, "-S") == 0) { std::cout << project_component_filenames.get_obj_binary(); return 0; }
-      if (argument.compare(0, 3, "-h") == 0) { std::cout << project_component_filenames.get_header_filename(); return 0; }
-      if (argument.compare(0, 3, "-t") == 0) { std::cout << project_component_filenames.get_test_src_filename(); return 0; }
-      if (argument.compare(0, 3, "-T") == 0) { std::cout << project_component_filenames.get_test_binary(); return 0; }
-      if (argument.compare(0, 3, "-e") == 0) { std::cout << project_component_filenames.get_example_src_filename(); return 0; }
-      if (argument.compare(0, 3, "-E") == 0) { std::cout << project_component_filenames.get_example_binary(); return 0; }
+      if (argument.compare(0, 3, "-q") == 0) { std::cout << project_component_filenames.generate_quintessence_filename(); return 0; }
+      if (argument.compare(0, 3, "-s") == 0) { std::cout << project_component_filenames.generate_source_filename(); return 0; }
+      if (argument.compare(0, 3, "-S") == 0) { std::cout << project_component_filenames.generate_obj_binary(); return 0; }
+      if (argument.compare(0, 3, "-h") == 0) { std::cout << project_component_filenames.generate_header_filename(); return 0; }
+      if (argument.compare(0, 3, "-t") == 0) { std::cout << project_component_filenames.generate_test_src_filename(); return 0; }
+      if (argument.compare(0, 3, "-T") == 0) { std::cout << project_component_filenames.generate_test_binary(); return 0; }
+      if (argument.compare(0, 3, "-e") == 0) { std::cout << project_component_filenames.generate_example_src_filename(); return 0; }
+      if (argument.compare(0, 3, "-E") == 0) { std::cout << project_component_filenames.generate_example_binary(); return 0; }
    }
 }
 
