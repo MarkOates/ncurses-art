@@ -7,31 +7,31 @@ properties:
     default_argument: false
     constructor_arg: true
 functions:
-  - name: get_quintessence_filename
+  - name: generate_quintessence_filename
     type: std::string
     body: return std::string("quintessence/") + basename + ".q.yml";
-  - name: get_source_filename
+  - name: generate_source_filename
     type: std::string
     body: return std::string("src/") + basename + ".cpp";
-  - name: get_header_filename
+  - name: generate_header_filename
     type: std::string
     body: return std::string("include/") + basename + ".hpp";
-  - name: get_test_src_filename
+  - name: generate_test_src_filename
     type: std::string
     body: |
       return std::string("tests/") + basename + (underscores ? "_test" : "Test") + ".cpp";
-  - name: get_example_src_filename
+  - name: generate_example_src_filename
     type: std::string
     body: |
       return std::string("examples/") + basename + (underscores ? "_example.cpp" : "Example.cpp");
-  - name: get_obj_binary
+  - name: generate_obj_binary
     type: std::string
     body: return std::string("obj/") + basename + ".o";
-  - name: get_test_binary
+  - name: generate_test_binary
     type: std::string
     body: |
       return std::string("bin/tests/") + basename + (underscores ? "_test" : "Test");
-  - name: get_example_binary
+  - name: generate_example_binary
     type: std::string
     body: |
       return std::string("bin/examples/") + basename + (underscores ? "_example.cpp" : "Example.cpp");

@@ -16,14 +16,14 @@ public:
 
 
    std::string get_basename();
-std::string get_quintessence_filename();
-std::string get_source_filename();
-std::string get_header_filename();
-std::string get_test_src_filename();
-std::string get_example_src_filename();
-std::string get_obj_binary();
-std::string get_test_binary();
-std::string get_example_binary();
+std::string generate_quintessence_filename();
+std::string generate_source_filename();
+std::string generate_header_filename();
+std::string generate_test_src_filename();
+std::string generate_example_src_filename();
+std::string generate_obj_binary();
+std::string generate_test_binary();
+std::string generate_example_binary();
 };
 
 
