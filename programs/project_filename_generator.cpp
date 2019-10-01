@@ -55,36 +55,8 @@ $> bin/programs/project_filename_generator -xinclude/MyProject/Models/User.hpp -
 
 
 #include <ProjectComponentBasenameExtractor.hpp>
+#include <ProjectFilenameGenerator.hpp>
 
-
-
-class ProjectFilenameGenerator
-{
-private:
-   std::string basename;
-   bool underscores;
-   //std::string project_name;
-
-public:
-  // ObjectSrcComponents(std::string basename, std::string project_name)
-   ProjectFilenameGenerator(std::string basename, bool underscores)
-      : basename(basename)
-      , underscores(underscores)
-      //, project_name(project_name)
-   {}
-
-   std::string get_basename() { return basename; }
-   std::string get_quintessence_filename() { return std::string("quintessence/") + basename + ".q.yml"; }
-   std::string get_source_filename() { return std::string("src/") + basename + ".cpp"; }
-   //std::string get_header_filename() { return std::string("include/") + project_name + "/" + basename + ".cpp"; }
-   std::string get_header_filename() { return std::string("include/") + basename + ".hpp"; }
-   std::string get_test_src_filename() { return std::string("tests/") + basename + (underscores ? "_test" : "Test") + ".cpp"; }
-   std::string get_example_src_filename() { return std::string("examples/") + basename + (underscores ? "_example.cpp" : "Example.cpp"); }
-
-   std::string get_obj_binary() { return std::string("obj/") + basename + ".o"; }
-   std::string get_test_binary() { return std::string("bin/tests/") + basename + (underscores ? "_test" : "Test"); }
-   std::string get_example_binary() { return std::string("bin/examples/") + basename + (underscores ? "_example.cpp" : "Example.cpp"); }
-};
 
 
 int main(int argc, char **argv)
