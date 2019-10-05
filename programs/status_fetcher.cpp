@@ -34,24 +34,73 @@ std::string check_it(std::string label, bool check)
    return result.str();
 }
 
+
+
+class Args
+{
+private:
+   std::vector<std::string> args;
+
+   bool find(std::string string)
+   {
+      return std::find(this->args.begin(), this->args.end(), string) != this->args.end();
+   }
+
+public:
+   Args()
+      : args{}
+   {}
+
+   void set(std::vector<std::string> args)
+   {
+      this->args = args;
+   }
+
+   void set(int argc, char **argv)
+   {
+      for (int i=0; i<argc; i++) this->args.push_back(argv[i]);
+   }
+
+   bool has(std::string arg_string_to_find)
+   {
+      return find(arg_string_to_find);
+   }
+};
+
+
+
+
 void initialize()
 {
    events[INITIALIZE_SCENE] = []{
       create_text("output");
 
-      statuses = {
-         { "ncurses-art",      GithubRepoStatusFetcher("ncurses-art") },
-         { "blast",            GithubRepoStatusFetcher("blast") },
-         { "fullscore",        GithubRepoStatusFetcher("fullscore") },
-         { "hexagon",          GithubRepoStatusFetcher("hexagon") },
-         { "HomeServer",       GithubRepoStatusFetcher("HomeServer") },
-         { "beebot",           GithubRepoStatusFetcher("beebot") },
-         { "allegro_flare",    GithubRepoStatusFetcher("allegro_flare") },
-         { "disclife",         GithubRepoStatusFetcher("disclife") },
-         { "me",               GithubRepoStatusFetcher("me") },
-         { ".dotfiles",        GithubRepoStatusFetcher(".dotfiles") },
-         { "first_vim_plugin", GithubRepoStatusFetcher("first_vim_plugin") },
-      };
+      Args magic_args;
+      magic_args.set(args);
+
+      if (magic_args.has("games"))
+      {
+         statuses = {
+            { "Slug3D",              GithubRepoStatusFetcher("slug_3d") },
+            { "Adventures of Beary", GithubRepoStatusFetcher("adventures-of-beary") },
+         };
+      }
+      else
+      {
+         statuses = {
+            { "ncurses-art",      GithubRepoStatusFetcher("ncurses-art") },
+            { "blast",            GithubRepoStatusFetcher("blast") },
+            { "fullscore",        GithubRepoStatusFetcher("fullscore") },
+            { "hexagon",          GithubRepoStatusFetcher("hexagon") },
+            { "HomeServer",       GithubRepoStatusFetcher("HomeServer") },
+            { "beebot",           GithubRepoStatusFetcher("beebot") },
+            { "allegro_flare",    GithubRepoStatusFetcher("allegro_flare") },
+            { "disclife",         GithubRepoStatusFetcher("disclife") },
+            { "me",               GithubRepoStatusFetcher("me") },
+            { ".dotfiles",        GithubRepoStatusFetcher(".dotfiles") },
+            { "first_vim_plugin", GithubRepoStatusFetcher("first_vim_plugin") },
+         };
+      }
    };
    events[REFRESH_STATUSES] = []{
       Text &text = find_text("output");
