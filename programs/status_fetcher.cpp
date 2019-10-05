@@ -83,6 +83,7 @@ void initialize()
          statuses = {
             { "Slug3D",              GithubRepoStatusFetcher("slug_3d") },
             { "Adventures of Beary", GithubRepoStatusFetcher("adventures-of-beary") },
+            { "Alex Park",           GithubRepoStatusFetcher("AlexPark") },
          };
       }
       else
