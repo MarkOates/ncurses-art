@@ -66,7 +66,7 @@ main:
 	$(call output_terminal_message,"Make all the test files")
 	@make tests
 	$(call output_terminal_message,"Run the tests for all the components")
-	@make run_tests
+	@make run_all_tests
 	$(call output_terminal_message,"Build the library")
 	@make library
 	$(call output_terminal_message,"Make all the programs")
@@ -98,12 +98,12 @@ library: $(LIBRARY_NAME)
 
 
 
-tests: $(INDIVIDUAL_TEST_EXECUTABLES) bin/tests/test_runner
+tests: $(INDIVIDUAL_TEST_EXECUTABLES) bin/tests/run_all_tests
 
 
 
-run_tests: tests
-	find bin/tests -type f -exec {} \;
+run_all_tests: tests
+	bin/tests/run_all_tests
 
 
 
@@ -154,9 +154,9 @@ bin/tests/%: obj/tests/%.o obj/tests/test_runner.o
 
 
 
-bin/tests/test_runner: $(TEST_OBJECTS) obj/tests/test_runner.o
+bin/tests/run_all_tests: $(TEST_OBJECTS) obj/tests/test_runner.o
 	@mkdir -p $(@D)
-	@printf "compiling test_runer from \e[1m\e[36m$<\033[0m..."
+	@printf "compiling run_all_tests from \e[1m\e[36m$<\033[0m..."
 	@g++ -std=gnu++11 -Qunused-arguments -Wall -Wuninitialized -Weffc++ $(OBJECTS) obj/tests/test_runner.o $< -o $@ -l$(GOOGLE_TEST_LIBS) -I./include -I$(GOOGLE_TEST_INCLUDE_DIR) -L$(GOOGLE_TEST_LIB_DIR) -l$(NCURSES_LIB) -I$(YAML_CPP_INCLUDE_DIR) -L$(YAML_CPP_LIB_DIR) -l$(YAML_CPP_LIBS)
 	@echo "done. Executable at \033[1m\033[32m$@\033[0m"
 
