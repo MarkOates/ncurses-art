@@ -63,10 +63,10 @@ main:
 	@make quintessences
 	$(call output_terminal_message,"Make all the object files")
 	@make objects
-	#$(call output_terminal_message,"Make all the test files")
-	#@make tests
-	#$(call output_terminal_message,"Run the tests for all the components")
-	#@make run_tests
+	$(call output_terminal_message,"Make all the test files")
+	@make tests
+	$(call output_terminal_message,"Run the tests for all the components")
+	@make run_tests
 	$(call output_terminal_message,"Build the library")
 	@make library
 	$(call output_terminal_message,"Make all the programs")
@@ -98,7 +98,7 @@ library: $(LIBRARY_NAME)
 
 
 
-tests: $(INDIVIDUAL_TEST_EXECUTABLES) bin/test_runner
+tests: $(INDIVIDUAL_TEST_EXECUTABLES) bin/tests/test_runner
 
 
 
@@ -146,28 +146,19 @@ obj/tests/%.o: tests/%.cpp $(OBJECTS)
 
 
 
-obj/tests/test_runner.o: tests/test_runner.cpp
-	@mkdir -p $(@D)
-	@printf "compiling test object for test_runner \e[1m\e[36m$<\033[0m..."
-	@g++ -c -std=gnu++11 -Qunused-arguments -Wall -Wuninitialized -Weffc++ $< -o $@ -I$(GOOGLE_TEST_INCLUDE_DIR)
-	@echo "done. Object at \033[1m\033[32m$@\033[0m"
-
-
-
 bin/tests/%: obj/tests/%.o obj/tests/test_runner.o
 	@mkdir -p $(@D)
-	@printf "compiling standalone test \e[1m\e[36m$<\033[0m..."
+	@printf "compiling standalone test from \e[1m\e[36m$<\033[0m..."
 	@g++ -std=gnu++11 -Qunused-arguments -Wall -Wuninitialized -Weffc++ $(OBJECTS) $< obj/tests/test_runner.o -o $@ -l$(GOOGLE_TEST_LIBS) -I./include -I$(GOOGLE_TEST_INCLUDE_DIR) -L$(GOOGLE_TEST_LIB_DIR) -l$(NCURSES_LIB) -I$(YAML_CPP_INCLUDE_DIR) -L$(YAML_CPP_LIB_DIR) -l$(YAML_CPP_LIBS)
 	@echo "done. Executable at \033[1m\033[32m$@\033[0m"
 
 
 
-#bin/test_runner: tests/test_runner.cpp $(TEST_OBJECTS)
-	#echo $(TEST_OBJECTS)
-	#@mkdir -p $(@D)
-	#@printf "compiling test_runer \e[1m\e[36m$<\033[0m..."
-	#@g++ -std=gnu++11 -Qunused-arguments -Wall -Wuninitialized -Weffc++ $(OBJECTS) $(TEST_OBJECTS) $< -o $@ -l$(GOOGLE_TEST_LIBS) -I./include -I$(GOOGLE_TEST_INCLUDE_DIR) -L$(GOOGLE_TEST_LIB_DIR) -l$(NCURSES_LIB) -I$(YAML_CPP_INCLUDE_DIR) -L$(YAML_CPP_LIB_DIR) -l$(YAML_CPP_LIBS)
-	#@echo "done. Executable at \033[1m\033[32m$@\033[0m"
+bin/tests/test_runner: $(TEST_OBJECTS) obj/tests/test_runner.o
+	@mkdir -p $(@D)
+	@printf "compiling test_runer from \e[1m\e[36m$<\033[0m..."
+	@g++ -std=gnu++11 -Qunused-arguments -Wall -Wuninitialized -Weffc++ $(OBJECTS) obj/tests/test_runner.o $< -o $@ -l$(GOOGLE_TEST_LIBS) -I./include -I$(GOOGLE_TEST_INCLUDE_DIR) -L$(GOOGLE_TEST_LIB_DIR) -l$(NCURSES_LIB) -I$(YAML_CPP_INCLUDE_DIR) -L$(YAML_CPP_LIB_DIR) -l$(YAML_CPP_LIBS)
+	@echo "done. Executable at \033[1m\033[32m$@\033[0m"
 
 
 
