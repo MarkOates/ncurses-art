@@ -35,10 +35,12 @@ std::string check_it(std::string label, bool check)
 }
 
 
+#include <StringVectorIntersection.hpp>
 
 class Args
 {
 private:
+   std::vector<std::string> known_args;
    std::vector<std::string> args;
 
    bool find(std::string string)
@@ -48,7 +50,12 @@ private:
 
 public:
    Args()
-      : args{}
+      : known_args({
+         "all",
+         "core",
+         "games",
+        })
+      , args{}
    {}
 
    void set(std::vector<std::string> args)
@@ -65,6 +72,12 @@ public:
    {
       return find(arg_string_to_find);
    }
+
+   bool has_no_recognized_args()
+   {
+      StringVectorIntersection intersection(args, known_args);
+      return intersection.intersection().empty();
+   }
 };
 
 
@@ -78,7 +91,10 @@ void initialize()
       Args magic_args;
       magic_args.set(args);
 
-      if (magic_args.has("games"))
+      bool fetch_game_repos = magic_args.has("games");
+      bool fetch_core_repos = magic_args.has("core") || magic_args.has_no_recognized_args();
+
+      if (fetch_game_repos)
       {
          statuses = {
             { "Slug3D",               GithubRepoStatusFetcher("slug_3d") },
@@ -87,7 +103,8 @@ void initialize()
             { "UnnamedGameFramework", GithubRepoStatusFetcher("UnnamedGameFramework") },
          };
       }
-      else
+
+      if (fetch_core_repos)
       {
          statuses = {
             { "ncurses-art",      GithubRepoStatusFetcher("ncurses-art") },
