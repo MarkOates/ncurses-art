@@ -81,9 +81,10 @@ void initialize()
       if (magic_args.has("games"))
       {
          statuses = {
-            { "Slug3D",              GithubRepoStatusFetcher("slug_3d") },
-            { "Adventures of Beary", GithubRepoStatusFetcher("adventures-of-beary") },
-            { "Alex Park",           GithubRepoStatusFetcher("AlexPark") },
+            { "Slug3D",               GithubRepoStatusFetcher("slug_3d") },
+            { "Adventures of Beary",  GithubRepoStatusFetcher("adventures-of-beary") },
+            { "Alex Park",            GithubRepoStatusFetcher("AlexPark") },
+            { "UnnamedGameFramework", GithubRepoStatusFetcher("UnnamedGameFramework") },
          };
       }
       else
