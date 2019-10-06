@@ -2,18 +2,21 @@
 
 
 #include <string>
+#include <vector>
 
 
 class StringVectorIntersection
 {
 private:
+   std::vector<std::string> v1;
+   std::vector<std::string> v2;
 
 public:
-   StringVectorIntersection();
+   StringVectorIntersection(std::vector<std::string> v1={}, std::vector<std::string> v2={});
    ~StringVectorIntersection();
 
 
-std::string run();
+std::vector<std::string> intersection();
 };
 
 

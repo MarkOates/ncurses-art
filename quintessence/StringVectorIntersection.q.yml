@@ -1,4 +1,31 @@
+properties:
+  - name: v1
+    type: std::vector<std::string>
+    init_with: "{}"
+    constructor_arg: true
+  - name: v2
+    type: std::vector<std::string>
+    init_with: "{}"
+    constructor_arg: true
 functions:
-  - name: run
-    type: std::string
-    body: return "Hello World!";
+  - name: intersection
+    type: std::vector<std::string> 
+    body: |
+      std::vector<std::string> result;
+      std::vector<std::string>::iterator it;
+
+      it = std::set_intersection(v1.begin(), v1.begin()+5, v2.begin(), v2.begin()+5, result.begin());
+
+      result.resize(it - result.begin());
+
+      return result;
+    body_dependency_symbols:
+      - std::set_intersection
+      - std::sort
+dependencies:
+  - symbol: std::vector<std::string> 
+    headers: [ 'vector', 'string' ]
+  - symbol: std::sort
+    headers: [ 'algorithm' ]
+  - symbol: std::set_intersection
+    headers: [ 'algorithm' ]
