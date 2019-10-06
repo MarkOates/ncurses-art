@@ -22,9 +22,13 @@ StringVectorIntersection::~StringVectorIntersection()
 std::vector<std::string> StringVectorIntersection::intersection()
 {
 std::vector<std::string> result;
+result.resize(v1.size() + v2.size());
 std::vector<std::string>::iterator it;
 
-it = std::set_intersection(v1.begin(), v1.begin()+5, v2.begin(), v2.begin()+5, result.begin());
+std::sort(v1.begin(), v1.end());
+std::sort(v2.begin(), v2.end());
+
+it = std::set_intersection(v1.begin(), v1.end(), v2.begin(), v2.end(), result.begin());
 
 result.resize(it - result.begin());
 
