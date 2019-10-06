@@ -101,6 +101,7 @@ void initialize()
             { "me",               GithubRepoStatusFetcher("me") },
             { ".dotfiles",        GithubRepoStatusFetcher(".dotfiles") },
             { "first_vim_plugin", GithubRepoStatusFetcher("first_vim_plugin") },
+            { "UnnamedGameFramework", GithubRepoStatusFetcher("UnnamedGameFramework") },
          };
       }
    };
