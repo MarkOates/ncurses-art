@@ -100,6 +100,9 @@ void initialize()
             { "Slug3D",               GithubRepoStatusFetcher("slug_3d") },
             { "Adventures of Beary",  GithubRepoStatusFetcher("adventures-of-beary") },
             { "Alex Park",            GithubRepoStatusFetcher("AlexPark") },
+            { "dungeon",              GithubRepoStatusFetcher("dungeon") },
+            { "beary2d",              GithubRepoStatusFetcher("beary2d") },
+            { "tilemap",              GithubRepoStatusFetcher("tilemap") },
             { "UnnamedGameFramework", GithubRepoStatusFetcher("UnnamedGameFramework") },
          };
       }
