@@ -110,6 +110,7 @@ void initialize()
             { "ncurses-art",      GithubRepoStatusFetcher("ncurses-art") },
             { "blast",            GithubRepoStatusFetcher("blast") },
             { "fullscore",        GithubRepoStatusFetcher("fullscore") },
+            { "oatescodes",       GithubRepoStatusFetcher("oatescodes") },
             { "hexagon",          GithubRepoStatusFetcher("hexagon") },
             { "HomeServer",       GithubRepoStatusFetcher("HomeServer") },
             { "beebot",           GithubRepoStatusFetcher("beebot") },
