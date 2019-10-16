@@ -104,6 +104,7 @@ void initialize()
             { "lightracer",           GithubRepoStatusFetcher("lightracer") },
             { "beary2d",              GithubRepoStatusFetcher("beary2d") },
             { "tilemap",              GithubRepoStatusFetcher("tilemap") },
+            { "motris",               GithubRepoStatusFetcher("motris") },
             { "UnnamedGameFramework", GithubRepoStatusFetcher("UnnamedGameFramework") },
          };
       }
