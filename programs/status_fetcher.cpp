@@ -126,6 +126,7 @@ void initialize()
             { ".dotfiles",        GithubRepoStatusFetcher(".dotfiles") },
             { "first_vim_plugin", GithubRepoStatusFetcher("first_vim_plugin") },
             { "UnnamedGameFramework", GithubRepoStatusFetcher("UnnamedGameFramework") },
+            { "allegroflare.github.io", GithubRepoStatusFetcher("allegroflare.github.io") },
          };
       }
    };
