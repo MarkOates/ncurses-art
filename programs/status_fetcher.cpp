@@ -105,7 +105,6 @@ void initialize()
             { "beary2d",              GithubRepoStatusFetcher("beary2d") },
             { "tilemap",              GithubRepoStatusFetcher("tilemap") },
             { "motris",               GithubRepoStatusFetcher("motris") },
-            { "UnnamedGameFramework", GithubRepoStatusFetcher("UnnamedGameFramework") },
          };
       }
 
@@ -125,7 +124,6 @@ void initialize()
             { "me",               GithubRepoStatusFetcher("me") },
             { ".dotfiles",        GithubRepoStatusFetcher(".dotfiles") },
             { "first_vim_plugin", GithubRepoStatusFetcher("first_vim_plugin") },
-            { "UnnamedGameFramework", GithubRepoStatusFetcher("UnnamedGameFramework") },
             { "allegroflare.github.io", GithubRepoStatusFetcher("allegroflare.github.io") },
          };
       }
