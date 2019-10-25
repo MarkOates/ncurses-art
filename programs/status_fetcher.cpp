@@ -105,6 +105,7 @@ void initialize()
             { "beary2d",              GithubRepoStatusFetcher("beary2d") },
             { "tilemap",              GithubRepoStatusFetcher("tilemap") },
             { "motris",               GithubRepoStatusFetcher("motris") },
+            { "tileo",                GithubRepoStatusFetcher("tileo") },
          };
       }
 
