@@ -101,7 +101,7 @@ void initialize()
             { "Adventures of Beary",  GithubRepoStatusFetcher("adventures-of-beary") },
             { "Alex Park",            GithubRepoStatusFetcher("AlexPark") },
             { "dungeon",              GithubRepoStatusFetcher("dungeon") },
-            { "lightracer",           GithubRepoStatusFetcher("lightracer") },
+            { "lightracer-max",       GithubRepoStatusFetcher("lightracer-max") },
             { "beary2d",              GithubRepoStatusFetcher("beary2d") },
             { "tilemap",              GithubRepoStatusFetcher("tilemap") },
             { "motris",               GithubRepoStatusFetcher("motris") },
