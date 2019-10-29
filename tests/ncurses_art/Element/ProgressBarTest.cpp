@@ -20,5 +20,17 @@ TEST(ProgressBarTest, can_get_an_set_the_value)
    float expected_value = 0.0;
 
    EXPECT_EQ(expected_value, progress_bar.get_value());
+
+   expected_value = 1.0;
+   progress_bar.set_value(expected_value);
+   EXPECT_EQ(expected_value, progress_bar.get_value());
+
+   expected_value = 0.332;
+   progress_bar.set_value(expected_value);
+   EXPECT_EQ(expected_value, progress_bar.get_value());
+
+   expected_value = 0.897;
+   progress_bar.set_value(expected_value);
+   EXPECT_EQ(expected_value, progress_bar.get_value());
 }
 
