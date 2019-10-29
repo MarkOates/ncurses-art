@@ -66,6 +66,15 @@ std::vector<Frame *> frames()
    return results;
 }
 
+std::vector<ProgressBar *> progress_bars()
+{
+   if (!current_project) throw std::runtime_error("Cannot retrieve progress_bars on a nullptr current_project");
+   std::vector<ProgressBar *> results;
+   for (ElementBase *element : current_project->get_elements())
+      if (element->is_type("ProgressBar")) results.push_back(static_cast<ProgressBar *>(element));
+   return results;
+}
+
 TabSet &find_tab_set(std::string name)
 {
    std::vector<TabSet *> results;
@@ -136,6 +145,16 @@ Frame &find_frame(std::string name)
    throw std::runtime_error(error_message.str());
 }
 
+ProgressBar &find_progress_bar(std::string name)
+{
+   std::vector<ProgressBar *> results;
+   for (ProgressBar *progress_bar : progress_bars()) if (progress_bar->is_name(name)) return *progress_bar;
+
+   std::stringstream error_message;
+   error_message << "Cannot find progress_bar with the name \"" << name << "\"";
+   throw std::runtime_error(error_message.str());
+}
+
 Menu &last_menu()
 {
    return (*menus().back());
@@ -200,6 +219,15 @@ Frame &create_frame(std::string name="", int x=0, int y=0, int w=20, int h=6)
    current_project->get_elements().push_back(frame);
    last_element().set_name(name);
    return (*frame);
+}
+
+ProgressBar &create_progress_bar(std::string name="", int x=0, int y=0, int w=20, int h=6)
+{
+   if (!current_project) throw std::runtime_error("Cannot create a menu, current_project is not set");
+   ProgressBar *progress_bar = new ProgressBar(x, y, w, h);
+   current_project->get_elements().push_back(progress_bar);
+   last_element().set_name(name);
+   return (*progress_bar);
 }
 
 HeaderBar &create_header_bar(std::string name="")
