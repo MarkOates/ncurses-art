@@ -93,6 +93,11 @@ functions:
       int result = atoi(command_output.c_str());
       return result;
 
+  - name: is_current_branch_master
+    type: bool
+    body: |
+      return get_current_branch_name() == "master\n";
+
   - name: get_current_branch_name
     type: std::string
     body: |

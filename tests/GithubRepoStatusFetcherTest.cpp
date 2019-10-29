@@ -3,6 +3,12 @@
 
 #include <GithubRepoStatusFetcher.hpp>
 
+//TEST(GithubRepoStatusFetcherTest, is_current_branch_master__returns_true_if_the_current_branch_is_set_to_master)
+//{
+   //GithubRepoStatusFetcher fetcher("adventures-of-beary");
+   //EXPECT_EQ(true, fetcher.is_current_branch_master());
+//}
+
 //TEST(GithubRepoStatusFetcherTest, run__returns_the_expected_response)
 //{
    //GithubRepoStatusFetcher fetcher("hexagon");

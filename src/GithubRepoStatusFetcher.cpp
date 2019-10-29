@@ -151,6 +151,12 @@ return result;
 
 }
 
+bool GithubRepoStatusFetcher::is_current_branch_master()
+{
+return get_current_branch_name() == "master\n";
+
+}
+
 std::string GithubRepoStatusFetcher::get_current_branch_name()
 {
 std::stringstream command;
