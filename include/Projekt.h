@@ -4,6 +4,7 @@
 #include <ncurses_art/Element/Frame.hpp>
 #include <ncurses_art/Element/HeaderBar.hpp>
 #include <ncurses_art/Element/Menu.hpp>
+#include <ncurses_art/Element/ProgressBar.hpp>
 #include <ncurses_art/Element/Rectangle.hpp>
 #include <ncurses_art/Element/Scene.hpp>
 #include <ncurses_art/Element/Table.hpp>
