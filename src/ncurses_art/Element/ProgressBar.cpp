@@ -46,7 +46,6 @@ void ProgressBar::draw()
    int max_characters = inner_progress_bar_total_width; // a placeholder for now
                                                         // this feature is used to prevent words from wrapping around the screen if they fall off the right edge
 
-
    int styles_with_reverse = styles;
    styles_with_reverse |= A_REVERSE;
    // styles_wihtout_reverse = styles &= ~A_REVERSE;
