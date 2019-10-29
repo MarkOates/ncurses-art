@@ -14,6 +14,10 @@ properties:
     type: std::string
     init_with: "\"git branch | grep \\\\* | cut -d ' ' -f2\""
     getter: true
+  - name: git_remote_branch_names_command
+    type: std::string
+    init_with: "\"git branch -r\""
+    getter: true
   - name: component_quintessence_filenames_command
     type: std::string
     init_with: "\"find quintessence -name '*.q.yml'\""

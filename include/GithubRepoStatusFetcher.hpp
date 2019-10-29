@@ -17,6 +17,7 @@ private:
    std::string git_status_command;
    std::string git_branch_count_command;
    std::string git_current_branch_command;
+   std::string git_remote_branch_names_command;
    std::string component_quintessence_filenames_command;
    std::string repo_name;
    std::string repos_directory;
@@ -33,6 +34,7 @@ public:
    std::string get_git_status_command();
    std::string get_git_branch_count_command();
    std::string get_git_current_branch_command();
+   std::string get_git_remote_branch_names_command();
    std::string get_component_quintessence_filenames_command();
    std::string get_repo_name();
    std::string get_repos_directory();

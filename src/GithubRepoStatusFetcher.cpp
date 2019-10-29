@@ -14,6 +14,7 @@ GithubRepoStatusFetcher::GithubRepoStatusFetcher(std::string repo_name, std::str
    , git_status_command("git status -uno -u")
    , git_branch_count_command("git branch | wc -l")
    , git_current_branch_command("git branch | grep \\* | cut -d ' ' -f2")
+   , git_remote_branch_names_command("git branch -r")
    , component_quintessence_filenames_command("find quintessence -name '*.q.yml'")
    , repo_name(repo_name)
    , repos_directory(repos_directory)
@@ -55,6 +56,12 @@ std::string GithubRepoStatusFetcher::get_git_branch_count_command()
 std::string GithubRepoStatusFetcher::get_git_current_branch_command()
 {
    return git_current_branch_command;
+}
+
+
+std::string GithubRepoStatusFetcher::get_git_remote_branch_names_command()
+{
+   return git_remote_branch_names_command;
 }
 
 
