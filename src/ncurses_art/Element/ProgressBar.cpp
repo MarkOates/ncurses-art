@@ -1,5 +1,6 @@
 #include <ncurses_art/Element/ProgressBar.hpp>
 
+#include <ncurses_art/Element/Frame.hpp>
 #include <ncurses.h>
 
 ProgressBar::ProgressBar(float x, float y, float w, float h)
@@ -33,6 +34,7 @@ void ProgressBar::set_styles(int styles)
 
 void ProgressBar::draw()
 {
+   Frame frame(x, y, w, h);
    attron(styles);
    for (unsigned yy=0; yy<(int)h; yy++)
       for (unsigned xx=0; xx<(int)w; xx++)
