@@ -3,8 +3,34 @@ properties:
     type: std::string
     init_with: "\"\""
     constructor_arg: true
+
 functions:
   - name: trim
     type: std::string
     body: |
-      return "Hello World!";
+      std::string s1 = text;
+      std::string s2 = rtrim(s1);
+      std::string s3 = ltrim(s2);
+      return s3;
+
+  - name: ltrim
+    private: true
+    type: std::string
+    parameters:
+      - name: s
+        type: std::string
+        default_argument: "\"\""
+    body: |
+      s.erase(s.begin(), std::find_if(s.begin(), s.end(), std::not1(std::ptr_fun<int, int>(std::isspace))));
+      return s;
+
+  - name: rtrim
+    private: true
+    type: std::string
+    parameters:
+      - name: s
+        type: std::string
+        default_argument: "\"\""
+    body: |
+      s.erase(std::find_if(s.rbegin(), s.rend(), std::not1(std::ptr_fun<int, int>(std::isspace))).base(), s.end());
+      return s;
