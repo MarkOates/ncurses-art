@@ -122,6 +122,8 @@ void initialize()
             { "allegro_flare",    GithubRepoStatusFetcher("allegro_flare") },
             { "allegro-planet",   GithubRepoStatusFetcher("allegro-planet") },
             { "disclife",         GithubRepoStatusFetcher("disclife") },
+            { "crayola",          GithubRepoStatusFetcher("crayola") },
+            { "crayola-client",   GithubRepoStatusFetcher("crayola-client") },
             { "me",               GithubRepoStatusFetcher("me") },
             { ".dotfiles",        GithubRepoStatusFetcher(".dotfiles") },
             { "first_vim_plugin", GithubRepoStatusFetcher("first_vim_plugin") },
