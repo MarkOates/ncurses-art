@@ -5,6 +5,8 @@
 #include <sstream>
 #include <iostream>
 #include <iostream>
+#include <vector>
+#include <string>
 
 
 
@@ -148,6 +150,12 @@ command << "(cd " << get_repos_directory() << "/" << get_repo_name() << " && git
 std::string command_output = execute_command(command.str().c_str());
 int result = atoi(command_output.c_str());
 return result;
+
+}
+
+std::vector<std::string> GithubRepoStatusFetcher::get_branch_names_at_remote()
+{
+return {};
 
 }
 

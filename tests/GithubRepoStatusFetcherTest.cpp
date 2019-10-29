@@ -9,6 +9,16 @@
    //EXPECT_EQ(true, fetcher.is_current_branch_master());
 //}
 
+TEST(GithubRepoStatusFetcherTest, branch_names_at_remote__returns_a_list_of_branch_names_at_remote)
+{
+   GithubRepoStatusFetcher fetcher("adventures-of-beary");
+   std::vector<std::string> expected_branch_names_at_remote = {
+      "origin/master",
+      "origin/something_something",
+   };
+   EXPECT_EQ(expected_branch_names_at_remote, fetcher.get_branch_names_at_remote());
+}
+
 //TEST(GithubRepoStatusFetcherTest, run__returns_the_expected_response)
 //{
    //GithubRepoStatusFetcher fetcher("hexagon");
