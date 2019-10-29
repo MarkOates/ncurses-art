@@ -1,0 +1,10 @@
+properties:
+  - name: text
+    type: std::string
+    init_with: "\"\""
+    constructor_arg: true
+functions:
+  - name: trim
+    type: std::string
+    body: |
+      return "Hello World!";
