@@ -96,7 +96,16 @@ functions:
   - name: get_branch_names_at_remote
     type: std::vector<std::string>
     body: |
-      return {};
+      std::stringstream command;
+      command << "(cd " << get_repos_directory() << "/" << get_repo_name() << " && " << get_git_remote_branch_names_command() << ")";
+      std::string command_output = execute_command(command.str().c_str());
+      std::vector<std::string> lines = StringSplitter(command_output, '\n').split();
+      for (auto &line : lines)
+      {
+         line = StringTrimmer(line).trim();
+      }
+      std::sort(lines.begin(), lines.end());
+      return lines;
 
   - name: is_current_branch_master
     type: bool
@@ -169,8 +178,10 @@ functions:
           result += buffer.data();
       }
       return result;
+
 function_body_symbol_dependencies:
   - StringSplitter
+  - StringTrimmer
   - std::stringstream
   - std::cerr
   - std::endl
@@ -178,6 +189,8 @@ function_body_symbol_dependencies:
 dependencies:
   - symbol: StringSplitter
     headers: [ 'StringSplitter.hpp' ]
+  - symbol: StringTrimmer
+    headers: [ 'StringTrimmer.hpp' ]
   - symbol: std::stringstream
     headers: [ 'sstream' ]
   - symbol: std::cerr

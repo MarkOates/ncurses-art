@@ -2,6 +2,7 @@
 
 #include <GithubRepoStatusFetcher.hpp>
 #include <StringSplitter.hpp>
+#include <StringTrimmer.hpp>
 #include <sstream>
 #include <iostream>
 #include <iostream>
@@ -155,7 +156,16 @@ return result;
 
 std::vector<std::string> GithubRepoStatusFetcher::get_branch_names_at_remote()
 {
-return {};
+std::stringstream command;
+command << "(cd " << get_repos_directory() << "/" << get_repo_name() << " && " << get_git_remote_branch_names_command() << ")";
+std::string command_output = execute_command(command.str().c_str());
+std::vector<std::string> lines = StringSplitter(command_output, '\n').split();
+for (auto &line : lines)
+{
+   line = StringTrimmer(line).trim();
+}
+std::sort(lines.begin(), lines.end());
+return lines;
 
 }
 
