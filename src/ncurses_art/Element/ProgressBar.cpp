@@ -34,10 +34,24 @@ void ProgressBar::set_styles(int styles)
 
 void ProgressBar::draw()
 {
+   int inner_progress_bar_total_width = w - 4;
+   char progress_bar_char = ' ';
+
    Frame frame(x, y, w, h);
-   attron(styles);
-   for (unsigned yy=0; yy<(int)h; yy++)
-      for (unsigned xx=0; xx<(int)w; xx++)
-         mvaddch((int)(y + yy), (int)(x + xx), ' ');
-   attroff(styles);
+   frame.set_styles(styles);
+   frame.draw();
+
+   std::string string_to_draw((int)(inner_progress_bar_total_width * value), progress_bar_char);
+
+   int max_characters = inner_progress_bar_total_width; // a placeholder for now
+                                                        // this feature is used to prevent words from wrapping around the screen if they fall off the right edge
+
+
+   int styles_with_reverse = styles;
+   styles_with_reverse |= A_REVERSE;
+   // styles_wihtout_reverse = styles &= ~A_REVERSE;
+
+   attron(styles_with_reverse);
+   mvaddnstr(((int)y)+1, ((int)x)+2, string_to_draw.c_str(), max_characters);
+   attroff(styles_with_reverse);
 }
