@@ -10,6 +10,8 @@
 #define REFRESH_ALL_STATUSES "REFRESH_ALL_STATUSES"
 #define REFRESH_NEXT_STATUS "REFRESH_NEXT_STATUS"
 
+#define OUTPUT_REPORT_TEXT find_text("output report");
+
 #define PROPERTY_DELIMITER ": "
 
 
@@ -88,7 +90,7 @@ public:
 void initialize()
 {
    events[INITIALIZE_SCENE] = []{
-      create_text("output");
+      create_text("output report");
 
       Args magic_args;
       magic_args.set(args);
@@ -136,7 +138,7 @@ void initialize()
    events[REFRESH_NEXT_STATUS] = []{
    };
    events[REFRESH_ALL_STATUSES] = []{
-      Text &text = find_text("output");
+      Text &text = OUTPUT_REPORT_TEXT;
 
       std::stringstream result_text;
 
