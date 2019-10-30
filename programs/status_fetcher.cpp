@@ -167,6 +167,27 @@ public:
 };
 
 
+enum final_status_t
+{
+   NONE = 0,
+   UNPROCESSED,
+   CLEAN,
+   UNSYNCED,
+   SOME_CLUTTERED_FILES,
+};
+
+
+final_status_t get_final_status(bool project_has_been_processed, bool exists_locally, bool in_sync, bool has_no_changed_files, bool has_no_untracked_files)
+{
+   if (project_has_been_processed == false) return UNPROCESSED;
+
+   final_status_t status_icon = CLEAN;
+   if (!exists_locally || !in_sync) status_icon = UNSYNCED;
+   if (!has_no_changed_files || !has_no_untracked_files) status_icon = SOME_CLUTTERED_FILES;
+   return status_icon;
+}
+
+
 std::string get_status_icon_and_text(bool project_has_been_processed, bool exists_locally, bool in_sync, bool has_no_changed_files, bool has_no_untracked_files)
 {
    if (project_has_been_processed == false) return "⏱  unprocessed";
