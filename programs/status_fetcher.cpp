@@ -318,7 +318,7 @@ void initialize()
    events[REFRESH_OUTPUT_REPORT] = []{
       std::stringstream result_text;
 
-      result_text << "[i] This tool does not check the status of *branches* within the repos" << std::endl << std::endl;
+      result_text << "[i] This tool does not check the status of *branches* within the repos" << std::endl << std::endl << std::endl;
 
       for (auto &project : projects)
       {
