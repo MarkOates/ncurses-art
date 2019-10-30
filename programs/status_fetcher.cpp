@@ -346,6 +346,8 @@ void initialize()
          result_text << std::endl;
       }
 
+      result_text << std::endl << "some processing messaging garbage:" << std::endl << std::endl << std::endl;
+
       OUTPUT_REPORT_TEXT.set_text(result_text.str());
    };
    events[REFRESH_ALL_STATUSES] = []{
