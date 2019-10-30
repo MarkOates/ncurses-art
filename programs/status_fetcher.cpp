@@ -7,7 +7,7 @@
 #define MOVE_CURSOR_LEFT "MOVE_CURSOR_LEFT"
 #define MOVE_CURSOR_RIGHT "MOVE_CURSOR_RIGHT"
 #define INITIALIZE_SCENE "INITIALIZE_SCENE"
-#define REFRESH_STATUSES "REFRESH_STATUSES"
+#define REFRESH_ALL_STATUSES "REFRESH_ALL_STATUSES"
 
 #define PROPERTY_DELIMITER ": "
 
@@ -131,7 +131,7 @@ void initialize()
          };
       }
    };
-   events[REFRESH_STATUSES] = []{
+   events[REFRESH_ALL_STATUSES] = []{
       Text &text = find_text("output");
 
       std::stringstream result_text;
@@ -167,6 +167,6 @@ void initialize()
    };
 
    emit_event(INITIALIZE_SCENE);
-   emit_event(REFRESH_STATUSES);
+   emit_event(REFRESH_ALL_STATUSES);
 }
 
