@@ -137,7 +137,6 @@ private:
 public:
    Args()
       : known_args({
-         "all",
          "core",
          "games",
         })
