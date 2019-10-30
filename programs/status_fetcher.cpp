@@ -219,11 +219,11 @@ void initialize()
 
       result_text << "Important note - this tool does not check the status of *branches* within the repos" << std::endl << std::endl;
 
-      for (auto &status : projects)
+      for (auto &project : projects)
       {
          result_text << std::endl;
 
-         ProjectStatus &project_status = status.second.second;
+         ProjectStatus &project_status = project.second.second;
 
          bool exists_locally = project_status.get_exists_locally();
          bool in_sync = project_status.get_in_sync();
@@ -236,7 +236,7 @@ void initialize()
          if (!exists_locally || !in_sync) status_icon = "🔺 unsynced";
          if (!has_no_changed_files || !has_no_untracked_files) status_icon = "🔸 some cluttered files";
 
-         result_text << status.first << std::endl;
+         result_text << project.first << std::endl;
          result_text << "  status" << PROPERTY_DELIMITER << status_icon << std::endl;
          if (!exists_locally) result_text << "  " << check_it("exists locally", exists_locally) << std::endl;
          if (num_local_branches != 1) result_text << "  " << diamond_it("num local branches", num_local_branches) << std::endl;
@@ -248,14 +248,14 @@ void initialize()
       OUTPUT_REPORT_TEXT.set_text(result_text.str());
    };
    events[REFRESH_ALL_STATUSES] = []{
-      for (auto &status : projects)
+      for (auto &project : projects)
       {
-         std::cout << "processing \"" << status.first << "\"" << std::endl;
+         std::cout << "processing \"" << project.first << "\"" << std::endl;
 
-         ProjectStatus &project_status = status.second.second;
+         ProjectStatus &project_status = project.second.second;
          project_status.process();
 
-         status.second.first = true;
+         project.second.first = true;
       }
    };
 
