@@ -174,8 +174,7 @@ std::string get_status_icon_and_text(bool project_has_been_processed, bool exist
 void initialize()
 {
    events[INITIALIZE_SCENE] = []{
-      create_text(OUTPUT_REPORT_TEXT_IDENTIFIER);
-      OUTPUT_REPORT_TEXT.set_x(3);
+      create_text(OUTPUT_REPORT_TEXT_IDENTIFIER, 3, 8);
 
       Args magic_args;
       magic_args.set(args);
