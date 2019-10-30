@@ -10,6 +10,7 @@
 #define REFRESH_ALL_STATUSES "REFRESH_ALL_STATUSES"
 #define PROCESS_NEXT_STATUS "PROCESS_NEXT_STATUS"
 #define REFRESH_OUTPUT_REPORT "REFRESH_OUTPUT_REPORT"
+#define REFRESH_PROGRESS_BAR "REFRESH_PROGRESS_BAR"
 #define INCREMENTAL_RUN "INCREMENTAL_RUN"
 
 #define OUTPUT_REPORT_TEXT_IDENTIFIER "output report"
@@ -188,6 +189,18 @@ bool have_all_projects_been_processed()
 }
 
 
+int get_number_of_projects_processed()
+{
+   int projects_processed_count = 0;
+   for (auto &project : projects)
+   {
+      bool project_has_been_processed = project.second.first;
+      if (project_has_been_processed) projects_processed_count++;
+   }
+   return projects_processed_count;
+}
+
+
 void initialize()
 {
    events[INITIALIZE_SCENE] = []{
@@ -264,6 +277,7 @@ void initialize()
       {
          emit_event(PROCESS_NEXT_STATUS);
          emit_event(REFRESH_OUTPUT_REPORT);
+         emit_event(REFRESH_PROGRESS_BAR);
          emit_event(INCREMENTAL_RUN);
       }
       else
@@ -271,10 +285,16 @@ void initialize()
          PROGRESS_BAR_TEXT.set_text("finished.");
       }
    };
+   events[REFRESH_PROGRESS_BAR] = []{
+      int total_number_of_projects_for_processing = projects.size();
+      int number_of_projects_processed = get_number_of_projects_processed();
+      float updated_progress_bar_value = (float)number_of_projects_processed / total_number_of_projects_for_processing;
+      PROGRESS_BAR.set_value(updated_progress_bar_value);
+   };
    events[REFRESH_OUTPUT_REPORT] = []{
       std::stringstream result_text;
 
-      //result_text << "Important note - this tool does not check the status of *branches* within the repos" << std::endl << std::endl;
+      result_text << "[i] This tool does not check the status of *branches* within the repos" << std::endl << std::endl;
 
       for (auto &project : projects)
       {
