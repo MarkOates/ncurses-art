@@ -147,8 +147,10 @@ public:
 };
 
 
-std::string get_status_icon_and_text(bool exists_locally, bool in_sync, bool has_no_changed_files, bool has_no_untracked_files)
+std::string get_status_icon_and_text(bool project_has_been_processed, bool exists_locally, bool in_sync, bool has_no_changed_files, bool has_no_untracked_files)
 {
+   if (project_has_been_processed == false) return "▫️  unprocessed";
+
    std::string status_icon = "🔹 clean";
    if (!exists_locally || !in_sync) status_icon = "🔺 unsynced";
    if (!has_no_changed_files || !has_no_untracked_files) status_icon = "🔸 some cluttered files";
@@ -221,15 +223,19 @@ void initialize()
          bool has_no_untracked_files = project_status.get_has_no_untracked_files();
          int num_local_branches = project_status.get_num_local_branches();
          std::string project_identifier = project.first;
+         bool project_has_been_processed = project.second.first;
 
          result_text << std::endl;
          result_text << project_identifier << std::endl;
-         result_text << "  status" << PROPERTY_DELIMITER << get_status_icon_and_text(exists_locally, in_sync, has_no_changed_files, has_no_untracked_files) << std::endl;
-         if (!exists_locally) result_text << "  " << check_it("exists locally", exists_locally) << std::endl;
-         if (num_local_branches != 1) result_text << "  " << diamond_it("num local branches", num_local_branches) << std::endl;
-         if (!in_sync) result_text << "  " << check_it("in sync with remote", in_sync) << std::endl;
-         if (!has_no_changed_files) result_text << "  " << check_it("has no changed files", has_no_changed_files) << std::endl;
-         if (!has_no_untracked_files) result_text << "  " << check_it("has no untracked files", has_no_untracked_files) << std::endl;
+         result_text << "  status" << PROPERTY_DELIMITER << get_status_icon_and_text(project_has_been_processed, exists_locally, in_sync, has_no_changed_files, has_no_untracked_files) << std::endl;
+         if (project_has_been_processed == true)
+         {
+            if (!exists_locally) result_text << "  " << check_it("exists locally", exists_locally) << std::endl;
+            if (num_local_branches != 1) result_text << "  " << diamond_it("num local branches", num_local_branches) << std::endl;
+            if (!in_sync) result_text << "  " << check_it("in sync with remote", in_sync) << std::endl;
+            if (!has_no_changed_files) result_text << "  " << check_it("has no changed files", has_no_changed_files) << std::endl;
+            if (!has_no_untracked_files) result_text << "  " << check_it("has no untracked files", has_no_untracked_files) << std::endl;
+         }
       }
 
       OUTPUT_REPORT_TEXT.set_text(result_text.str());
