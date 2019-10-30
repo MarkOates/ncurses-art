@@ -167,6 +167,8 @@ void initialize()
          if (!in_sync) result_text << "  " << check_it("in sync with remote", in_sync) << std::endl;
          if (!has_no_changed_files) result_text << "  " << check_it("has no changed files", has_no_changed_files) << std::endl;
          if (!has_no_untracked_files) result_text << "  " << check_it("has no untracked files", has_no_untracked_files) << std::endl;
+
+         status.second.first = true;
       }
 
       text.set_text(result_text.str());
