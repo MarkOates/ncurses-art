@@ -16,6 +16,61 @@
 #define PROPERTY_DELIMITER ": "
 
 
+class ProjectStatus
+{
+private:
+   std::string repo_name;
+
+   bool exists_locally;
+   bool in_sync;
+   bool has_no_changed_files;
+   bool has_no_untracked_files;
+   int num_local_branches;
+
+   GithubRepoStatusFetcher fetcher;
+
+public:
+   ProjectStatus(std::string repo_name)
+      : repo_name(repo_name)
+      , fetcher()
+   {}
+
+   bool get_exists_locally()
+   {
+      return exists_locally;
+   }
+
+   bool get_in_sync()
+   {
+      return in_sync;
+   }
+
+   bool get_has_no_changed_files()
+   {
+      return has_no_changed_files;
+   }
+
+   bool get_has_no_untracked_files()
+   {
+      return has_no_untracked_files;
+   }
+
+   int get_num_local_branches()
+   {
+      return num_local_branches;
+   }
+
+   void process()
+   {
+      exists_locally = fetcher.local_repo_exists();
+      in_sync = fetcher.is_the_repo_in_sync_with_remote();
+      has_no_changed_files = !fetcher.has_file_changes();
+      has_no_untracked_files = !fetcher.has_untracked_files();
+      num_local_branches = fetcher.get_branch_count();
+   }
+};
+
+
 std::map<std::string, std::pair<bool, GithubRepoStatusFetcher>> statuses = {};
 
 std::string diamond_it(std::string label, int number)
