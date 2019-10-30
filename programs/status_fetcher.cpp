@@ -33,6 +33,11 @@ private:
 public:
    ProjectStatus(std::string repo_name)
       : repo_name(repo_name)
+      , exists_locally(false)
+      , in_sync(false)
+      , has_no_changed_files(false)
+      , has_no_untracked_files(false)
+      , num_local_branches(0)
       , fetcher()
    {}
 
