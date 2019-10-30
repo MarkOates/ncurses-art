@@ -162,6 +162,14 @@ public:
 };
 
 
+std::string get_status_icon_and_text(bool exists_locally, bool in_sync, bool has_no_changed_files, bool has_no_untracked_files)
+{
+   std::string status_icon = "🔹 clean";
+   if (!exists_locally || !in_sync) status_icon = "🔺 unsynced";
+   if (!has_no_changed_files || !has_no_untracked_files) status_icon = "🔸 some cluttered files";
+   return status_icon;
+}
+
 
 
 void initialize()
@@ -221,23 +229,18 @@ void initialize()
 
       for (auto &project : projects)
       {
-         result_text << std::endl;
-
          ProjectStatus &project_status = project.second.second;
-
          bool exists_locally = project_status.get_exists_locally();
          bool in_sync = project_status.get_in_sync();
          bool has_no_changed_files = project_status.get_has_no_changed_files();
          bool has_no_untracked_files = project_status.get_has_no_untracked_files();
          int num_local_branches = project_status.get_num_local_branches();
          ProjectStatus::status_t final_status = project_status.infer_status();
+         std::string project_identifier = project.first;
 
-         std::string status_icon = "🔹 clean";
-         if (!exists_locally || !in_sync) status_icon = "🔺 unsynced";
-         if (!has_no_changed_files || !has_no_untracked_files) status_icon = "🔸 some cluttered files";
-
-         result_text << project.first << std::endl;
-         result_text << "  status" << PROPERTY_DELIMITER << status_icon << std::endl;
+         result_text << std::endl;
+         result_text << project_identifier << std::endl;
+         result_text << "  status" << PROPERTY_DELIMITER << get_status_icon_and_text(exists_locally, in_sync, has_no_changed_files, has_no_untracked_files) << std::endl;
          if (!exists_locally) result_text << "  " << check_it("exists locally", exists_locally) << std::endl;
          if (num_local_branches != 1) result_text << "  " << diamond_it("num local branches", num_local_branches) << std::endl;
          if (!in_sync) result_text << "  " << check_it("in sync with remote", in_sync) << std::endl;
