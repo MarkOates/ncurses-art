@@ -250,12 +250,13 @@ void initialize()
    events[REFRESH_ALL_STATUSES] = []{
       for (auto &project : projects)
       {
-         std::cout << "processing \"" << project.first << "\"" << std::endl;
-
+         std::string project_identifier = project.first;
          ProjectStatus &project_status = project.second.second;
-         project_status.process();
+         bool &project_processed_state = project.second.first;
 
-         project.second.first = true;
+         std::cout << "processing \"" << project_identifier << "\"" << std::endl;
+         project_status.process();
+         project_processed_state = true;
       }
    };
 
