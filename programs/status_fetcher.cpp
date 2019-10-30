@@ -175,6 +175,7 @@ void initialize()
 {
    events[INITIALIZE_SCENE] = []{
       create_text(OUTPUT_REPORT_TEXT_IDENTIFIER);
+      OUTPUT_REPORT_TEXT.set_x(3);
 
       Args magic_args;
       magic_args.set(args);
@@ -238,9 +239,8 @@ void initialize()
          std::string repo_name = project_status.get_repo_name();
          bool project_has_been_processed = project.second.first;
 
-         result_text << std::endl;
-         result_text << project_identifier << std::endl;
-         result_text << "  status" << PROPERTY_DELIMITER << get_status_icon_and_text(project_has_been_processed, exists_locally, in_sync, has_no_changed_files, has_no_untracked_files) << std::endl;
+         std::string status_icon_and_text = get_status_icon_and_text(project_has_been_processed, exists_locally, in_sync, has_no_changed_files, has_no_untracked_files);
+         result_text << project_identifier << PROPERTY_DELIMITER << status_icon_and_text << std::endl;
          if (project_has_been_processed == true)
          {
             result_text << "  " << show_it("repo name", repo_name) << std::endl;
@@ -250,6 +250,7 @@ void initialize()
             result_text << "  " << check_it("has no changed files", has_no_changed_files) << std::endl;
             result_text << "  " << check_it("has no untracked files", has_no_untracked_files) << std::endl;
          }
+         result_text << std::endl;
       }
 
       OUTPUT_REPORT_TEXT.set_text(result_text.str());
