@@ -8,10 +8,12 @@
 #define MOVE_CURSOR_RIGHT "MOVE_CURSOR_RIGHT"
 #define INITIALIZE_SCENE "INITIALIZE_SCENE"
 #define REFRESH_ALL_STATUSES "REFRESH_ALL_STATUSES"
+#define REFRESH_NEXT_STATUS "REFRESH_NEXT_STATUS"
 
 #define PROPERTY_DELIMITER ": "
 
-std::map<std::string, GithubRepoStatusFetcher> statuses = {};
+
+std::map<std::string, std::pair<bool, GithubRepoStatusFetcher>> statuses = {};
 
 std::string diamond_it(std::string label, int number)
 {
@@ -97,39 +99,41 @@ void initialize()
       if (fetch_game_repos)
       {
          statuses = {
-            { "Slug3D",               GithubRepoStatusFetcher("slug_3d") },
-            { "Adventures of Beary",  GithubRepoStatusFetcher("adventures-of-beary") },
-            { "Alex Park",            GithubRepoStatusFetcher("AlexPark") },
-            { "dungeon",              GithubRepoStatusFetcher("dungeon") },
-            { "lightracer-max",       GithubRepoStatusFetcher("lightracer-max") },
-            { "beary2d",              GithubRepoStatusFetcher("beary2d") },
-            { "tilemap",              GithubRepoStatusFetcher("tilemap") },
-            { "motris",               GithubRepoStatusFetcher("motris") },
-            { "tileo",                GithubRepoStatusFetcher("tileo") },
+            { "Slug3D",               { false, GithubRepoStatusFetcher("slug_3d") } },
+            { "Adventures of Beary",  { false, GithubRepoStatusFetcher("adventures-of-beary") } },
+            { "Alex Park",            { false, GithubRepoStatusFetcher("AlexPark") } },
+            { "dungeon",              { false, GithubRepoStatusFetcher("dungeon") } },
+            { "lightracer-max",       { false, GithubRepoStatusFetcher("lightracer-max") } },
+            { "beary2d",              { false, GithubRepoStatusFetcher("beary2d") } },
+            { "tilemap",              { false, GithubRepoStatusFetcher("tilemap") } },
+            { "motris",               { false, GithubRepoStatusFetcher("motris") } },
+            { "tileo",                { false, GithubRepoStatusFetcher("tileo") } },
          };
       }
 
       if (fetch_core_repos)
       {
          statuses = {
-            { "ncurses-art",      GithubRepoStatusFetcher("ncurses-art") },
-            { "blast",            GithubRepoStatusFetcher("blast") },
-            { "fullscore",        GithubRepoStatusFetcher("fullscore") },
-            { "oatescodes",       GithubRepoStatusFetcher("oatescodes") },
-            { "hexagon",          GithubRepoStatusFetcher("hexagon") },
-            { "HomeServer",       GithubRepoStatusFetcher("HomeServer") },
-            { "beebot",           GithubRepoStatusFetcher("beebot") },
-            { "allegro_flare",    GithubRepoStatusFetcher("allegro_flare") },
-            { "allegro-planet",   GithubRepoStatusFetcher("allegro-planet") },
-            { "disclife",         GithubRepoStatusFetcher("disclife") },
-            { "crayola",          GithubRepoStatusFetcher("crayola") },
-            { "crayola-client",   GithubRepoStatusFetcher("crayola-client") },
-            { "me",               GithubRepoStatusFetcher("me") },
-            { ".dotfiles",        GithubRepoStatusFetcher(".dotfiles") },
-            { "first_vim_plugin", GithubRepoStatusFetcher("first_vim_plugin") },
-            { "allegroflare.github.io", GithubRepoStatusFetcher("allegroflare.github.io") },
+            { "ncurses-art",      { false, GithubRepoStatusFetcher("ncurses-art") } },
+            { "blast",            { false, GithubRepoStatusFetcher("blast") } },
+            { "fullscore",        { false, GithubRepoStatusFetcher("fullscore") } },
+            { "oatescodes",       { false, GithubRepoStatusFetcher("oatescodes") } },
+            { "hexagon",          { false, GithubRepoStatusFetcher("hexagon") } },
+            { "HomeServer",       { false, GithubRepoStatusFetcher("HomeServer") } },
+            { "beebot",           { false, GithubRepoStatusFetcher("beebot") } },
+            { "allegro_flare",    { false, GithubRepoStatusFetcher("allegro_flare") } },
+            { "allegro-planet",   { false, GithubRepoStatusFetcher("allegro-planet") } },
+            { "disclife",         { false, GithubRepoStatusFetcher("disclife") } },
+            { "crayola",          { false, GithubRepoStatusFetcher("crayola") } },
+            { "crayola-client",   { false, GithubRepoStatusFetcher("crayola-client") } },
+            { "me",               { false, GithubRepoStatusFetcher("me") } },
+            { ".dotfiles",        { false, GithubRepoStatusFetcher(".dotfiles") } },
+            { "first_vim_plugin", { false, GithubRepoStatusFetcher("first_vim_plugin") } },
+            { "allegroflare.github.io", { false, GithubRepoStatusFetcher("allegroflare.github.io") } },
          };
       }
+   };
+   events[REFRESH_NEXT_STATUS] = []{
    };
    events[REFRESH_ALL_STATUSES] = []{
       Text &text = find_text("output");
@@ -144,11 +148,13 @@ void initialize()
 
          result_text << std::endl;
 
-         bool exists_locally = status.second.local_repo_exists();
-         bool in_sync = status.second.is_the_repo_in_sync_with_remote();
-         bool has_no_changed_files = !status.second.has_file_changes();
-         bool has_no_untracked_files = !status.second.has_untracked_files();
-         int num_local_branches = status.second.get_branch_count();
+         GithubRepoStatusFetcher &fetcher = status.second.second;
+
+         bool exists_locally = fetcher.local_repo_exists();
+         bool in_sync = fetcher.is_the_repo_in_sync_with_remote();
+         bool has_no_changed_files = !fetcher.has_file_changes();
+         bool has_no_untracked_files = !fetcher.has_untracked_files();
+         int num_local_branches = fetcher.get_branch_count();
 
          std::string status_icon = "🔹 clean";
          if (!exists_locally || !in_sync) status_icon = "🔺 unsynced";
