@@ -41,6 +41,11 @@ public:
       , fetcher()
    {}
 
+   std::string get_repo_name()
+   {
+      return repo_name;
+   }
+
    bool get_exists_locally()
    {
       return exists_locally;
@@ -97,6 +102,13 @@ std::string check_it(std::string label, bool check)
    result << label;
    if (check) result << PROPERTY_DELIMITER << "✓ yes";
    else result << PROPERTY_DELIMITER << "✗ no";
+   return result.str();
+}
+
+std::string show_it(std::string label, std::string value)
+{
+   std::stringstream result;
+   result << label << PROPERTY_DELIMITER << value;
    return result.str();
 }
 
@@ -223,6 +235,7 @@ void initialize()
          bool has_no_untracked_files = project_status.get_has_no_untracked_files();
          int num_local_branches = project_status.get_num_local_branches();
          std::string project_identifier = project.first;
+         std::string repo_name = project_status.get_repo_name();
          bool project_has_been_processed = project.second.first;
 
          result_text << std::endl;
@@ -230,6 +243,7 @@ void initialize()
          result_text << "  status" << PROPERTY_DELIMITER << get_status_icon_and_text(project_has_been_processed, exists_locally, in_sync, has_no_changed_files, has_no_untracked_files) << std::endl;
          if (project_has_been_processed == true)
          {
+            result_text << "  " << show_it("repo name", repo_name) << std::endl;
             result_text << "  " << check_it("exists locally", exists_locally) << std::endl;
             result_text << "  " << diamond_it("num local branches", num_local_branches) << std::endl;
             result_text << "  " << check_it("in sync with remote", in_sync) << std::endl;
