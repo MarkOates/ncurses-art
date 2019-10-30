@@ -92,7 +92,7 @@ public:
 };
 
 
-std::map<std::string, std::pair<bool, ProjectStatus>> statuses = {};
+std::map<std::string, std::pair<bool, ProjectStatus>> projects = {};
 
 std::string diamond_it(std::string label, int number)
 {
@@ -177,7 +177,7 @@ void initialize()
 
       if (fetch_game_repos)
       {
-         statuses = {
+         projects = {
             { "Slug3D",               { false, ProjectStatus("slug_3d") } },
             { "Adventures of Beary",  { false, ProjectStatus("adventures-of-beary") } },
             { "Alex Park",            { false, ProjectStatus("AlexPark") } },
@@ -192,7 +192,7 @@ void initialize()
 
       if (fetch_core_repos)
       {
-         statuses = {
+         projects = {
             { "ncurses-art",      { false, ProjectStatus("ncurses-art") } },
             { "blast",            { false, ProjectStatus("blast") } },
             { "fullscore",        { false, ProjectStatus("fullscore") } },
@@ -219,7 +219,7 @@ void initialize()
 
       result_text << "Important note - this tool does not check the status of *branches* within the repos" << std::endl << std::endl;
 
-      for (auto &status : statuses)
+      for (auto &status : projects)
       {
          result_text << std::endl;
 
@@ -248,7 +248,7 @@ void initialize()
       OUTPUT_REPORT_TEXT.set_text(result_text.str());
    };
    events[REFRESH_ALL_STATUSES] = []{
-      for (auto &status : statuses)
+      for (auto &status : projects)
       {
          std::cout << "processing \"" << status.first << "\"" << std::endl;
 
