@@ -14,6 +14,12 @@
 #define OUTPUT_REPORT_TEXT_IDENTIFIER "output report"
 #define OUTPUT_REPORT_TEXT find_text(OUTPUT_REPORT_TEXT_IDENTIFIER)
 
+#define PROGRESS_BAR_IDENTIFIER "progress bar"
+#define PROGRESS_BAR find_progress_bar(PROGRESS_BAR_IDENTIFIER)
+
+#define PROGRESS_BAR_TEXT_IDENTIFIER "progress bar text"
+#define PROGRESS_BAR_TEXT find_text(PROGRESS_BAR_TEXT_IDENTIFIER)
+
 #define PROPERTY_DELIMITER ": "
 
 
@@ -170,11 +176,14 @@ std::string get_status_icon_and_text(bool project_has_been_processed, bool exist
 }
 
 
-
 void initialize()
 {
    events[INITIALIZE_SCENE] = []{
+      create_progress_bar(PROGRESS_BAR_IDENTIFIER, 3, 2, 60, 3);
+      create_text(PROGRESS_BAR_TEXT_IDENTIFIER, 5, 5);
       create_text(OUTPUT_REPORT_TEXT_IDENTIFIER, 3, 8);
+
+      PROGRESS_BAR_TEXT.set_text("processing...");
 
       Args magic_args;
       magic_args.set(args);
@@ -265,6 +274,8 @@ void initialize()
          project_status.process();
          project_processed_state = true;
       }
+
+      PROGRESS_BAR_TEXT.set_text("finished.");
    };
 
    emit_event(INITIALIZE_SCENE);
