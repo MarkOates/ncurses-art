@@ -173,27 +173,30 @@ enum final_status_t
    CLEAN,
    UNSYNCED,
    SOME_CLUTTERED_FILES,
+   EXTRA_LOCAL_BRANCHES,
 };
 
 
-final_status_t get_final_status(bool project_has_been_processed, bool exists_locally, bool in_sync, bool has_no_changed_files, bool has_no_untracked_files)
+final_status_t get_final_status(int num_local_branches, bool project_has_been_processed, bool exists_locally, bool in_sync, bool has_no_changed_files, bool has_no_untracked_files)
 {
    if (project_has_been_processed == false) return UNPROCESSED;
 
    final_status_t status_icon = CLEAN;
    if (!exists_locally || !in_sync) status_icon = UNSYNCED;
    if (!has_no_changed_files || !has_no_untracked_files) status_icon = SOME_CLUTTERED_FILES;
+   if (num_local_branches > 1) status_icon = EXTRA_LOCAL_BRANCHES;
    return status_icon;
 }
 
 
-std::string get_status_icon_and_text(bool project_has_been_processed, bool exists_locally, bool in_sync, bool has_no_changed_files, bool has_no_untracked_files)
+std::string get_status_icon_and_text(int num_local_branches, bool project_has_been_processed, bool exists_locally, bool in_sync, bool has_no_changed_files, bool has_no_untracked_files)
 {
    if (project_has_been_processed == false) return "⏱  unprocessed";
 
    std::string status_icon = "🔹 clean";
    if (!exists_locally || !in_sync) status_icon = "🔺 unsynced";
    if (!has_no_changed_files || !has_no_untracked_files) status_icon = "🔸 some cluttered files";
+   if (num_local_branches > 1) status_icon = std::string("🔸 some extra local branches (") + std::to_string(num_local_branches) + ")";
    return status_icon;
 }
 
@@ -330,9 +333,9 @@ void initialize()
          std::string project_identifier = project.first;
          std::string repo_name = project_status.get_repo_name();
          bool project_has_been_processed = project.second.first;
-         final_status_t final_status = get_final_status(project_has_been_processed, exists_locally, in_sync, has_no_changed_files, has_no_untracked_files);
+         final_status_t final_status = get_final_status(num_local_branches, project_has_been_processed, exists_locally, in_sync, has_no_changed_files, has_no_untracked_files);
 
-         std::string status_icon_and_text = get_status_icon_and_text(project_has_been_processed, exists_locally, in_sync, has_no_changed_files, has_no_untracked_files);
+         std::string status_icon_and_text = get_status_icon_and_text(num_local_branches, project_has_been_processed, exists_locally, in_sync, has_no_changed_files, has_no_untracked_files);
          result_text << project_identifier << PROPERTY_DELIMITER << status_icon_and_text << std::endl;
          if (project_has_been_processed == true && final_status != CLEAN)
          {
