@@ -71,7 +71,7 @@ public:
 };
 
 
-std::map<std::string, std::pair<bool, GithubRepoStatusFetcher>> statuses = {};
+std::map<std::string, std::pair<bool, ProjectStatus>> statuses = {};
 
 std::string diamond_it(std::string label, int number)
 {
@@ -157,37 +157,37 @@ void initialize()
       if (fetch_game_repos)
       {
          statuses = {
-            { "Slug3D",               { false, GithubRepoStatusFetcher("slug_3d") } },
-            { "Adventures of Beary",  { false, GithubRepoStatusFetcher("adventures-of-beary") } },
-            { "Alex Park",            { false, GithubRepoStatusFetcher("AlexPark") } },
-            { "dungeon",              { false, GithubRepoStatusFetcher("dungeon") } },
-            { "lightracer-max",       { false, GithubRepoStatusFetcher("lightracer-max") } },
-            { "beary2d",              { false, GithubRepoStatusFetcher("beary2d") } },
-            { "tilemap",              { false, GithubRepoStatusFetcher("tilemap") } },
-            { "motris",               { false, GithubRepoStatusFetcher("motris") } },
-            { "tileo",                { false, GithubRepoStatusFetcher("tileo") } },
+            { "Slug3D",               { false, ProjectStatus("slug_3d") } },
+            { "Adventures of Beary",  { false, ProjectStatus("adventures-of-beary") } },
+            { "Alex Park",            { false, ProjectStatus("AlexPark") } },
+            { "dungeon",              { false, ProjectStatus("dungeon") } },
+            { "lightracer-max",       { false, ProjectStatus("lightracer-max") } },
+            { "beary2d",              { false, ProjectStatus("beary2d") } },
+            { "tilemap",              { false, ProjectStatus("tilemap") } },
+            { "motris",               { false, ProjectStatus("motris") } },
+            { "tileo",                { false, ProjectStatus("tileo") } },
          };
       }
 
       if (fetch_core_repos)
       {
          statuses = {
-            { "ncurses-art",      { false, GithubRepoStatusFetcher("ncurses-art") } },
-            { "blast",            { false, GithubRepoStatusFetcher("blast") } },
-            { "fullscore",        { false, GithubRepoStatusFetcher("fullscore") } },
-            { "oatescodes",       { false, GithubRepoStatusFetcher("oatescodes") } },
-            { "hexagon",          { false, GithubRepoStatusFetcher("hexagon") } },
-            { "HomeServer",       { false, GithubRepoStatusFetcher("HomeServer") } },
-            { "beebot",           { false, GithubRepoStatusFetcher("beebot") } },
-            { "allegro_flare",    { false, GithubRepoStatusFetcher("allegro_flare") } },
-            { "allegro-planet",   { false, GithubRepoStatusFetcher("allegro-planet") } },
-            { "disclife",         { false, GithubRepoStatusFetcher("disclife") } },
-            { "crayola",          { false, GithubRepoStatusFetcher("crayola") } },
-            { "crayola-client",   { false, GithubRepoStatusFetcher("crayola-client") } },
-            { "me",               { false, GithubRepoStatusFetcher("me") } },
-            { ".dotfiles",        { false, GithubRepoStatusFetcher(".dotfiles") } },
-            { "first_vim_plugin", { false, GithubRepoStatusFetcher("first_vim_plugin") } },
-            { "allegroflare.github.io", { false, GithubRepoStatusFetcher("allegroflare.github.io") } },
+            { "ncurses-art",      { false, ProjectStatus("ncurses-art") } },
+            { "blast",            { false, ProjectStatus("blast") } },
+            { "fullscore",        { false, ProjectStatus("fullscore") } },
+            { "oatescodes",       { false, ProjectStatus("oatescodes") } },
+            { "hexagon",          { false, ProjectStatus("hexagon") } },
+            { "HomeServer",       { false, ProjectStatus("HomeServer") } },
+            { "beebot",           { false, ProjectStatus("beebot") } },
+            { "allegro_flare",    { false, ProjectStatus("allegro_flare") } },
+            { "allegro-planet",   { false, ProjectStatus("allegro-planet") } },
+            { "disclife",         { false, ProjectStatus("disclife") } },
+            { "crayola",          { false, ProjectStatus("crayola") } },
+            { "crayola-client",   { false, ProjectStatus("crayola-client") } },
+            { "me",               { false, ProjectStatus("me") } },
+            { ".dotfiles",        { false, ProjectStatus(".dotfiles") } },
+            { "first_vim_plugin", { false, ProjectStatus("first_vim_plugin") } },
+            { "allegroflare.github.io", { false, ProjectStatus("allegroflare.github.io") } },
          };
       }
    };
@@ -204,13 +204,14 @@ void initialize()
 
          result_text << std::endl;
 
-         GithubRepoStatusFetcher &fetcher = status.second.second;
+         ProjectStatus &project_status = status.second.second;
+         project_status.process();
 
-         bool exists_locally = fetcher.local_repo_exists();
-         bool in_sync = fetcher.is_the_repo_in_sync_with_remote();
-         bool has_no_changed_files = !fetcher.has_file_changes();
-         bool has_no_untracked_files = !fetcher.has_untracked_files();
-         int num_local_branches = fetcher.get_branch_count();
+         bool exists_locally = project_status.get_exists_locally();
+         bool in_sync = project_status.get_in_sync();
+         bool has_no_changed_files = project_status.get_has_no_changed_files();
+         bool has_no_untracked_files = project_status.get_has_no_untracked_files();
+         int num_local_branches = project_status.get_num_local_branches();
 
          std::string status_icon = "🔹 clean";
          if (!exists_locally || !in_sync) status_icon = "🔺 unsynced";
