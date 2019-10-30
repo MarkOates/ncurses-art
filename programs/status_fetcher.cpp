@@ -10,7 +10,8 @@
 #define REFRESH_ALL_STATUSES "REFRESH_ALL_STATUSES"
 #define REFRESH_NEXT_STATUS "REFRESH_NEXT_STATUS"
 
-#define OUTPUT_REPORT_TEXT find_text("output report");
+#define OUTPUT_REPORT_TEXT_IDENTIFIER "output report"
+#define OUTPUT_REPORT_TEXT find_text(OUTPUT_REPORT_TEXT_IDENTIFIER)
 
 #define PROPERTY_DELIMITER ": "
 
@@ -90,7 +91,7 @@ public:
 void initialize()
 {
    events[INITIALIZE_SCENE] = []{
-      create_text("output report");
+      create_text(OUTPUT_REPORT_TEXT_IDENTIFIER);
 
       Args magic_args;
       magic_args.set(args);
@@ -138,8 +139,6 @@ void initialize()
    events[REFRESH_NEXT_STATUS] = []{
    };
    events[REFRESH_ALL_STATUSES] = []{
-      Text &text = OUTPUT_REPORT_TEXT;
-
       std::stringstream result_text;
 
       result_text << "Important note - this tool does not check the status of *branches* within the repos" << std::endl << std::endl;
@@ -173,7 +172,7 @@ void initialize()
          status.second.first = true;
       }
 
-      text.set_text(result_text.str());
+      OUTPUT_REPORT_TEXT.set_text(result_text.str());
    };
 
    emit_event(INITIALIZE_SCENE);
