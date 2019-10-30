@@ -182,9 +182,9 @@ final_status_t get_final_status(int num_local_branches, bool project_has_been_pr
    if (project_has_been_processed == false) return UNPROCESSED;
 
    final_status_t status_icon = CLEAN;
+   if (num_local_branches > 1) status_icon = EXTRA_LOCAL_BRANCHES;
    if (!exists_locally || !in_sync) status_icon = UNSYNCED;
    if (!has_no_changed_files || !has_no_untracked_files) status_icon = SOME_CLUTTERED_FILES;
-   if (num_local_branches > 1) status_icon = EXTRA_LOCAL_BRANCHES;
    return status_icon;
 }
 
@@ -194,9 +194,9 @@ std::string get_status_icon_and_text(int num_local_branches, bool project_has_be
    if (project_has_been_processed == false) return "⏱  unprocessed";
 
    std::string status_icon = "🔹 clean";
+   if (num_local_branches > 1) status_icon = std::string("🚧 some extra local branches (") + std::to_string(num_local_branches) + ")";
    if (!exists_locally || !in_sync) status_icon = "🔺 unsynced";
    if (!has_no_changed_files || !has_no_untracked_files) status_icon = "🔸 some cluttered files";
-   if (num_local_branches > 1) status_icon = std::string("🔸 some extra local branches (") + std::to_string(num_local_branches) + ")";
    return status_icon;
 }
 
