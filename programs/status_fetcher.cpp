@@ -169,7 +169,7 @@ public:
 
 std::string get_status_icon_and_text(bool project_has_been_processed, bool exists_locally, bool in_sync, bool has_no_changed_files, bool has_no_untracked_files)
 {
-   if (project_has_been_processed == false) return "▫️  unprocessed";
+   if (project_has_been_processed == false) return "⏱  unprocessed";
 
    std::string status_icon = "🔹 clean";
    if (!exists_locally || !in_sync) status_icon = "🔺 unsynced";
@@ -252,6 +252,9 @@ void initialize()
             { "allegroflare.github.io", { false, ProjectStatus("allegroflare.github.io") } },
          };
       }
+
+      emit_event(REFRESH_OUTPUT_REPORT);
+      emit_event(REFRESH_PROGRESS_BAR);
    };
    events[PROCESS_NEXT_STATUS] = []{
       if (projects.empty()) return;
