@@ -10,6 +10,7 @@
 #define REFRESH_ALL_STATUSES "REFRESH_ALL_STATUSES"
 #define PROCESS_NEXT_STATUS "PROCESS_NEXT_STATUS"
 #define REFRESH_OUTPUT_REPORT "REFRESH_OUTPUT_REPORT"
+#define INCREMENTAL_RUN "INCREMENTAL_RUN"
 
 #define OUTPUT_REPORT_TEXT_IDENTIFIER "output report"
 #define OUTPUT_REPORT_TEXT find_text(OUTPUT_REPORT_TEXT_IDENTIFIER)
@@ -176,6 +177,17 @@ std::string get_status_icon_and_text(bool project_has_been_processed, bool exist
 }
 
 
+bool have_all_projects_been_processed()
+{
+   for (auto &project : projects)
+   {
+      bool project_has_been_processed = project.second.first;
+      if (!project_has_been_processed) return false;
+   }
+   return true;
+}
+
+
 void initialize()
 {
    events[INITIALIZE_SCENE] = []{
@@ -229,11 +241,40 @@ void initialize()
       }
    };
    events[PROCESS_NEXT_STATUS] = []{
+      if (projects.empty()) return;
+
+      for (auto &project : projects)
+      {
+         bool project_has_been_processed = project.second.first;
+         if (!project_has_been_processed)
+         {
+            std::string project_identifier = project.first;
+            ProjectStatus &project_status = project.second.second;
+            bool &project_processed_state = project.second.first;
+
+            project_status.process();
+            project_processed_state = true;
+
+            break;
+         }
+      }
+   };
+   events[INCREMENTAL_RUN] = []{
+      if (!have_all_projects_been_processed())
+      {
+         emit_event(PROCESS_NEXT_STATUS);
+         emit_event(REFRESH_OUTPUT_REPORT);
+         emit_event(INCREMENTAL_RUN);
+      }
+      else
+      {
+         PROGRESS_BAR_TEXT.set_text("finished.");
+      }
    };
    events[REFRESH_OUTPUT_REPORT] = []{
       std::stringstream result_text;
 
-      result_text << "Important note - this tool does not check the status of *branches* within the repos" << std::endl << std::endl;
+      //result_text << "Important note - this tool does not check the status of *branches* within the repos" << std::endl << std::endl;
 
       for (auto &project : projects)
       {
@@ -279,7 +320,6 @@ void initialize()
    };
 
    emit_event(INITIALIZE_SCENE);
-   emit_event(REFRESH_ALL_STATUSES);
-   emit_event(REFRESH_OUTPUT_REPORT);
+   emit_event(INCREMENTAL_RUN);
 }
 
