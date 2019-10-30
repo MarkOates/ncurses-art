@@ -9,6 +9,7 @@
 #define INITIALIZE_SCENE "INITIALIZE_SCENE"
 #define REFRESH_ALL_STATUSES "REFRESH_ALL_STATUSES"
 #define REFRESH_NEXT_STATUS "REFRESH_NEXT_STATUS"
+#define REFRESH_OUTPUT_REPORT "REFRESH_OUTPUT_REPORT"
 
 #define OUTPUT_REPORT_TEXT_IDENTIFIER "output report"
 #define OUTPUT_REPORT_TEXT find_text(OUTPUT_REPORT_TEXT_IDENTIFIER)
@@ -193,6 +194,40 @@ void initialize()
    };
    events[REFRESH_NEXT_STATUS] = []{
    };
+   events[REFRESH_OUTPUT_REPORT] = []{
+      std::stringstream result_text;
+
+      result_text << "Important note - this tool does not check the status of *branches* within the repos" << std::endl << std::endl;
+
+      for (auto &status : statuses)
+      {
+         std::cout << "processing \"" << status.first << "\"" << std::endl;
+
+         result_text << std::endl;
+
+         ProjectStatus &project_status = status.second.second;
+
+         bool exists_locally = project_status.get_exists_locally();
+         bool in_sync = project_status.get_in_sync();
+         bool has_no_changed_files = project_status.get_has_no_changed_files();
+         bool has_no_untracked_files = project_status.get_has_no_untracked_files();
+         int num_local_branches = project_status.get_num_local_branches();
+
+         std::string status_icon = "🔹 clean";
+         if (!exists_locally || !in_sync) status_icon = "🔺 unsynced";
+         if (!has_no_changed_files || !has_no_untracked_files) status_icon = "🔸 some cluttered files";
+
+         result_text << status.first << std::endl;
+         result_text << "  status" << PROPERTY_DELIMITER << status_icon << std::endl;
+         if (!exists_locally) result_text << "  " << check_it("exists locally", exists_locally) << std::endl;
+         if (num_local_branches != 1) result_text << "  " << diamond_it("num local branches", num_local_branches) << std::endl;
+         if (!in_sync) result_text << "  " << check_it("in sync with remote", in_sync) << std::endl;
+         if (!has_no_changed_files) result_text << "  " << check_it("has no changed files", has_no_changed_files) << std::endl;
+         if (!has_no_untracked_files) result_text << "  " << check_it("has no untracked files", has_no_untracked_files) << std::endl;
+      }
+
+      OUTPUT_REPORT_TEXT.set_text(result_text.str());
+   };
    events[REFRESH_ALL_STATUSES] = []{
       std::stringstream result_text;
 
@@ -233,5 +268,6 @@ void initialize()
 
    emit_event(INITIALIZE_SCENE);
    emit_event(REFRESH_ALL_STATUSES);
+   //emit_event(REFRESH_OUTPUT_REPORT);
 }
 
