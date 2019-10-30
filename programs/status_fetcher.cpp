@@ -19,6 +19,16 @@
 
 class ProjectStatus
 {
+public:
+   enum status_t
+   {
+      UNKNOWN = 0,
+      CLEAN,
+      UNSYNCED,
+      SOME_CLUTTERED_FILES,
+      DOES_NOT_EXIST,
+   };
+
 private:
    std::string repo_name;
 
@@ -44,6 +54,11 @@ public:
    bool get_exists_locally()
    {
       return exists_locally;
+   }
+
+   status_t infer_status()
+   {
+      return UNKNOWN;
    }
 
    bool get_in_sync()
@@ -217,6 +232,7 @@ void initialize()
          bool has_no_changed_files = project_status.get_has_no_changed_files();
          bool has_no_untracked_files = project_status.get_has_no_untracked_files();
          int num_local_branches = project_status.get_num_local_branches();
+         ProjectStatus::status_t final_status = project_status.infer_status();
 
          std::string status_icon = "🔹 clean";
          if (!exists_locally || !in_sync) status_icon = "🔺 unsynced";
@@ -252,6 +268,7 @@ void initialize()
          bool has_no_changed_files = project_status.get_has_no_changed_files();
          bool has_no_untracked_files = project_status.get_has_no_untracked_files();
          int num_local_branches = project_status.get_num_local_branches();
+         ProjectStatus::status_t final_status = project_status.infer_status();
 
          std::string status_icon = "🔹 clean";
          if (!exists_locally || !in_sync) status_icon = "🔺 unsynced";
