@@ -8,7 +8,7 @@
 #define MOVE_CURSOR_RIGHT "MOVE_CURSOR_RIGHT"
 #define INITIALIZE_SCENE "INITIALIZE_SCENE"
 #define REFRESH_ALL_STATUSES "REFRESH_ALL_STATUSES"
-#define REFRESH_NEXT_STATUS "REFRESH_NEXT_STATUS"
+#define PROCESS_NEXT_STATUS "PROCESS_NEXT_STATUS"
 #define REFRESH_OUTPUT_REPORT "REFRESH_OUTPUT_REPORT"
 
 #define OUTPUT_REPORT_TEXT_IDENTIFIER "output report"
@@ -228,7 +228,7 @@ void initialize()
          };
       }
    };
-   events[REFRESH_NEXT_STATUS] = []{
+   events[PROCESS_NEXT_STATUS] = []{
    };
    events[REFRESH_OUTPUT_REPORT] = []{
       std::stringstream result_text;
