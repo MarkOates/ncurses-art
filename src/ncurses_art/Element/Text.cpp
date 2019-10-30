@@ -35,6 +35,18 @@ bool Text::set_y(float y)
    return true;
 }
 
+bool Text::set_align_x(float align_x)
+{
+   this->align_x = align_x;
+   return true;
+}
+
+bool Text::set_align_y(float align_y)
+{
+   this->align_y = align_y;
+   return true;
+}
+
 void Text::set_styles(int styles)
 {
    this->styles = styles;
@@ -48,6 +60,16 @@ float Text::get_x()
 float Text::get_y()
 {
    return y;
+}
+
+float Text::get_align_x()
+{
+   return align_x;
+}
+
+float Text::get_align_y()
+{
+   return align_y;
 }
 
 Text &Text::blink(bool on)

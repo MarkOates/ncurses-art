@@ -42,3 +42,24 @@ TEST (TextTest, can_get_an_set_text)
    ASSERT_TRUE(text.set_text("Good, I hope :)"));
    ASSERT_EQ("Good, I hope :)", text.get_text());
 }
+
+TEST (TextTest, can_get_and_set_align_x)
+{
+   Text text("Hello World", 10.0f, 10.0f);
+   EXPECT_EQ(0.0f, text.get_align_x());
+   ASSERT_TRUE(text.set_align_x(1.0f));
+   EXPECT_EQ(1.0f, text.get_align_x());
+   ASSERT_TRUE(text.set_align_x(-0.5f));
+   EXPECT_EQ(-0.5f, text.get_align_x());
+}
+
+TEST (TextTest, can_get_and_set_align_y)
+{
+   Text text("Hello World", 10.0f, 10.0f);
+   EXPECT_EQ(0.0f, text.get_align_y());
+   ASSERT_TRUE(text.set_align_y(1.0f));
+   EXPECT_EQ(1.0f, text.get_align_y());
+   ASSERT_TRUE(text.set_align_y(-0.5f));
+   EXPECT_EQ(-0.5f, text.get_align_y());
+}
+
