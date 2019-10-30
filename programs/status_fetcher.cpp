@@ -46,7 +46,7 @@ public:
       , has_no_changed_files(false)
       , has_no_untracked_files(false)
       , num_local_branches(0)
-      , fetcher()
+      , fetcher(repo_name)
    {}
 
    std::string get_repo_name()
