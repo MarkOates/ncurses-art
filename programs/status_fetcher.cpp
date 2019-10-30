@@ -331,10 +331,11 @@ void initialize()
          std::string project_identifier = project.first;
          std::string repo_name = project_status.get_repo_name();
          bool project_has_been_processed = project.second.first;
+         final_status_t final_status = get_final_status(project_has_been_processed, exists_locally, in_sync, has_no_changed_files, has_no_untracked_files);
 
          std::string status_icon_and_text = get_status_icon_and_text(project_has_been_processed, exists_locally, in_sync, has_no_changed_files, has_no_untracked_files);
          result_text << project_identifier << PROPERTY_DELIMITER << status_icon_and_text << std::endl;
-         if (project_has_been_processed == true)
+         if (project_has_been_processed == true && final_status != CLEAN)
          {
             result_text << "  " << show_it("repo name", repo_name) << std::endl;
             result_text << "  " << check_it("exists locally", exists_locally) << std::endl;
