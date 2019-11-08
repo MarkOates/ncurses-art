@@ -236,45 +236,33 @@ void initialize()
       Args magic_args;
       magic_args.set(args);
 
-      bool fetch_game_repos = magic_args.has("games");
-      bool fetch_core_repos = magic_args.has("core") || magic_args.has_no_recognized_args();
-
-      if (fetch_game_repos)
-      {
-         projects = {
-            { "Slug3D",               { false, ProjectStatus("slug_3d") } },
-            { "Adventures of Beary",  { false, ProjectStatus("adventures-of-beary") } },
-            { "Alex Park",            { false, ProjectStatus("AlexPark") } },
-            { "dungeon",              { false, ProjectStatus("dungeon") } },
-            { "lightracer-max",       { false, ProjectStatus("lightracer-max") } },
-            { "beary2d",              { false, ProjectStatus("beary2d") } },
-            { "tilemap",              { false, ProjectStatus("tilemap") } },
-            { "motris",               { false, ProjectStatus("motris") } },
-            { "tileo",                { false, ProjectStatus("tileo") } },
-         };
-      }
-
-      if (fetch_core_repos)
-      {
-         projects = {
-            { "ncurses-art",      { false, ProjectStatus("ncurses-art") } },
-            { "blast",            { false, ProjectStatus("blast") } },
-            { "fullscore",        { false, ProjectStatus("fullscore") } },
-            { "oatescodes",       { false, ProjectStatus("oatescodes") } },
-            { "hexagon",          { false, ProjectStatus("hexagon") } },
-            { "HomeServer",       { false, ProjectStatus("HomeServer") } },
-            { "beebot",           { false, ProjectStatus("beebot") } },
-            { "allegro_flare",    { false, ProjectStatus("allegro_flare") } },
-            { "allegro-planet",   { false, ProjectStatus("allegro-planet") } },
-            { "disclife",         { false, ProjectStatus("disclife") } },
-            //{ "crayola",          { false, ProjectStatus("crayola") } },
-            //{ "crayola-client",   { false, ProjectStatus("crayola-client") } },
-            { "me",               { false, ProjectStatus("me") } },
-            { ".dotfiles",        { false, ProjectStatus(".dotfiles") } },
-            { "first_vim_plugin", { false, ProjectStatus("first_vim_plugin") } },
-            { "allegroflare.github.io", { false, ProjectStatus("allegroflare.github.io") } },
-         };
-      }
+      projects = {
+         { ".dotfiles",        { false, ProjectStatus(".dotfiles") } },
+         { "Adventures of Beary",  { false, ProjectStatus("adventures-of-beary") } },
+         { "Alex Park",            { false, ProjectStatus("AlexPark") } },
+         { "HomeServer",       { false, ProjectStatus("HomeServer") } },
+         { "Slug3D",               { false, ProjectStatus("slug_3d") } },
+         { "allegro-planet",   { false, ProjectStatus("allegro-planet") } },
+         { "allegro_flare",    { false, ProjectStatus("allegro_flare") } },
+         { "allegroflare.github.io", { false, ProjectStatus("allegroflare.github.io") } },
+         { "beary2d",              { false, ProjectStatus("beary2d") } },
+         { "beebot",           { false, ProjectStatus("beebot") } },
+         { "blast",            { false, ProjectStatus("blast") } },
+         //{ "crayola",          { false, ProjectStatus("crayola") } },
+         //{ "crayola-client",   { false, ProjectStatus("crayola-client") } },
+         { "disclife",         { false, ProjectStatus("disclife") } },
+         { "dungeon",              { false, ProjectStatus("dungeon") } },
+         { "first_vim_plugin", { false, ProjectStatus("first_vim_plugin") } },
+         { "fullscore",        { false, ProjectStatus("fullscore") } },
+         { "hexagon",          { false, ProjectStatus("hexagon") } },
+         { "lightracer-max",       { false, ProjectStatus("lightracer-max") } },
+         { "me",               { false, ProjectStatus("me") } },
+         { "motris",               { false, ProjectStatus("motris") } },
+         { "ncurses-art",      { false, ProjectStatus("ncurses-art") } },
+         { "oatescodes",       { false, ProjectStatus("oatescodes") } },
+         { "tilemap",              { false, ProjectStatus("tilemap") } },
+         { "tileo",                { false, ProjectStatus("tileo") } },
+      };
 
       emit_event(REFRESH_OUTPUT_REPORT);
       emit_event(REFRESH_PROGRESS_BAR);
