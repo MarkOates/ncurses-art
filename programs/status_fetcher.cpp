@@ -189,15 +189,28 @@ final_status_t get_final_status(int num_local_branches, bool project_has_been_pr
 }
 
 
-std::string get_status_icon_and_text(int num_local_branches, bool project_has_been_processed, bool exists_locally, bool in_sync, bool has_no_changed_files, bool has_no_untracked_files)
+std::string get_status_icon_and_text(final_status_t status, int num_local_branches)
 {
-   if (project_has_been_processed == false) return "⏱  unprocessed";
+   switch (status)
+   {
+   case UNPROCESSED:
+      return "⏱  unprocessed";
+      break;
+   case CLEAN:
+      return "🔹 clean";
+      break;
+   case UNSYNCED:
+      return "🔹 clean";
+      break;
+   case SOME_CLUTTERED_FILES:
+      return "🔸 some cluttered files";
+      break;
+   case EXTRA_LOCAL_BRANCHES:
+      return std::string("🚧 some extra local branches (") + std::to_string(num_local_branches) + ")";
+      break;
+   }
 
-   std::string status_icon = "🔹 clean";
-   if (num_local_branches > 1) status_icon = std::string("🚧 some extra local branches (") + std::to_string(num_local_branches) + ")";
-   if (!exists_locally || !in_sync) status_icon = "🔺 unsynced";
-   if (!has_no_changed_files || !has_no_untracked_files) status_icon = "🔸 some cluttered files";
-   return status_icon;
+   return "🌌 status unknown";
 }
 
 
@@ -323,7 +336,7 @@ void initialize()
          bool project_has_been_processed = project.second.first;
          final_status_t final_status = get_final_status(num_local_branches, project_has_been_processed, exists_locally, in_sync, has_no_changed_files, has_no_untracked_files);
 
-         std::string status_icon_and_text = get_status_icon_and_text(num_local_branches, project_has_been_processed, exists_locally, in_sync, has_no_changed_files, has_no_untracked_files);
+         std::string status_icon_and_text = get_status_icon_and_text(final_status, num_local_branches);
          result_text << project_identifier << PROPERTY_DELIMITER << status_icon_and_text << std::endl;
          if (project_has_been_processed == true && final_status != CLEAN)
          {
