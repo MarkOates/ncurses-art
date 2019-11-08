@@ -200,7 +200,7 @@ std::string get_status_icon_and_text(final_status_t status, int num_local_branch
       return "🔹 clean";
       break;
    case UNSYNCED:
-      return "🔹 clean";
+      return "🔺 unsynced";
       break;
    case SOME_CLUTTERED_FILES:
       return "🔸 some cluttered files";
