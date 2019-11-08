@@ -181,11 +181,11 @@ final_status_t get_final_status(int num_local_branches, bool project_has_been_pr
 {
    if (project_has_been_processed == false) return UNPROCESSED;
 
-   final_status_t status_icon = CLEAN;
-   if (num_local_branches > 1) status_icon = EXTRA_LOCAL_BRANCHES;
-   if (!exists_locally || !in_sync) status_icon = UNSYNCED;
-   if (!has_no_changed_files || !has_no_untracked_files) status_icon = SOME_CLUTTERED_FILES;
-   return status_icon;
+   final_status_t status = CLEAN;
+   if (num_local_branches > 1) status = EXTRA_LOCAL_BRANCHES;
+   if (!exists_locally || !in_sync) status = UNSYNCED;
+   if (!has_no_changed_files || !has_no_untracked_files) status = SOME_CLUTTERED_FILES;
+   return status;
 }
 
 
