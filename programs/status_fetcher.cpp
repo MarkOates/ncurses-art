@@ -194,10 +194,10 @@ std::string get_status_icon_and_text(final_status_t status, int num_local_branch
    switch (status)
    {
    case UNPROCESSED:
-      return "⏱  unprocessed";
+      return "▫️  unprocessed";
       break;
    case CLEAN:
-      return "🔹 clean";
+      return "💎 clean";
       break;
    case UNSYNCED:
       return "🔺 unsynced";
@@ -206,7 +206,7 @@ std::string get_status_icon_and_text(final_status_t status, int num_local_branch
       return "🔸 some cluttered files";
       break;
    case EXTRA_LOCAL_BRANCHES:
-      return std::string("🚧 some extra local branches (") + std::to_string(num_local_branches) + ")";
+      return std::string("🔹 some extra local branches (") + std::to_string(num_local_branches) + ")";
       break;
    }
 
@@ -338,7 +338,7 @@ void initialize()
 
          std::string status_icon_and_text = get_status_icon_and_text(final_status, num_local_branches);
          result_text << project_identifier << PROPERTY_DELIMITER << status_icon_and_text << std::endl;
-         if (project_has_been_processed == true && final_status != CLEAN)
+         if (project_has_been_processed == true && !(final_status == CLEAN || final_status == EXTRA_LOCAL_BRANCHES))
          {
             result_text << "  " << show_it("repo name", repo_name) << std::endl;
             result_text << "  " << check_it("exists locally", exists_locally) << std::endl;
