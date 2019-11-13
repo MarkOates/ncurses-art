@@ -1,4 +1,16 @@
 functions:
-  - name: run
+  - name: get_computer_name
     type: std::string
-    body: return "Hello World!";
+    body: |
+      ShellCommandExecutorWithCallback executor("hostname");
+      std::string raw_shell_response = executor.execute();
+      std::string result = StringTrimmer(raw_shell_response).trim();
+      return result;
+    body_dependency_symbols:
+      - ShellCommandExecutorWithCallback
+      - StringTrimmer
+dependencies:
+  - symbol: ShellCommandExecutorWithCallback
+    headers: [ 'ShellCommandExecutorWithCallback.hpp' ]
+  - symbol: StringTrimmer
+    headers: [ 'StringTrimmer.hpp' ]

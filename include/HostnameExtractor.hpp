@@ -13,7 +13,7 @@ public:
    ~HostnameExtractor();
 
 
-std::string run();
+std::string get_computer_name();
 };
 
 

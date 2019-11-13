@@ -3,9 +3,17 @@
 
 #include <HostnameExtractor.hpp>
 
-TEST(HostnameExtractorTest, run__returns_the_expected_response)
+TEST(HostnameExtractorTest, can_be_created_without_arguments)
 {
-   HostnameExtractor program_runner;
-   std::string expected_string = "Hello World!";
-   EXPECT_EQ(expected_string, program_runner.run());
+   HostnameExtractor hostname_extractor;
+}
+
+TEST(HostnameExtractorTest, get_computer_name__returns_the_expected_response)
+{
+   HostnameExtractor hostname_extractor;
+
+   std::string expected_string = "Marks-Mac-mini.local";
+   std::string actual_computer_name = hostname_extractor.get_computer_name();
+
+   EXPECT_EQ(expected_string, actual_computer_name);
 }
