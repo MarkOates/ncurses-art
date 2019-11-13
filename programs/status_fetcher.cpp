@@ -1,6 +1,7 @@
 #include "Projekt2.h"
 
 #include <GithubRepoStatusFetcher.hpp>
+#include <HostnameExtractor.hpp>
 
 #define MOVE_CURSOR_UP "MOVE_CURSOR_UP"
 #define MOVE_CURSOR_DOWN "MOVE_CURSOR_DOWN"
@@ -15,6 +16,9 @@
 
 #define OUTPUT_REPORT_TEXT_IDENTIFIER "output report"
 #define OUTPUT_REPORT_TEXT find_text(OUTPUT_REPORT_TEXT_IDENTIFIER)
+
+#define HOSTNAME_TEXT_IDENTIFIER "hostname text"
+#define HOSTNAME_TEXT find_text(HOSTNAME_TEXT_IDENTIFIER)
 
 #define PROGRESS_BAR_IDENTIFIER "progress bar"
 #define PROGRESS_BAR find_progress_bar(PROGRESS_BAR_IDENTIFIER)
@@ -189,6 +193,12 @@ final_status_t get_final_status(int num_local_branches, bool project_has_been_pr
 }
 
 
+std::string get_hostname()
+{
+   return HostnameExtractor().get_computer_name();
+}
+
+
 std::string get_status_icon_and_text(final_status_t status, int num_local_branches)
 {
    switch (status)
@@ -240,9 +250,12 @@ int get_number_of_projects_processed()
 void initialize()
 {
    events[INITIALIZE_SCENE] = []{
-      create_progress_bar(PROGRESS_BAR_IDENTIFIER, 3, 2, 60, 3);
-      create_text(PROGRESS_BAR_TEXT_IDENTIFIER, 5, 5);
-      create_text(OUTPUT_REPORT_TEXT_IDENTIFIER, 3, 8);
+      create_text(HOSTNAME_TEXT_IDENTIFIER, 5, 2);
+      create_progress_bar(PROGRESS_BAR_IDENTIFIER, 3, 2+2, 60, 3);
+      create_text(PROGRESS_BAR_TEXT_IDENTIFIER, 5, 5+2);
+      create_text(OUTPUT_REPORT_TEXT_IDENTIFIER, 3, 8+2);
+
+      HOSTNAME_TEXT.set_text(get_hostname());
 
       PROGRESS_BAR_TEXT.set_text("processing...");
 
