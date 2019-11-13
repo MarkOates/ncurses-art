@@ -74,7 +74,6 @@ std::map<char, std::vector<std::string>> letters = {
   {
      'F',
      {
-  //std::string shade_chars_for_reference = " ░▒▓█▀▄";
        { "█▀▀" },
        { "█▀▀" },
        { "▀  " },
@@ -147,9 +146,9 @@ std::map<char, std::vector<std::string>> letters = {
   {
      'O',
      {
-       { "▄▀▀▄" },
-       { "█  █" },
-       { " ▀▀ " },
+       { "▄▀▀▀▄" },
+       { "█   █" },
+       { " ▀▀▀ " },
      }
   },
   {
@@ -160,7 +159,41 @@ std::map<char, std::vector<std::string>> letters = {
        { "▀   " },
      }
   },
+  {
+     'Q',
+     {
+       { "▄▀▀▀▄" },
+       { "█  ▄▀" },
+       { " ▀▀ ▀" },
+     }
+  },
+  {
+     'R',
+     {
+       { "█▀▀▄" },
+       { "█▄▄▀" },
+       { "▀  ▀" },
+     }
+  },
+  {
+     'S',
+     {
+       { "▄▀▀▀" },
+       { " ▀▀▄" },
+       { "▀▀▀ " },
+     }
+  },
+  {
+     'T',
+     {
+       { "▀█▀" },
+       { " █ " },
+       { " ▀ " },
+     }
+  },
 };
+
+//std::string shade_chars_for_reference = " ░▒▓█▀▄";
 
 return letters;
 
