@@ -90,8 +90,18 @@ bool Projekt::process_event(std::string e)
    }
    else if (e == COMMAND_REBUILD_MENU)
    {
+      // get the options
+      std::vector<std::string> options = {
+         "foo",
+         "bar",
+         "boobaz",
+      };
+
+      // fill the options into the menu
       Menu &menu = find_menu("main_menu");
-      menu.set_options({"Hellow text has been set"});
+      menu.set_options(options);
+      menu.set_x(10);
+      menu.set_y(10);
    }
    if (e == BEEBOT_SETUP_BLAST_COMPONENT_COMMAND)
    {
