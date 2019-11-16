@@ -90,17 +90,8 @@ bool Projekt::process_event(std::string e)
    }
    else if (e == COMMAND_REBUILD_MENU)
    {
-      std::stringstream ss;
-      //ss << "find quintessence/**/*.yml" << " > \"" << TMP_OUTFILE << "\"";
-      ss << "find quintessence/**/*.yml" << " > \"" << TMP_OUTFILE << "\"";
-      //ss << "git branch --sort=-committerdate > \"" << TMP_OUTFILE << "\"";
-      system(ss.str().c_str());
-      std::string txt = get_file_contents();
-      std::vector<std::string> tokens = split_string(txt, "\n");
-      //Menu &menu = find_menu("main_menu");
-      //menu.set_options(tokens);
-      //menu.set_x(COLS/2 - menu.get_width()/2);
-      //menu.set_y(LINES/2 - 3);
+      Menu &menu = find_menu("main_menu");
+      menu.set_options({"Hellow text has been set"});
    }
    if (e == BEEBOT_SETUP_BLAST_COMPONENT_COMMAND)
    {
