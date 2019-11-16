@@ -33,6 +33,35 @@ std::string trim(std::string s)
 }
 
 
+std::vector<std::string> project_folder_names = {
+   { ".dotfiles" },
+   { "adventures-of-beary" },
+   { "AlexPark" },
+   { "HomeServer" },
+   { "Slug3D" },
+   { "allegro-planet" },
+   { "allegro_flare" },
+   { "allegroflare.github.io" },
+   { "beary2d" },
+   { "beebot" },
+   { "blast" },
+   //{ "crayola" },
+   //{ "crayola-client" },
+   { "disclife" },
+   { "dungeon" },
+   { "first_vim_plugin" },
+   { "fullscore" },
+   { "hexagon" },
+   { "lightracer-max" },
+   { "me" },
+   { "motris" },
+   { "ncurses-art" },
+   { "oatescodes" },
+   { "tilemap" },
+   { "tileo" },
+};
+
+
 Projekt::Projekt() { current_project = this; }
 bool Projekt::process_input(char ch)
 {
