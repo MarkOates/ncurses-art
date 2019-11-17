@@ -17,3 +17,4 @@ allegro.log
 .project_info
 out.tmp
 
+tmp/*

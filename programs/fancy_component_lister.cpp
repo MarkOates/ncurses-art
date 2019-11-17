@@ -14,6 +14,7 @@
 #define COMMAND_REBUILD_ALL_PROJECTS_IN_MENU "COMMAND_REBUILD_ALL_PROJECTS_IN_MENU"
 #define REFRESH_TEXT_DISPLAY "refresh_text_display"
 #define YANK_SELECTED_TEXT "YANK_SELECTED_TEXT"
+#define SAVE_MENU_CONTENTS_TO_FILE "SAVE_MENU_CONTENTS_TO_FILE"
 #define BEEBOT_SETUP_BLAST_COMPONENT_COMMAND "BEEBOT_SETUP_BLAST_COMPONENT_COMMAND"
 
 // trim from start
@@ -35,6 +36,17 @@ std::string trim(std::string s)
    std::string s2 = rtrim(s1);
    std::string s3 = ltrim(s2);
    return s3;
+}
+
+// write string to a file
+bool file_put_contents(std::string filename, std::string contents)
+{
+   std::ofstream file;
+   file.open(filename.c_str());
+   if (!file.is_open()) return false;
+   file << contents.c_str();
+   file.close();
+   return true;
 }
 
 
@@ -78,6 +90,7 @@ bool Projekt::process_input(char ch)
    case 'y': emit_event(YANK_SELECTED_TEXT); break;
    case 'p': emit_event(COMMAND_REBUILD_CURRENT_PROJECT_IN_MENU); break;
    case 'a': emit_event(COMMAND_REBUILD_ALL_PROJECTS_IN_MENU); break;
+   case 's': emit_event(SAVE_MENU_CONTENTS_TO_FILE); break;
    case 'c': emit_event(BEEBOT_SETUP_BLAST_COMPONENT_COMMAND); break;
    default: return false; break;
    }
@@ -191,6 +204,16 @@ bool Projekt::process_event(std::string e)
       menu.set_options(options);
       menu.set_x(10);
       menu.set_y(10);
+   }
+   if (e == SAVE_MENU_CONTENTS_TO_FILE)
+   {
+      Menu &menu = find_menu("main_menu");
+      std::vector<std::string> options = menu.get_options();
+
+      std::stringstream result_to_write_to_file;
+      for (auto &option : options) { result_to_write_to_file << option << std::endl; }
+
+      file_put_contents("tmp/output_list_of_components.txt", result_to_write_to_file.str());
    }
    if (e == BEEBOT_SETUP_BLAST_COMPONENT_COMMAND)
    {
