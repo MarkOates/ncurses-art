@@ -5,6 +5,8 @@
 
 #include <ncurses.h>
 
+#include <string>
+
 #include <Blast/ProjectComponentLister.hpp>
 
 #define COMMAND_FLIP_STAGING "flip_staging"
@@ -127,12 +129,20 @@ bool Projekt::process_event(std::string e)
       // extract project components
       for (const auto &project_folder_name : project_folder_names)
       {
-         std::string full_folder = std::string("/users/markoates/Repos/") + project_folder_name;
-         Blast::ProjectComponentLister lister(full_folder);
-         std::vector<std::string> components = lister.components();
+         std::string fol_nam = "ncurses-art";
+         std::string full_folder_name = std::string("/Users/markoates/Repos/") + fol_nam;
+         Blast::ProjectComponentLister lister(full_folder_name);
+         std::vector<std::string> actual_components = lister.components();
 
-         for (auto &component : components) options.push_back(component);
+         for (auto &actual_component : actual_components)
+         {
+            options.push_back(actual_component);
+         }
       }
+
+      std::sort(options.begin(), options.end());
+      std::vector<std::string>::iterator it = std::unique(options.begin(), options.end());
+      options.resize(std::distance(options.begin(), it));
 
       // fill the options into the menu
       Menu &menu = find_menu("main_menu");
