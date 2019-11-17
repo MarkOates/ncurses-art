@@ -29,6 +29,7 @@ public:
    float get_y();
    float get_width();
    float get_height();
+   std::vector<std::string> get_options();
    int get_cursor_pos();
    int get_num_options();
    void move_cursor_up();

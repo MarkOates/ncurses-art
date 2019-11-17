@@ -78,6 +78,11 @@ float Menu::get_height()
    return options.size();
 }
 
+std::vector<std::string> Menu::get_options()
+{
+   return options;
+}
+
 int Menu::get_cursor_pos()
 {
    return cursor_pos;

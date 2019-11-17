@@ -135,6 +135,13 @@ TEST(MenuTest, height_returns_the_number_of_options)
    ASSERT_EQ(4, menu.get_height());
 }
 
+TEST(MenuTest, get_options__returns_a_copy_of_the_options)
+{
+   std::vector<std::string> options = { "Option1", "Option2", "Option3", "Option4" };
+   Menu menu(0, 0, options);
+   ASSERT_EQ(options, menu.get_options());
+}
+
 TEST(MenuTest, width_returns_the_width_of_the_longest_line_from_the_options)
 {
    Menu menu(0, 0, { "Option1", "Option that is 55 characters long", "Option3" });
