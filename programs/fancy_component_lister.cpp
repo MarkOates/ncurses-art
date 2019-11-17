@@ -10,7 +10,8 @@
 #include <Blast/ProjectComponentLister.hpp>
 
 #define COMMAND_FLIP_STAGING "flip_staging"
-#define COMMAND_REBUILD_MENU "rebuild_menu"
+#define COMMAND_REBUILD_CURRENT_PROJECT_IN_MENU "COMMAND_REBUILD_CURRENT_PROJECT_IN_MENU"
+#define COMMAND_REBUILD_ALL_PROJECTS_IN_MENU "COMMAND_REBUILD_ALL_PROJECTS_IN_MENU"
 #define REFRESH_TEXT_DISPLAY "refresh_text_display"
 #define YANK_SELECTED_TEXT "YANK_SELECTED_TEXT"
 #define BEEBOT_SETUP_BLAST_COMPONENT_COMMAND "BEEBOT_SETUP_BLAST_COMPONENT_COMMAND"
@@ -99,7 +100,7 @@ bool Projekt::process_event(std::string e)
       create_menu("main_menu").set_styles(COLOR_PAIR(1));
       create_text("body_text", 80, 3).set_styles(COLOR_PAIR(2));
 
-      emit_event(COMMAND_REBUILD_MENU);
+      emit_event(COMMAND_REBUILD_ALL_PROJECTS_IN_MENU);
    }
    if (e == YANK_SELECTED_TEXT)
    {
@@ -121,7 +122,10 @@ bool Projekt::process_event(std::string e)
       menu.set_y(menu.get_y()+1);
       menu.move_cursor_up();
    }
-   else if (e == COMMAND_REBUILD_MENU)
+   else if (e == COMMAND_REBUILD_CURRENT_PROJECT_IN_MENU)
+   {
+   }
+   else if (e == COMMAND_REBUILD_ALL_PROJECTS_IN_MENU)
    {
       // get the options
       std::vector<std::string> options = { };
