@@ -130,6 +130,7 @@ bool Projekt::process_event(std::string e)
       for (const auto &project_folder_name : project_folder_names)
       {
          std::string project_folder_name_string = project_folder_name.first;
+
          std::string full_folder_name = std::string("/Users/markoates/Repos/") + project_folder_name_string;
          Blast::ProjectComponentLister lister(full_folder_name);
          std::vector<std::string> actual_components = lister.components();
