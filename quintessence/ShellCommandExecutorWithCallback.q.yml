@@ -8,6 +8,15 @@ properties:
     init_with: "ShellCommandExecutorWithCallback::simple_cout_callback"
     constructor_arg: true
 functions:
+  - name: simple_silent_callback
+    type: void
+    static: true
+    parameters:
+      - name: string_for_appending
+        type: std::string
+        default_argument: "\"\""
+    body: |
+      return;
   - name: simple_cout_callback
     type: void
     static: true

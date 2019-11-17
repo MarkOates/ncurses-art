@@ -16,6 +16,7 @@ public:
    ~ShellCommandExecutorWithCallback();
 
 
+static void simple_silent_callback(std::string string_for_appending="");
 static void simple_cout_callback(std::string string_for_appending="");
 std::string execute();
 };

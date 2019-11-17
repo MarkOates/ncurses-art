@@ -28,6 +28,12 @@ ShellCommandExecutorWithCallback::~ShellCommandExecutorWithCallback()
 }
 
 
+void ShellCommandExecutorWithCallback::simple_silent_callback(std::string string_for_appending)
+{
+return;
+
+}
+
 void ShellCommandExecutorWithCallback::simple_cout_callback(std::string string_for_appending)
 {
 std::cout << string_for_appending;
