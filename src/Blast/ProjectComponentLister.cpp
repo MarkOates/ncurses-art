@@ -70,7 +70,7 @@ std::vector<std::string> get_components_of_fragment_type(std::string project_roo
 
    std::stringstream find_command;
    std::string fragment_folder_name = get_component_fragment_folder_name(component_fragment);
-   find_command << "cd " << project_root_directory << " && find src -type f -name \"*.q.yml\"";
+   find_command << "cd " << project_root_directory << " && find quintessence -type f -name \"*.q.yml\"";
    ShellCommandExecutorWithCallback executor(find_command.str(), ShellCommandExecutorWithCallback::simple_silent_callback);
    std::string executor_response = executor.execute();
    StringSplitter splitter(executor_response, '\n');
@@ -88,12 +88,7 @@ std::vector<std::string> ProjectComponentLister::components()
       //<< "and injects it directly into a shell command.  This needs to be fixed."
       //<< std::endl;
 
-   std::stringstream find_command;
-   find_command << "cd " << project_root_directory << " && find quintessence -type f -name \"*.q.yml\"";
-   ShellCommandExecutorWithCallback executor(find_command.str(), ShellCommandExecutorWithCallback::simple_silent_callback);
-   std::string executor_response = executor.execute();
-   StringSplitter splitter(executor_response, '\n');
-   std::vector<std::string> quintessence_fragment_filenames = splitter.split();
+   std::vector<std::string> quintessence_fragment_filenames = get_components_of_fragment_type(project_root_directory, COMPONENT_FRAGMENT_TYPE_QUINTESSENCE);
 
    for (auto &item : quintessence_fragment_filenames)
    {
