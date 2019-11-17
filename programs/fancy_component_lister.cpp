@@ -37,32 +37,32 @@ std::string trim(std::string s)
 }
 
 
-std::vector<std::string> project_folder_names = {
-   { ".dotfiles" },
-   { "adventures-of-beary" },
-   { "AlexPark" },
-   { "HomeServer" },
-   { "Slug3D" },
-   { "allegro-planet" },
-   { "allegro_flare" },
-   { "allegroflare.github.io" },
-   { "beary2d" },
-   { "beebot" },
-   { "blast" },
-   //{ "crayola" },
-   //{ "crayola-client" },
-   { "disclife" },
-   { "dungeon" },
-   { "first_vim_plugin" },
-   { "fullscore" },
-   { "hexagon" },
-   { "lightracer-max" },
-   { "me" },
-   { "motris" },
-   { "ncurses-art" },
-   { "oatescodes" },
-   { "tilemap" },
-   { "tileo" },
+std::vector<std::pair<std::string, std::string>> project_folder_names = {
+   { { ".dotfiles" }, {} },
+   { { "adventures-of-beary" }, {} },
+   { { "AlexPark" }, {} },
+   { { "HomeServer" }, {} },
+   { { "Slug3D" }, {} },
+   { { "allegro-planet" }, {} },
+   { { "allegro_flare" }, {} },
+   { { "allegroflare.github.io" }, {} },
+   { { "beary2d" }, {} },
+   { { "beebot" }, {} },
+   { { "blast" }, {} },
+   //{ { "crayola" }, {} },
+   //{ { "crayola-client" }, {} },
+   { { "disclife" }, {} },
+   { { "dungeon" }, {} },
+   { { "first_vim_plugin" }, {} },
+   { { "fullscore" }, {} },
+   { { "hexagon" }, {} },
+   { { "lightracer-max" }, {} },
+   { { "me" }, {} },
+   { { "motris" }, {} },
+   { { "ncurses-art" }, {} },
+   { { "oatescodes" }, {} },
+   { { "tilemap" }, {} },
+   { { "tileo" }, {} },
 };
 
 
@@ -129,14 +129,17 @@ bool Projekt::process_event(std::string e)
       // extract project components
       for (const auto &project_folder_name : project_folder_names)
       {
-         std::string fol_nam = "ncurses-art";
-         std::string full_folder_name = std::string("/Users/markoates/Repos/") + fol_nam;
+         std::string project_folder_name_string = project_folder_name.first;
+         std::string full_folder_name = std::string("/Users/markoates/Repos/") + project_folder_name_string;
          Blast::ProjectComponentLister lister(full_folder_name);
          std::vector<std::string> actual_components = lister.components();
 
          for (auto &actual_component : actual_components)
          {
-            options.push_back(actual_component);
+            std::stringstream text_to_be_displayed_in_menu_option;
+            text_to_be_displayed_in_menu_option << project_folder_name_string << " - " << actual_component;
+
+            options.push_back(text_to_be_displayed_in_menu_option.str());
          }
       }
 
