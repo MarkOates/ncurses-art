@@ -36,11 +36,11 @@ std::vector<std::string> ProjectComponentLister::components()
 
    std::stringstream find_command;
    find_command << "cd " << project_root_directory << " && find quintessence -type f -name \"*.q.yml\"";
-   std::cout << "FIND_COMMAND: " << find_command.str() << std::endl;
+   //std::cout << "FIND_COMMAND: " << find_command.str() << std::endl;
    ShellCommandExecutorWithCallback executor(find_command.str());
    std::string executor_response = executor.execute();
 
-   std::cout << "EXECUTOR_RESPONSE: " << executor_response << std::endl;
+   //std::cout << "EXECUTOR_RESPONSE: " << executor_response << std::endl;
 
    StringSplitter splitter(executor_response, '\n');
    std::vector<std::string> quintessence_filenames = splitter.split();

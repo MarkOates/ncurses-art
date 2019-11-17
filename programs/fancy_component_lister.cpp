@@ -5,6 +5,8 @@
 
 #include <ncurses.h>
 
+#include <Blast/ProjectComponentLister.hpp>
+
 #define COMMAND_FLIP_STAGING "flip_staging"
 #define COMMAND_REBUILD_MENU "rebuild_menu"
 #define REFRESH_TEXT_DISPLAY "refresh_text_display"
@@ -120,11 +122,17 @@ bool Projekt::process_event(std::string e)
    else if (e == COMMAND_REBUILD_MENU)
    {
       // get the options
-      std::vector<std::string> options = {
-         "foo",
-         "bar",
-         "boobaz",
-      };
+      std::vector<std::string> options = { };
+
+      // extract project components
+      for (const auto &project_folder_name : project_folder_names)
+      {
+         std::string full_folder = std::string("/users/markoates/Repos/") + project_folder_name;
+         Blast::ProjectComponentLister lister(full_folder);
+         std::vector<std::string> components = lister.components();
+
+         for (auto &component : components) options.push_back(component);
+      }
 
       // fill the options into the menu
       Menu &menu = find_menu("main_menu");
