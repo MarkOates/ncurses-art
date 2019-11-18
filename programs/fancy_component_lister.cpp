@@ -5,9 +5,13 @@
 
 #include <ncurses.h>
 
+#include <iostream>
+
 #include <string>
 
 #include <Blast/ProjectComponentLister.hpp>
+#include <ShellCommandExecutorWithCallback.hpp>
+#include <StringTrimmer.hpp>
 
 #define COMMAND_FLIP_STAGING "flip_staging"
 #define COMMAND_REBUILD_CURRENT_PROJECT_IN_MENU "COMMAND_REBUILD_CURRENT_PROJECT_IN_MENU"
@@ -141,6 +145,7 @@ bool Projekt::process_event(std::string e)
    {
       // get the options
       std::vector<std::string> options = { };
+      std::string current_directory = StringTrimmer(ShellCommandExecutorWithCallback("pwd").execute()).trim();
       std::string current_project_folder_name = "ncurses-art";
       std::vector<std::pair<std::string, std::string>> project_folder_names = { { { current_project_folder_name }, {} } }; // 
 
@@ -149,7 +154,8 @@ bool Projekt::process_event(std::string e)
       {
          std::string project_folder_name_string = project_folder_name.first;
 
-         std::string full_folder_name = std::string("/Users/markoates/Repos/") + project_folder_name_string;
+         //std::string full_folder_name = std::string("/Users/markoates/Repos/") + project_folder_name_string;
+         std::string full_folder_name = current_directory + "/";
          Blast::ProjectComponentLister lister(full_folder_name);
          std::vector<std::string> actual_components = lister.components();
 
