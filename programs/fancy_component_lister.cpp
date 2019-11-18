@@ -18,6 +18,7 @@
 #define COMMAND_FLIP_STAGING "flip_staging"
 #define COMMAND_REBUILD_CURRENT_PROJECT_IN_MENU "COMMAND_REBUILD_CURRENT_PROJECT_IN_MENU"
 #define COMMAND_REBUILD_ALL_PROJECTS_IN_MENU "COMMAND_REBUILD_ALL_PROJECTS_IN_MENU"
+#define BUILD_COMMAND_LIST "build command list"
 #define REFRESH_TEXT_DISPLAY "refresh_text_display"
 #define YANK_SELECTED_TEXT "YANK_SELECTED_TEXT"
 #define SAVE_MENU_CONTENTS_TO_FILE "SAVE_MENU_CONTENTS_TO_FILE"
@@ -126,22 +127,43 @@ std::string extract_component_from_menu_option(std::string text_to_extract_token
 }
 
 
+#include <map>
+
+std::map<char, std::string> command_mapping = {
+   { 'j', MOVE_CURSOR_DOWN },
+   { 'k', MOVE_CURSOR_UP },
+   { 'q', EVENT_ABORT_PROGRAM },
+   { 'y', YANK_SELECTED_TEXT },
+   { 'p', COMMAND_REBUILD_CURRENT_PROJECT_IN_MENU },
+   { 'a', COMMAND_REBUILD_ALL_PROJECTS_IN_MENU },
+   { 's', SAVE_MENU_CONTENTS_TO_FILE },
+   { 'c', BEEBOT_SETUP_BLAST_COMPONENT_COMMAND },
+   { 'm', TOGGLE_MENU_MOVING_WITH_CURSOR },
+};
+
+
+std::string compose_command_mapping_text(std::map<char, std::string> &command_mapping)
+{
+   std::stringstream result;
+   for (auto &command_map : command_mapping)
+   {
+      result
+         << command_map.first
+         << " - "
+         << command_map.second
+         << std::endl;
+         ;
+   }
+   return result.str();
+}
+
+
 Projekt::Projekt() { current_project = this; }
 bool Projekt::process_input(char ch)
 {
-   switch(ch)
-   {
-   case 'j': emit_event(MOVE_CURSOR_DOWN); break;
-   case 'k': emit_event(MOVE_CURSOR_UP); break;
-   case 'q': emit_event(EVENT_ABORT_PROGRAM); break;
-   case 'y': emit_event(YANK_SELECTED_TEXT); break;
-   case 'p': emit_event(COMMAND_REBUILD_CURRENT_PROJECT_IN_MENU); break;
-   case 'a': emit_event(COMMAND_REBUILD_ALL_PROJECTS_IN_MENU); break;
-   case 's': emit_event(SAVE_MENU_CONTENTS_TO_FILE); break;
-   case 'c': emit_event(BEEBOT_SETUP_BLAST_COMPONENT_COMMAND); break;
-   case 'm': emit_event(TOGGLE_MENU_MOVING_WITH_CURSOR); break;
-   default: return false; break;
-   }
+   auto found = command_mapping.find(ch);
+   if (found == command_mapping.end()) return false;
+   emit_event(found->second);
    return true;
 }
 
@@ -161,6 +183,7 @@ bool Projekt::process_event(std::string e)
       init_pair(5, COLOR_MAGENTA, 23);
       init_pair(6, 21, COLOR_BLACK);
 
+      // layout
       create_menu("main_menu").set_styles(COLOR_PAIR(1));
       create_text("body_text", 80, 3).set_styles(COLOR_PAIR(2));
 
@@ -168,6 +191,10 @@ bool Projekt::process_event(std::string e)
       file_preview.set_styles(COLOR_PAIR(6));
       file_preview.set_options({ "FILE PREVIEW" });
 
+      create_text("command_list_text", 170, 4).set_styles(COLOR_PAIR(5));
+
+      // initial events
+      emit_event(BUILD_COMMAND_LIST);
       emit_event(COMMAND_REBUILD_CURRENT_PROJECT_IN_MENU);
    }
    if (e == YANK_SELECTED_TEXT)
@@ -197,6 +224,11 @@ bool Projekt::process_event(std::string e)
    else if (e == TOGGLE_MENU_MOVING_WITH_CURSOR)
    {
       menu_is_moving_with_cursor = !menu_is_moving_with_cursor;
+   }
+   else if (e == BUILD_COMMAND_LIST)
+   {
+      std::string command_mapping_string = compose_command_mapping_text(command_mapping);
+      find_text("command_list_text").set_text(command_mapping_string);
    }
    else if (e == COMMAND_REBUILD_CURRENT_PROJECT_IN_MENU)
    {
