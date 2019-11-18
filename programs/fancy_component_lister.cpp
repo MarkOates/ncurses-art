@@ -132,13 +132,13 @@ bool Projekt::process_event(std::string e)
    else if (e == MOVE_CURSOR_DOWN)
    {
       Menu &menu = find_menu("main_menu");
-      menu.set_y(menu.get_y()-1);
+      //menu.set_y(menu.get_y()-1);
       menu.move_cursor_down();
    }
    else if (e == MOVE_CURSOR_UP)
    {
       Menu &menu = find_menu("main_menu");
-      menu.set_y(menu.get_y()+1);
+      //menu.set_y(menu.get_y()+1);
       menu.move_cursor_up();
    }
    else if (e == COMMAND_REBUILD_CURRENT_PROJECT_IN_MENU)
