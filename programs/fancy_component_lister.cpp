@@ -23,6 +23,7 @@
 #define SAVE_MENU_CONTENTS_TO_FILE "SAVE_MENU_CONTENTS_TO_FILE"
 #define BEEBOT_SETUP_BLAST_COMPONENT_COMMAND "BEEBOT_SETUP_BLAST_COMPONENT_COMMAND"
 #define SET_FILE_PREVIEW_TO_A_FILE_FROM_THE_CURRENT_SELECTION "SET_FILE_PREVIEW_TO_A_FILE_FROM_THE_CURRENT_SELECTION"
+#define TOGGLE_MENU_MOVING_WITH_CURSOR "TOGGLE_MENU_MOVING_WITH_CURSOR"
 
 #define DELIMITER std::string(" - ")
 
@@ -84,6 +85,9 @@ std::string file_get_contents(std::string filename, bool raise_on_missing_file=t
 }
 
 
+bool menu_is_moving_with_cursor = false;
+
+
 std::vector<std::pair<std::string, std::string>> project_folder_names = {
    { { ".dotfiles" }, {} },
    { { "adventures-of-beary" }, {} },
@@ -135,6 +139,7 @@ bool Projekt::process_input(char ch)
    case 'a': emit_event(COMMAND_REBUILD_ALL_PROJECTS_IN_MENU); break;
    case 's': emit_event(SAVE_MENU_CONTENTS_TO_FILE); break;
    case 'c': emit_event(BEEBOT_SETUP_BLAST_COMPONENT_COMMAND); break;
+   case 'm': emit_event(TOGGLE_MENU_MOVING_WITH_CURSOR); break;
    default: return false; break;
    }
    return true;
@@ -176,18 +181,22 @@ bool Projekt::process_event(std::string e)
    else if (e == MOVE_CURSOR_DOWN)
    {
       Menu &menu = find_menu("main_menu");
-      //menu.set_y(menu.get_y()-1);
       menu.move_cursor_down();
+      if (menu_is_moving_with_cursor) menu.set_y(menu.get_y()-1);
 
       emit_event(SET_FILE_PREVIEW_TO_A_FILE_FROM_THE_CURRENT_SELECTION);
    }
    else if (e == MOVE_CURSOR_UP)
    {
       Menu &menu = find_menu("main_menu");
-      //menu.set_y(menu.get_y()+1);
       menu.move_cursor_up();
+      if (menu_is_moving_with_cursor) menu.set_y(menu.get_y()+1);
 
       emit_event(SET_FILE_PREVIEW_TO_A_FILE_FROM_THE_CURRENT_SELECTION);
+   }
+   else if (e == TOGGLE_MENU_MOVING_WITH_CURSOR)
+   {
+      menu_is_moving_with_cursor = !menu_is_moving_with_cursor;
    }
    else if (e == COMMAND_REBUILD_CURRENT_PROJECT_IN_MENU)
    {
