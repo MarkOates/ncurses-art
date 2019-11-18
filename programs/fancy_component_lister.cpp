@@ -110,8 +110,8 @@ bool Projekt::process_event(std::string e)
       init_color(22, (int)(96.0/255.0*1000), 0, (int)(128.0/255.0*1000));
       init_color(23, (int)(175.0/255.0*1000), (int)(96.0/255.0*1000), 60);
       init_color(24, 0, 0, 0);
-      init_color(25, (int)(96.0/255.0*1000), (int)(255.0/255.0*1000), 60);
-      init_pair(1, COLOR_BLACK, 25);
+      init_color(25, (int)(96.0/255.0*1000), 60, (int)(255.0/255.0*1000));
+      init_pair(1, COLOR_WHITE, 25);
       init_pair(2, COLOR_BLACK, 25);
       init_pair(3, COLOR_BLACK, 21);
       init_pair(4, 24, 22);
