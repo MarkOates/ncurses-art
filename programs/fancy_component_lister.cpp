@@ -21,6 +21,9 @@
 #define YANK_SELECTED_TEXT "YANK_SELECTED_TEXT"
 #define SAVE_MENU_CONTENTS_TO_FILE "SAVE_MENU_CONTENTS_TO_FILE"
 #define BEEBOT_SETUP_BLAST_COMPONENT_COMMAND "BEEBOT_SETUP_BLAST_COMPONENT_COMMAND"
+#define SET_FILE_PREVIEW_TO_A_FILE_FROM_THE_CURRENT_SELECTION "SET_FILE_PREVIEW_TO_A_FILE_FROM_THE_CURRENT_SELECTION"
+
+#define DELIMITER std::string(" - ")
 
 // trim from start
 std::string ltrim(std::string &s) {
@@ -120,6 +123,10 @@ bool Projekt::process_event(std::string e)
       create_menu("main_menu").set_styles(COLOR_PAIR(1));
       create_text("body_text", 80, 3).set_styles(COLOR_PAIR(2));
 
+      Menu &file_preview = create_menu("file_preview", 70, 4);
+      file_preview.set_styles(COLOR_PAIR(3));
+      file_preview.set_options({ "FILE PREVIEW" });
+
       emit_event(COMMAND_REBUILD_CURRENT_PROJECT_IN_MENU);
    }
    if (e == YANK_SELECTED_TEXT)
@@ -135,12 +142,16 @@ bool Projekt::process_event(std::string e)
       Menu &menu = find_menu("main_menu");
       //menu.set_y(menu.get_y()-1);
       menu.move_cursor_down();
+
+      emit_event(SET_FILE_PREVIEW_TO_A_FILE_FROM_THE_CURRENT_SELECTION);
    }
    else if (e == MOVE_CURSOR_UP)
    {
       Menu &menu = find_menu("main_menu");
       //menu.set_y(menu.get_y()+1);
       menu.move_cursor_up();
+
+      emit_event(SET_FILE_PREVIEW_TO_A_FILE_FROM_THE_CURRENT_SELECTION);
    }
    else if (e == COMMAND_REBUILD_CURRENT_PROJECT_IN_MENU)
    {
@@ -165,7 +176,7 @@ bool Projekt::process_event(std::string e)
          for (auto &actual_component : actual_components)
          {
             std::stringstream text_to_be_displayed_in_menu_option;
-            text_to_be_displayed_in_menu_option << project_folder_name_string << " - " << actual_component;
+            text_to_be_displayed_in_menu_option << project_folder_name_string << DELIMITER << actual_component;
 
             options.push_back(text_to_be_displayed_in_menu_option.str());
          }
@@ -198,7 +209,7 @@ bool Projekt::process_event(std::string e)
          for (auto &actual_component : actual_components)
          {
             std::stringstream text_to_be_displayed_in_menu_option;
-            text_to_be_displayed_in_menu_option << project_folder_name_string << " - " << actual_component;
+            text_to_be_displayed_in_menu_option << project_folder_name_string << DELIMITER << actual_component;
 
             options.push_back(text_to_be_displayed_in_menu_option.str());
          }
@@ -213,6 +224,17 @@ bool Projekt::process_event(std::string e)
       menu.set_options(options);
       menu.set_x(10);
       menu.set_y(10);
+   }
+   if (e == SET_FILE_PREVIEW_TO_A_FILE_FROM_THE_CURRENT_SELECTION)
+   {
+      Menu &main_menu = find_menu("main_menu");
+      Menu &file_preview = find_menu("file_preview");
+
+      std::string trimmed = StringTrimmer(main_menu.current_selection()).trim();
+      std::vector<std::string> tokens = split_string(trimmed, DELIMITER);
+      std::string component_name = tokens.empty() ? "[UnextractableComponentName]" : tokens.back();
+
+      file_preview.set_options({ component_name });
    }
    if (e == SAVE_MENU_CONTENTS_TO_FILE)
    {
