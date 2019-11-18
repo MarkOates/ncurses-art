@@ -11,6 +11,7 @@
 
 #include <Blast/ProjectComponentLister.hpp>
 #include <ShellCommandExecutorWithCallback.hpp>
+#include <ProjectFilenameGenerator.hpp>
 #include <StringTrimmer.hpp>
 #include <StringSplitter.hpp>
 
@@ -55,6 +56,31 @@ bool file_put_contents(std::string filename, std::string contents)
    file << contents.c_str();
    file.close();
    return true;
+}
+
+// obtain the contents of a file
+std::string file_get_contents(std::string filename, bool raise_on_missing_file=true)
+{
+   std::ifstream file(filename.c_str());
+   std::string input = "";
+   if (!file)
+   {
+      if (raise_on_missing_file)
+      {
+         std::stringstream error_message;
+         error_message << "Attempting to open file \"" << filename << "\" but it was not found." << std::endl;
+         throw std::runtime_error(error_message.str());
+      }
+      else
+      {
+         return "";
+      }
+   }
+   char ch;
+   while (file.get(ch)) input.append(1, ch);
+   if (!file.eof()) return ""; // strange error
+   file.close();
+   return input;
 }
 
 
@@ -119,12 +145,13 @@ bool Projekt::process_event(std::string e)
       init_pair(3, COLOR_BLACK, 21);
       init_pair(4, 24, 22);
       init_pair(5, COLOR_MAGENTA, 23);
+      init_pair(6, 21, COLOR_BLACK);
 
       create_menu("main_menu").set_styles(COLOR_PAIR(1));
       create_text("body_text", 80, 3).set_styles(COLOR_PAIR(2));
 
       Menu &file_preview = create_menu("file_preview", 70, 4);
-      file_preview.set_styles(COLOR_PAIR(3));
+      file_preview.set_styles(COLOR_PAIR(6));
       file_preview.set_options({ "FILE PREVIEW" });
 
       emit_event(COMMAND_REBUILD_CURRENT_PROJECT_IN_MENU);
@@ -234,7 +261,12 @@ bool Projekt::process_event(std::string e)
       std::vector<std::string> tokens = split_string(trimmed, DELIMITER);
       std::string component_name = tokens.empty() ? "[UnextractableComponentName]" : tokens.back();
 
-      file_preview.set_options({ component_name });
+      std::string component_header_filename = ProjectFilenameGenerator(component_name).generate_header_filename();
+      std::string file_contents = file_get_contents(component_header_filename, false);
+
+      std::vector<std::string> file_lines = StringSplitter(file_contents, '\n').split();
+
+      file_preview.set_options(file_lines);
    }
    if (e == SAVE_MENU_CONTENTS_TO_FILE)
    {
