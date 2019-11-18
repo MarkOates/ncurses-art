@@ -12,6 +12,7 @@
 #include <Blast/ProjectComponentLister.hpp>
 #include <ShellCommandExecutorWithCallback.hpp>
 #include <StringTrimmer.hpp>
+#include <StringSplitter.hpp>
 
 #define COMMAND_FLIP_STAGING "flip_staging"
 #define COMMAND_REBUILD_CURRENT_PROJECT_IN_MENU "COMMAND_REBUILD_CURRENT_PROJECT_IN_MENU"
@@ -146,8 +147,10 @@ bool Projekt::process_event(std::string e)
       // get the options
       std::vector<std::string> options = { };
       std::string current_directory = StringTrimmer(ShellCommandExecutorWithCallback("pwd").execute()).trim();
-      std::string current_project_folder_name = "ncurses-art";
-      std::vector<std::pair<std::string, std::string>> project_folder_names = { { { current_project_folder_name }, {} } }; // 
+      std::vector<std::string> current_project_absolute_directory_components = StringSplitter(current_directory, '/').split();
+      std::string current_project_name = current_project_absolute_directory_components.empty() ? "[unidentifiable project directory]" : current_project_absolute_directory_components.back();
+      std::string current_project_folder_name = current_directory;
+      std::vector<std::pair<std::string, std::string>> project_folder_names = { { { current_project_name }, {} } };
 
       // extract project components
       for (const auto &project_folder_name : project_folder_names)
