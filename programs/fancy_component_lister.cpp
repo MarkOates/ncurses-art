@@ -113,6 +113,15 @@ std::vector<std::pair<std::string, std::string>> project_folder_names = {
 };
 
 
+std::string extract_component_from_menu_option(std::string text_to_extract_token)
+{
+   std::string trimmed = StringTrimmer(text_to_extract_token).trim();
+   std::vector<std::string> tokens = split_string(trimmed, DELIMITER);
+   std::string component_name = tokens.empty() ? "[UnextractableComponentName]" : tokens.back();
+   return component_name;
+}
+
+
 Projekt::Projekt() { current_project = this; }
 bool Projekt::process_input(char ch)
 {
@@ -257,9 +266,9 @@ bool Projekt::process_event(std::string e)
       Menu &main_menu = find_menu("main_menu");
       Menu &file_preview = find_menu("file_preview");
 
-      std::string trimmed = StringTrimmer(main_menu.current_selection()).trim();
-      std::vector<std::string> tokens = split_string(trimmed, DELIMITER);
-      std::string component_name = tokens.empty() ? "[UnextractableComponentName]" : tokens.back();
+      std::string text_to_extract_token = main_menu.current_selection();
+
+      std::string component_name = extract_component_from_menu_option(text_to_extract_token);
 
       std::string component_header_filename = ProjectFilenameGenerator(component_name).generate_header_filename();
       std::string file_contents = file_get_contents(component_header_filename, false);
