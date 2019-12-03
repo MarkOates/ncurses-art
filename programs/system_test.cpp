@@ -12,6 +12,7 @@
 #define REFRESH_STATUSES "REFRESH_STATUSES"
 
 
+
 enum test_status
 {
    UNRUN = 0,
@@ -25,6 +26,46 @@ enum test_status
 #define PROPERTY_DELIMITER ": "
 
 std::map<std::string, bool (*)()> tests = {};
+
+
+auto command_callback = ShellCommandExecutorWithCallback::simple_silent_callback;
+
+
+
+class TestResult
+{
+public:
+   std::string expected;
+   std::string actual;
+
+public:
+   TestResult(std::string expected="foo", std::string actual="foo")
+      : expected(expected)
+      , actual(actual)
+   {}
+
+   std::string message()
+   {
+      std::string result;
+      if (expected != actual)
+      {
+         std::stringstream msg;
+         msg << "Test condition not met:" << std::endl
+             << "  expected: " << expected << std::endl
+             << "  actual: " << actual << std::endl
+             ;
+         result = msg.str();
+      }
+      else
+      {
+         result = "pass";
+      }
+      return result;
+   }
+};
+
+
+TestResult last_test_result;
 
 
 
@@ -97,7 +138,7 @@ bool check_hexagon_app_package_alias_test()
    std::string symlink_check_command = std::string("if [ -L \"/Applications/Hexagon.app\" ]; then echo \"") + success_message + "\"; else echo \"symlink does not exist\"; fi";
    std::string COMMAND_TO_CREATE_SYMLINK = "ln -s /Users/markoates/Repos/hexagon/bin/Hexagon.app /Applications/Hexagon.app";
 
-   ShellCommandExecutorWithCallback executor(symlink_check_command);
+   ShellCommandExecutorWithCallback executor(symlink_check_command, command_callback);
    std::string output = executor.execute();
    std::string trimmed_output = trim(output);
 
@@ -109,7 +150,7 @@ std::string get_head_sha_of_vim_plugin_first_vim_plugin()
 {
    std::string command = "cd /Users/markoates/.vim/bundle/first_vim_plugin && git rev-parse HEAD";
 
-   ShellCommandExecutorWithCallback executor(command);
+   ShellCommandExecutorWithCallback executor(command, command_callback);
    std::string output = executor.execute();
    std::string trimmed_output = trim(output);
 
@@ -121,11 +162,26 @@ std::string get_head_sha_of_first_vim_plugin_repo()
 {
    std::string command = "cd /Users/markoates/Repos/first_vim_plugin && git rev-parse HEAD";
 
-   ShellCommandExecutorWithCallback executor(command);
+   ShellCommandExecutorWithCallback executor(command, command_callback);
    std::string output = executor.execute();
    std::string trimmed_output = trim(output);
 
    return trimmed_output;
+}
+
+
+std::string get_clang_version()
+{
+   std::string command = "clang -v";
+
+   ShellCommandExecutorWithCallback executor(command, command_callback);
+   std::string output = executor.execute();
+   std::string trimmed_output = trim(output);
+
+   std::vector<std::string> tokens = StringSplitter(trimmed_output, '\r').split();
+   std::string first_line = tokens.empty() ? "" : tokens[0];
+
+   return first_line;
 }
 
 
@@ -134,7 +190,7 @@ bool check_hexagon_app_package_symlink_destination()
    std::string expected_destination = "/Users/markoates/Repos/hexagon/bin/Hexagon.app";
    std::string symlink_check_command = "readlink /Applications/Hexagon.app";
 
-   ShellCommandExecutorWithCallback executor(symlink_check_command);
+   ShellCommandExecutorWithCallback executor(symlink_check_command, command_callback);
    std::string output = executor.execute();
    std::string trimmed_output = trim(output);
 
@@ -147,6 +203,14 @@ bool check_vim_plugins_are_in_sync_with_local_repos()
    std::string sha_from_plugin = get_head_sha_of_vim_plugin_first_vim_plugin();
    std::string sha_from_local_repo = get_head_sha_of_first_vim_plugin_repo();
    return sha_from_plugin == sha_from_local_repo;
+}
+
+
+bool check_clang_version_is_expected_version()
+{
+   std::string expected_version_string = "Apple clang version 11.0.0 (clang-1100.0.33.8)";
+   last_test_result = TestResult(expected_version_string, get_clang_version());
+   return get_clang_version() == expected_version_string;
 }
 
 
@@ -173,8 +237,12 @@ std::string check_it(std::string label, bool check)
 {
    std::stringstream result;
    result << label;
-   if (check) result << PROPERTY_DELIMITER << "✓ yes";
-   else result << PROPERTY_DELIMITER << "✗ no";
+   if (check) result << PROPERTY_DELIMITER << "✅ pass";
+   else
+   {
+      result << PROPERTY_DELIMITER << "🔺 FAIL" << std::endl;
+      result << last_test_result.message() << std::endl;
+   }
    return result.str();
 }
 
@@ -192,6 +260,7 @@ void initialize()
          { "the system's /Applications folder contains a symlink to the hexagon repo's app package", check_hexagon_app_package_alias_test },
          { "the /Applications/Hexagon.app symlink points to the expected hexagon app package", check_hexagon_app_package_symlink_destination },
          { "vim plugins have been updated (run \":PluginUpdate\" in vim) since version changes to first_vim_plugin", check_vim_plugins_are_in_sync_with_local_repos },
+         { "clang version is the expected version", check_clang_version_is_expected_version },
       };
    };
    events[REFRESH_STATUSES] = []{
@@ -201,9 +270,10 @@ void initialize()
 
       for (auto &test : tests)
       {
+         last_test_result = TestResult();
          result_text << "running \"" << test.first << "\"" << std::endl;
          bool test_result = (*test.second)();
-         result_text << "   " << check_it("status", test_result) << std::endl;
+         result_text << "   " << check_it("status", test_result) << std::endl << std::endl;
       }
       
       text.set_text(result_text.str());
