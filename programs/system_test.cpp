@@ -172,13 +172,13 @@ std::string get_head_sha_of_first_vim_plugin_repo()
 
 std::string get_clang_version()
 {
-   std::string command = "clang -v";
+   std::string command = "clang --version";
 
    ShellCommandExecutorWithCallback executor(command, command_callback);
    std::string output = executor.execute();
    std::string trimmed_output = trim(output);
 
-   std::vector<std::string> tokens = StringSplitter(trimmed_output, '\r').split();
+   std::vector<std::string> tokens = StringSplitter(trimmed_output, '\n').split();
    std::string first_line = tokens.empty() ? "" : tokens[0];
 
    return first_line;
