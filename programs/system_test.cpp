@@ -268,6 +268,18 @@ std::string get_rerun_version()
 }
 
 
+std::string get_rails_version()
+{
+   std::string command = "rails --version";
+
+   ShellCommandExecutorWithCallback executor(command, command_callback);
+   std::string output = executor.execute();
+   std::string trimmed_output = trim(output);
+
+   return trimmed_output;
+}
+
+
 bool check_hexagon_app_package_symlink_destination()
 {
    std::string expected_destination = "/Users/markoates/Repos/hexagon/bin/Hexagon.app";
@@ -315,6 +327,14 @@ bool run_rerun_version_test()
 
 
 
+bool run_rails_version_test()
+{
+   last_test_result = new TestResultMatcher("^Rails [0-9]+\\.[0-9]+\\.[0-9]+$).+", get_rails_version());
+   return last_test_result->assessment();
+}
+
+
+
 bool just_a_failing_test()
 {
    return false;
@@ -355,6 +375,7 @@ void initialize()
          { "chruby is present", run_chruby_test },
          { "Ruby version is the expected version (otherwise \"sudo ruby-install ruby 2.6.5\")", run_ruby_version_test },
          { "rerun is present and installed (otherwise \"sudo gem install rerun\", after instaling ruby)", run_rerun_version_test },
+         { "Rails is present and installed (otherwise \"sudo gem install rails\", after instaling ruby. Needed by inflector components in blast)", run_rails_version_test },
          { "terminal sessions are still open despite ./dotfile changes", just_a_failing_test },
          { "project binaries are up-to-date despite project file changes", just_a_failing_test },
          { "terminal session has installed new ruby verions and chruby has been refreshed (with a terminal refresh)", just_a_failing_test },
