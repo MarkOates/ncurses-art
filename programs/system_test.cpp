@@ -292,6 +292,24 @@ std::string get_rails_version()
 }
 
 
+bool check_beebot_response_ping()
+{
+   std::string command = "ruby /Users/markoates/Repos/beebot/lib/runner.rb ping";
+
+   ShellCommandExecutorWithCallback executor(command, command_callback);
+   std::string output = executor.execute();
+   std::string trimmed_output = trim(output);
+
+   std::vector<std::string> tokens = StringSplitter(trimmed_output, '\n').split();
+   for (auto &token : tokens)
+   {
+      if (token == "pong") return true;
+   }
+
+   return false;
+}
+
+
 bool check_hexagon_app_package_symlink_destination()
 {
    std::string expected_destination = "/Users/markoates/Repos/hexagon/bin/Hexagon.app";
@@ -395,6 +413,7 @@ void initialize()
          { "chruby is present", run_chruby_test },
          { "Ruby version is the expected version (otherwise \"sudo ruby-install ruby 2.6.5\")", run_ruby_version_test },
          { "rerun is present and installed (otherwise \"sudo gem install rerun\", after instaling ruby)", run_rerun_version_test },
+         { "beebot is responsive", check_beebot_response_ping },
          { "bundler is present and installed (otherwise \"sudo gem install bundler:2.0.1\", after instaling ruby)", run_bundler_version_test },
          { "Rails is present and installed (otherwise \"sudo gem install rails\", after instaling ruby. Needed by inflector components in blast)", run_rails_version_test },
          { "terminal sessions are still open despite ./dotfile changes", just_a_failing_test },
