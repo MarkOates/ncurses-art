@@ -82,6 +82,48 @@ public:
 };
 
 
+#include <Hexagon/RegexMatcher.hpp>
+
+
+class TestResultMatcher : public TestResultInterface
+{
+public:
+   std::string expression;
+   std::string actual;
+
+public:
+   TestResultMatcher(std::string expression=".*", std::string actual="foo")
+      : TestResultInterface()
+      , expression(expression)
+      , actual(actual)
+   {}
+
+   bool assessment() override
+   {
+      return !RegexMatcher(actual, expression).get_match_info().empty();
+   }
+
+   std::string message() override
+   {
+      std::string result;
+      if (!assessment())
+      {
+         std::stringstream msg;
+         msg << "Test condition not met:" << std::endl
+             << "  expression: " << expression << std::endl
+             << "  actual: " << actual << std::endl
+             ;
+         result = msg.str();
+      }
+      else
+      {
+         result = "pass";
+      }
+      return result;
+   }
+};
+
+
 TestResultInterface *last_test_result = nullptr;
 
 
@@ -229,10 +271,10 @@ bool check_hexagon_app_package_symlink_destination()
 
 bool run_ruby_version_test()
 {
-   std::string expected_ruby_version = "ruby 2.6.5p114 (2019-10-01 revision 67812)";
-   std::string actual_ruby_version = get_ruby_version();
-   last_test_result = new TestResultEq(expected_ruby_version, actual_ruby_version);
-   return expected_ruby_version == actual_ruby_version;
+   std::string match_expression = "ruby 2\\.6\\.5p114 \\(2019-10-01 revision 67812\\).+";
+   std::string actual_string = get_ruby_version();
+   last_test_result = new TestResultMatcher(match_expression, actual_string);
+   return last_test_result->assessment();
 }
 
 
