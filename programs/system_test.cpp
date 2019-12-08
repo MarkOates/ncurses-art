@@ -32,19 +32,36 @@ auto command_callback = ShellCommandExecutorWithCallback::simple_silent_callback
 
 
 
-class TestResult
+class TestResultInterface
+{
+public:
+   TestResultInterface() {}
+   virtual ~TestResultInterface() {}
+   virtual bool assessment() = 0;
+   virtual std::string message() = 0;
+};
+
+
+
+class TestResultEq : public TestResultInterface
 {
 public:
    std::string expected;
    std::string actual;
 
 public:
-   TestResult(std::string expected="foo", std::string actual="foo")
-      : expected(expected)
+   TestResultEq(std::string expected="foo", std::string actual="foo")
+      : TestResultInterface()
+      , expected(expected)
       , actual(actual)
    {}
 
-   std::string message()
+   bool assessment() override
+   {
+      return expected == actual;
+   }
+
+   std::string message() override
    {
       std::string result;
       if (expected != actual)
@@ -65,7 +82,7 @@ public:
 };
 
 
-TestResult last_test_result;
+TestResultInterface *last_test_result = nullptr;
 
 
 
@@ -170,6 +187,18 @@ std::string get_head_sha_of_first_vim_plugin_repo()
 }
 
 
+std::string get_ruby_version()
+{
+   std::string command = "ruby --version";
+
+   ShellCommandExecutorWithCallback executor(command, command_callback);
+   std::string output = executor.execute();
+   std::string trimmed_output = trim(output);
+
+   return trimmed_output;
+}
+
+
 std::string get_clang_version()
 {
    std::string command = "clang --version";
@@ -198,6 +227,15 @@ bool check_hexagon_app_package_symlink_destination()
 }
 
 
+bool run_ruby_version_test()
+{
+   std::string expected_ruby_version = "ruby 2.6.5p114 (2019-10-01 revision 67812)";
+   std::string actual_ruby_version = get_ruby_version();
+   last_test_result = new TestResultEq(expected_ruby_version, actual_ruby_version);
+   return expected_ruby_version == actual_ruby_version;
+}
+
+
 bool check_vim_plugins_are_in_sync_with_local_repos()
 {
    std::string sha_from_plugin = get_head_sha_of_vim_plugin_first_vim_plugin();
@@ -209,7 +247,7 @@ bool check_vim_plugins_are_in_sync_with_local_repos()
 bool check_clang_version_is_expected_version()
 {
    std::string expected_version_string = "Apple clang version 11.0.0 (clang-1100.0.33.8)";
-   last_test_result = TestResult(expected_version_string, get_clang_version());
+   last_test_result = new TestResultEq(expected_version_string, get_clang_version());
    return get_clang_version() == expected_version_string;
 }
 
@@ -241,7 +279,7 @@ std::string check_it(std::string label, bool check)
    else
    {
       result << PROPERTY_DELIMITER << "🔺 FAIL" << std::endl;
-      result << last_test_result.message() << std::endl;
+      if (last_test_result) result << last_test_result->message() << std::endl;
    }
    return result.str();
 }
@@ -253,6 +291,7 @@ void initialize()
 
       tests = {
          { "chruby is present", run_chruby_test },
+         { "Ruby version is the expected version", run_ruby_version_test },
          { "terminal sessions are still open despite ./dotfile changes", just_a_failing_test },
          { "project binaries are up-to-date despite project file changes", just_a_failing_test },
          { "terminal session has installed new ruby verions and chruby has been refreshed (with a terminal refresh)", just_a_failing_test },
@@ -270,7 +309,7 @@ void initialize()
 
       for (auto &test : tests)
       {
-         last_test_result = TestResult();
+         last_test_result = new TestResultEq();
          result_text << "running \"" << test.first << "\"" << std::endl;
          bool test_result = (*test.second)();
          result_text << "   " << check_it("status", test_result) << std::endl << std::endl;
