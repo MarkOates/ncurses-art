@@ -256,6 +256,18 @@ std::string get_clang_version()
 }
 
 
+std::string get_bundler_version()
+{
+   std::string command = "bundler --version";
+
+   ShellCommandExecutorWithCallback executor(command, command_callback);
+   std::string output = executor.execute();
+   std::string trimmed_output = trim(output);
+
+   return trimmed_output;
+}
+
+
 std::string get_rerun_version()
 {
    std::string command = "rerun --version";
@@ -319,6 +331,14 @@ bool check_clang_version_is_expected_version()
 
 
 
+bool run_bundler_version_test()
+{
+   last_test_result = new TestResultMatcher("^Bundler version [0-9]+\\.[0-9]+\\.[0-9]+$).+", get_bundler_version());
+   return last_test_result->assessment();
+}
+
+
+
 bool run_rerun_version_test()
 {
    last_test_result = new TestResultMatcher("^[0-9]+\\.[0-9]+\\.[0-9]+$).+", get_rerun_version());
@@ -375,6 +395,7 @@ void initialize()
          { "chruby is present", run_chruby_test },
          { "Ruby version is the expected version (otherwise \"sudo ruby-install ruby 2.6.5\")", run_ruby_version_test },
          { "rerun is present and installed (otherwise \"sudo gem install rerun\", after instaling ruby)", run_rerun_version_test },
+         { "bundler is present and installed (otherwise \"sudo gem install bundler:2.0.1\", after instaling ruby)", run_bundler_version_test },
          { "Rails is present and installed (otherwise \"sudo gem install rails\", after instaling ruby. Needed by inflector components in blast)", run_rails_version_test },
          { "terminal sessions are still open despite ./dotfile changes", just_a_failing_test },
          { "project binaries are up-to-date despite project file changes", just_a_failing_test },
