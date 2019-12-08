@@ -256,6 +256,18 @@ std::string get_clang_version()
 }
 
 
+std::string get_rerun_version()
+{
+   std::string command = "rerun --version";
+
+   ShellCommandExecutorWithCallback executor(command, command_callback);
+   std::string output = executor.execute();
+   std::string trimmed_output = trim(output);
+
+   return trimmed_output;
+}
+
+
 bool check_hexagon_app_package_symlink_destination()
 {
    std::string expected_destination = "/Users/markoates/Repos/hexagon/bin/Hexagon.app";
@@ -291,6 +303,14 @@ bool check_clang_version_is_expected_version()
    std::string expected_version_string = "Apple clang version 11.0.0 (clang-1100.0.33.8)";
    last_test_result = new TestResultEq(expected_version_string, get_clang_version());
    return get_clang_version() == expected_version_string;
+}
+
+
+
+bool run_rerun_version_test()
+{
+   last_test_result = new TestResultMatcher("^[0-9]+\\.[0-9]+\\.[0-9]+$).+", get_rerun_version());
+   return last_test_result->assessment();
 }
 
 
@@ -333,7 +353,8 @@ void initialize()
 
       tests = {
          { "chruby is present", run_chruby_test },
-         { "Ruby version is the expected version", run_ruby_version_test },
+         { "Ruby version is the expected version (otherwise \"sudo ruby-install ruby 2.6.5\")", run_ruby_version_test },
+         { "rerun is present and installed (otherwise \"sudo gem install rerun\", after instaling ruby)", run_rerun_version_test },
          { "terminal sessions are still open despite ./dotfile changes", just_a_failing_test },
          { "project binaries are up-to-date despite project file changes", just_a_failing_test },
          { "terminal session has installed new ruby verions and chruby has been refreshed (with a terminal refresh)", just_a_failing_test },
