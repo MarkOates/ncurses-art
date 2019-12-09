@@ -411,7 +411,7 @@ void initialize()
 
       tests = {
          { "chruby is present", run_chruby_test },
-         { "Ruby version is the expected version (otherwise \"sudo ruby-install ruby 2.6.5\")", run_ruby_version_test },
+         { "Ruby version is the expected version (otherwise \"sudo ruby-install ruby 2.6.5\", then \"sudo ruby-install --system ruby 2.6.5\")", run_ruby_version_test },
          { "rerun is present and installed (otherwise \"sudo gem install rerun\", after instaling ruby)", run_rerun_version_test },
          { "beebot is responsive", check_beebot_response_ping },
          { "bundler is present and installed (otherwise \"sudo gem install bundler:2.0.1\", after instaling ruby)", run_bundler_version_test },
