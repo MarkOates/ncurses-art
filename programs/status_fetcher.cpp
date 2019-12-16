@@ -268,6 +268,7 @@ void initialize()
          { "Alex Park",            { false, ProjectStatus("AlexPark") } },
          { "HomeServer",       { false, ProjectStatus("HomeServer") } },
          { "Slug3D",               { false, ProjectStatus("slug_3d") } },
+         { "LabyrinthOfLore",  { false, ProjectStatus("LabyrinthOfLore") } },
          { "allegro-planet",   { false, ProjectStatus("allegro-planet") } },
          { "allegro_flare",    { false, ProjectStatus("allegro_flare") } },
          { "allegroflare.github.io", { false, ProjectStatus("allegroflare.github.io") } },
