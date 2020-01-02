@@ -7,6 +7,7 @@ int main(int argc, char** argv)
    std::string filename = "/Users/markoates/Repos/LabyrinthOfLore/include/AllegroFlare/Inventory.hpp";
    char linkname[256];
 
+   // from https://linux.die.net/man/2/readlink
    //ssize_t readlink(const char *path, char *buf, size_t bufsiz);
    ssize_t r;
    r = readlink(filename.c_str(), linkname, 256);
