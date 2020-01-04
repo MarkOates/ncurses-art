@@ -3,6 +3,7 @@
 #include <Blast/Project/ReleaseBuilder.hpp>
 #include <fstream>
 #include <fstream>
+#include <fstream>
 #include <iostream>
 #include <Blast/Project/SymlinkChecker.hpp>
 #include <Blast/ShellCommandExecutorWithCallback.hpp>
@@ -30,6 +31,26 @@ ReleaseBuilder::~ReleaseBuilder()
 {
 }
 
+
+void ReleaseBuilder::write_file_contents(std::string filename, std::string file_contents)
+{
+std::ofstream out(filename);
+out << file_contents;
+out.close();
+
+}
+
+std::string ReleaseBuilder::get_makefile_content()
+{
+std::string MAKEFILE_CONTENT = R"HEREDOC(SRC_FILES := $(shell find src -type f)
+ALLEGRO_LIBS=-lallegro_color -lallegro_font -lallegro_ttf -lallegro_dialog -lallegro_audio -lallegro_acodec -lallegro_primitives -lallegro_image -lallegro -lallegro_main
+main: $(SRC_FILES)
+)HEREDOC";
+MAKEFILE_CONTENT += "\t";
+MAKEFILE_CONTENT += "g++ -std=c++17 $^ programs/LabyrinthOfLore.cpp -o LabyrinthOfLore -I./include $(ALLEGRO_LIBS)";
+return MAKEFILE_CONTENT;
+
+}
 
 void ReleaseBuilder::copy_file(std::string source_filename, std::string destination_filename)
 {
@@ -94,10 +115,16 @@ std::stringstream copy_include_files_command;
 copy_include_files_command << "cp -R " << source_directory << "/include " << destination_directory << "/include";
 std::stringstream copy_src_files_command;
 copy_src_files_command << "cp -R " << source_directory << "/src " << destination_directory << "/src";
+std::stringstream copy_data_files_command;
+copy_data_files_command << "cp -R " << source_directory << "/data " << destination_directory << "/data";
+std::stringstream copy_program_files_command;
+copy_program_files_command << "cp -R " << source_directory << "/programs " << destination_directory << "/programs";
 
 // copy files
 Blast::ShellCommandExecutorWithCallback include_file_copy_executor(copy_include_files_command.str(), ShellCommandExecutorWithCallback::simple_silent_callback);
 Blast::ShellCommandExecutorWithCallback src_file_copy_executor(copy_src_files_command.str(), ShellCommandExecutorWithCallback::simple_silent_callback);
+Blast::ShellCommandExecutorWithCallback data_file_copy_executor(copy_data_files_command.str(), ShellCommandExecutorWithCallback::simple_silent_callback);
+Blast::ShellCommandExecutorWithCallback program_file_copy_executor(copy_program_files_command.str(), ShellCommandExecutorWithCallback::simple_silent_callback);
 
 std::cout << "Copying include files into \"" << destination_directory << "\"... ";
 include_file_copy_executor.execute();
@@ -105,6 +132,19 @@ std::cout << "done." << std::endl;
 
 std::cout << "Copying src files into \"" << destination_directory << "\"... ";
 src_file_copy_executor.execute();
+std::cout << "done." << std::endl;
+
+std::cout << "Copying program files into \"" << destination_directory << "\"... ";
+program_file_copy_executor.execute();
+std::cout << "done." << std::endl;
+
+std::cout << "Copying data files into \"" << destination_directory << "\"... ";
+data_file_copy_executor.execute();
+std::cout << "done." << std::endl;
+
+std::cout << "Creating rudimentary Makefile...";
+std::string makefile_full_filename = destination_directory + "/Makefile";
+write_file_contents(makefile_full_filename, get_makefile_content());
 std::cout << "done." << std::endl;
 
 replace_symlinks_with_copies_of_linked_files();
