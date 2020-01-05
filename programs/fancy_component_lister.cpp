@@ -9,7 +9,7 @@
 
 #include <string>
 
-#include <Blast/ProjectComponentLister.hpp>
+#include <Blast/Project/ComponentLister.hpp>
 #include <ShellCommandExecutorWithCallback.hpp>
 #include <ProjectFilenameGenerator.hpp>
 #include <StringTrimmer.hpp>
@@ -247,7 +247,7 @@ bool Projekt::process_event(std::string e)
 
          //std::string full_folder_name = std::string("/Users/markoates/Repos/") + project_folder_name_string;
          std::string full_folder_name = current_directory + "/";
-         Blast::ProjectComponentLister lister(full_folder_name);
+         Blast::Project::ComponentLister lister(full_folder_name);
          std::vector<std::string> actual_components = lister.components();
 
          for (auto &actual_component : actual_components)
@@ -280,7 +280,7 @@ bool Projekt::process_event(std::string e)
          std::string project_folder_name_string = project_folder_name.first;
 
          std::string full_folder_name = std::string("/Users/markoates/Repos/") + project_folder_name_string;
-         Blast::ProjectComponentLister lister(full_folder_name);
+         Blast::Project::ComponentLister lister(full_folder_name);
          std::vector<std::string> actual_components = lister.components();
 
          for (auto &actual_component : actual_components)
