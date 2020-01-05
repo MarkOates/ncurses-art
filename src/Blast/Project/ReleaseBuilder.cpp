@@ -116,7 +116,7 @@ copy_include_files_command << "cp -R " << source_directory << "/include " << des
 std::stringstream copy_src_files_command;
 copy_src_files_command << "cp -R " << source_directory << "/src " << destination_directory << "/src";
 std::stringstream copy_data_files_command;
-copy_data_files_command << "cp -R " << source_directory << "/bin/data " << destination_directory << "/data";
+copy_data_files_command << "cp -R " << source_directory << "/bin/programs/data " << destination_directory << "/data";
 std::stringstream copy_program_files_command;
 copy_program_files_command << "cp -R " << source_directory << "/programs " << destination_directory << "/programs";
 
