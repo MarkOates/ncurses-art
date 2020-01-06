@@ -265,6 +265,7 @@ void initialize()
       projects = {
          { ".dotfiles",        { false, ProjectStatus(".dotfiles") } },
          { "Adventures of Beary",  { false, ProjectStatus("adventures-of-beary") } },
+         { "union",            { false, ProjectStatus("union") } },
          { "Alex Park",            { false, ProjectStatus("AlexPark") } },
          { "HomeServer",       { false, ProjectStatus("HomeServer") } },
          { "Slug3D",               { false, ProjectStatus("slug_3d") } },
