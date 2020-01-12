@@ -131,6 +131,15 @@ TestResultInterface *last_test_result = nullptr;
 
 
 
+std::time_t get_last_write_time(std::string filename)
+{
+   auto ftime = std::__fs::filesystem::last_write_time(filename);
+   std::time_t last_write_time = decltype(ftime)::clock::to_time_t(ftime);
+
+   return last_write_time;
+}
+
+
 std::string file_get_contents(std::string filename, bool raise_on_missing_file=true)
 {
    std::ifstream file(filename.c_str());
@@ -384,9 +393,9 @@ bool celebrator_executable_presence_check()
 bool celebrator_is_up_to_date()
 {
    std::string file_location = "/Users/markoates/Repos/ncurses-art/bin/programs/celebrate";
-   auto ftime = std::__fs::filesystem::last_write_time(file_location);
-   std::time_t cftime = decltype(ftime)::clock::to_time_t(ftime);
-   std::cout << "File write time is " << std::asctime(std::localtime(&cftime)) << '\n';
+   std::time_t last_write_time = get_last_write_time(file_location);
+   std::cout << "File write time is " << last_write_time << '\n';
+   //std::cout << "File write time is " << std::asctime(std::localtime(&last_write_time)) << '\n';
 
    return false;
 }
