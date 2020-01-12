@@ -462,8 +462,6 @@ bool celebrate_is_up_to_date()
 bool check_all_executables_are_up_to_date_to_their_source()
 {
    std::vector<std::tuple<bool, std::string, std::string>> source_executable_pairs = {
-      { false, "/Users/markoates/Repos/ncurses-art/programs/celebrate.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/celebrate" },
-
       // blast files
 
       //component_generator.cpp
@@ -473,25 +471,24 @@ bool check_all_executables_are_up_to_date_to_their_source()
 
       // ncurses-art files
 
-      //builder.cpp
-      //builder2.cpp
-      //project_filename_generator.cpp
-      //system_test.cpp
-      //component_generator.cpp
-      //celebrate.cpp
-      //create_release.cpp
-      //fancy_branch.cpp
-      //fancy_component.cpp
-      //fancy_component_lister.cpp
-      //fancy_find.cpp
-      //fancy_list.cpp
-      //fancy_log.cpp
-      //fancy_stager.cpp
-      //quiz.cpp
-      //status_fetcher.cpp
+      { false, "/Users/markoates/Repos/ncurses-art/programs/builder.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/builder" },
+      { false, "/Users/markoates/Repos/ncurses-art/programs/builder2.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/builder2" },
+      { false, "/Users/markoates/Repos/ncurses-art/programs/project_filename_generator.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/project_filename_generator" },
+      { false, "/Users/markoates/Repos/ncurses-art/programs/system_test.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/system_test" },
+      { false, "/Users/markoates/Repos/ncurses-art/programs/component_generator.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/component_generator" },
+      { false, "/Users/markoates/Repos/ncurses-art/programs/celebrate.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/celebrate" },
+      { false, "/Users/markoates/Repos/ncurses-art/programs/create_release.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/create_release" },
+      { false, "/Users/markoates/Repos/ncurses-art/programs/fancy_branch.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/fancy_branch" },
+      { false, "/Users/markoates/Repos/ncurses-art/programs/fancy_component.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/fancy_component" },
+      { false, "/Users/markoates/Repos/ncurses-art/programs/fancy_component_lister.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/fancy_component_lister" },
+      { false, "/Users/markoates/Repos/ncurses-art/programs/fancy_find.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/fancy_find" },
+      { false, "/Users/markoates/Repos/ncurses-art/programs/fancy_list.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/fancy_list" },
+      { false, "/Users/markoates/Repos/ncurses-art/programs/fancy_log.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/fancy_log" },
+      { false, "/Users/markoates/Repos/ncurses-art/programs/fancy_stager.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/fancy_stager" },
+      { false, "/Users/markoates/Repos/ncurses-art/programs/quiz.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/quiz" },
+      { false, "/Users/markoates/Repos/ncurses-art/programs/status_fetcher.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/status_fetcher" },
    };
 
-   bool all_are_up_to_date = true;
    for (auto &source_executable_pair : source_executable_pairs)
    {
       bool &is_up_to_date = std::get<0>(source_executable_pair);
@@ -499,11 +496,10 @@ bool check_all_executables_are_up_to_date_to_their_source()
       std::string &executable_filename = std::get<2>(source_executable_pair);
 
       is_up_to_date = compare_last_write_time(source_filename, executable_filename);
-
-      if (!is_up_to_date) all_are_up_to_date = false;
    }
 
-   return all_are_up_to_date;
+   last_test_result = new TestResultList(source_executable_pairs);
+   return last_test_result->assessment();
 }
 
 
