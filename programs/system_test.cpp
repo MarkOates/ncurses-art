@@ -464,10 +464,10 @@ bool check_all_executables_are_up_to_date_to_their_source()
    std::vector<std::tuple<bool, std::string, std::string>> source_executable_pairs = {
       // blast files
 
-      //component_generator.cpp
-      //generator.cpp
-      //quintessence_from_yaml.cpp
-      //symlink_component_from_another_project.cpp
+      { false, "/Users/markoates/Repos/blast/programs/component_generator.cpp", "/Users/markoates/Repos/blast/bin/programs/component_generator" },
+      { false, "/Users/markoates/Repos/blast/programs/generator.cpp", "/Users/markoates/Repos/blast/bin/programs/generator" },
+      { false, "/Users/markoates/Repos/blast/programs/quintessence_from_yaml.cpp", "/Users/markoates/Repos/blast/bin/programs/quintessence_from_yaml" },
+      { false, "/Users/markoates/Repos/blast/programs/symlink_component_from_another_project.cpp", "/Users/markoates/Repos/blast/bin/programs/symlink_component_from_another_project" },
 
       // ncurses-art files
 
