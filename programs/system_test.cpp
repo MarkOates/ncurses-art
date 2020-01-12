@@ -442,15 +442,15 @@ void initialize()
          { "beebot is responsive", check_beebot_response_ping },
          { "bundler is present and installed (otherwise \"sudo gem install bundler:2.0.1\", after instaling ruby)", run_bundler_version_test },
          { "Rails is present and installed (otherwise \"sudo gem install rails\", after instaling ruby. Needed by inflector components in blast)", run_rails_version_test },
-         { "terminal sessions are still open despite ./dotfile changes", just_a_failing_test },
-         { "project binaries are up-to-date despite project file changes", just_a_failing_test },
-         { "terminal session has installed new ruby verions and chruby has been refreshed (with a terminal refresh)", just_a_failing_test },
+         //{ "terminal sessions are still open despite ./dotfile changes", just_a_failing_test },
+         //{ "project binaries are up-to-date despite project file changes", just_a_failing_test },
+         //{ "terminal session has installed new ruby verions and chruby has been refreshed (with a terminal refresh)", just_a_failing_test },
          { "the hexagon app package is present in the hexagon repo", run_hexagon_app_package_test },
          { "the system's /Applications folder contains a symlink to the hexagon repo's app package", check_hexagon_app_package_alias_test },
          { "the /Applications/Hexagon.app symlink points to the expected hexagon app package", check_hexagon_app_package_symlink_destination },
          { "vim plugins have been updated (run \":PluginUpdate\" in vim) since version changes to first_vim_plugin", check_vim_plugins_are_in_sync_with_local_repos },
          { "clang version is the expected version (consider running \"brew install llvm\" to update to a more recent version)", check_clang_version_is_expected_version },
-         { "generating a blast project adds ./.keep files for the necessary created directories", just_a_failing_test },
+         //{ "generating a blast project adds ./.keep files for the necessary created directories", just_a_failing_test },
       };
    };
    events[REFRESH_STATUSES] = []{
