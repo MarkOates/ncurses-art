@@ -459,7 +459,7 @@ bool celebrate_is_up_to_date()
 }
 
 
-bool all_executables_are_up_to_date_to_their_source()
+bool check_all_executables_are_up_to_date_to_their_source()
 {
    std::vector<std::tuple<bool, std::string, std::string>> source_executable_pairs = {
       { false, "/Users/markoates/Repos/ncurses-art/programs/celebrate.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/celebrate" },
@@ -588,7 +588,7 @@ void initialize()
          //{ "project binaries are up-to-date despite project file changes", just_a_failing_test },
          { "celebrate executable is present", celebrate_executable_presence_check },
          { "celebrate executable is up-to-date (executable been created at a time later than the last change to its source file)", celebrate_is_up_to_date },
-         { "all custom executables are up-to-date to their source files", all_executables_are_up_to_date_to_their_source },
+         { "all custom executables are up-to-date to their source files", check_all_executables_are_up_to_date_to_their_source },
          //{ "terminal session has installed new ruby verions and chruby has been refreshed (with a terminal refresh)", just_a_failing_test },
          { "the hexagon app package is present in the hexagon repo", run_hexagon_app_package_test },
          { "the system's /Applications folder contains a symlink to the hexagon repo's app package", check_hexagon_app_package_alias_test },
