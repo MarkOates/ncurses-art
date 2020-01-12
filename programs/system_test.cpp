@@ -47,6 +47,51 @@ public:
 
 
 
+class TestResultList : public TestResultInterface
+{
+public:
+   std::vector<std::tuple<bool, std::string, std::string>> list;
+
+public:
+   TestResultList(std::vector<std::tuple<bool, std::string, std::string>> list)
+      : TestResultInterface()
+      , list(list)
+   {}
+
+   bool assessment() override
+   {
+      for (auto &list_element : list)
+      {
+         if (!std::get<0>(list_element)) return false;
+      }
+      return true;
+   }
+
+   std::string message() override
+   {
+      std::string result;
+      if (!assessment())
+      {
+         std::stringstream msg;
+         msg << "The following elements in the comparison list were prefixed with false:" << std::endl;
+         for (auto &list_element : list)
+         {
+            if (!std::get<0>(list_element))
+            {
+               msg << "  element: " << std::get<1>(list_element) << std::endl;
+            }
+         }
+         result = msg.str();
+      }
+      else
+      {
+         result = "pass";
+      }
+      return result;
+   }
+};
+
+
 class TestResultEq : public TestResultInterface
 {
 public:
