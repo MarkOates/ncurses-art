@@ -28,27 +28,6 @@
 
 #define DELIMITER std::string(" - ")
 
-// trim from start
-std::string ltrim(std::string &s) {
-   s.erase(s.begin(), std::find_if(s.begin(), s.end(), std::not1(std::ptr_fun<int, int>(std::isspace))));
-   return s;
-}
-
-// trim from end
-std::string rtrim(std::string &s) {
-   s.erase(std::find_if(s.rbegin(), s.rend(), std::not1(std::ptr_fun<int, int>(std::isspace))).base(), s.end());
-   return s;
-}
-
-// trim from both ends
-std::string trim(std::string s)
-{
-   std::string s1 = s;
-   std::string s2 = rtrim(s1);
-   std::string s3 = ltrim(s2);
-   return s3;
-}
-
 // write string to a file
 bool file_put_contents(std::string filename, std::string contents)
 {
@@ -200,7 +179,7 @@ bool Projekt::process_event(std::string e)
    if (e == YANK_SELECTED_TEXT)
    {
       Menu &menu = find_menu("main_menu");
-      std::string trimmed = trim(menu.current_selection());
+      std::string trimmed = StringTrimmer(menu.current_selection()).trim();
       std::stringstream command;
       command << "printf \"" << trimmed << "\" | pbcopy";
       system(command.str().c_str());
@@ -331,7 +310,7 @@ bool Projekt::process_event(std::string e)
    if (e == BEEBOT_SETUP_BLAST_COMPONENT_COMMAND)
    {
       Menu &menu = find_menu("main_menu");
-      std::string trimmed = trim(menu.current_selection());
+      std::string trimmed = StringTrimmer(menu.current_selection()).trim();
       std::stringstream command;
       command << "printf \"ruby ~/Repos/beebot/lib/runner.rb setup_blast_component\" | pbcopy"; // should be replaced with an environment variable and std::getenv
       system(command.str().c_str());
