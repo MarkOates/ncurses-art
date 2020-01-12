@@ -164,6 +164,21 @@ std::string file_get_contents(std::string filename, bool raise_on_missing_file=t
    return input;
 }
 
+
+bool compare_last_write_time(std::string file_a, std::string file_b)
+{
+   std::time_t source_last_write_time = get_last_write_time(file_a);
+   std::time_t executable_last_write_time = get_last_write_time(file_b);
+
+   //std::cout << "Source file write time is " << source_last_write_time << '\n';
+   //std::cout << "Executable file write time is " << executable_last_write_time << '\n';
+   //std::cout << "File write time is " << std::asctime(std::localtime(&last_write_time)) << '\n';
+
+   return executable_last_write_time >= source_last_write_time;
+}
+
+
+
 bool run_chruby_test()
 {
    std::string expected_line = "source /usr/local/opt/chruby/share/chruby/chruby.sh";
@@ -394,15 +409,7 @@ bool celebrate_is_up_to_date()
 {
    std::string source_file_location = "/Users/markoates/Repos/ncurses-art/programs/celebrate.cpp";
    std::string executable_file_location = "/Users/markoates/Repos/ncurses-art/bin/programs/celebrate";
-
-   std::time_t source_last_write_time = get_last_write_time(source_file_location);
-   std::time_t executable_last_write_time = get_last_write_time(executable_file_location);
-
-   //std::cout << "Source file write time is " << source_last_write_time << '\n';
-   //std::cout << "Executable file write time is " << executable_last_write_time << '\n';
-   //std::cout << "File write time is " << std::asctime(std::localtime(&last_write_time)) << '\n';
-
-   return executable_last_write_time >= source_last_write_time;
+   return compare_last_write_time(source_file_location, executable_file_location);
 }
 
 
