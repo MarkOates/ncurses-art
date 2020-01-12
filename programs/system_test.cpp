@@ -4,6 +4,9 @@
 #include <ShellCommandExecutorWithCallback.hpp>
 #include <StringSplitter.hpp>
 
+#include <filesystem>
+#include <iostream>
+
 #define MOVE_CURSOR_UP "MOVE_CURSOR_UP"
 #define MOVE_CURSOR_DOWN "MOVE_CURSOR_DOWN"
 #define MOVE_CURSOR_LEFT "MOVE_CURSOR_LEFT"
@@ -378,6 +381,23 @@ bool celebrator_executable_presence_check()
 }
 
 
+bool celebrator_is_up_to_date()
+{
+   std::string file_location = "/Users/markoates/Repos/ncurses-art/bin/programs/celebrate";
+   auto ftime = std::__fs::filesystem::last_write_time(file_location);
+   std::time_t cftime = decltype(ftime)::clock::to_time_t(ftime);
+   std::cout << "File write time is " << std::asctime(std::localtime(&cftime)) << '\n';
+
+   /*
+   // WOH! this technique can be used to test files write time features
+   fs::last_write_time(p, ftime + 1h); // move file write time 1 hour to the future
+   ftime = fs::last_write_time(p); // read back from the filesystem
+   */
+
+   return false;
+}
+
+
 bool check_clang_version_is_expected_version()
 {
    std::string expected_version_string = "Apple clang version 11.0.0 (clang-1100.0.33.8)";
@@ -458,6 +478,7 @@ void initialize()
          //{ "terminal sessions are still open despite ./dotfile changes", just_a_failing_test },
          //{ "project binaries are up-to-date despite project file changes", just_a_failing_test },
          { "celebrator executable is present", celebrator_executable_presence_check },
+         { "celebrator executable has been created at a datetime later than the last change to its source file", celebrator_is_up_to_date },
          //{ "terminal session has installed new ruby verions and chruby has been refreshed (with a terminal refresh)", just_a_failing_test },
          { "the hexagon app package is present in the hexagon repo", run_hexagon_app_package_test },
          { "the system's /Applications folder contains a symlink to the hexagon repo's app package", check_hexagon_app_package_alias_test },
