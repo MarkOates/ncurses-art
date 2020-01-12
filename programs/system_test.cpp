@@ -6,6 +6,7 @@
 
 #include <filesystem>
 #include <iostream>
+#include <utility>
 
 #define MOVE_CURSOR_UP "MOVE_CURSOR_UP"
 #define MOVE_CURSOR_DOWN "MOVE_CURSOR_DOWN"
@@ -413,6 +414,28 @@ bool celebrate_is_up_to_date()
 }
 
 
+bool all_executables_are_up_to_date_to_their_source()
+{
+   std::vector<std::tuple<bool, std::string, std::string>> source_executable_pairs = {
+      { false, "/Users/markoates/Repos/ncurses-art/programs/celebrate.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/celebrate" },
+   };
+
+   bool all_are_up_to_date = true;
+   for (auto &source_executable_pair : source_executable_pairs)
+   {
+      bool &is_up_to_date = std::get<0>(source_executable_pair);
+      std::string &source_filename = std::get<1>(source_executable_pair);
+      std::string &executable_filename = std::get<2>(source_executable_pair);
+
+      is_up_to_date = compare_last_write_time(source_filename, executable_filename);
+
+      if (!is_up_to_date) all_are_up_to_date = false;
+   }
+
+   return all_are_up_to_date;
+}
+
+
 bool check_clang_version_is_expected_version()
 {
    std::string expected_version_string = "Apple clang version 11.0.0 (clang-1100.0.33.8)";
@@ -494,6 +517,7 @@ void initialize()
          //{ "project binaries are up-to-date despite project file changes", just_a_failing_test },
          { "celebrate executable is present", celebrate_executable_presence_check },
          { "celebrate executable is up-to-date (executable been created at a time later than the last change to its source file)", celebrate_is_up_to_date },
+         { "all custom executables are up-to-date to their source files", all_executables_are_up_to_date_to_their_source },
          //{ "terminal session has installed new ruby verions and chruby has been refreshed (with a terminal refresh)", just_a_failing_test },
          { "the hexagon app package is present in the hexagon repo", run_hexagon_app_package_test },
          { "the system's /Applications folder contains a symlink to the hexagon repo's app package", check_hexagon_app_package_alias_test },
