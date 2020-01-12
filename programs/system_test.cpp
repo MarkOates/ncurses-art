@@ -365,6 +365,19 @@ bool check_vim_plugins_are_in_sync_with_local_repos()
 }
 
 
+bool celebrator_executable_presence_check()
+{
+   std::string expected_program_location = "/Users/markoates/Repos/ncurses-art/bin/programs/celebrate";
+   std::string command = "command -v " + expected_program_location;
+
+   ShellCommandExecutorWithCallback executor(command, command_callback);
+   std::string output = executor.execute();
+   std::string trimmed_output = trim(output);
+
+   return trimmed_output == expected_program_location;
+}
+
+
 bool check_clang_version_is_expected_version()
 {
    std::string expected_version_string = "Apple clang version 11.0.0 (clang-1100.0.33.8)";
@@ -444,6 +457,7 @@ void initialize()
          { "Rails is present and installed (otherwise \"sudo gem install rails\", after instaling ruby. Needed by inflector components in blast)", run_rails_version_test },
          //{ "terminal sessions are still open despite ./dotfile changes", just_a_failing_test },
          //{ "project binaries are up-to-date despite project file changes", just_a_failing_test },
+         { "celebrator executable is present", celebrator_executable_presence_check },
          //{ "terminal session has installed new ruby verions and chruby has been refreshed (with a terminal refresh)", just_a_failing_test },
          { "the hexagon app package is present in the hexagon repo", run_hexagon_app_package_test },
          { "the system's /Applications folder contains a symlink to the hexagon repo's app package", check_hexagon_app_package_alias_test },
