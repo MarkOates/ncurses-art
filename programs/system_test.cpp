@@ -418,6 +418,32 @@ bool all_executables_are_up_to_date_to_their_source()
 {
    std::vector<std::tuple<bool, std::string, std::string>> source_executable_pairs = {
       { false, "/Users/markoates/Repos/ncurses-art/programs/celebrate.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/celebrate" },
+
+      // blast files
+
+      //component_generator.cpp
+      //generator.cpp
+      //quintessence_from_yaml.cpp
+      //symlink_component_from_another_project.cpp
+
+      // ncurses-art files
+
+      //builder.cpp
+      //builder2.cpp
+      //project_filename_generator.cpp
+      //system_test.cpp
+      //component_generator.cpp
+      //celebrate.cpp
+      //create_release.cpp
+      //fancy_branch.cpp
+      //fancy_component.cpp
+      //fancy_component_lister.cpp
+      //fancy_find.cpp
+      //fancy_list.cpp
+      //fancy_log.cpp
+      //fancy_stager.cpp
+      //quiz.cpp
+      //status_fetcher.cpp
    };
 
    bool all_are_up_to_date = true;
