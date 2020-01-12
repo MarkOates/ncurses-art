@@ -25,6 +25,7 @@
 #define BEEBOT_SETUP_BLAST_COMPONENT_COMMAND "BEEBOT_SETUP_BLAST_COMPONENT_COMMAND"
 #define SET_FILE_PREVIEW_TO_A_FILE_FROM_THE_CURRENT_SELECTION "SET_FILE_PREVIEW_TO_A_FILE_FROM_THE_CURRENT_SELECTION"
 #define TOGGLE_MENU_MOVING_WITH_CURSOR "TOGGLE_MENU_MOVING_WITH_CURSOR"
+#define COMMAND_RERUN_MAKE_WITH_COMPONENT_AS_FOCUS "COMMAND_RERUN_MAKE_WITH_COMPONENT_AS_FOCUS"
 
 #define DELIMITER std::string(" - ")
 
@@ -114,6 +115,7 @@ std::map<char, std::string> command_mapping = {
    { 'q', EVENT_ABORT_PROGRAM },
    { 'y', YANK_SELECTED_TEXT },
    { 'p', COMMAND_REBUILD_CURRENT_PROJECT_IN_MENU },
+   { 'f', COMMAND_RERUN_MAKE_WITH_COMPONENT_AS_FOCUS },
    { 'a', COMMAND_REBUILD_ALL_PROJECTS_IN_MENU },
    { 's', SAVE_MENU_CONTENTS_TO_FILE },
    { 'c', BEEBOT_SETUP_BLAST_COMPONENT_COMMAND },
@@ -208,6 +210,19 @@ bool Projekt::process_event(std::string e)
    {
       std::string command_mapping_string = compose_command_mapping_text(command_mapping);
       find_text("command_list_text").set_text(command_mapping_string);
+   }
+   else if (e == COMMAND_RERUN_MAKE_WITH_COMPONENT_AS_FOCUS)
+   {
+      Menu &main_menu = find_menu("main_menu");
+      std::string menu_selection = main_menu.current_selection();
+      std::string component_name = extract_component_from_menu_option(menu_selection);
+
+      std::stringstream rerun_with_focus_component_command;
+      rerun_with_focus_component_command << "rr make COMPONENT=" << component_name << " focus";
+
+      std::stringstream copy_to_clipboard_command;
+      copy_to_clipboard_command << "printf \"" << rerun_with_focus_component_command.str() << "\" | pbcopy";
+      system(copy_to_clipboard_command.str().c_str());
    }
    else if (e == COMMAND_REBUILD_CURRENT_PROJECT_IN_MENU)
    {
