@@ -392,12 +392,17 @@ bool celebrator_executable_presence_check()
 
 bool celebrator_is_up_to_date()
 {
-   std::string file_location = "/Users/markoates/Repos/ncurses-art/bin/programs/celebrate";
-   std::time_t last_write_time = get_last_write_time(file_location);
-   std::cout << "File write time is " << last_write_time << '\n';
+   std::string source_file_location = "/Users/markoates/Repos/ncurses-art/programs/celebrate.cpp";
+   std::string executable_file_location = "/Users/markoates/Repos/ncurses-art/bin/programs/celebrate";
+
+   std::time_t source_last_write_time = get_last_write_time(source_file_location);
+   std::time_t executable_last_write_time = get_last_write_time(executable_file_location);
+
+   //std::cout << "Source file write time is " << source_last_write_time << '\n';
+   //std::cout << "Executable file write time is " << executable_last_write_time << '\n';
    //std::cout << "File write time is " << std::asctime(std::localtime(&last_write_time)) << '\n';
 
-   return false;
+   return executable_last_write_time >= source_last_write_time;
 }
 
 
@@ -481,7 +486,7 @@ void initialize()
          //{ "terminal sessions are still open despite ./dotfile changes", just_a_failing_test },
          //{ "project binaries are up-to-date despite project file changes", just_a_failing_test },
          { "celebrator executable is present", celebrator_executable_presence_check },
-         { "celebrator executable has been created at a datetime later than the last change to its source file", celebrator_is_up_to_date },
+         { "celebrator executable is up-to-date (executable been created at a time later than the last change to its source file)", celebrator_is_up_to_date },
          //{ "terminal session has installed new ruby verions and chruby has been refreshed (with a terminal refresh)", just_a_failing_test },
          { "the hexagon app package is present in the hexagon repo", run_hexagon_app_package_test },
          { "the system's /Applications folder contains a symlink to the hexagon repo's app package", check_hexagon_app_package_alias_test },
