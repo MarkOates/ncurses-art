@@ -1,11 +1,13 @@
 #include <Blast/Build/Celebrator.hpp>
 #include <Blast/StringJoiner.hpp>
 #include <Blast/CommandLineFlaggedArgumentsParser.hpp>
+#include <AllegroFlare/ConsoleColor.hpp>
 #include <iostream>
 #include <stdlib.h> // for atoi
 
 
 using Blast::CommandLineFlaggedArgumentsParser;
+
 
 int main(int argc, char **argv)
 {
@@ -32,7 +34,24 @@ int main(int argc, char **argv)
       length = atoi(number[0][0].c_str());
    }
 
+   std::string color_string = "";
+   std::string closing_color_string = "";
+   if (args.has_flag("-c"))
+   {
+      std::vector<std::vector<std::string>> number = args.get_flagged_args("-c");
+      std::string color_arg = number[0][0].c_str();
+      if (color_arg == "yellow")
+      {
+         color_string = CONSOLE_COLOR_YELLOW;
+         closing_color_string = CONSOLE_COLOR_DEFAULT;
+      }
+   }
+
    Blast::Build::Celebrator celebrator;
-   std::cout << celebrator.generate_full_width_output_banner(message, length) << std::endl;
+   std::cout
+      << color_string
+      << celebrator.generate_full_width_output_banner(message, length)
+      << closing_color_string
+      << std::endl;
    return 0;
 }
