@@ -388,12 +388,6 @@ bool celebrator_is_up_to_date()
    std::time_t cftime = decltype(ftime)::clock::to_time_t(ftime);
    std::cout << "File write time is " << std::asctime(std::localtime(&cftime)) << '\n';
 
-   /*
-   // WOH! this technique can be used to test files write time features
-   fs::last_write_time(p, ftime + 1h); // move file write time 1 hour to the future
-   ftime = fs::last_write_time(p); // read back from the filesystem
-   */
-
    return false;
 }
 
