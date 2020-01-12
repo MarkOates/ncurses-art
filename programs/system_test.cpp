@@ -377,7 +377,7 @@ bool check_vim_plugins_are_in_sync_with_local_repos()
 }
 
 
-bool celebrator_executable_presence_check()
+bool celebrate_executable_presence_check()
 {
    std::string expected_program_location = "/Users/markoates/Repos/ncurses-art/bin/programs/celebrate";
    std::string command = "command -v " + expected_program_location;
@@ -390,7 +390,7 @@ bool celebrator_executable_presence_check()
 }
 
 
-bool celebrator_is_up_to_date()
+bool celebrate_is_up_to_date()
 {
    std::string source_file_location = "/Users/markoates/Repos/ncurses-art/programs/celebrate.cpp";
    std::string executable_file_location = "/Users/markoates/Repos/ncurses-art/bin/programs/celebrate";
@@ -485,8 +485,8 @@ void initialize()
          { "Rails is present and installed (otherwise \"sudo gem install rails\", after instaling ruby. Needed by inflector components in blast)", run_rails_version_test },
          //{ "terminal sessions are still open despite ./dotfile changes", just_a_failing_test },
          //{ "project binaries are up-to-date despite project file changes", just_a_failing_test },
-         { "celebrator executable is present", celebrator_executable_presence_check },
-         { "celebrator executable is up-to-date (executable been created at a time later than the last change to its source file)", celebrator_is_up_to_date },
+         { "celebrate executable is present", celebrate_executable_presence_check },
+         { "celebrate executable is up-to-date (executable been created at a time later than the last change to its source file)", celebrate_is_up_to_date },
          //{ "terminal session has installed new ruby verions and chruby has been refreshed (with a terminal refresh)", just_a_failing_test },
          { "the hexagon app package is present in the hexagon repo", run_hexagon_app_package_test },
          { "the system's /Applications folder contains a symlink to the hexagon repo's app package", check_hexagon_app_package_alias_test },
