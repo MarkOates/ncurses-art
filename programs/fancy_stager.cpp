@@ -13,6 +13,7 @@
 #define COPY_GIT_ADD_PATCH_COMMAND "copy \"git add patch\" command to clipboard"
 #define COPY_RAILS_TEST_COMMAND "copy \"rails test\" command to clipboard"
 #define COPY_RAILS_RERUN_RSPEC_COMMAND "copy \"rspec test\" command to clipboard"
+#define COPY_RAILS_RUBOCOP_COMMAND "copy \"rubocop\" command to clipboard"
 #define COPY_VIM_EDIT_COMMAND "copy \"vim open\" command to clipboard"
 
 std::map<char, std::string> command_mapping = {
@@ -24,6 +25,7 @@ std::map<char, std::string> command_mapping = {
    { 'p', COPY_GIT_ADD_PATCH_COMMAND },
    { 't', COPY_RAILS_TEST_COMMAND },
    { 's', COPY_RAILS_RERUN_RSPEC_COMMAND },
+   { 'r', COPY_RAILS_RUBOCOP_COMMAND },
    { 'v', COPY_VIM_EDIT_COMMAND },
 };
 
@@ -216,6 +218,14 @@ bool Projekt::process_event(std::string e)
       GitStatusLineDeducer git_status_line_deducer(menu);
       std::stringstream command;
       command << "printf \"rerun -c \\\"bundle exec rspec " << git_status_line_deducer.parse_filename() << "\\\"\" | pbcopy";
+      system(command.str().c_str());
+   }
+   else if (e == COPY_RAILS_RUBOCOP_COMMAND)
+   {
+      Menu &menu = find_menu("main_menu");
+      GitStatusLineDeducer git_status_line_deducer(menu);
+      std::stringstream command;
+      command << "printf \"bundle exec rubocop " << git_status_line_deducer.parse_filename() << "\" | pbcopy";
       system(command.str().c_str());
    }
    else if (e == COPY_VIM_EDIT_COMMAND)
