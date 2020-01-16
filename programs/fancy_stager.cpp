@@ -5,15 +5,15 @@
 
 #include <ncurses.h>
 
-#define COMMAND_FLIP_STAGING "flip_staging"
-#define COMMAND_REBUILD_MENU "rebuild_menu"
+#define COMMAND_FLIP_STAGING "flip staging"
+#define COMMAND_REBUILD_MENU "rebuild menu"
 #define BUILD_COMMAND_LIST "build command list"
-#define REFRESH_TEXT_DISPLAY "refresh_text_display"
-#define YANK_SELECTED_TEXT "YANK_SELECTED_TEXT"
-#define COPY_GIT_ADD_PATCH_COMMAND "COPY_GIT_ADD_PATCH_COMMAND"
-#define COPY_RAILS_TEST_COMMAND "COPY_RAILS_TEST_COMMAND"
-#define COPY_RAILS_RERUN_RSPEC_COMMAND "Copy Rails rerun rspec command for the selected file"
-#define COPY_VIM_EDIT_COMMAND "copy_vim_edit_command"
+#define REFRESH_TEXT_DISPLAY "refresh text display"
+#define YANK_SELECTED_TEXT "yank selected text (copy to clipboard)"
+#define COPY_GIT_ADD_PATCH_COMMAND "copy \"git add patch\" command to clipboard"
+#define COPY_RAILS_TEST_COMMAND "copy \"rails test\" command to clipboard"
+#define COPY_RAILS_RERUN_RSPEC_COMMAND "copy \"rspec test\" command to clipboard"
+#define COPY_VIM_EDIT_COMMAND "copy \"vim open\" command to clipboard"
 
 std::map<char, std::string> command_mapping = {
    { 'j', MOVE_CURSOR_DOWN },
