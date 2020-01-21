@@ -352,7 +352,7 @@ void initialize()
          final_status_t final_status = get_final_status(num_local_branches, project_has_been_processed, exists_locally, in_sync, has_no_changed_files, has_no_untracked_files);
 
          std::string status_icon_and_text = get_status_icon_and_text(final_status, num_local_branches);
-         result_text << project_identifier << PROPERTY_DELIMITER << status_icon_and_text << std::endl;
+         result_text << project_identifier << PROPERTY_DELIMITER << status_icon_and_text;
          if (project_has_been_processed == true && !(final_status == CLEAN || final_status == EXTRA_LOCAL_BRANCHES))
          {
             result_text << "  " << show_it("repo name", repo_name) << std::endl;
