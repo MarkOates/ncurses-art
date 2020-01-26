@@ -211,23 +211,23 @@ std::string file_get_contents(std::string filename, bool raise_on_missing_file=t
 }
 
 
-bool compare_last_write_time(std::string file_a, std::string file_b)
+bool compare_last_write_time(std::string source_file_location, std::string executable_file_location)
 {
-   if (!std::__fs::filesystem::exists(file_a))
+   if (!std::__fs::filesystem::exists(source_file_location))
    {
       std::stringstream error_message;
-      error_message << "Attempting to check if source file is up-to-date, but the file \"" << file_a << "\" does not exist.";
+      error_message << "Attempting to check if source file is up-to-date, but the file \"" << source_file_location << "\" does not exist.";
       throw std::runtime_error(error_message.str());
    }
-   else if (!std::__fs::filesystem::exists(file_b))
+   else if (!std::__fs::filesystem::exists(executable_file_location))
    {
       std::stringstream error_message;
-      error_message << "Attempting to check if executable file is up-to-date, but the file \"" << file_b << "\" does not exist.";
+      error_message << "Attempting to check if executable file is up-to-date, but the file \"" << executable_file_location << "\" does not exist.";
       throw std::runtime_error(error_message.str());
    }
 
-   std::time_t source_last_write_time = get_last_write_time(file_a);
-   std::time_t executable_last_write_time = get_last_write_time(file_b);
+   std::time_t source_last_write_time = get_last_write_time(source_file_location);
+   std::time_t executable_last_write_time = get_last_write_time(executable_file_location);
 
    //std::cout << "Source file write time is " << source_last_write_time << '\n';
    //std::cout << "Executable file write time is " << executable_last_write_time << '\n';
