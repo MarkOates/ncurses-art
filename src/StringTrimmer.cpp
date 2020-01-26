@@ -1,7 +1,7 @@
 
 
 #include <StringTrimmer.hpp>
-
+#include <algorithm>
 
 
 

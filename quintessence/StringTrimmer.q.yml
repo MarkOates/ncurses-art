@@ -23,6 +23,8 @@ functions:
     body: |
       s.erase(s.begin(), std::find_if(s.begin(), s.end(), std::not1(std::ptr_fun<int, int>(std::isspace))));
       return s;
+    body_dependency_symbols:
+      - std::find_if
 
   - name: rtrim
     private: true
@@ -34,3 +36,7 @@ functions:
     body: |
       s.erase(std::find_if(s.rbegin(), s.rend(), std::not1(std::ptr_fun<int, int>(std::isspace))).base(), s.end());
       return s;
+
+dependencies:
+  - symbol: std::find_if
+    headers: [ algorithm ]
