@@ -14,6 +14,8 @@
 #include <ncurses_art/Element/WcharText.hpp>
 #include <ncurses_art/EventTypes.hpp>
 
+#include <allegro5/allegro.h>
+
 #define TMP_OUTFILE "/tmp/out.txt.tmp"
 
 std::vector<std::string> args;
