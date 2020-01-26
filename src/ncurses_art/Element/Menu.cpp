@@ -2,6 +2,7 @@
 
 #include <ncurses_art/Element/Rectangle.hpp>
 #include <ncurses_art/Element/Text.hpp>
+#include <stdexcept>
 #include <curses.h>
 
 Menu::Menu(float x, float y, std::vector<std::string> options)

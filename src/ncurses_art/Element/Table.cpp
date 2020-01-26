@@ -4,6 +4,7 @@
 #include <ncurses_art/Element/Text.hpp>
 #include <curses.h>
 #include <sstream>
+#include <stdexcept>
 
 std::vector<std::vector<std::string>> &Table::__validate_table_dimensions(std::vector<std::vector<std::string>> &elements)
 {
