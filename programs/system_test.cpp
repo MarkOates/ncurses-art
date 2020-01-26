@@ -4,7 +4,6 @@
 #include <ShellCommandExecutorWithCallback.hpp>
 #include <StringSplitter.hpp>
 
-#include <filesystem>
 #include <iostream>
 #include <utility>
 #include <ctime> // for std::time_t
@@ -16,6 +15,28 @@
 #define MOVE_CURSOR_RIGHT "MOVE_CURSOR_RIGHT"
 #define INITIALIZE_SCENE "INITIALIZE_SCENE"
 #define REFRESH_STATUSES "REFRESH_STATUSES"
+
+
+
+#include <fstream> // for std::ifstream
+
+// this technique would fail if the file existed, but were not accessible, or if it were opened
+// by another application
+// see here for a more thorough set of options: https://stackoverflow.com/a/12774387
+bool file_exists__implementation_1(const std::string name)
+{
+   std::ifstream f(name.c_str());
+   return f.good();
+}
+
+
+#include <filesystem>
+
+bool file_exists__implementation_2(std::string file_location)
+{
+   //return std::__fs::filesystem::exists(file_location);
+   return false;
+}
 
 
 
@@ -179,13 +200,26 @@ TestResultInterface *last_test_result = nullptr;
 
 
 
+//std::time_t get_last_write_time__implementation_1(std::string filename)
+//{
+   //auto ftime = std::__fs::filesystem::last_write_time(filename);
+   //std::time_t last_write_time = decltype(ftime)::clock::to_time_t(ftime);
+//
+   //return last_write_time;
+//}
+
+
+std::time_t get_last_write_time__null_implementation(std::string filename)
+{
+   return 0;
+}
+
+
 std::time_t get_last_write_time(std::string filename)
 {
-   auto ftime = std::__fs::filesystem::last_write_time(filename);
-   std::time_t last_write_time = decltype(ftime)::clock::to_time_t(ftime);
-
-   return last_write_time;
+   return get_last_write_time__null_implementation(filename);
 }
+
 
 
 std::string file_get_contents(std::string filename, bool raise_on_missing_file=true)
@@ -215,13 +249,13 @@ std::string file_get_contents(std::string filename, bool raise_on_missing_file=t
 
 bool compare_last_write_time(std::string source_file_location, std::string executable_file_location)
 {
-   if (!std::__fs::filesystem::exists(source_file_location))
+   if (!file_exists__implementation_1(source_file_location))
    {
       std::stringstream error_message;
       error_message << "Attempting to check if source file is up-to-date, but the file \"" << source_file_location << "\" does not exist.";
       throw std::runtime_error(error_message.str());
    }
-   else if (!std::__fs::filesystem::exists(executable_file_location))
+   else if (!file_exists__implementation_1(executable_file_location))
    {
       std::stringstream error_message;
       error_message << "Attempting to check if executable file is up-to-date, but the file \"" << executable_file_location << "\" does not exist.";
