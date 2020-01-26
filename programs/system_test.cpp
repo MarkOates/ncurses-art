@@ -278,6 +278,12 @@ bool check_hexagon_app_package_alias_test()
 }
 
 
+bool check_vimbackup_folder_exists()
+{
+   return false;
+}
+
+
 std::string get_head_sha_of_vim_plugin_first_vim_plugin()
 {
    std::string command = "cd /Users/markoates/.vim/bundle/first_vim_plugin && git rev-parse HEAD";
@@ -577,6 +583,7 @@ void initialize()
          { "Ruby version is the expected version (otherwise \"sudo ruby-install ruby 2.6.5\", then \"sudo ruby-install --system ruby 2.6.5\")", run_ruby_version_test },
          { "rerun is present and installed (otherwise \"sudo gem install rerun\", after instaling ruby)", run_rerun_version_test },
          { "beebot is responsive", check_beebot_response_ping },
+         { "~/.vimbackup folder exists", check_vimbackup_folder_exists },
          { "bundler is present and installed (otherwise \"sudo gem install bundler:2.0.1\", after instaling ruby)", run_bundler_version_test },
          { "Rails is present and installed (otherwise \"sudo gem install rails\", after instaling ruby. Needed by inflector components in blast)", run_rails_version_test },
          //{ "terminal sessions are still open despite ./dotfile changes", just_a_failing_test },
