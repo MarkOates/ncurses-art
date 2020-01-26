@@ -1,5 +1,6 @@
 #include <Projekt.h>
 #include "projekt_helper.h"
+#include <algorithm> // for std::find_if
 
 #include <ncurses.h>
 

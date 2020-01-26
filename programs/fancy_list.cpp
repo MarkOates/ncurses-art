@@ -2,6 +2,7 @@
 #include "projekt_helper.h"
 
 #include <ncurses.h>
+#include <algorithm> // for sd::find_if
 
 #define BUILD_COMMAND_MENU "command_build_menu"
 #define JUMP_TO_NEXT_SECTION "JUMP_TO_NEXT_SECTION"

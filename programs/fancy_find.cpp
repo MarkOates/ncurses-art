@@ -3,6 +3,8 @@
 
 #include <ncurses.h>
 
+#include <algorithm> // for std::find_if
+
 #define COMMAND_REBUILD_MENU "rebuild_menu"
 #define REFRESH_TEXT_DISPLAY "refresh_text_display"
 #define YANK_SELECTED_TEXT "YANK_SELECTED_TEXT"

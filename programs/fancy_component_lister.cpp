@@ -6,6 +6,7 @@
 #include <ncurses.h>
 
 #include <iostream>
+#include <algorithm> // for std::sort and std::unique
 
 #include <string>
 

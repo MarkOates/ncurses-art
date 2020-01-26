@@ -3,6 +3,8 @@
 
 #include <ncurses.h>
 
+#include <iterator> // for std::ostream_iterator
+
 #define TEST_APPEND_TEXT "test_append_text"
 #define TEST_SPLIT_STRING "test_split_string"
 #define MESSAGE_STARTING_TEST "message_starting_test"

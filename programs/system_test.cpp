@@ -7,6 +7,8 @@
 #include <filesystem>
 #include <iostream>
 #include <utility>
+#include <ctime> // for std::time_t
+
 
 #define MOVE_CURSOR_UP "MOVE_CURSOR_UP"
 #define MOVE_CURSOR_DOWN "MOVE_CURSOR_DOWN"

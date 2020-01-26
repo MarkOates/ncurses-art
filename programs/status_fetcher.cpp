@@ -3,6 +3,8 @@
 #include <GithubRepoStatusFetcher.hpp>
 #include <HostnameExtractor.hpp>
 
+#include <algorithm> // for std::find
+
 #define MOVE_CURSOR_UP "MOVE_CURSOR_UP"
 #define MOVE_CURSOR_DOWN "MOVE_CURSOR_DOWN"
 #define MOVE_CURSOR_LEFT "MOVE_CURSOR_LEFT"
