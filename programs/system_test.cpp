@@ -493,9 +493,9 @@ bool check_vim_plugins_are_in_sync_with_local_repos()
 }
 
 
-bool celebrate_executable_presence_check()
+bool build_celebrator_executable_presence_check()
 {
-   std::string expected_program_location = "/Users/markoates/Repos/ncurses-art/bin/programs/celebrate";
+   std::string expected_program_location = "/Users/markoates/Repos/blast/bin/programs/build_celebrator";
    std::string command = "command -v " + expected_program_location;
 
    ShellCommandExecutorWithCallback executor(command, command_callback);
@@ -506,10 +506,10 @@ bool celebrate_executable_presence_check()
 }
 
 
-bool celebrate_is_up_to_date()
+bool build_celebrator_is_up_to_date()
 {
-   std::string source_file_location = "/Users/markoates/Repos/ncurses-art/programs/celebrate.cpp";
-   std::string executable_file_location = "/Users/markoates/Repos/ncurses-art/bin/programs/celebrate";
+   std::string source_file_location = "/Users/markoates/Repos/blast/programs/build_celebrator.cpp";
+   std::string executable_file_location = "/Users/markoates/Repos/blast/bin/programs/build_celebrator";
    return compare_last_write_time(source_file_location, executable_file_location);
 }
 
@@ -523,6 +523,7 @@ bool check_all_executables_are_up_to_date_to_their_source()
       { false, "/Users/markoates/Repos/blast/programs/generator.cpp", "/Users/markoates/Repos/blast/bin/programs/generator" },
       { false, "/Users/markoates/Repos/blast/programs/quintessence_from_yaml.cpp", "/Users/markoates/Repos/blast/bin/programs/quintessence_from_yaml" },
       { false, "/Users/markoates/Repos/blast/programs/symlink_component_from_another_project.cpp", "/Users/markoates/Repos/blast/bin/programs/symlink_component_from_another_project" },
+      { false, "/Users/markoates/Repos/blast/programs/build_celebrator.cpp", "/Users/markoates/Repos/blast/bin/programs/build_celebrator" },
 
       // ncurses-art files
 
@@ -531,7 +532,6 @@ bool check_all_executables_are_up_to_date_to_their_source()
       { false, "/Users/markoates/Repos/ncurses-art/programs/project_filename_generator.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/project_filename_generator" },
       { false, "/Users/markoates/Repos/ncurses-art/programs/system_test.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/system_test" },
       { false, "/Users/markoates/Repos/ncurses-art/programs/component_generator.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/component_generator" },
-      { false, "/Users/markoates/Repos/ncurses-art/programs/celebrate.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/celebrate" },
       { false, "/Users/markoates/Repos/ncurses-art/programs/create_release.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/create_release" },
       { false, "/Users/markoates/Repos/ncurses-art/programs/fancy_branch.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/fancy_branch" },
       { false, "/Users/markoates/Repos/ncurses-art/programs/fancy_component.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/fancy_component" },
@@ -639,8 +639,8 @@ void initialize()
          { "pacman has the ncurses-devel package installed", just_a_failing_test },
          //{ "terminal sessions are still open despite ./dotfile changes", just_a_failing_test },
          //{ "project binaries are up-to-date despite project file changes", just_a_failing_test },
-         { "celebrate executable is present", celebrate_executable_presence_check },
-         { "celebrate executable is up-to-date (executable been created at a time later than the last change to its source file)", celebrate_is_up_to_date },
+         { "celebrate executable is present", build_celebrator_executable_presence_check },
+         { "celebrate executable is up-to-date (executable been created at a time later than the last change to its source file)", build_celebrator_is_up_to_date },
          { "all custom executables are up-to-date to their source files", check_all_executables_are_up_to_date_to_their_source },
          //{ "terminal session has installed new ruby verions and chruby has been refreshed (with a terminal refresh)", just_a_failing_test },
          { "the hexagon app package is present in the hexagon repo", run_hexagon_app_package_test },
