@@ -106,6 +106,8 @@ functions:
       }
       std::sort(lines.begin(), lines.end());
       return lines;
+    body_dependency_symbols:
+      - std::sort
 
   - name: is_current_branch_master
     type: bool
@@ -193,6 +195,8 @@ dependencies:
     headers: [ 'StringTrimmer.hpp' ]
   - symbol: std::stringstream
     headers: [ 'sstream' ]
+  - symbol: std::sort
+    headers: [ 'algorithm' ]
   - symbol: std::cerr
     headers: [ 'iostream' ]
   - symbol: std::endl

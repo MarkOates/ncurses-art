@@ -1,1 +1,1 @@
-/Users/markoates/Repos/blast/include/Blast/StringJoiner.hpp
+../../../blast/include/Blast/StringJoiner.hpp
