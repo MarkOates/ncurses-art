@@ -586,6 +586,8 @@ void initialize()
          { "~/.vimbackup folder exists", check_vimbackup_folder_exists },
          { "bundler is present and installed (otherwise \"sudo gem install bundler:2.0.1\", after instaling ruby)", run_bundler_version_test },
          { "Rails is present and installed (otherwise \"sudo gem install rails\", after instaling ruby. Needed by inflector components in blast)", run_rails_version_test },
+         { "pacman has the mingw-w64-x86_64-yaml-cpp package installed", just_a_failing_test },
+         { "pacman has the ncurses-devel package installed", just_a_failing_test },
          //{ "terminal sessions are still open despite ./dotfile changes", just_a_failing_test },
          //{ "project binaries are up-to-date despite project file changes", just_a_failing_test },
          { "celebrate executable is present", celebrate_executable_presence_check },
