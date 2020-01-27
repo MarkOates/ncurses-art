@@ -454,6 +454,20 @@ bool check_beebot_response_ping()
 }
 
 
+bool check_bashrc_exists_with_term_export()
+{
+   std::string expected_line = "export TERMINFO=/mingw64/share/terminfo";
+   // note: the existence of this line needs to be scanned for from the last line up (to ensure it is the last definition)
+}
+
+
+bool check_bashrc_exists_with_terminfo_export()
+{
+   std::string expected_line = "export TERM=xterm-256color";
+   // note: the existence of this line needs to be scanned for from the last line up (to ensure it is the last definition)
+}
+
+
 bool check_hexagon_app_package_symlink_destination()
 {
    std::string expected_destination = "/Users/markoates/Repos/hexagon/bin/Hexagon.app";
@@ -637,6 +651,9 @@ void initialize()
          { "Rails is present and installed (otherwise \"sudo gem install rails\", after instaling ruby. Needed by inflector components in blast)", run_rails_version_test },
          { "pacman has the mingw-w64-x86_64-yaml-cpp package installed", just_a_failing_test },
          { "pacman has the ncurses-devel package installed", just_a_failing_test },
+         { "bashrc exists", just_a_failing_test },
+         { "bashrc exports a TERM system variable with the expected value", just_a_failing_test },
+         { "bashrc exports a TERMINFO system variable with the expected value", just_a_failing_test },
          //{ "terminal sessions are still open despite ./dotfile changes", just_a_failing_test },
          //{ "project binaries are up-to-date despite project file changes", just_a_failing_test },
          { "celebrate executable is present", build_celebrator_executable_presence_check },
