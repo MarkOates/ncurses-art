@@ -18,3 +18,4 @@ allegro.log
 out.tmp
 
 tmp/*
+obj/*
