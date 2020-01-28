@@ -1,5 +1,6 @@
 //#include "Projekt2.h"
 
+#include <string>
 #include <map>
 
 std::map<std::string, void(*)()> events = {
@@ -20,6 +21,7 @@ bool emit_event(std::string e)
 #include <HostnameExtractor.hpp>
 
 #include <sstream>
+#include <iostream> // for std::find
 #include <algorithm> // for std::find
 
 #define MOVE_CURSOR_UP "MOVE_CURSOR_UP"
