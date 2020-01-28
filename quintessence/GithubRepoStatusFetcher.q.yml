@@ -186,7 +186,8 @@ functions:
           result += buffer.data();
       }
       return result;
-
+    body_dependency_symbols:
+      - Blast::ShellCommandExecutorWithCallback
 function_body_symbol_dependencies:
   - StringSplitter
   - StringTrimmer
@@ -207,6 +208,8 @@ dependencies:
     headers: [ 'iostream' ]
   - symbol: std::endl
     headers: [ 'iostream' ]
+  - symbol: Blast::ShellCommandExecutorWithCallback
+    headers: [ 'Blast/ShellCommandExecutorWithCallback.hpp' ]
   - symbol: std::vector<std::string>
     headers: [ 'vector', 'string' ]
   - symbol: al_init()

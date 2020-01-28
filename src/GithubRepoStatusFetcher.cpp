@@ -9,6 +9,7 @@
 #include <vector>
 #include <string>
 #include <algorithm>
+#include <Blast/ShellCommandExecutorWithCallback.hpp>
 
 
 
