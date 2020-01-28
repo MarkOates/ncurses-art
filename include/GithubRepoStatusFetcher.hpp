@@ -1,11 +1,6 @@
 #pragma once
 
 
-#include <array>
-#include <cstdio>
-#include <iostream>
-#include <memory>
-#include <stdexcept>
 #include <string>
 #include <vector>
 
@@ -56,7 +51,7 @@ bool have_the_local_and_remote_repos_diverged();
 bool last_captured_output_contains_string(std::string string_to_find);
 bool poll_status();
 std::string full_command();
-std::string execute_command(const char* cmd);
+std::string execute_command(std::string command);
 };
 
 

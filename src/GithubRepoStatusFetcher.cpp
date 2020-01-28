@@ -150,7 +150,7 @@ int GithubRepoStatusFetcher::get_branch_count()
 {
 std::stringstream command;
 command << "(cd " << get_repos_directory() << "/" << get_repo_name() << " && git fetch && " << get_git_branch_count_command() << ")";
-std::string command_output = execute_command(command.str().c_str());
+std::string command_output = execute_command(command.str());
 int result = atoi(command_output.c_str());
 return result;
 
@@ -160,7 +160,7 @@ std::vector<std::string> GithubRepoStatusFetcher::get_branch_names_at_remote()
 {
 std::stringstream command;
 command << "(cd " << get_repos_directory() << "/" << get_repo_name() << " && " << get_git_remote_branch_names_command() << ")";
-std::string command_output = execute_command(command.str().c_str());
+std::string command_output = execute_command(command.str());
 std::vector<std::string> lines = StringSplitter(command_output, '\n').split();
 for (auto &line : lines)
 {
@@ -188,7 +188,7 @@ return command.str();
 std::string GithubRepoStatusFetcher::get_current_branch_name()
 {
 std::string current_branch_name_command = get_current_branch_name_command();
-return execute_command(current_branch_name_command.c_str());
+return execute_command(current_branch_name_command);
 
 }
 
@@ -196,7 +196,7 @@ std::vector<std::string> GithubRepoStatusFetcher::get_quintessence_filenames()
 {
 std::stringstream command;
 command << "(cd " << get_repos_directory() << "/" << get_repo_name() << " && " << get_component_quintessence_filenames_command() << ")";
-std::string command_output = execute_command(command.str().c_str());
+std::string command_output = execute_command(command.str());
 return StringSplitter(command_output, '\n').split();
 
 }
@@ -220,7 +220,7 @@ return false;
 bool GithubRepoStatusFetcher::poll_status()
 {
 if (get_only_poll_once() && get_status_polled()) return true;
-last_captured_output = execute_command(full_command().c_str());
+last_captured_output = execute_command(full_command());
 set_status_polled(true);
 return true;
 
@@ -234,9 +234,9 @@ return result.str();
 
 }
 
-std::string GithubRepoStatusFetcher::execute_command(const char* cmd)
+std::string GithubRepoStatusFetcher::execute_command(std::string command)
 {
-Blast::ShellCommandExecutorWithCallback executor(cmd);
+Blast::ShellCommandExecutorWithCallback executor(command);
 return executor.execute();
 
 }
