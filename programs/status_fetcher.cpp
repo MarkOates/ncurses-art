@@ -1,8 +1,25 @@
-#include "Projekt2.h"
+//#include "Projekt2.h"
+
+#include <map>
+
+std::map<std::string, void(*)()> events = {
+   //{ EVENT_PROGRAM_INITIALIZED, initialize },
+};
+
+#include <vector>
+std::vector<std::string> args;
+
+bool emit_event(std::string e)
+{
+   if (events.find(e) == events.end()) return false;
+   events[e]();
+   return true;
+}
 
 #include <GithubRepoStatusFetcher.hpp>
 #include <HostnameExtractor.hpp>
 
+#include <sstream>
 #include <algorithm> // for std::find
 
 #define MOVE_CURSOR_UP "MOVE_CURSOR_UP"
@@ -17,16 +34,16 @@
 #define INCREMENTAL_RUN "INCREMENTAL_RUN"
 
 #define OUTPUT_REPORT_TEXT_IDENTIFIER "output report"
-#define OUTPUT_REPORT_TEXT find_text(OUTPUT_REPORT_TEXT_IDENTIFIER)
+//#define OUTPUT_REPORT_TEXT find_text(OUTPUT_REPORT_TEXT_IDENTIFIER)
 
 #define HOSTNAME_TEXT_IDENTIFIER "hostname text"
-#define HOSTNAME_TEXT find_text(HOSTNAME_TEXT_IDENTIFIER)
+//#define HOSTNAME_TEXT find_text(HOSTNAME_TEXT_IDENTIFIER)
 
 #define PROGRESS_BAR_IDENTIFIER "progress bar"
-#define PROGRESS_BAR find_progress_bar(PROGRESS_BAR_IDENTIFIER)
+//#define PROGRESS_BAR find_progress_bar(PROGRESS_BAR_IDENTIFIER)
 
 #define PROGRESS_BAR_TEXT_IDENTIFIER "progress bar text"
-#define PROGRESS_BAR_TEXT find_text(PROGRESS_BAR_TEXT_IDENTIFIER)
+//#define PROGRESS_BAR_TEXT find_text(PROGRESS_BAR_TEXT_IDENTIFIER)
 
 #define PROPERTY_DELIMITER ": "
 
@@ -249,17 +266,17 @@ int get_number_of_projects_processed()
 }
 
 
-void initialize()
+void load_events()
 {
    events[INITIALIZE_SCENE] = []{
-      create_text(HOSTNAME_TEXT_IDENTIFIER, 5, 2);
-      create_progress_bar(PROGRESS_BAR_IDENTIFIER, 3, 2+2, 60, 3);
-      create_text(PROGRESS_BAR_TEXT_IDENTIFIER, 5, 5+2);
-      create_text(OUTPUT_REPORT_TEXT_IDENTIFIER, 3, 8+2);
+      ///create_text(HOSTNAME_TEXT_IDENTIFIER, 5, 2);
+      ///create_progress_bar(PROGRESS_BAR_IDENTIFIER, 3, 2+2, 60, 3);
+      ///create_text(PROGRESS_BAR_TEXT_IDENTIFIER, 5, 5+2);
+      ///create_text(OUTPUT_REPORT_TEXT_IDENTIFIER, 3, 8+2);
 
-      HOSTNAME_TEXT.set_text(get_hostname());
+      //HOSTNAME_TEXT.set_text(get_hostname());
 
-      PROGRESS_BAR_TEXT.set_text("processing...");
+      //PROGRESS_BAR_TEXT.set_text("processing...");
 
       Args magic_args;
       magic_args.set(args);
@@ -326,14 +343,14 @@ void initialize()
       }
       else
       {
-         PROGRESS_BAR_TEXT.set_text("finished.");
+         //PROGRESS_BAR_TEXT.set_text("finished.");
       }
    };
    events[REFRESH_PROGRESS_BAR] = []{
       int total_number_of_projects_for_processing = projects.size();
       int number_of_projects_processed = get_number_of_projects_processed();
       float updated_progress_bar_value = (float)number_of_projects_processed / total_number_of_projects_for_processing;
-      PROGRESS_BAR.set_value(updated_progress_bar_value);
+      //PROGRESS_BAR.set_value(updated_progress_bar_value);
    };
    events[REFRESH_OUTPUT_REPORT] = []{
       std::stringstream result_text;
@@ -369,7 +386,7 @@ void initialize()
 
       result_text << std::endl << "some processing messaging garbage:" << std::endl << std::endl << std::endl;
 
-      OUTPUT_REPORT_TEXT.set_text(result_text.str());
+      //OUTPUT_REPORT_TEXT.set_text(result_text.str());
    };
    events[REFRESH_ALL_STATUSES] = []{
       for (auto &project : projects)
@@ -383,10 +400,21 @@ void initialize()
          project_processed_state = true;
       }
 
-      PROGRESS_BAR_TEXT.set_text("finished.");
+      //PROGRESS_BAR_TEXT.set_text("finished.");
    };
+}
+
+
+int main(int argc, char **argv)
+{
+   for (int i=0; i<argc; i++) args.push_back(argv[i]);
+
+
+   load_events();
 
    emit_event(INITIALIZE_SCENE);
    emit_event(INCREMENTAL_RUN);
-}
+   
 
+   return 0;
+}
