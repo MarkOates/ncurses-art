@@ -3,6 +3,13 @@
 
 #include <GithubRepoStatusFetcher.hpp>
 
+TEST(GithubRepoStatusFetcherTest, get_current_branch_name_command__returns_the_shell_command_to_obtain_the_current_branch)
+{
+   GithubRepoStatusFetcher fetcher("blast");
+   std::string expected_shell_command = "foo";
+   EXPECT_EQ(expected_shell_command, fetcher.get_current_branch_name_command());
+}
+
 //TEST(GithubRepoStatusFetcherTest, is_current_branch_master__returns_true_if_the_current_branch_is_set_to_master)
 //{
    //GithubRepoStatusFetcher fetcher("adventures-of-beary");

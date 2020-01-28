@@ -176,11 +176,18 @@ return get_current_branch_name() == "master\n";
 
 }
 
-std::string GithubRepoStatusFetcher::get_current_branch_name()
+std::string GithubRepoStatusFetcher::get_current_branch_name_command()
 {
 std::stringstream command;
 command << "(cd " << get_repos_directory() << "/" << get_repo_name() << " && git fetch && " << get_git_current_branch_command() << ")";
-return execute_command(command.str().c_str());
+return command.str();
+
+}
+
+std::string GithubRepoStatusFetcher::get_current_branch_name()
+{
+std::string current_branch_name_command = get_current_branch_name_command();
+return execute_command(current_branch_name_command.c_str());
 
 }
 

@@ -49,6 +49,7 @@ bool is_the_local_repo_behind();
 int get_branch_count();
 std::vector<std::string> get_branch_names_at_remote();
 bool is_current_branch_master();
+std::string get_current_branch_name_command();
 std::string get_current_branch_name();
 std::vector<std::string> get_quintessence_filenames();
 bool have_the_local_and_remote_repos_diverged();
