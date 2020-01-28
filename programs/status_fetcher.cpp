@@ -1,4 +1,5 @@
 //#include "Projekt2.h"
+#include <allegro5/allegro.h> // required for compliance with union/Makefile
 
 #include <string>
 #include <map>
