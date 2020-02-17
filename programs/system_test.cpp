@@ -400,6 +400,22 @@ std::string get_brew_yaml_info_string()
 
 
 
+std::string get_brew_ghostscript_info_string()
+{
+   std::string command = "brew info ghostscript";
+
+   ShellCommandExecutorWithCallback executor(command, command_callback);
+   std::string output = executor.execute();
+   std::string trimmed_output = trim(output);
+
+   std::vector<std::string> tokens = StringSplitter(trimmed_output, '\n').split();
+   std::string first_line = tokens.empty() ? "" : tokens[0];
+
+   return first_line;
+}
+
+
+
 std::string get_bundler_version()
 {
    std::string command = "bundler --version";
@@ -494,6 +510,15 @@ bool run_yaml_cpp_presence_test()
 {
    std::string match_expression = "^yaml-cpp: ";
    std::string actual_string = get_brew_yaml_info_string();
+   last_test_result = new TestResultMatcher(match_expression, actual_string);
+   return last_test_result->assessment();
+}
+
+
+bool run_ghostscript_presence_test()
+{
+   std::string match_expression = "^ghostscript: ";
+   std::string actual_string = get_brew_ghostscript_info_string();
    last_test_result = new TestResultMatcher(match_expression, actual_string);
    return last_test_result->assessment();
 }
@@ -642,6 +667,7 @@ void initialize()
 
       tests = {
          { "yaml-cpp is installed through homebrew", run_yaml_cpp_presence_test },
+         { "ghostscript is installed through homebrew (needed for imagemagick's `convert file.pdf file.png`", run_ghostscript_presence_test },
          { "chruby is present", run_chruby_test },
          { "Ruby version is the expected version (otherwise \"sudo ruby-install ruby 2.6.5\", then \"sudo ruby-install --system ruby 2.6.5\")", run_ruby_version_test },
          { "rerun is present and installed (otherwise \"sudo gem install rerun\", after instaling ruby)", run_rerun_version_test },
