@@ -1,5 +1,7 @@
 
 
+#include <allegro5/allegro.h> // required for compliance with union/Makefile
+
 #include <iostream>
 #include <string>
 #include <vector>
