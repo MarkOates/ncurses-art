@@ -18,7 +18,7 @@ Checkbox::~Checkbox()
 
 std::string Checkbox::run()
 {
-return "Hello Buddy!";
+return "Hello World!";
 }
 
 

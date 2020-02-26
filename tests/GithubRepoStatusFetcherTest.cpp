@@ -14,7 +14,7 @@ TEST(GithubRepoStatusFetcherTest, execute_command__is_able_to_find_the_path_spec
 {
    GithubRepoStatusFetcher fetcher("blast");
    std::string shell_command = "(cd ~/Repos/blast && git fetch && git branch | grep \\* | cut -d ' ' -f2)";
-   std::string expected_command_result = "foo";
+   std::string expected_command_result = "master\n";
 
    EXPECT_EQ(expected_command_result, fetcher.execute_command(shell_command));
 }

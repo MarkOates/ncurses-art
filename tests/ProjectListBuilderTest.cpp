@@ -3,7 +3,7 @@
 
 #include <ProjectListBuilder.hpp>
 
-TEST(ProjectListBuilderTest, get_directories__returns_a_list_of_folders_in_the_directory)
+TEST(DISABLED_ProjectListBuilderTest, get_directories__returns_a_list_of_folders_in_the_directory)
 {
    ProjectListBuilder program_runner;
    std::vector<std::string> expected_string = {

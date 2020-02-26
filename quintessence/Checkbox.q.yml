@@ -11,4 +11,4 @@ parameters:
 functions:
   - name: run
     type: std::string
-    body: return "Hello Buddy!";
+    body: return "Hello World!";
