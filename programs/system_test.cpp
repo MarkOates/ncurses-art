@@ -200,13 +200,13 @@ TestResultInterface *last_test_result = nullptr;
 
 
 
-//std::time_t get_last_write_time__implementation_1(std::string filename)
-//{
-   //auto ftime = std::__fs::filesystem::last_write_time(filename);
-   //std::time_t last_write_time = decltype(ftime)::clock::to_time_t(ftime);
-//
-   //return last_write_time;
-//}
+std::time_t get_last_write_time__implementation_1(std::string filename)
+{
+   auto ftime = std::__fs::filesystem::last_write_time(filename);
+   std::time_t last_write_time = decltype(ftime)::clock::to_time_t(ftime);
+
+   return last_write_time;
+}
 
 
 std::time_t get_last_write_time__null_implementation(std::string filename)
@@ -217,7 +217,7 @@ std::time_t get_last_write_time__null_implementation(std::string filename)
 
 std::time_t get_last_write_time(std::string filename)
 {
-   return get_last_write_time__null_implementation(filename);
+   return get_last_write_time__implementation_1(filename);
 }
 
 
