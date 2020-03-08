@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <ctime>
+#include <random>
 
 #include "Question.hpp"
 #include "Quiz.hpp"
@@ -72,7 +73,10 @@ void initialize()
 
       std::vector<std::string> answers = current_question.get_incorrect_answers();
       answers.push_back(current_question.get_correct_answer());
-      std::random_shuffle(answers.begin(), answers.end());
+
+      std::random_device rd;
+      std::mt19937 g(rd());
+      std::shuffle(answers.begin(), answers.end(), g);
 
       find_text("question").set_text(current_question.get_question());
       find_menu("answers").set_options(answers);
