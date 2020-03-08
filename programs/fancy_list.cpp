@@ -9,26 +9,7 @@
 #define YANK_SELECTED_TEXT "yank_selected_text"
 #define YANK_OPEN_COMMAND "yank_open_command"
 
-// trim from start
-std::string ltrim(std::string &s) {
-   s.erase(s.begin(), std::find_if(s.begin(), s.end(), std::not1(std::ptr_fun<int, int>(std::isspace))));
-   return s;
-}
-
-// trim from end
-std::string rtrim(std::string &s) {
-   s.erase(std::find_if(s.rbegin(), s.rend(), std::not1(std::ptr_fun<int, int>(std::isspace))).base(), s.end());
-   return s;
-}
-
-// trim from both ends
-std::string trim(std::string s)
-{
-   std::string s1 = s;
-   std::string s2 = rtrim(s1);
-   std::string s3 = ltrim(s2);
-   return s3;
-}
+#include <StringTrimmer.hpp>
 
 // replace characters in a string
 void ___replace(std::string& str, std::string from, std::string to)
@@ -197,7 +178,7 @@ bool Projekt::process_event(std::string e)
    if (e == YANK_OPEN_COMMAND)
    {
       Menu &menu = find_menu("main_menu");
-      std::string trimmed = trim(menu.current_selection());
+      std::string trimmed = StringTrimmer(menu.current_selection()).trim();
       std::vector<std::string> tokens = split_string(trimmed, TokenBuilder::DELIMITER);
       if (tokens.size() == 2)
       {
@@ -216,7 +197,7 @@ bool Projekt::process_event(std::string e)
    if (e == YANK_SELECTED_TEXT)
    {
       Menu &menu = find_menu("main_menu");
-      std::string trimmed = trim(menu.current_selection());
+      std::string trimmed = StringTrimmer(menu.current_selection()).trim();
       std::vector<std::string> tokens = split_string(trimmed, TokenBuilder::DELIMITER);
       if (tokens.size() == 2)
       {
