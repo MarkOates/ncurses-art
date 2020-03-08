@@ -11,26 +11,8 @@
 #define GIT_CHECKOUT_BRANCH_COMMAND "GIT_CHECKOUT_BRANCH_COMMAND"
 #define COPY_GIT_ADD_PATCH_COMMAND "COPY_GIT_ADD_PATCH_COMMAND"
 
-// trim from start
-std::string ltrim(std::string &s) {
-   s.erase(s.begin(), std::find_if(s.begin(), s.end(), std::not1(std::ptr_fun<int, int>(std::isspace))));
-   return s;
-}
 
-// trim from end
-std::string rtrim(std::string &s) {
-   s.erase(std::find_if(s.rbegin(), s.rend(), std::not1(std::ptr_fun<int, int>(std::isspace))).base(), s.end());
-   return s;
-}
-
-// trim from both ends
-std::string trim(std::string s)
-{
-   std::string s1 = s;
-   std::string s2 = rtrim(s1);
-   std::string s3 = ltrim(s2);
-   return s3;
-}
+#include <StringTrimmer.hpp>
 
 
 Projekt::Projekt() { current_project = this; }
@@ -71,7 +53,7 @@ bool Projekt::process_event(std::string e)
    if (e == YANK_SELECTED_TEXT)
    {
       Menu &menu = find_menu("main_menu");
-      std::string trimmed = trim(menu.current_selection());
+      std::string trimmed = StringTrimmer(menu.current_selection()).trim();
       std::stringstream command;
       command << "printf \"" << trimmed << "\" | pbcopy";
       system(command.str().c_str());
@@ -79,7 +61,7 @@ bool Projekt::process_event(std::string e)
    if (e == GIT_CHECKOUT_BRANCH_COMMAND)
    {
       Menu &menu = find_menu("main_menu");
-      std::string trimmed = trim(menu.current_selection());
+      std::string trimmed = StringTrimmer(menu.current_selection()).trim();
       std::stringstream command;
       command << "printf \"git checkout " << trimmed << "\" | pbcopy";
       system(command.str().c_str());
