@@ -1,9 +1,7 @@
 
 
 #include <Blast/FileExistenceChecker.hpp>
-#include <sys/stat.h>
-#include <sys/stat.h>
-#include <sys/stat.h>
+#include <filesystem>
 
 
 namespace Blast
@@ -29,10 +27,7 @@ std::string FileExistenceChecker::get_filename()
 
 bool FileExistenceChecker::exists()
 {
-struct stat info;
-//disable for Windows compile
-return stat(filename.c_str(), &info) == 0 && (S_ISREG(info.st_mode) || S_ISLNK(info.st_mode));
-//return false;
+return std::filesystem::exists(filename);
 
 }
 } // namespace Blast
