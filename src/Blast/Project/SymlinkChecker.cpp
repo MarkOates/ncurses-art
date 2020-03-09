@@ -1,9 +1,11 @@
 
 
 #include <Blast/Project/SymlinkChecker.hpp>
-#include <sys/stat.h>
-#include <unistd.h>
-#include <string>
+#include <filesystem>
+#include <filesystem>
+#include <filesystem>
+#include <filesystem>
+#include <filesystem>
 
 
 namespace Blast
@@ -25,26 +27,20 @@ SymlinkChecker::~SymlinkChecker()
 
 bool SymlinkChecker::is_symlink()
 {
-struct stat p_statbuf;
-
-if (lstat(filename.c_str(), &p_statbuf) < 0)
-{
-   throw std::runtime_error("[Project/SymlinkChecker error:] An error occurred while attempting to is_symlink");
-}
-
-return (S_ISLNK(p_statbuf.st_mode) == 1);
+std::filesystem::path path(filename);
+return std::filesystem::exists(path) && std::filesystem::is_symlink(path);
 
 }
 
 std::string SymlinkChecker::read_symlink_target()
 {
-char buff[512];
-ssize_t len = ::readlink(filename.c_str(), buff, sizeof(buff)-1);
-if (len != -1) {
-   buff[len] = '\0';
-   return std::string(buff);
+if (!is_symlink())
+{
+   std::string error_message = "an error occurred when trying to read_symlink_target in Blast/Project/SymlinkChecker";
+   throw std::runtime_error(error_message);
 }
-throw std::runtime_error("an error occurred when trying to read_symlink_target in Blast/Project/SymlinkChecker");
+std::filesystem::path path(filename);
+return std::filesystem::read_symlink(path).string();
 
 }
 } // namespace Project
