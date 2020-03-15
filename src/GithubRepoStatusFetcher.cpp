@@ -15,7 +15,7 @@
 
 
 GithubRepoStatusFetcher::GithubRepoStatusFetcher(std::string repo_name, std::string repos_directory)
-   : last_captured_output("")
+   : last_captured_output_from_status_request("")
    , git_status_command("git status -uno -u")
    , git_pull_command("git pull")
    , git_branch_count_command("git branch | wc -l")
@@ -41,9 +41,9 @@ void GithubRepoStatusFetcher::set_status_polled(bool status_polled)
 }
 
 
-std::string GithubRepoStatusFetcher::get_last_captured_output()
+std::string GithubRepoStatusFetcher::get_last_captured_output_from_status_request()
 {
-   return last_captured_output;
+   return last_captured_output_from_status_request;
 }
 
 
@@ -112,20 +112,20 @@ bool GithubRepoStatusFetcher::local_repo_exists()
 poll_status();
 // TODO: modify this function so it can rely on captured std::err output
 // std::string string_to_find = "cd: no such file or directory";
-return !get_last_captured_output().empty();
+return !get_last_captured_output_from_status_request().empty();
 
 }
 
 bool GithubRepoStatusFetcher::has_file_changes()
 {
-poll_status(); std::string string_to_find = "Changes not staged for commit:"; return last_captured_output_contains_string(string_to_find);
+poll_status(); std::string string_to_find = "Changes not staged for commit:"; return last_captured_output_from_status_request_contains_string(string_to_find);
 }
 
 bool GithubRepoStatusFetcher::has_untracked_files()
 {
 poll_status();
 std::string string_to_find = "Untracked files:";
-return last_captured_output_contains_string(string_to_find);
+return last_captured_output_from_status_request_contains_string(string_to_find);
 
 }
 
@@ -133,7 +133,7 @@ bool GithubRepoStatusFetcher::is_the_repo_in_sync_with_remote()
 {
 poll_status();
 std::string string_to_find = "Your branch is up to date with 'origin/master'";
-return last_captured_output_contains_string(string_to_find);
+return last_captured_output_from_status_request_contains_string(string_to_find);
 
 }
 
@@ -141,7 +141,7 @@ bool GithubRepoStatusFetcher::is_the_local_repo_ahead()
 {
 poll_status();
 std::string string_to_find = "Your branch is ahead of 'origin/master' by";
-return last_captured_output_contains_string(string_to_find);
+return last_captured_output_from_status_request_contains_string(string_to_find);
 
 }
 
@@ -149,7 +149,7 @@ bool GithubRepoStatusFetcher::is_the_local_repo_behind()
 {
 poll_status();
 std::string string_to_find = "Your branch is behind 'origin/master' by";
-return last_captured_output_contains_string(string_to_find);
+return last_captured_output_from_status_request_contains_string(string_to_find);
 
 }
 
@@ -200,6 +200,14 @@ return result.str();
 
 }
 
+std::string GithubRepoStatusFetcher::get_status_command()
+{
+std::stringstream result;
+result << "(cd " << get_repos_directory() << "/" << get_repo_name() << " && git fetch && " << get_git_status_command() << ")";
+return result.str();
+
+}
+
 std::string GithubRepoStatusFetcher::get_current_branch_name()
 {
 std::string current_branch_name_command = get_current_branch_name_command();
@@ -220,13 +228,13 @@ bool GithubRepoStatusFetcher::have_the_local_and_remote_repos_diverged()
 {
 poll_status();
 std::string string_to_find = "Your branch and 'origin/master' have diverged";
-return last_captured_output_contains_string(string_to_find);
+return last_captured_output_from_status_request_contains_string(string_to_find);
 
 }
 
-bool GithubRepoStatusFetcher::last_captured_output_contains_string(std::string string_to_find)
+bool GithubRepoStatusFetcher::last_captured_output_from_status_request_contains_string(std::string string_to_find)
 {
-std::size_t found = last_captured_output.find(string_to_find);
+std::size_t found = last_captured_output_from_status_request.find(string_to_find);
 if (found!=std::string::npos) return true;
 return false;
 
@@ -235,17 +243,9 @@ return false;
 bool GithubRepoStatusFetcher::poll_status()
 {
 if (get_only_poll_once() && get_status_polled()) return true;
-last_captured_output = execute_command(full_command());
+last_captured_output_from_status_request = execute_command(get_status_command());
 set_status_polled(true);
 return true;
-
-}
-
-std::string GithubRepoStatusFetcher::full_command()
-{
-std::stringstream result;
-result << "(cd " << get_repos_directory() << "/" << get_repo_name() << " && git fetch && " << get_git_status_command() << ")";
-return result.str();
 
 }
 

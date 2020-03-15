@@ -1,5 +1,5 @@
 properties:
-  - name: last_captured_output
+  - name: last_captured_output_from_status_request
     type: std::string
     getter: true
   - name: git_status_command
@@ -51,42 +51,42 @@ functions:
       poll_status();
       // TODO: modify this function so it can rely on captured std::err output
       // std::string string_to_find = "cd: no such file or directory";
-      return !get_last_captured_output().empty();
+      return !get_last_captured_output_from_status_request().empty();
 
   - name: has_file_changes
     type: bool
     body:
       poll_status();
       std::string string_to_find = "Changes not staged for commit:";
-      return last_captured_output_contains_string(string_to_find);
+      return last_captured_output_from_status_request_contains_string(string_to_find);
 
   - name: has_untracked_files
     type: bool
     body: |
       poll_status();
       std::string string_to_find = "Untracked files:";
-      return last_captured_output_contains_string(string_to_find);
+      return last_captured_output_from_status_request_contains_string(string_to_find);
 
   - name: is_the_repo_in_sync_with_remote
     type: bool
     body: |
       poll_status();
       std::string string_to_find = "Your branch is up to date with 'origin/master'";
-      return last_captured_output_contains_string(string_to_find);
+      return last_captured_output_from_status_request_contains_string(string_to_find);
 
   - name: is_the_local_repo_ahead
     type: bool
     body: |
       poll_status();
       std::string string_to_find = "Your branch is ahead of 'origin/master' by";
-      return last_captured_output_contains_string(string_to_find);
+      return last_captured_output_from_status_request_contains_string(string_to_find);
 
   - name: is_the_local_repo_behind
     type: bool
     body: |
       poll_status();
       std::string string_to_find = "Your branch is behind 'origin/master' by";
-      return last_captured_output_contains_string(string_to_find);
+      return last_captured_output_from_status_request_contains_string(string_to_find);
 
   - name: get_branch_count
     type: int
@@ -132,6 +132,13 @@ functions:
       result << "(cd " << get_repos_directory() << "/" << get_repo_name() << " && git fetch && " << get_git_pull_command() << ")";
       return result.str();
 
+  - name: get_status_command
+    type: std::string
+    body: |
+      std::stringstream result;
+      result << "(cd " << get_repos_directory() << "/" << get_repo_name() << " && git fetch && " << get_git_status_command() << ")";
+      return result.str();
+
   - name: get_current_branch_name
     type: std::string
     body: |
@@ -151,16 +158,16 @@ functions:
     body: |
       poll_status();
       std::string string_to_find = "Your branch and 'origin/master' have diverged";
-      return last_captured_output_contains_string(string_to_find);
+      return last_captured_output_from_status_request_contains_string(string_to_find);
 
-  - name: last_captured_output_contains_string
+  - name: last_captured_output_from_status_request_contains_string
     type: bool
     parameters:
       - name: string_to_find
         type: std::string
         default_argument: ""
     body: |
-      std::size_t found = last_captured_output.find(string_to_find);
+      std::size_t found = last_captured_output_from_status_request.find(string_to_find);
       if (found!=std::string::npos) return true;
       return false;
 
@@ -168,16 +175,9 @@ functions:
     type: bool
     body: |
       if (get_only_poll_once() && get_status_polled()) return true;
-      last_captured_output = execute_command(full_command());
+      last_captured_output_from_status_request = execute_command(get_status_command());
       set_status_polled(true);
       return true;
-
-  - name: full_command
-    type: std::string
-    body: |
-      std::stringstream result;
-      result << "(cd " << get_repos_directory() << "/" << get_repo_name() << " && git fetch && " << get_git_status_command() << ")";
-      return result.str();
 
   - name: execute_command
     type: std::string
