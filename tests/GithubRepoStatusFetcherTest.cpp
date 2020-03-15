@@ -24,14 +24,14 @@ TEST(GithubRepoStatusFetcherTest, get_pull_commnd__returns_the_shell_command_to_
    EXPECT_EQ(expected_shell_command, fetcher.get_pull_command());
 }
 
-TEST(GithubRepoStatusFetcherTest, execute_command__is_able_to_find_the_path_specificed)
-{
-   GithubRepoStatusFetcher fetcher("blast");
-   std::string shell_command = "(cd ~/Repos/blast && git fetch && git branch | grep \\* | cut -d ' ' -f2)";
-   std::string expected_command_result = "master\n";
+//TEST(GithubRepoStatusFetcherTest, execute_command__is_able_to_find_the_path_specificed)
+//{
+   //GithubRepoStatusFetcher fetcher("blast");
+   //std::string shell_command = "(cd ~/Repos/blast && git fetch && git branch | grep \\* | cut -d ' ' -f2)";
+   //std::string expected_command_result = "master\n";
 
-   EXPECT_EQ(expected_command_result, fetcher.execute_command(shell_command));
-}
+   //EXPECT_EQ(expected_command_result, fetcher.execute_command(shell_command));
+//}
 
 //TEST(GithubRepoStatusFetcherTest, is_current_branch_master__returns_true_if_the_current_branch_is_set_to_master)
 //{
