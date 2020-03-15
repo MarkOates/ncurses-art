@@ -6,6 +6,10 @@ properties:
     type: std::string
     init_with: "\"git status -uno -u\""
     getter: true
+  - name: git_pull_command
+    type: std::string
+    init_with: "\"git pull\""
+    getter: true
   - name: git_branch_count_command
     type: std::string
     init_with: "\"git branch | wc -l\""
@@ -120,6 +124,13 @@ functions:
       std::stringstream command;
       command << "(cd " << get_repos_directory() << "/" << get_repo_name() << " && git fetch && " << get_git_current_branch_command() << ")";
       return command.str();
+
+  - name: get_pull_command
+    type: std::string
+    body: |
+      std::stringstream result;
+      result << "(cd " << get_repos_directory() << "/" << get_repo_name() << " && git fetch && " << get_git_pull_command() << ")";
+      return result.str();
 
   - name: get_current_branch_name
     type: std::string

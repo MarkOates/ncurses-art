@@ -10,6 +10,20 @@ TEST(GithubRepoStatusFetcherTest, get_current_branch_name_command__returns_the_s
    EXPECT_EQ(expected_shell_command, fetcher.get_current_branch_name_command());
 }
 
+TEST(GithubRepoStatusFetcherTest, get_git_pull_commnd__returns_the_shell_command_to_pull_the_repo)
+{
+   GithubRepoStatusFetcher fetcher("blast");
+   std::string expected_shell_command = "git pull";
+   EXPECT_EQ(expected_shell_command, fetcher.get_git_pull_command());
+}
+
+TEST(GithubRepoStatusFetcherTest, get_pull_commnd__returns_the_shell_command_to_pull_the_repo)
+{
+   GithubRepoStatusFetcher fetcher("blast");
+   std::string expected_shell_command = "(cd ~/Repos/blast && git fetch && git pull)";
+   EXPECT_EQ(expected_shell_command, fetcher.get_pull_command());
+}
+
 TEST(GithubRepoStatusFetcherTest, execute_command__is_able_to_find_the_path_specificed)
 {
    GithubRepoStatusFetcher fetcher("blast");

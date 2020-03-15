@@ -10,6 +10,7 @@ class GithubRepoStatusFetcher
 private:
    std::string last_captured_output;
    std::string git_status_command;
+   std::string git_pull_command;
    std::string git_branch_count_command;
    std::string git_current_branch_command;
    std::string git_remote_branch_names_command;
@@ -27,6 +28,7 @@ public:
 
    std::string get_last_captured_output();
    std::string get_git_status_command();
+   std::string get_git_pull_command();
    std::string get_git_branch_count_command();
    std::string get_git_current_branch_command();
    std::string get_git_remote_branch_names_command();
@@ -45,6 +47,7 @@ int get_branch_count();
 std::vector<std::string> get_branch_names_at_remote();
 bool is_current_branch_master();
 std::string get_current_branch_name_command();
+std::string get_pull_command();
 std::string get_current_branch_name();
 std::vector<std::string> get_quintessence_filenames();
 bool have_the_local_and_remote_repos_diverged();

@@ -17,6 +17,7 @@
 GithubRepoStatusFetcher::GithubRepoStatusFetcher(std::string repo_name, std::string repos_directory)
    : last_captured_output("")
    , git_status_command("git status -uno -u")
+   , git_pull_command("git pull")
    , git_branch_count_command("git branch | wc -l")
    , git_current_branch_command("git branch | grep \\* | cut -d ' ' -f2")
    , git_remote_branch_names_command("git branch -r")
@@ -49,6 +50,12 @@ std::string GithubRepoStatusFetcher::get_last_captured_output()
 std::string GithubRepoStatusFetcher::get_git_status_command()
 {
    return git_status_command;
+}
+
+
+std::string GithubRepoStatusFetcher::get_git_pull_command()
+{
+   return git_pull_command;
 }
 
 
@@ -182,6 +189,14 @@ std::string GithubRepoStatusFetcher::get_current_branch_name_command()
 std::stringstream command;
 command << "(cd " << get_repos_directory() << "/" << get_repo_name() << " && git fetch && " << get_git_current_branch_command() << ")";
 return command.str();
+
+}
+
+std::string GithubRepoStatusFetcher::get_pull_command()
+{
+std::stringstream result;
+result << "(cd " << get_repos_directory() << "/" << get_repo_name() << " && git fetch && " << get_git_pull_command() << ")";
+return result.str();
 
 }
 
