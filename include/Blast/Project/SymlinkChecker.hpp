@@ -19,7 +19,9 @@ namespace Blast
 
 
       bool is_symlink();
+      bool is_symlink__shell_call_impl();
       std::string read_symlink_target();
+      std::string read_symlink_target__shell_call_impl();
       };
    }
 }

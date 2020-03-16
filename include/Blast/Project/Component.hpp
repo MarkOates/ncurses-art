@@ -17,7 +17,7 @@ namespace Blast
          std::string project_root;
 
       public:
-         Component(std::string name="Unnamed/Component", std::string project_root="/Users/markoates/Repos/blast/");
+         Component(std::string name="Unnamed/Component", std::string project_root="");
          ~Component();
 
 
