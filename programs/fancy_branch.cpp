@@ -12,7 +12,7 @@
 #define COPY_GIT_ADD_PATCH_COMMAND "COPY_GIT_ADD_PATCH_COMMAND"
 
 
-#include <StringTrimmer.hpp>
+#include <Blast/String/Trimmer.hpp>
 
 
 Projekt::Projekt() { current_project = this; }
@@ -53,7 +53,7 @@ bool Projekt::process_event(std::string e)
    if (e == YANK_SELECTED_TEXT)
    {
       Menu &menu = find_menu("main_menu");
-      std::string trimmed = StringTrimmer(menu.current_selection()).trim();
+      std::string trimmed = Blast::String::Trimmer(menu.current_selection()).trim();
       std::stringstream command;
       command << "printf \"" << trimmed << "\" | pbcopy";
       system(command.str().c_str());
@@ -61,7 +61,7 @@ bool Projekt::process_event(std::string e)
    if (e == GIT_CHECKOUT_BRANCH_COMMAND)
    {
       Menu &menu = find_menu("main_menu");
-      std::string trimmed = StringTrimmer(menu.current_selection()).trim();
+      std::string trimmed = Blast::String::Trimmer(menu.current_selection()).trim();
       std::stringstream command;
       command << "printf \"git checkout " << trimmed << "\" | pbcopy";
       system(command.str().c_str());

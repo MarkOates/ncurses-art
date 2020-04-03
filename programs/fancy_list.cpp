@@ -9,7 +9,7 @@
 #define YANK_SELECTED_TEXT "yank_selected_text"
 #define YANK_OPEN_COMMAND "yank_open_command"
 
-#include <StringTrimmer.hpp>
+#include <Blast/String/Trimmer.hpp>
 
 // replace characters in a string
 void ___replace(std::string& str, std::string from, std::string to)
@@ -178,7 +178,7 @@ bool Projekt::process_event(std::string e)
    if (e == YANK_OPEN_COMMAND)
    {
       Menu &menu = find_menu("main_menu");
-      std::string trimmed = StringTrimmer(menu.current_selection()).trim();
+      std::string trimmed = Blast::String::Trimmer(menu.current_selection()).trim();
       std::vector<std::string> tokens = split_string(trimmed, TokenBuilder::DELIMITER);
       if (tokens.size() == 2)
       {
@@ -197,7 +197,7 @@ bool Projekt::process_event(std::string e)
    if (e == YANK_SELECTED_TEXT)
    {
       Menu &menu = find_menu("main_menu");
-      std::string trimmed = StringTrimmer(menu.current_selection()).trim();
+      std::string trimmed = Blast::String::Trimmer(menu.current_selection()).trim();
       std::vector<std::string> tokens = split_string(trimmed, TokenBuilder::DELIMITER);
       if (tokens.size() == 2)
       {

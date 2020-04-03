@@ -4,13 +4,13 @@ functions:
     body: |
       ShellCommandExecutorWithCallback executor("hostname");
       std::string raw_shell_response = executor.execute();
-      std::string result = StringTrimmer(raw_shell_response).trim();
+      std::string result = Blast::String::Trimmer(raw_shell_response).trim();
       return result;
     body_dependency_symbols:
       - ShellCommandExecutorWithCallback
-      - StringTrimmer
+      - Blast::String::Trimmer
 dependencies:
   - symbol: ShellCommandExecutorWithCallback
     headers: [ 'ShellCommandExecutorWithCallback.hpp' ]
-  - symbol: StringTrimmer
-    headers: [ 'StringTrimmer.hpp' ]
+  - symbol: Blast::String::Trimmer
+    headers: [ 'Blast/String/Trimmer.hpp' ]

@@ -1,8 +1,8 @@
 
 
 #include <NcursesArt/GithubRepoStatusFetcher.hpp>
-#include <StringSplitter.hpp>
-#include <StringTrimmer.hpp>
+#include <Blast/StringSplitter.hpp>
+#include <Blast/String/Trimmer.hpp>
 #include <sstream>
 #include <iostream>
 #include <iostream>
@@ -170,10 +170,10 @@ std::vector<std::string> GithubRepoStatusFetcher::get_branch_names_at_remote()
 std::stringstream command;
 command << "(cd " << get_repos_directory() << "/" << get_repo_name() << " && " << get_git_remote_branch_names_command() << ")";
 std::string command_output = execute_command(command.str());
-std::vector<std::string> lines = StringSplitter(command_output, '\n').split();
+std::vector<std::string> lines = Blast::StringSplitter(command_output, '\n').split();
 for (auto &line : lines)
 {
-   line = StringTrimmer(line).trim();
+   line = Blast::String::Trimmer(line).trim();
 }
 std::sort(lines.begin(), lines.end());
 return lines;
@@ -222,7 +222,7 @@ std::vector<std::string> GithubRepoStatusFetcher::get_quintessence_filenames()
 std::stringstream command;
 command << "(cd " << get_repos_directory() << "/" << get_repo_name() << " && " << get_component_quintessence_filenames_command() << ")";
 std::string command_output = execute_command(command.str());
-return StringSplitter(command_output, '\n').split();
+return Blast::StringSplitter(command_output, '\n').split();
 
 }
 

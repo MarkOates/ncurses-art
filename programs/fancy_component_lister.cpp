@@ -13,7 +13,7 @@
 #include <Blast/Project/ComponentLister.hpp>
 #include <ShellCommandExecutorWithCallback.hpp>
 #include <ProjectFilenameGenerator.hpp>
-#include <StringTrimmer.hpp>
+#include <Blast/String/Trimmer.hpp>
 #include <StringSplitter.hpp>
 
 #define COMMAND_FLIP_STAGING "flip_staging"
@@ -101,7 +101,7 @@ std::vector<std::pair<std::string, std::string>> project_folder_names = {
 
 std::string extract_component_from_menu_option(std::string text_to_extract_token)
 {
-   std::string trimmed = StringTrimmer(text_to_extract_token).trim();
+   std::string trimmed = Blast::String::Trimmer(text_to_extract_token).trim();
    std::vector<std::string> tokens = split_string(trimmed, DELIMITER);
    std::string component_name = tokens.empty() ? "[UnextractableComponentName]" : tokens.back();
    return component_name;
@@ -182,7 +182,7 @@ bool Projekt::process_event(std::string e)
    if (e == YANK_SELECTED_TEXT)
    {
       Menu &menu = find_menu("main_menu");
-      std::string trimmed = StringTrimmer(menu.current_selection()).trim();
+      std::string trimmed = Blast::String::Trimmer(menu.current_selection()).trim();
       std::stringstream command;
       command << "printf \"" << trimmed << "\" | pbcopy";
       system(command.str().c_str());
@@ -229,7 +229,7 @@ bool Projekt::process_event(std::string e)
    {
       // get the options
       std::vector<std::string> options = { };
-      std::string current_directory = StringTrimmer(ShellCommandExecutorWithCallback("pwd").execute()).trim();
+      std::string current_directory = Blast::String::Trimmer(ShellCommandExecutorWithCallback("pwd").execute()).trim();
       std::vector<std::string> current_project_absolute_directory_components = StringSplitter(current_directory, '/').split();
       std::string current_project_name = current_project_absolute_directory_components.empty() ? "[unidentifiable project directory]" : current_project_absolute_directory_components.back();
       std::string current_project_folder_name = current_directory;
@@ -326,7 +326,7 @@ bool Projekt::process_event(std::string e)
    if (e == BEEBOT_SETUP_BLAST_COMPONENT_COMMAND)
    {
       Menu &menu = find_menu("main_menu");
-      std::string trimmed = StringTrimmer(menu.current_selection()).trim();
+      std::string trimmed = Blast::String::Trimmer(menu.current_selection()).trim();
       std::stringstream command;
       command << "printf \"ruby ~/Repos/beebot/lib/runner.rb setup_blast_component\" | pbcopy"; // should be replaced with an environment variable and std::getenv
       system(command.str().c_str());

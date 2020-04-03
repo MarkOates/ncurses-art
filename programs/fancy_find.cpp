@@ -101,7 +101,7 @@ std::string STATE_INPUT = "input";
 StateManager state_manager;
 
 
-#include <StringTrimmer.hpp>
+#include <Blast/String/Trimmer.hpp>
 
 
 class InputToActionEmitterInterface
@@ -302,7 +302,7 @@ std::endl;
    {
       Menu &menu = find_menu("main_menu");
       //GitStatusLineDeducer git_status_line_deducer(menu);
-      std::string trimmed = StringTrimmer(menu.current_selection()).trim();
+      std::string trimmed = Blast::String::Trimmer(menu.current_selection()).trim();
       std::stringstream command;
       command << "printf \"" << trimmed << "\" | pbcopy";
       system(command.str().c_str());

@@ -103,10 +103,10 @@ functions:
       std::stringstream command;
       command << "(cd " << get_repos_directory() << "/" << get_repo_name() << " && " << get_git_remote_branch_names_command() << ")";
       std::string command_output = execute_command(command.str());
-      std::vector<std::string> lines = StringSplitter(command_output, '\n').split();
+      std::vector<std::string> lines = Blast::StringSplitter(command_output, '\n').split();
       for (auto &line : lines)
       {
-         line = StringTrimmer(line).trim();
+         line = Blast::String::Trimmer(line).trim();
       }
       std::sort(lines.begin(), lines.end());
       return lines;
@@ -151,7 +151,7 @@ functions:
       std::stringstream command;
       command << "(cd " << get_repos_directory() << "/" << get_repo_name() << " && " << get_component_quintessence_filenames_command() << ")";
       std::string command_output = execute_command(command.str());
-      return StringSplitter(command_output, '\n').split();
+      return Blast::StringSplitter(command_output, '\n').split();
 
   - name: have_the_local_and_remote_repos_diverged
     type: bool
@@ -191,17 +191,17 @@ functions:
     body_dependency_symbols:
       - Blast::ShellCommandExecutorWithCallback
 function_body_symbol_dependencies:
-  - StringSplitter
-  - StringTrimmer
+  - Blast::StringSplitter
+  - Blast::String::Trimmer
   - std::stringstream
   - std::cerr
   - std::endl
   - std::vector<std::string>
 dependencies:
-  - symbol: StringSplitter
-    headers: [ 'StringSplitter.hpp' ]
-  - symbol: StringTrimmer
-    headers: [ 'StringTrimmer.hpp' ]
+  - symbol: Blast::StringSplitter
+    headers: [ 'Blast/StringSplitter.hpp' ]
+  - symbol: Blast::String::Trimmer
+    headers: [ 'Blast/String/Trimmer.hpp' ]
   - symbol: std::stringstream
     headers: [ 'sstream' ]
   - symbol: std::sort
