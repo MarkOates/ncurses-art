@@ -1,7 +1,9 @@
 
 #include <gtest/gtest.h>
 
-#include <GithubRepoStatusFetcher.hpp>
+#include <NcursesArt/GithubRepoStatusFetcher.hpp>
+
+using NcursesArt::GithubRepoStatusFetcher;
 
 TEST(GithubRepoStatusFetcherTest, get_current_branch_name_command__returns_the_shell_command_to_obtain_the_current_branch)
 {

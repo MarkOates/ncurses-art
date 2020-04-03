@@ -1,6 +1,6 @@
 #include "Projekt2.h"
 
-#include <GithubRepoStatusFetcher.hpp>
+#include <NcursesArt/GithubRepoStatusFetcher.hpp>
 #include <HostnameExtractor.hpp>
 
 #include <iostream>
@@ -30,6 +30,9 @@
 #define PROGRESS_BAR_TEXT find_text(PROGRESS_BAR_TEXT_IDENTIFIER)
 
 #define PROPERTY_DELIMITER ": "
+
+
+using NcursesArt::GithubRepoStatusFetcher;
 
 
 class ProjectStatus

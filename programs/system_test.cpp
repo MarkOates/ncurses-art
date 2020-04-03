@@ -1,6 +1,6 @@
 #include "Projekt2.h"
 
-#include <GithubRepoStatusFetcher.hpp>
+#include <NcursesArt/GithubRepoStatusFetcher.hpp>
 #include <ShellCommandExecutorWithCallback.hpp>
 #include <StringSplitter.hpp>
 

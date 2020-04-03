@@ -1,6 +1,6 @@
 
 
-#include <GithubRepoStatusFetcher.hpp>
+#include <NcursesArt/GithubRepoStatusFetcher.hpp>
 #include <StringSplitter.hpp>
 #include <StringTrimmer.hpp>
 #include <sstream>
@@ -12,6 +12,8 @@
 #include <Blast/ShellCommandExecutorWithCallback.hpp>
 
 
+namespace NcursesArt
+{
 
 
 GithubRepoStatusFetcher::GithubRepoStatusFetcher(std::string repo_name, std::string repos_directory)
@@ -255,5 +257,6 @@ Blast::ShellCommandExecutorWithCallback executor(command);
 return executor.execute();
 
 }
+} // namespace NcursesArt
 
 
