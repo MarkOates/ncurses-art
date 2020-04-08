@@ -5,7 +5,8 @@
 
 using NcursesArt::GithubRepoStatusFetcher;
 
-TEST(GithubRepoStatusFetcherTest, get_current_branch_name_command__returns_the_shell_command_to_obtain_the_current_branch)
+TEST(GithubRepoStatusFetcherTest,
+   get_current_branch_name_command__returns_the_shell_command_to_obtain_the_current_branch)
 {
    GithubRepoStatusFetcher fetcher("blast");
    std::string expected_shell_command = "(cd ~/Repos/blast && git fetch && git branch | grep \\* | cut -d ' ' -f2)";
