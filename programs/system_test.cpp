@@ -580,7 +580,7 @@ bool check_all_executables_are_up_to_date_to_their_source()
       { false, "/Users/markoates/Repos/ncurses-art/programs/fancy_log.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/fancy_log" },
       { false, "/Users/markoates/Repos/ncurses-art/programs/fancy_stager.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/fancy_stager" },
       { false, "/Users/markoates/Repos/ncurses-art/programs/quiz.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/quiz" },
-      { false, "/Users/markoates/Repos/ncurses-art/programs/status_fetcher.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/status_fetcher" },
+      { false, "/Users/markoates/Repos/ncurses-art/programs/ncurses_status_fetcher.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/ncurses_status_fetcher" },
    };
 
    for (auto &source_executable_pair : source_executable_pairs)
