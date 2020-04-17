@@ -515,6 +515,15 @@ bool run_yaml_cpp_presence_test()
 }
 
 
+bool asio_standalone_is_present()
+{
+   std::string expected_present_file = "/Users/markoates/Repos/asio/asio/include/asio.hpp";
+   bool file_exists = file_exists__implementation_1(expected_present_file);
+   last_test_result = new TestResultEq("exists", file_exists ? "exists" : "does not exist");
+   return last_test_result->assessment();
+}
+
+
 bool run_ghostscript_presence_test()
 {
    std::string match_expression = "^ghostscript: ";
@@ -667,6 +676,7 @@ void initialize()
 
       tests = {
          { "yaml-cpp is installed through homebrew", run_yaml_cpp_presence_test },
+         { "asio standalone is present", asio_standalone_is_present },
          { "ghostscript is installed through homebrew (needed for imagemagick's `convert file.pdf file.png`", run_ghostscript_presence_test },
          { "chruby is present", run_chruby_test },
          { "Ruby version is the expected version (otherwise \"sudo ruby-install ruby 2.6.5\", then \"sudo ruby-install --system ruby 2.6.5\")", run_ruby_version_test },
