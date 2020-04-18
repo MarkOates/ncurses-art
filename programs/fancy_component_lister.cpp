@@ -11,7 +11,7 @@
 #include <string>
 
 #include <Blast/Project/ComponentLister.hpp>
-#include <ShellCommandExecutorWithCallback.hpp>
+#include <Blast/ShellCommandExecutorWithCallback.hpp>
 #include <ProjectFilenameGenerator.hpp>
 #include <Blast/String/Trimmer.hpp>
 #include <StringSplitter.hpp>
@@ -229,7 +229,7 @@ bool Projekt::process_event(std::string e)
    {
       // get the options
       std::vector<std::string> options = { };
-      std::string current_directory = Blast::String::Trimmer(ShellCommandExecutorWithCallback("pwd").execute()).trim();
+      std::string current_directory = Blast::String::Trimmer(Blast::ShellCommandExecutorWithCallback("pwd").execute()).trim();
       std::vector<std::string> current_project_absolute_directory_components = StringSplitter(current_directory, '/').split();
       std::string current_project_name = current_project_absolute_directory_components.empty() ? "[unidentifiable project directory]" : current_project_absolute_directory_components.back();
       std::string current_project_folder_name = current_directory;

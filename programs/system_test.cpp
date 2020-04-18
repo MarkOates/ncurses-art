@@ -1,7 +1,7 @@
 #include "Projekt2.h"
 
 #include <NcursesArt/GithubRepoStatusFetcher.hpp>
-#include <ShellCommandExecutorWithCallback.hpp>
+#include <Blast/ShellCommandExecutorWithCallback.hpp>
 #include <StringSplitter.hpp>
 
 #include <iostream>
@@ -55,7 +55,7 @@ enum test_status
 std::map<std::string, bool (*)()> tests = {};
 
 
-auto command_callback = ShellCommandExecutorWithCallback::simple_silent_callback;
+auto command_callback = Blast::ShellCommandExecutorWithCallback::simple_silent_callback;
 
 
 
@@ -319,7 +319,7 @@ bool check_hexagon_app_package_alias_test()
    std::string symlink_check_command = std::string("if [ -L \"/Applications/Hexagon.app\" ]; then echo \"") + success_message + "\"; else echo \"symlink does not exist\"; fi";
    std::string COMMAND_TO_CREATE_SYMLINK = "ln -s /Users/markoates/Repos/hexagon/bin/Hexagon.app /Applications/Hexagon.app";
 
-   ShellCommandExecutorWithCallback executor(symlink_check_command, command_callback);
+   Blast::ShellCommandExecutorWithCallback executor(symlink_check_command, command_callback);
    std::string output = executor.execute();
    std::string trimmed_output = trim(output);
 
@@ -337,7 +337,7 @@ std::string get_head_sha_of_vim_plugin_first_vim_plugin()
 {
    std::string command = "cd /Users/markoates/.vim/bundle/first_vim_plugin && git rev-parse HEAD";
 
-   ShellCommandExecutorWithCallback executor(command, command_callback);
+   Blast::ShellCommandExecutorWithCallback executor(command, command_callback);
    std::string output = executor.execute();
    std::string trimmed_output = trim(output);
 
@@ -349,7 +349,7 @@ std::string get_head_sha_of_first_vim_plugin_repo()
 {
    std::string command = "cd /Users/markoates/Repos/first_vim_plugin && git rev-parse HEAD";
 
-   ShellCommandExecutorWithCallback executor(command, command_callback);
+   Blast::ShellCommandExecutorWithCallback executor(command, command_callback);
    std::string output = executor.execute();
    std::string trimmed_output = trim(output);
 
@@ -361,7 +361,7 @@ std::string get_ruby_version()
 {
    std::string command = "ruby --version";
 
-   ShellCommandExecutorWithCallback executor(command, command_callback);
+   Blast::ShellCommandExecutorWithCallback executor(command, command_callback);
    std::string output = executor.execute();
    std::string trimmed_output = trim(output);
 
@@ -373,7 +373,7 @@ std::string get_clang_version()
 {
    std::string command = "clang --version";
 
-   ShellCommandExecutorWithCallback executor(command, command_callback);
+   Blast::ShellCommandExecutorWithCallback executor(command, command_callback);
    std::string output = executor.execute();
    std::string trimmed_output = trim(output);
 
@@ -388,7 +388,7 @@ std::string get_brew_yaml_info_string()
 {
    std::string command = "brew info yaml-cpp";
 
-   ShellCommandExecutorWithCallback executor(command, command_callback);
+   Blast::ShellCommandExecutorWithCallback executor(command, command_callback);
    std::string output = executor.execute();
    std::string trimmed_output = trim(output);
 
@@ -404,7 +404,7 @@ std::string get_brew_ghostscript_info_string()
 {
    std::string command = "brew info ghostscript";
 
-   ShellCommandExecutorWithCallback executor(command, command_callback);
+   Blast::ShellCommandExecutorWithCallback executor(command, command_callback);
    std::string output = executor.execute();
    std::string trimmed_output = trim(output);
 
@@ -420,7 +420,7 @@ std::string get_bundler_version()
 {
    std::string command = "bundler --version";
 
-   ShellCommandExecutorWithCallback executor(command, command_callback);
+   Blast::ShellCommandExecutorWithCallback executor(command, command_callback);
    std::string output = executor.execute();
    std::string trimmed_output = trim(output);
 
@@ -432,7 +432,7 @@ std::string get_rerun_version()
 {
    std::string command = "rerun --version";
 
-   ShellCommandExecutorWithCallback executor(command, command_callback);
+   Blast::ShellCommandExecutorWithCallback executor(command, command_callback);
    std::string output = executor.execute();
    std::string trimmed_output = trim(output);
 
@@ -444,7 +444,7 @@ std::string get_rails_version()
 {
    std::string command = "rails --version";
 
-   ShellCommandExecutorWithCallback executor(command, command_callback);
+   Blast::ShellCommandExecutorWithCallback executor(command, command_callback);
    std::string output = executor.execute();
    std::string trimmed_output = trim(output);
 
@@ -456,7 +456,7 @@ bool check_beebot_response_ping()
 {
    std::string command = "ruby /Users/markoates/Repos/beebot/lib/runner.rb ping";
 
-   ShellCommandExecutorWithCallback executor(command, command_callback);
+   Blast::ShellCommandExecutorWithCallback executor(command, command_callback);
    std::string output = executor.execute();
    std::string trimmed_output = trim(output);
 
@@ -489,7 +489,7 @@ bool check_hexagon_app_package_symlink_destination()
    std::string expected_destination = "/Users/markoates/Repos/hexagon/bin/Hexagon.app";
    std::string symlink_check_command = "readlink /Applications/Hexagon.app";
 
-   ShellCommandExecutorWithCallback executor(symlink_check_command, command_callback);
+   Blast::ShellCommandExecutorWithCallback executor(symlink_check_command, command_callback);
    std::string output = executor.execute();
    std::string trimmed_output = trim(output);
 
@@ -546,7 +546,7 @@ bool build_celebrator_executable_presence_check()
    std::string expected_program_location = "/Users/markoates/Repos/blast/bin/programs/build_celebrator";
    std::string command = "command -v " + expected_program_location;
 
-   ShellCommandExecutorWithCallback executor(command, command_callback);
+   Blast::ShellCommandExecutorWithCallback executor(command, command_callback);
    std::string output = executor.execute();
    std::string trimmed_output = trim(output);
 

@@ -2,15 +2,15 @@ functions:
   - name: get_computer_name
     type: std::string
     body: |
-      ShellCommandExecutorWithCallback executor("hostname");
+      Blast::ShellCommandExecutorWithCallback executor("hostname");
       std::string raw_shell_response = executor.execute();
       std::string result = Blast::String::Trimmer(raw_shell_response).trim();
       return result;
     body_dependency_symbols:
-      - ShellCommandExecutorWithCallback
+      - Blast::ShellCommandExecutorWithCallback
       - Blast::String::Trimmer
 dependencies:
-  - symbol: ShellCommandExecutorWithCallback
-    headers: [ 'ShellCommandExecutorWithCallback.hpp' ]
+  - symbol: Blast::ShellCommandExecutorWithCallback
+    headers: [ 'Blast/ShellCommandExecutorWithCallback.hpp' ]
   - symbol: Blast::String::Trimmer
     headers: [ 'Blast/String/Trimmer.hpp' ]

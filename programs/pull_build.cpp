@@ -1,7 +1,7 @@
 #include <iostream>
 #include <allegro5/allegro.h>
 
-#include <ShellCommandExecutorWithCallback.hpp>
+#include <Blast/ShellCommandExecutorWithCallback.hpp>
 #include <unistd.h>
 
 int main(int argc, char **argv)
@@ -16,7 +16,7 @@ int main(int argc, char **argv)
 
    while(true)
    {
-      ShellCommandExecutorWithCallback executor(command);
+      Blast::ShellCommandExecutorWithCallback executor(command);
       executor.execute();
       std::cout << "==== Command finished ====" << std::endl;
       sleep(5);
