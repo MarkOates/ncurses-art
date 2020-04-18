@@ -281,7 +281,19 @@ bool Projekt::process_event(std::string e)
          for (auto &actual_component : actual_components)
          {
             std::stringstream text_to_be_displayed_in_menu_option;
-            text_to_be_displayed_in_menu_option << project_folder_name_string << DELIMITER << actual_component;
+            text_to_be_displayed_in_menu_option
+               << project_folder_name_string
+               << DELIMITER
+               << actual_component;
+
+            bool is_symlink = false;
+            if (is_symlink)
+            {
+               std::string symlink_target = "unset";
+               text_to_be_displayed_in_menu_option
+                  << DELIMITER
+                  << symlink_target;
+            }
 
             options.push_back(text_to_be_displayed_in_menu_option.str());
          }
