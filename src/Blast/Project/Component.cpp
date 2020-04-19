@@ -13,6 +13,7 @@
 #include <Blast/ProjectComponentFileTypes.hpp>
 #include <Blast/ProjectComponentFileTypes.hpp>
 #include <Blast/ProjectComponentFileTypes.hpp>
+#include <Blast/Project/SymlinkChecker.hpp>
 
 
 namespace Blast
@@ -49,6 +50,35 @@ std::string Component::generate_full_path_test_binary_filename()
 {
 std::string filename = Blast::ProjectComponentFilenameGenerator(name, Blast::ProjectComponentFileTypes::TEST_BINARY).generate_filename();
 return project_root + filename;
+
+}
+
+std::vector<std::string> Component::list_existing_component_files()
+{
+std::vector<std::string> result;
+
+std::time_t most_recent_file_write_time = 0;
+std::vector<Blast::ProjectComponentFileTypes::project_file_type_t> types_to_scan_for = {
+   Blast::ProjectComponentFileTypes::QUINTESSENCE_FILE,
+   Blast::ProjectComponentFileTypes::SOURCE_FILE,
+   Blast::ProjectComponentFileTypes::HEADER_FILE,
+   Blast::ProjectComponentFileTypes::TEST_FILE,
+   Blast::ProjectComponentFileTypes::EXAMPLE_FILE,
+   //Blast::ProjectComponentFileTypes::OBJECT_FILE,
+   //Blast::ProjectComponentFileTypes::TEST_BINARY,
+   //Blast::ProjectComponentFileTypes::EXAMPLE_BINARY,
+};
+
+for (auto &type_to_scan_for : types_to_scan_for)
+{
+   std::string filename = Blast::ProjectComponentFilenameGenerator(name, type_to_scan_for).generate_filename();
+   std::string full_filename = project_root + filename;
+   bool exists = Blast::FileExistenceChecker(full_filename).exists();
+
+   if (exists) result.push_back(full_filename);
+}
+
+return result;
 
 }
 
@@ -133,6 +163,26 @@ return (
 bool Component::has_test()
 {
 return check_file_existence(Blast::ProjectComponentFileTypes::TEST_FILE);
+
+}
+
+std::vector<std::pair<std::string, std::string>> Component::read_symlinks()
+{
+std::vector<std::string> existing_filenames = list_existing_component_files();
+std::vector<std::pair<std::string, std::string>> result = {};
+
+for (auto &filename : existing_filenames)
+{
+   Blast::Project::SymlinkChecker symlink_checker(filename);
+   bool is_symlink = symlink_checker.is_symlink();
+   if (is_symlink)
+   {
+      std::string symlink_target = symlink_checker.read_symlink_target();
+      result.push_back({ filename, symlink_target });
+   }
+}
+
+return result;
 
 }
 } // namespace Project
