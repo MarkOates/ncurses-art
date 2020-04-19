@@ -23,14 +23,10 @@ TEST(ProjectListBuilderTest, get_directories__returns_a_list_of_folders_in_the_d
 {
    ProjectListBuilder program_runner("../");
    std::vector<std::string> some_expected_directories = {
+      "asio",
       "allegro_flare",
-      "beebot",
-      "HomeServer",
       ".dotfiles",
-      "googletest",
-      "blast",
-      "fullscore",
-      "first_vim_plugin",
+      "flare_network",
       "ncurses-art",
    };
 
