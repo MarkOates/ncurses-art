@@ -1,1 +1,1 @@
-/Users/markoates/Repos/blast/src/Blast/ProjectComponentFileTypes.cpp
+../../../blast/src/Blast/ProjectComponentFileTypes.cpp
