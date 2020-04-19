@@ -21,7 +21,7 @@ TEST(ProjectListBuilderTest, get_directories__without_a_repos_directory_that_end
 
 TEST(ProjectListBuilderTest, get_directories__returns_a_list_of_folders_in_the_directory)
 {
-   ProjectListBuilder program_runner;
+   ProjectListBuilder program_runner("../");
    std::vector<std::string> some_expected_directories = {
       "allegro_flare",
       "beebot",
