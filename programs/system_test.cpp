@@ -2,6 +2,7 @@
 
 #include <NcursesArt/GithubRepoStatusFetcher.hpp>
 #include <Blast/ShellCommandExecutorWithCallback.hpp>
+#include <Blast/FileLastWriteTime.hpp>
 #include <StringSplitter.hpp>
 
 #include <iostream>
@@ -202,8 +203,10 @@ TestResultInterface *last_test_result = nullptr;
 
 std::time_t get_last_write_time__implementation_1(std::string filename)
 {
-   auto ftime = std::__fs::filesystem::last_write_time(filename);
-   std::time_t last_write_time = decltype(ftime)::clock::to_time_t(ftime);
+   //auto ftime = Blaststd::__fs::filesystem::last_write_time(filename);
+   //std::time_t last_write_time = decltype(ftime)::clock::to_time_t(ftime);
+
+   std::time_t last_write_time = Blast::FileLastWriteTime(filename).last_write_time();
 
    return last_write_time;
 }
