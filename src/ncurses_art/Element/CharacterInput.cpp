@@ -1,7 +1,7 @@
 #include <ncurses_art/Element/CharacterInput.hpp>
 
 CharacterInput::CharacterInput()
-   : buffer(buffer)
+   : buffer("")
 {
 }
 
