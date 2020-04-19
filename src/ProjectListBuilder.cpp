@@ -30,7 +30,7 @@ std::vector<std::string> result = {};
 int repos_directory_length = repos_directory.length();
 for (const auto& entry : std::filesystem::directory_iterator(repos_directory))
 {
-   std::string directory = std::string(entry.path());
+   std::string directory = entry.path().string();
    directory = directory.substr(repos_directory_length);
    result.push_back(directory);
 }
