@@ -1,38 +1,25 @@
 properties:
   - name: repos_directory
     type: std::string
-    init_with: "\"/Users/markoates/Repos\""
+    init_with: "\"/Users/markoates/Repos/\""
     getter: true
 functions:
   - name: get_directories
     type: std::vector<std::string>
     body: |
       std::vector<std::string> result = {};
-      const char* PATH = get_repos_directory().c_str();
-      DIR *dir = opendir(PATH);
-      struct dirent *entry = readdir(dir);
-      while (entry != NULL)
-      {
-          if (entry->d_type == DT_DIR)
-          {
-             std::string name = entry->d_name;
-             if (name == ".") {}
-             else if (name == "..") {}
-             else { result.push_back(name); }
-          }
 
-          entry = readdir(dir);
+      int repos_directory_length = repos_directory.length();
+      for (const auto& entry : std::filesystem::directory_iterator(repos_directory))
+      {
+         std::string directory = entry.path();
+         directory = directory.substr(repos_directory_length);
+         result.push_back(directory);
       }
-      closedir(dir);
+
       return result;
     body_dependency_symbols:
-      - opendir
-      - readdir
-      - DIR
+      - std::filesystem::directory_iterator
 dependencies:
-  - symbol: readdir
-    headers: [ 'dirent.h', 'stdio.h' ]
-  - symbol: DIR
-    headers: [ 'dirent.h', 'stdio.h' ]
-  - symbol: opendir
-    headers: [ 'dirent.h', 'stdio.h' ]
+  - symbol: std::filesystem::directory_iterator
+    headers: [ filesystem ]

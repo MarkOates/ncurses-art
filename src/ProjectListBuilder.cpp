@@ -1,18 +1,13 @@
 
 
 #include <ProjectListBuilder.hpp>
-#include <dirent.h>
-#include <stdio.h>
-#include <dirent.h>
-#include <stdio.h>
-#include <dirent.h>
-#include <stdio.h>
+#include <filesystem>
 
 
 
 
 ProjectListBuilder::ProjectListBuilder()
-   : repos_directory("/Users/markoates/Repos")
+   : repos_directory("/Users/markoates/Repos/")
 {
 }
 
@@ -31,22 +26,15 @@ std::string ProjectListBuilder::get_repos_directory()
 std::vector<std::string> ProjectListBuilder::get_directories()
 {
 std::vector<std::string> result = {};
-const char* PATH = get_repos_directory().c_str();
-DIR *dir = opendir(PATH);
-struct dirent *entry = readdir(dir);
-while (entry != NULL)
-{
-    if (entry->d_type == DT_DIR)
-    {
-       std::string name = entry->d_name;
-       if (name == ".") {}
-       else if (name == "..") {}
-       else { result.push_back(name); }
-    }
 
-    entry = readdir(dir);
+int repos_directory_length = repos_directory.length();
+for (const auto& entry : std::filesystem::directory_iterator(repos_directory))
+{
+   std::string directory = entry.path();
+   directory = directory.substr(repos_directory_length);
+   result.push_back(directory);
 }
-closedir(dir);
+
 return result;
 
 }
