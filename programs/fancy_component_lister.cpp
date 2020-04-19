@@ -11,6 +11,7 @@
 #include <string>
 
 #include <Blast/Project/ComponentLister.hpp>
+#include <Blast/Project/Component.hpp>
 #include <Blast/ShellCommandExecutorWithCallback.hpp>
 #include <ProjectFilenameGenerator.hpp>
 #include <Blast/String/Trimmer.hpp>
@@ -286,10 +287,13 @@ bool Projekt::process_event(std::string e)
                << DELIMITER
                << actual_component;
 
-            bool is_symlink = false;
+            Blast::Project::Component component(actual_component);
+            std::vector<std::pair<std::string, std::string>> symlink_list = component.read_symlinks();
+
+            bool is_symlink = !symlink_list.empty();
             if (is_symlink)
             {
-               std::string symlink_target = "unset";
+               std::string symlink_target = "has symlinked files";
                text_to_be_displayed_in_menu_option
                   << DELIMITER
                   << symlink_target;
