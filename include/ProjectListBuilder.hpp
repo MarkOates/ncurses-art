@@ -11,7 +11,7 @@ private:
    std::string repos_directory;
 
 public:
-   ProjectListBuilder();
+   ProjectListBuilder(std::string repos_directory="/Users/markoates/Repos/");
    ~ProjectListBuilder();
 
 

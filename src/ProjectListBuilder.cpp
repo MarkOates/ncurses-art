@@ -2,12 +2,13 @@
 
 #include <ProjectListBuilder.hpp>
 #include <filesystem>
+#include <sstream>
 
 
 
 
-ProjectListBuilder::ProjectListBuilder()
-   : repos_directory("/Users/markoates/Repos/")
+ProjectListBuilder::ProjectListBuilder(std::string repos_directory)
+   : repos_directory(repos_directory)
 {
 }
 
@@ -25,6 +26,14 @@ std::string ProjectListBuilder::get_repos_directory()
 
 std::vector<std::string> ProjectListBuilder::get_directories()
 {
+if (repos_directory.empty() || repos_directory.back() != '/')
+{
+   std::stringstream error_message;
+   error_message << "[ProjectListBuilder::get_directories error:] "
+                 << "repos_directory must end in '/' character.";
+   throw std::runtime_error(error_message.str());
+}
+
 std::vector<std::string> result = {};
 
 int repos_directory_length = repos_directory.length();
