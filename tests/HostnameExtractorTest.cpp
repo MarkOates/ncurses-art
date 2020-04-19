@@ -17,6 +17,7 @@ TEST(HostnameExtractorTest, get_computer_name__returns_the_expected_response)
    HostnameExtractor hostname_extractor;
 
    std::vector<std::string> expected_possible_strings = {
+      "DESKTOP-NC9M1BH",
       "Marks-Mac-mini.local",
       "Mark-Oates-MacBook-Pro.local",
    };
