@@ -293,10 +293,18 @@ bool Projekt::process_event(std::string e)
             bool is_symlink = !symlink_list.empty();
             if (is_symlink)
             {
-               std::string symlink_target = "has symlinked files";
+               std::stringstream symlink_info_string;
+
+               symlink_info_string << "{ ";
+               for (auto &symlink_info : symlink_list)
+               {
+                  symlink_info_string << symlink_info.first << " ~> " << symlink_info.second << ", ";
+               }
+               symlink_info_string << " }";
+
                text_to_be_displayed_in_menu_option
                   << DELIMITER
-                  << symlink_target;
+                  << symlink_info_string.str();
             }
 
             options.push_back(text_to_be_displayed_in_menu_option.str());
