@@ -290,7 +290,7 @@ void initialize()
          { "first_vim_plugin", { false, ProjectStatus("first_vim_plugin") } },
          { "fullscore",        { false, ProjectStatus("fullscore") } },
          { "hexagon",          { false, ProjectStatus("hexagon") } },
-         //{ "lightracer-max",       { false, ProjectStatus("lightracer-max") } },
+         { "lightracer-max",       { false, ProjectStatus("lightracer-max") } },
          { "me",               { false, ProjectStatus("me") } },
          //{ "motris",               { false, ProjectStatus("motris") } },
          { "ncurses-art",      { false, ProjectStatus("ncurses-art") } },
