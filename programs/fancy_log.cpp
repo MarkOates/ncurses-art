@@ -71,6 +71,7 @@ public:
 #define SET_COMMIT_LOG_MENU "set_commit_log_menu"
 #define SET_DIFF_TEXT "set_diff_text"
 #define COPY_CURRENT_HASH_TO_CLIPBOARD "copy_current_hash_to_clipboard"
+#define COPY_GIT_DIFF_TREE_COMMAND_TO_CLIPBOARD "copy_GIT_DIFF_TREE_COMMAND_TO_CLIPBOARD"
 #define COPY_INTERACTIVE_REBASE_COMMAND "copy_interactive_rebase_command"
 #define COPY_FANCY_FIXUP_COMMAND "copy_fancy_fixup_command"
 #define TOGGLE_MENU_PLACEMENT "toggle_menu_placement"
@@ -121,6 +122,7 @@ bool Projekt::process_input(char input_ch)
    case 'k': emit_event(MOVE_CURSOR_UP); break;
    case 'q': emit_event(EVENT_ABORT_PROGRAM); break;
    case 'y': emit_event(COPY_CURRENT_HASH_TO_CLIPBOARD); break;
+   case 'd': emit_event(COPY_GIT_DIFF_TREE_COMMAND_TO_CLIPBOARD); break;
    case 'r': emit_event(COPY_INTERACTIVE_REBASE_COMMAND); break;
    case 'f': emit_event(COPY_FANCY_FIXUP_COMMAND); break;
    case 'i': emit_event(COPY_FILES_COMMAND); break;
@@ -151,6 +153,15 @@ bool Projekt::process_event(std::string event)
       std::stringstream command;
 
       command << "printf \"" << command_token << "\" | pbcopy";
+      system(command.str().c_str());
+   }
+   else if (event == COPY_GIT_DIFF_TREE_COMMAND_TO_CLIPBOARD)
+   {
+      std::string selection_text = find_menu("main_menu").current_selection();
+      std::string command_token = git_log_format.extract_component(selection_text, ABBREVIATED_COMMIT_HASH);
+      std::stringstream command;
+
+      command << "printf \"git diff-tree " << command_token << "\" | pbcopy";
       system(command.str().c_str());
    }
    else if (event == COPY_INTERACTIVE_REBASE_COMMAND)
