@@ -638,7 +638,7 @@ bool check_all_executables_are_up_to_date_to_their_source()
 
 bool check_clang_version_is_expected_version()
 {
-   last_test_result = new TestResultMatcher("^Apple clang version 11\\.0\\.0 \\(clang-1100\\.0\\.33\\.[0-9]+\\)$", get_clang_version());
+   last_test_result = new TestResultMatcher("^Apple clang version 11\\.0\\.[0-9]+ \\(clang-11[0-9][0-9]\\.[0-9]+\\.[0-9]+\\.[0-9]+\\)$", get_clang_version());
    return last_test_result->assessment();
 }
 
