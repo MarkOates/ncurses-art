@@ -685,15 +685,9 @@ void initialize()
          { "Ruby version is the expected version (otherwise \"sudo ruby-install ruby 2.6.5\", then \"sudo ruby-install --system ruby 2.6.5\")", run_ruby_version_test },
          { "rerun is present and installed (otherwise \"sudo gem install rerun\", after instaling ruby)", run_rerun_version_test },
          { "beebot is responsive", check_beebot_response_ping },
-         { "~/.vimbackup folder exists", check_vimbackup_folder_exists },
          { "bundler is present and installed (otherwise \"sudo gem install bundler:2.0.1\", after instaling ruby)", run_bundler_version_test },
          { "Rails is present and installed (otherwise \"sudo gem install rails\", after instaling ruby. Needed by inflector components in blast)", run_rails_version_test },
-         { "pacman has the mingw-w64-x86_64-yaml-cpp package installed", just_a_failing_test },
          { "googletest and googlemock library are installed", just_a_failing_test },
-         { "pacman has the ncurses-devel package installed", just_a_failing_test },
-         { "bashrc exists", just_a_failing_test },
-         { "bashrc exports a TERM system variable with the expected value", just_a_failing_test },
-         { "bashrc exports a TERMINFO system variable with the expected value", just_a_failing_test },
          //{ "terminal sessions are still open despite ./dotfile changes", just_a_failing_test },
          //{ "project binaries are up-to-date despite project file changes", just_a_failing_test },
          { "celebrate executable is present", build_celebrator_executable_presence_check },
@@ -707,6 +701,20 @@ void initialize()
          { "clang version is the expected version (consider running \"brew install llvm\" to update to a more recent version)", check_clang_version_is_expected_version },
          //{ "generating a blast project adds ./.keep files for the necessary created directories", just_a_failing_test },
       };
+
+#ifdef _WIN32
+      std::map<std::string, bool (*)()> windows_specific_tests = {
+         { "bashrc exists", just_a_failing_test },
+         { "bashrc exports a TERM system variable with the expected value", just_a_failing_test },
+         { "bashrc exports a TERMINFO system variable with the expected value", just_a_failing_test },
+         { "pacman has the mingw-w64-x86_64-yaml-cpp package installed", just_a_failing_test },
+         { "pacman has the ncurses-devel package installed", just_a_failing_test },
+         { "~/.vimbackup folder exists", check_vimbackup_folder_exists },
+      };
+
+      tests.insert(windows_specific_tests.begin(), windows_specific_tests.end());
+#endif
+
    };
    events[REFRESH_STATUSES] = []{
       Text &text = find_text("output");
