@@ -336,6 +336,33 @@ bool check_vimbackup_folder_exists()
 }
 
 
+#include <Blast/DirectoryExistenceChecker.hpp>
+bool check_google_test_and_google_mock_installed()
+{
+   std::string base_repos_dir = "/Users/markoates/Repos";
+
+   std::string googletest_expected_directory = base_repos_dir + "/googletest";
+   std::string googletest_lib_dir = base_repos_dir + "/googletest/build/googlemock/gtest";
+   std::string googletest_include_dir = base_repos_dir + "/googletest/googletest/include";
+   std::string googletest_mock_include_dir = base_repos_dir + "/googletest/googlemock/include";
+
+   std::vector<std::string> expected_directories = {
+      googletest_expected_directory,
+      googletest_lib_dir,
+      googletest_include_dir,
+      googletest_mock_include_dir,
+   };
+
+   bool directories_missing = false;
+   for (auto &expected_directory : expected_directories)
+   {
+      if (!Blast::DirectoryExistenceChecker(expected_directory).exists()) directories_missing = true;
+   }
+
+   return directories_missing;
+}
+
+
 std::string get_head_sha_of_vim_plugin_first_vim_plugin()
 {
    std::string command = "cd /Users/markoates/.vim/bundle/first_vim_plugin && git rev-parse HEAD";
@@ -687,7 +714,7 @@ void initialize()
          { "beebot is responsive", check_beebot_response_ping },
          { "bundler is present and installed (otherwise \"sudo gem install bundler:2.0.1\", after instaling ruby)", run_bundler_version_test },
          { "Rails is present and installed (otherwise \"sudo gem install rails\", after instaling ruby. Needed by inflector components in blast)", run_rails_version_test },
-         { "googletest and googlemock library are installed", just_a_failing_test },
+         { "googletest and googlemock library are installed", check_google_test_and_google_mock_installed },
          //{ "terminal sessions are still open despite ./dotfile changes", just_a_failing_test },
          //{ "project binaries are up-to-date despite project file changes", just_a_failing_test },
          { "celebrate executable is present", build_celebrator_executable_presence_check },
