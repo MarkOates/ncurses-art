@@ -2,6 +2,7 @@
 
 #include <NcursesArt/GithubRepoStatusFetcher.hpp>
 #include <Blast/ShellCommandExecutorWithCallback.hpp>
+#include <Blast/Project/ProgramLister.hpp>
 #include <Blast/FileLastWriteTime.hpp>
 #include <StringSplitter.hpp>
 
@@ -592,7 +593,7 @@ bool build_celebrator_is_up_to_date()
 }
 
 
-bool check_all_executables_are_up_to_date_to_their_source()
+bool check_select_executables_are_up_to_date_to_their_source()
 {
    std::vector<std::tuple<bool, std::string, std::string>> source_executable_pairs = {
       // blast files
@@ -705,6 +706,8 @@ void initialize()
       create_text("output");
 
       tests = {
+         { "a targeted set of executables are up-to-date to their source files", check_select_executables_are_up_to_date_to_their_source },
+
          { "yaml-cpp is installed through homebrew", run_yaml_cpp_presence_test },
          { "asio standalone is present", asio_standalone_is_present },
          { "ghostscript is installed through homebrew (needed for imagemagick's `convert file.pdf file.png`", run_ghostscript_presence_test },
@@ -715,17 +718,17 @@ void initialize()
          { "bundler is present and installed (otherwise \"sudo gem install bundler:2.0.1\", after instaling ruby)", run_bundler_version_test },
          { "Rails is present and installed (otherwise \"sudo gem install rails\", after instaling ruby. Needed by inflector components in blast)", run_rails_version_test },
          { "googletest and googlemock library are installed", check_google_test_and_google_mock_installed },
-         //{ "terminal sessions are still open despite ./dotfile changes", just_a_failing_test },
-         //{ "project binaries are up-to-date despite project file changes", just_a_failing_test },
          { "celebrate executable is present", build_celebrator_executable_presence_check },
          { "celebrate executable is up-to-date (executable been created at a time later than the last change to its source file)", build_celebrator_is_up_to_date },
-         { "all custom executables are up-to-date to their source files", check_all_executables_are_up_to_date_to_their_source },
-         //{ "terminal session has installed new ruby verions and chruby has been refreshed (with a terminal refresh)", just_a_failing_test },
          { "the hexagon app package is present in the hexagon repo", run_hexagon_app_package_test },
          { "the system's /Applications folder contains a symlink to the hexagon repo's app package", check_hexagon_app_package_alias_test },
          { "the /Applications/Hexagon.app symlink points to the expected hexagon app package", check_hexagon_app_package_symlink_destination },
          { "vim plugins have been updated (run \":PluginUpdate\" in vim) since version changes to first_vim_plugin", check_vim_plugins_are_in_sync_with_local_repos },
          { "clang version is the expected version (consider running \"brew install llvm\" to update to a more recent version)", check_clang_version_is_expected_version },
+
+         //{ "terminal sessions are still open despite ./dotfile changes", just_a_failing_test },
+         //{ "project binaries are up-to-date despite project file changes", just_a_failing_test },
+         //{ "terminal session has installed new ruby verions and chruby has been refreshed (with a terminal refresh)", just_a_failing_test },
          //{ "generating a blast project adds ./.keep files for the necessary created directories", just_a_failing_test },
       };
 
