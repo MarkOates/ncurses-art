@@ -278,7 +278,7 @@ void initialize()
          //{ "LabyrinthOfLore",  { false, ProjectStatus("LabyrinthOfLore") } },
          //{ "allegro-planet",   { false, ProjectStatus("allegro-planet") } },
          { "allegro_flare",    { false, ProjectStatus("allegro_flare") } },
-         { "flare_network",    { false, ProjectStatus("flare_network") } },
+         //{ "flare_network",    { false, ProjectStatus("flare_network") } },
          //{ "allegroflare.github.io", { false, ProjectStatus("allegroflare.github.io") } },
          //{ "beary2d",              { false, ProjectStatus("beary2d") } },
          { "beebot",           { false, ProjectStatus("beebot") } },
