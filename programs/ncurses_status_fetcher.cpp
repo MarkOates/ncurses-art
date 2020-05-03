@@ -296,7 +296,7 @@ void initialize()
          { "ncurses-art",      { false, ProjectStatus("ncurses-art") } },
          //{ "oatescodes",       { false, ProjectStatus("oatescodes") } },
          { "tilemap",              { false, ProjectStatus("tilemap") } },
-         //{ "tileo",                { false, ProjectStatus("tileo") } },
+         { "tileo",                { false, ProjectStatus("tileo") } },
       };
 
       emit_event(REFRESH_OUTPUT_REPORT);
