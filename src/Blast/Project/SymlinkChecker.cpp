@@ -54,7 +54,9 @@ bool SymlinkChecker::is_symlink__shell_call_impl()
 {
 std::stringstream command;
 command << "ls -l " << filename;
-Blast::ShellCommandExecutorWithCallback executor(command.str(), Blast::ShellCommandExecutorWithCallback::simple_silent_callback);
+Blast::ShellCommandExecutorWithCallback executor(
+   command.str(),
+   Blast::ShellCommandExecutorWithCallback::simple_silent_callback);
 std::string command_result = executor.execute();
 if (!command_result.empty() && command_result[0] == 'l') return true;
 return false;
@@ -82,7 +84,9 @@ std::string SymlinkChecker::read_symlink_target__shell_call_impl()
 {
 std::stringstream command;
 command << "readlink " << filename;
-Blast::ShellCommandExecutorWithCallback executor(command.str(), Blast::ShellCommandExecutorWithCallback::simple_silent_callback);
+Blast::ShellCommandExecutorWithCallback executor(
+   command.str(),
+   Blast::ShellCommandExecutorWithCallback::simple_silent_callback);
 std::string command_result = executor.execute();
 if (!command_result.empty() && command_result.back() == '\n') command_result.pop_back();
 return command_result;
