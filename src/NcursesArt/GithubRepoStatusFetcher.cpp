@@ -253,7 +253,8 @@ return true;
 
 std::string GithubRepoStatusFetcher::execute_command(std::string command)
 {
-Blast::ShellCommandExecutorWithCallback executor(command);
+auto silent_callback = Blast::ShellCommandExecutorWithCallback::simple_silent_callback;
+Blast::ShellCommandExecutorWithCallback executor(command, silent_callback);
 return executor.execute();
 
 }

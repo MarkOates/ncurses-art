@@ -186,7 +186,8 @@ functions:
         type: std::string
         default_argument: ""
     body: |
-      Blast::ShellCommandExecutorWithCallback executor(command);
+      auto silent_callback = Blast::ShellCommandExecutorWithCallback::simple_silent_callback;
+      Blast::ShellCommandExecutorWithCallback executor(command, silent_callback);
       return executor.execute();
     body_dependency_symbols:
       - Blast::ShellCommandExecutorWithCallback
