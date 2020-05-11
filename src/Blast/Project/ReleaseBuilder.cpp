@@ -119,12 +119,15 @@ std::stringstream copy_data_files_command;
 copy_data_files_command << "cp -R " << source_directory << "/bin/programs/data " << destination_directory << "/data";
 std::stringstream copy_program_files_command;
 copy_program_files_command << "cp -R " << source_directory << "/programs " << destination_directory << "/programs";
+std::stringstream copy_readme_file_command;
+copy_readme_file_command << "cp " << source_directory << "/README.md " << destination_directory << "/README.md";
 
 // copy files
 Blast::ShellCommandExecutorWithCallback include_file_copy_executor(copy_include_files_command.str(), ShellCommandExecutorWithCallback::simple_silent_callback);
 Blast::ShellCommandExecutorWithCallback src_file_copy_executor(copy_src_files_command.str(), ShellCommandExecutorWithCallback::simple_silent_callback);
 Blast::ShellCommandExecutorWithCallback data_file_copy_executor(copy_data_files_command.str(), ShellCommandExecutorWithCallback::simple_silent_callback);
 Blast::ShellCommandExecutorWithCallback program_file_copy_executor(copy_program_files_command.str(), ShellCommandExecutorWithCallback::simple_silent_callback);
+Blast::ShellCommandExecutorWithCallback readme_file_copy_executor(copy_readme_file_command.str(), ShellCommandExecutorWithCallback::simple_silent_callback);
 
 std::cout << "Copying include files into \"" << destination_directory << "\"... ";
 include_file_copy_executor.execute();
@@ -140,6 +143,10 @@ std::cout << "done." << std::endl;
 
 std::cout << "Copying data files into \"" << destination_directory << "\"... ";
 data_file_copy_executor.execute();
+std::cout << "done." << std::endl;
+
+std::cout << "Copying README.md file into \"" << destination_directory << "\"... ";
+readme_file_copy_executor.execute();
 std::cout << "done." << std::endl;
 
 std::cout << "Creating rudimentary Makefile...";
