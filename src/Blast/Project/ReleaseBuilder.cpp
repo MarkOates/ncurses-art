@@ -47,7 +47,7 @@ ALLEGRO_LIBS=-lallegro_color -lallegro_font -lallegro_ttf -lallegro_dialog -lall
 main: $(SRC_FILES)
 )HEREDOC";
 MAKEFILE_CONTENT += "\t";
-MAKEFILE_CONTENT += "g++ -std=c++17 $^ programs/LabyrinthOfLore.cpp -o LabyrinthOfLore -I./include $(ALLEGRO_LIBS)";
+MAKEFILE_CONTENT += "g++ -std=c++17 $^ programs/Flowers.cpp -o Flowers -I./include $(ALLEGRO_LIBS)";
 return MAKEFILE_CONTENT;
 
 }
@@ -109,7 +109,7 @@ return;
 
 void ReleaseBuilder::generate_source_release()
 {
-std::string source_directory = "/Users/markoates/Repos/LabyrinthOfLore";
+std::string source_directory = "/Users/markoates/Repos/Flowers";
 
 std::stringstream copy_include_files_command;
 copy_include_files_command << "cp -R " << source_directory << "/include " << destination_directory << "/include";

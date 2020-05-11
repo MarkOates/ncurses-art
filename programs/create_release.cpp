@@ -1,3 +1,5 @@
+#include <allegro5/allegro.h>
+
 #include <Blast/Project/ReleaseBuilder.hpp>
 
 int main(int argc, char **argv)
