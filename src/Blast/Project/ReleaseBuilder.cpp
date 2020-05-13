@@ -11,6 +11,7 @@
 #include <cstdio>
 #include <sstream>
 #include <cstdio>
+#include <Blast/DirectoryCreator.hpp>
 #include <Blast/ShellCommandExecutorWithCallback.hpp>
 #include <sstream>
 
@@ -23,12 +24,26 @@ namespace Project
 
 ReleaseBuilder::ReleaseBuilder(std::string destination_directory)
    : destination_directory(destination_directory)
+   , project_name("Flowers")
+   , source_project_directory("/Users/markoates/Repos/Flowers")
 {
 }
 
 
 ReleaseBuilder::~ReleaseBuilder()
 {
+}
+
+
+std::string ReleaseBuilder::get_project_name()
+{
+   return project_name;
+}
+
+
+std::string ReleaseBuilder::get_source_project_directory()
+{
+   return source_project_directory;
 }
 
 
@@ -107,9 +122,52 @@ return;
 
 }
 
+std::string ReleaseBuilder::get_source_release_folder_name()
+{
+return get_project_name() + "SourceRelease";
+
+}
+
+std::string ReleaseBuilder::get_macos_release_folder_name()
+{
+return get_project_name() + "MacOSRelease";
+
+}
+
+std::string ReleaseBuilder::get_win64_release_folder_name()
+{
+return get_project_name() + "Win64Release";
+
+}
+
+void ReleaseBuilder::generate_macos_release()
+{
+// create folder "Flower.app/"
+return;
+
+}
+
 void ReleaseBuilder::generate_source_release()
 {
-std::string source_directory = "/Users/markoates/Repos/Flowers";
+std::string source_directory = get_source_project_directory();
+// !! WARNING: local variable name shadows class instance variable name:
+std::string xxx = destination_directory + "/" + get_source_release_folder_name();
+
+// create the directory
+std::vector<std::string> directories_that_will_exist = StringSplitter(xxx, '/').split();
+Blast::DirectoryCreator directory_creator(directories_that_will_exist, true);
+bool created = directory_creator.create();
+if (!created)
+{
+   std::stringstream error_message;
+   error_message << "Project/ReleaseBuilder error: could not create directory \""
+                << xxx
+                << "\"";
+   throw std::runtime_error(error_message.str());
+}
+
+std::string destination_directory = xxx;
+
 
 std::stringstream copy_include_files_command;
 copy_include_files_command << "cp -R " << source_directory << "/include " << destination_directory << "/include";
