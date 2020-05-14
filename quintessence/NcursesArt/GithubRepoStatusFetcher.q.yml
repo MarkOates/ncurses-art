@@ -151,10 +151,12 @@ functions:
       return result.str();
 
   - name: get_current_staged_files
-    type: std::string
+    type: std::vector<std::string>
     body: |
       std::string current_staged_files_command = get_current_staged_files_command();
-      return execute_command(current_staged_files_command);
+      //return execute_command(current_staged_files_command);
+      std::string command_output = execute_command(current_staged_files_command);
+      return Blast::StringSplitter(command_output, '\n').split();
 
   - name: get_current_branch_name
     type: std::string

@@ -225,10 +225,12 @@ return result.str();
 
 }
 
-std::string GithubRepoStatusFetcher::get_current_staged_files()
+std::vector<std::string> GithubRepoStatusFetcher::get_current_staged_files()
 {
 std::string current_staged_files_command = get_current_staged_files_command();
-return execute_command(current_staged_files_command);
+//return execute_command(current_staged_files_command);
+std::string command_output = execute_command(current_staged_files_command);
+return Blast::StringSplitter(command_output, '\n').split();
 
 }
 
