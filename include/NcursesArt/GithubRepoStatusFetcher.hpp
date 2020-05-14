@@ -53,6 +53,8 @@ namespace NcursesArt
    std::string get_current_branch_name_command();
    std::string get_pull_command();
    std::string get_status_command();
+   std::string get_current_staged_files_command();
+   std::string get_current_staged_files();
    std::string get_current_branch_name();
    std::vector<std::string> get_quintessence_filenames();
    bool have_the_local_and_remote_repos_diverged();

@@ -217,6 +217,21 @@ return result.str();
 
 }
 
+std::string GithubRepoStatusFetcher::get_current_staged_files_command()
+{
+std::stringstream result;
+result << "(cd " << get_repos_directory() << "/" << get_repo_name() << " && " << get_git_current_staged_files_command() << ")";
+return result.str();
+
+}
+
+std::string GithubRepoStatusFetcher::get_current_staged_files()
+{
+std::string current_staged_files_command = get_current_staged_files_command();
+return execute_command(current_staged_files_command);
+
+}
+
 std::string GithubRepoStatusFetcher::get_current_branch_name()
 {
 std::string current_branch_name_command = get_current_branch_name_command();
