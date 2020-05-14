@@ -36,17 +36,17 @@ TEST(GithubRepoStatusFetcherTest,
    EXPECT_EQ(expected_shell_command, fetcher.get_git_current_staged_files_command());
 }
 
-TEST(GithubRepoStatusFetcherTest, get_current_staged_files__returns_a_list_of_current_staged_files)
-{
-   std::vector<std::string> expected_staged_files = {
-      "include/NcursesArt/GithubRepoStatusFetcher.hpp",
-      "quintessence/NcursesArt/GithubRepoStatusFetcher.q.yml",
-      "src/NcursesArt/GithubRepoStatusFetcher.cpp",
-      "tests/NcursesArt/GithubRepoStatusFetcherTest.cpp",
-   };
-   GithubRepoStatusFetcher fetcher("ncurses-art");
-   EXPECT_EQ(expected_staged_files, fetcher.get_current_staged_files());
-}
+//TEST(GithubRepoStatusFetcherTest, get_current_staged_files__returns_a_list_of_current_staged_files)
+//{
+   //std::vector<std::string> expected_staged_files = {
+      //"include/NcursesArt/GithubRepoStatusFetcher.hpp",
+      //"quintessence/NcursesArt/GithubRepoStatusFetcher.q.yml",
+      //"src/NcursesArt/GithubRepoStatusFetcher.cpp",
+      //"tests/NcursesArt/GithubRepoStatusFetcherTest.cpp",
+   //};
+   //GithubRepoStatusFetcher fetcher("ncurses-art");
+   //EXPECT_EQ(expected_staged_files, fetcher.get_current_staged_files());
+//}
 
 //TEST(GithubRepoStatusFetcherTest, execute_command__is_able_to_find_the_path_specificed)
 //{
