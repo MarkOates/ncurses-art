@@ -27,6 +27,15 @@ TEST(GithubRepoStatusFetcherTest, get_pull_commnd__returns_the_shell_command_to_
    EXPECT_EQ(expected_shell_command, fetcher.get_pull_command());
 }
 
+TEST(GithubRepoStatusFetcherTest,
+   get_current_staged_files_command__returns_the_shell_command_to_obtain_the_list_of_staged_files)
+{
+   GithubRepoStatusFetcher fetcher("blast");
+   // from https://stackoverflow.com/a/33610683/607236
+   std::string expected_shell_command = "git diff --name-only --cached";
+   EXPECT_EQ(expected_shell_command, fetcher.get_git_current_staged_files_command());
+}
+
 //TEST(GithubRepoStatusFetcherTest, execute_command__is_able_to_find_the_path_specificed)
 //{
    //GithubRepoStatusFetcher fetcher("blast");

@@ -17,6 +17,7 @@ namespace NcursesArt
       std::string git_current_branch_command;
       std::string git_remote_branch_names_command;
       std::string component_quintessence_filenames_command;
+      std::string git_current_staged_files_command;
       std::string repo_name;
       std::string repos_directory;
       bool only_poll_once;
@@ -35,6 +36,7 @@ namespace NcursesArt
       std::string get_git_current_branch_command();
       std::string get_git_remote_branch_names_command();
       std::string get_component_quintessence_filenames_command();
+      std::string get_git_current_staged_files_command();
       std::string get_repo_name();
       std::string get_repos_directory();
       bool get_only_poll_once();

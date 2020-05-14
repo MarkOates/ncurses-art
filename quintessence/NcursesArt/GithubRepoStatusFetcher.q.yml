@@ -26,6 +26,10 @@ properties:
     type: std::string
     init_with: "\"find quintessence -name '*.q.yml'\""
     getter: true
+  - name: git_current_staged_files_command
+    type: std::string
+    init_with: '"git diff --name-only --cached"'
+    getter: true
   - name: repo_name
     getter: true
     init_with: "\"blast\""
