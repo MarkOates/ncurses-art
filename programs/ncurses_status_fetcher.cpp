@@ -44,6 +44,7 @@ private:
    bool in_sync;
    bool has_no_changed_files;
    bool has_no_untracked_files;
+   bool has_no_staged_files;
    int num_local_branches;
 
    GithubRepoStatusFetcher fetcher;
@@ -55,6 +56,7 @@ public:
       , in_sync(false)
       , has_no_changed_files(false)
       , has_no_untracked_files(false)
+      , has_no_staged_files(false)
       , num_local_branches(0)
       , fetcher(repo_name)
    {}
@@ -89,6 +91,11 @@ public:
       return num_local_branches;
    }
 
+   int get_has_no_staged_files()
+   {
+      return has_no_staged_files;
+   }
+
    void process()
    {
       exists_locally = fetcher.local_repo_exists();
@@ -96,6 +103,7 @@ public:
       has_no_changed_files = !fetcher.has_file_changes();
       has_no_untracked_files = !fetcher.has_untracked_files();
       num_local_branches = fetcher.get_branch_count();
+      has_no_staged_files = (fetcher.get_current_staged_files().size() == 0);
    }
 };
 
@@ -187,14 +195,14 @@ enum final_status_t
 };
 
 
-final_status_t get_final_status(int num_local_branches, bool project_has_been_processed, bool exists_locally, bool in_sync, bool has_no_changed_files, bool has_no_untracked_files)
+final_status_t get_final_status(int num_local_branches, bool project_has_been_processed, bool exists_locally, bool in_sync, bool has_no_changed_files, bool has_no_untracked_files, bool has_no_staged_files)
 {
    if (project_has_been_processed == false) return UNPROCESSED;
 
    final_status_t status = CLEAN;
    if (num_local_branches > 1) status = EXTRA_LOCAL_BRANCHES;
    if (!exists_locally || !in_sync) status = UNSYNCED;
-   if (!has_no_changed_files || !has_no_untracked_files) status = SOME_CLUTTERED_FILES;
+   if (!has_no_changed_files || !has_no_untracked_files || !has_no_staged_files) status = SOME_CLUTTERED_FILES;
    return status;
 }
 
@@ -352,11 +360,12 @@ void initialize()
          bool in_sync = project_status.get_in_sync();
          bool has_no_changed_files = project_status.get_has_no_changed_files();
          bool has_no_untracked_files = project_status.get_has_no_untracked_files();
+         bool has_no_staged_files = project_status.get_has_no_staged_files();
          int num_local_branches = project_status.get_num_local_branches();
          std::string project_identifier = project.first;
          std::string repo_name = project_status.get_repo_name();
          bool project_has_been_processed = project.second.first;
-         final_status_t final_status = get_final_status(num_local_branches, project_has_been_processed, exists_locally, in_sync, has_no_changed_files, has_no_untracked_files);
+         final_status_t final_status = get_final_status(num_local_branches, project_has_been_processed, exists_locally, in_sync, has_no_changed_files, has_no_untracked_files, has_no_staged_files);
 
          std::string status_icon_and_text = get_status_icon_and_text(final_status, num_local_branches);
          result_text << project_identifier << PROPERTY_DELIMITER << status_icon_and_text;
@@ -368,6 +377,7 @@ void initialize()
             result_text << "  " << check_it("in sync with remote", in_sync) << std::endl;
             result_text << "  " << check_it("has no changed files", has_no_changed_files) << std::endl;
             result_text << "  " << check_it("has no untracked files", has_no_untracked_files) << std::endl;
+            result_text << "  " << check_it("has no staged files", has_no_staged_files) << std::endl;
          }
          result_text << std::endl;
       }
