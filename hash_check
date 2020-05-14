@@ -1,2 +1,0 @@
-#!/bin/bash
-find quintessence -name '*.q.yml'| xargs md5
