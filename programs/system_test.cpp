@@ -397,6 +397,21 @@ std::string get_ruby_version()
    std::string trimmed_output = trim(output);
 
    return trimmed_output;
+
+}
+
+
+std::string get_imagemagick_version()
+{
+   std::string command = "convert -version";
+   Blast::ShellCommandExecutorWithCallback executor(command, command_callback);
+   std::string output = executor.execute();
+   std::string trimmed_output = trim(output);
+
+   std::vector<std::string> tokens = StringSplitter(trimmed_output, '\n').split();
+   std::string first_line = tokens.empty() ? "" : tokens[0];
+
+   return first_line;
 }
 
 
@@ -527,6 +542,18 @@ bool check_hexagon_app_package_symlink_destination()
    std::string trimmed_output = trim(output);
 
    return trimmed_output == expected_destination;
+}
+
+
+bool run_imagemagick_version_test()
+{
+   // first line version string looks like:
+   //"Version: ImageMagick 7.0.8-68 Q16 x86_64 2019-10-07 https://imagemagick.org\n"
+   //std::string match_expression = R"HEREDOC(^Version: ImageMagick [0-9\.\-a-zA-Z].* [a-zA-Z0_]+ [0-9\-].* https://imagemagick.org)HEREDOC";
+   std::string match_expression = R"HEREDOC(^Version: ImageMagick [0-9\.\-a-zA-Z].* [a-zA-Z0_]+)HEREDOC";
+   std::string actual_string = get_imagemagick_version();
+   last_test_result = new TestResultMatcher(match_expression, actual_string);
+   return last_test_result->assessment();
 }
 
 
@@ -720,6 +747,7 @@ void initialize()
          { "bundler is present and installed (otherwise \"sudo gem install bundler:2.0.1\", after instaling ruby)", run_bundler_version_test },
          { "Rails is present and installed (otherwise \"sudo gem install rails\", after instaling ruby. Needed by inflector components in blast)", run_rails_version_test },
          { "googletest and googlemock library are installed", check_google_test_and_google_mock_installed },
+         { "ImageMagick is present in the command line", run_imagemagick_version_test },
          { "celebrate executable is present", build_celebrator_executable_presence_check },
          { "celebrate executable is up-to-date (executable been created at a time later than the last change to its source file)", build_celebrator_is_up_to_date },
          { "the hexagon app package is present in the hexagon repo", run_hexagon_app_package_test },
