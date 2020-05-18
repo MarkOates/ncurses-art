@@ -505,6 +505,7 @@ bool check_bashrc_exists_with_term_export()
 {
    std::string expected_line = "export TERMINFO=/mingw64/share/terminfo";
    // note: the existence of this line needs to be scanned for from the last line up (to ensure it is the last definition)
+   return false;
 }
 
 
@@ -512,6 +513,7 @@ bool check_bashrc_exists_with_terminfo_export()
 {
    std::string expected_line = "export TERM=xterm-256color";
    // note: the existence of this line needs to be scanned for from the last line up (to ensure it is the last definition)
+   return false;
 }
 
 
