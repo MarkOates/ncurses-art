@@ -9,6 +9,7 @@
 #define REFRESH_TEXT_DISPLAY "refresh_text_display"
 #define YANK_SELECTED_TEXT "YANK_SELECTED_TEXT"
 #define GIT_CHECKOUT_BRANCH_COMMAND "GIT_CHECKOUT_BRANCH_COMMAND"
+#define GIT_DELETE_BRANCH_COMMAND "GIT_DELETE_BRANCH_COMMAND"
 #define COPY_GIT_ADD_PATCH_COMMAND "COPY_GIT_ADD_PATCH_COMMAND"
 
 
@@ -25,6 +26,7 @@ bool Projekt::process_input(char ch)
    case 'q': emit_event(EVENT_ABORT_PROGRAM); break;
    case 'y': emit_event(YANK_SELECTED_TEXT); break;
    case 'c': emit_event(GIT_CHECKOUT_BRANCH_COMMAND); break;
+   case 'd': emit_event(GIT_DELETE_BRANCH_COMMAND); break;
    default: return false; break;
    }
    return true;
@@ -64,6 +66,14 @@ bool Projekt::process_event(std::string e)
       std::string trimmed = Blast::String::Trimmer(menu.current_selection()).trim();
       std::stringstream command;
       command << "printf \"git checkout " << trimmed << "\" | pbcopy";
+      system(command.str().c_str());
+   }
+   if (e == GIT_DELETE_BRANCH_COMMAND)
+   {
+      Menu &menu = find_menu("main_menu");
+      std::string trimmed = Blast::String::Trimmer(menu.current_selection()).trim();
+      std::stringstream command;
+      command << "printf \"git branch -d " << trimmed << "\" | pbcopy";
       system(command.str().c_str());
    }
    else if (e == MOVE_CURSOR_DOWN)
