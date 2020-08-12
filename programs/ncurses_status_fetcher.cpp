@@ -297,6 +297,7 @@ void initialize()
          //{ "dungeon",              { false, ProjectStatus("dungeon") } },
          { "first_vim_plugin", { false, ProjectStatus("first_vim_plugin") } },
          { "fullscore",        { false, ProjectStatus("fullscore") } },
+         { "Solitare",          { false, ProjectStatus("Solitare") } },
          { "hexagon",          { false, ProjectStatus("hexagon") } },
          { "lightracer-max",       { false, ProjectStatus("lightracer-max") } },
          { "me",               { false, ProjectStatus("me") } },
