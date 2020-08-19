@@ -301,7 +301,7 @@ void initialize()
          { "hexagon",          { false, ProjectStatus("hexagon") } },
          { "lightracer-max",       { false, ProjectStatus("lightracer-max") } },
          { "me",               { false, ProjectStatus("me") } },
-         //{ "motris",               { false, ProjectStatus("motris") } },
+         { "motris",               { false, ProjectStatus("motris") } },
          { "ncurses-art",      { false, ProjectStatus("ncurses-art") } },
          { "Releaser",      { false, ProjectStatus("Releaser") } },
          //{ "oatescodes",       { false, ProjectStatus("oatescodes") } },
