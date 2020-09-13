@@ -430,6 +430,21 @@ std::string get_clang_version()
 }
 
 
+std::string get_ninja_version()
+{
+   std::string command = "ninja --version";
+
+   Blast::ShellCommandExecutorWithCallback executor(command, command_callback);
+   std::string output = executor.execute();
+   std::string trimmed_output = trim(output);
+
+   std::vector<std::string> tokens = StringSplitter(trimmed_output, '\n').split();
+   std::string first_line = tokens.empty() ? "" : tokens[0];
+
+   return first_line;
+}
+
+
 std::string get_brew_yaml_info_string()
 {
    std::string command = "brew info yaml-cpp";
@@ -673,6 +688,14 @@ bool check_clang_version_is_expected_version()
 }
 
 
+bool check_ninja_version_is_expected_version()
+{
+   last_test_result = new TestResultMatcher("^1\.10\.1$", get_ninja_version());
+   return last_test_result->assessment();
+}
+
+
+
 
 bool run_bundler_version_test()
 {
@@ -755,7 +778,7 @@ void initialize()
          { "the /Applications/Hexagon.app symlink points to the expected hexagon app package", check_hexagon_app_package_symlink_destination },
          { "vim plugins have been updated (run \":PluginUpdate\" in vim) since version changes to first_vim_plugin", check_vim_plugins_are_in_sync_with_local_repos },
          { "clang version is the expected version (consider running \"brew install llvm\" to update to a more recent version)", check_clang_version_is_expected_version },
-
+         { "ninja version is the expected version (consider running \"brew install ninja\" to update to a more recent version)", check_ninja_version_is_expected_version },
          //{ "on MacOS, Hexagon has an override keyboard shortcut for hiding the window (https://stackoverflow.com/q/45601543/6072362, https://superuser.com/a/1328252)", just_a_failing_test },
          //{ "terminal sessions are still open despite ./dotfile changes", just_a_failing_test },
          //{ "project binaries are up-to-date despite project file changes", just_a_failing_test },
