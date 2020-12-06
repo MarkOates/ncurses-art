@@ -299,7 +299,6 @@ void initialize()
          { "fullscore",        { false, ProjectStatus("fullscore") } },
          { "Solitare",          { false, ProjectStatus("Solitare") } },
          { "hexagon",          { false, ProjectStatus("hexagon") } },
-         { "mastermind",          { false, ProjectStatus("mastermind") } },
          { "lightracer-max",       { false, ProjectStatus("lightracer-max") } },
          { "me",               { false, ProjectStatus("me") } },
          { "motris",               { false, ProjectStatus("motris") } },
