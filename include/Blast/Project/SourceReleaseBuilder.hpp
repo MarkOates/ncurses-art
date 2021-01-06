@@ -17,7 +17,7 @@ namespace Blast
          std::string source_project_directory;
 
       public:
-         SourceReleaseBuilder(std::string destination_directory="/Users/markoates/Desktop/Release/");
+         SourceReleaseBuilder(std::string destination_directory="/Users/markoates/Desktop/Release/", std::string project_name="Flowers", std::string source_project_directory="/Users/markoates/Repos/Flowers");
          ~SourceReleaseBuilder();
 
 

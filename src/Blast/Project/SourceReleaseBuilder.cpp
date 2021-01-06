@@ -22,10 +22,10 @@ namespace Project
 {
 
 
-SourceReleaseBuilder::SourceReleaseBuilder(std::string destination_directory)
+SourceReleaseBuilder::SourceReleaseBuilder(std::string destination_directory, std::string project_name, std::string source_project_directory)
    : destination_directory(destination_directory)
-   , project_name("Flowers")
-   , source_project_directory("/Users/markoates/Repos/Flowers")
+   , project_name(project_name)
+   , source_project_directory(source_project_directory)
 {
 }
 
@@ -62,7 +62,8 @@ ALLEGRO_LIBS=-lallegro_color -lallegro_font -lallegro_ttf -lallegro_dialog -lall
 main: $(SRC_FILES)
 )HEREDOC";
 MAKEFILE_CONTENT += "\t";
-MAKEFILE_CONTENT += "g++ -std=c++17 $^ programs/Flowers.cpp -o Flowers -I./include $(ALLEGRO_LIBS)";
+MAKEFILE_CONTENT += "g++ -std=c++17 $^ programs/" + project_name + ".cpp -o " + project_name
+                  + " -I./include $(ALLEGRO_LIBS)";
 return MAKEFILE_CONTENT;
 
 }
