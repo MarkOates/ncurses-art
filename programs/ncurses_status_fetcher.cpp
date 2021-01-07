@@ -304,6 +304,7 @@ void initialize()
          { "motris",               { false, ProjectStatus("motris") } },
          { "ncurses-art",      { false, ProjectStatus("ncurses-art") } },
          { "Releaser",      { false, ProjectStatus("Releaser") } },
+         { "DragonWrath",      { false, ProjectStatus("DragonWrath") } },
          { "oatescodes",       { false, ProjectStatus("oatescodes") } },
          { "tilemap",              { false, ProjectStatus("tilemap") } },
          { "tileo",                { false, ProjectStatus("tileo") } },
