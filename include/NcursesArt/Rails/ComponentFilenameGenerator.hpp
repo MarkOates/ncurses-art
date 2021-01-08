@@ -19,7 +19,7 @@ namespace NcursesArt
 
 
          std::string get_component_basename();
-      std::string get_model_name();
+      std::string get_model_filename();
       };
    }
 }

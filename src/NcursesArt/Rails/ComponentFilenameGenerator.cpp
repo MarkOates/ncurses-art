@@ -27,7 +27,7 @@ std::string ComponentFilenameGenerator::get_component_basename()
 }
 
 
-std::string ComponentFilenameGenerator::get_model_name()
+std::string ComponentFilenameGenerator::get_model_filename()
 {
 std::stringstream result;
 result << "app/models/" << component_basename << ".rb"; 

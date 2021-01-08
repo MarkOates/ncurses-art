@@ -16,10 +16,10 @@ TEST(NcursesArt_Rails_ComponentFilenameGeneratorText, component_basename__has_a_
    EXPECT_EQ(expected_default_value, actual_default_value);
 }
 
-TEST(NcursesArt_Rails_ComponentFilenameGeneratorTest, run__returns_the_expected_response)
+TEST(NcursesArt_Rails_ComponentFilenameGeneratorTest, get_model_filename__returns_the_expected_response)
 {
    std::string component_name = "namespaced/component_name";
    NcursesArt::Rails::ComponentFilenameGenerator component_filename_generator(component_name);
    std::string expected_string = "app/models/namespaced/component_name.rb";
-   EXPECT_EQ(expected_string, component_filename_generator.get_model_name());
+   EXPECT_EQ(expected_string, component_filename_generator.get_model_filename());
 }
