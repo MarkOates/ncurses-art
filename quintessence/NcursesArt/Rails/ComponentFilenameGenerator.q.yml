@@ -1,4 +1,23 @@
-functions:
-  - name: run
+properties:
+
+
+  - name: component_basename
     type: std::string
-    body: return "Hello World!";
+    init_with: '"unnamed/component"'
+    getter: true
+    constructor_arg: true
+ 
+
+functions:
+
+
+  - name: get_model_name
+    type: std::string
+    body: |
+      std::stringstream result;
+      result << "app/models/" << component_basename << ".rb"; 
+      return result.str();
+    body_dependency_symbols:
+      - std::stringstream
+
+

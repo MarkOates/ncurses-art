@@ -11,13 +11,15 @@ namespace NcursesArt
       class ComponentFilenameGenerator
       {
       private:
+         std::string component_basename;
 
       public:
-         ComponentFilenameGenerator();
+         ComponentFilenameGenerator(std::string component_basename="unnamed/component");
          ~ComponentFilenameGenerator();
 
 
-      std::string run();
+         std::string get_component_basename();
+      std::string get_model_name();
       };
    }
 }
