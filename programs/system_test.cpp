@@ -461,6 +461,22 @@ std::string get_brew_yaml_info_string()
 
 
 
+std::string get_brew_ripgrep_info_string()
+{
+   std::string command = "brew info ripgrep";
+
+   Blast::ShellCommandExecutorWithCallback executor(command, command_callback);
+   std::string output = executor.execute();
+   std::string trimmed_output = trim(output);
+
+   std::vector<std::string> tokens = StringSplitter(trimmed_output, '\n').split();
+   std::string first_line = tokens.empty() ? "" : tokens[0];
+
+   return first_line;
+}
+
+
+
 std::string get_brew_ghostscript_info_string()
 {
    std::string command = "brew info ghostscript";
@@ -585,6 +601,15 @@ bool run_yaml_cpp_presence_test()
 {
    std::string match_expression = "^yaml-cpp: ";
    std::string actual_string = get_brew_yaml_info_string();
+   last_test_result = new TestResultMatcher(match_expression, actual_string);
+   return last_test_result->assessment();
+}
+
+
+bool run_ripgrep_presence_test()
+{
+   std::string match_expression = "^ripgrep: ";
+   std::string actual_string = get_brew_ripgrep_info_string();
    last_test_result = new TestResultMatcher(match_expression, actual_string);
    return last_test_result->assessment();
 }
@@ -761,6 +786,7 @@ void initialize()
          { "a targeted set of executables are up-to-date to their source files", check_select_executables_are_up_to_date_to_their_source },
 
          { "yaml-cpp is installed through homebrew", run_yaml_cpp_presence_test },
+         { "ripgrep is installed through homebrew", run_ripgrep_presence_test },
          { "asio standalone is present", asio_standalone_is_present },
          { "ghostscript is installed through homebrew (needed for imagemagick's `convert file.pdf file.png`", run_ghostscript_presence_test },
          { "chruby is present", run_chruby_test },
