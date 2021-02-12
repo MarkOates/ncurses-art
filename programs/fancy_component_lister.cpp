@@ -76,6 +76,8 @@ std::vector<std::pair<std::string, std::string>> project_folder_names = {
    { { "adventures-of-beary" }, {} },
    { { "AlexPark" }, {} },
    { { "HomeServer" }, {} },
+   { { "DragonWrath" }, {} },
+   { { "LabyrinthOfLore" }, {} },
    { { "Slug3D" }, {} },
    { { "allegro-planet" }, {} },
    { { "allegro_flare" }, {} },
