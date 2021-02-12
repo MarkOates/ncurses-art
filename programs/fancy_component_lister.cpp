@@ -17,16 +17,19 @@
 #include <Blast/String/Trimmer.hpp>
 #include <StringSplitter.hpp>
 
-#define COMMAND_FLIP_STAGING "flip_staging"
+#define COMMAND_MOVE_CURSOR_UP "MOVE_CURSOR_UP"
+#define COMMAND_MOVE_CURSOR_DOWN "MOVE_CURSOR_DOWN"
+#define COMMAND_ABORT_PROGRAM "ABORT_PROGRAM"
+#define COMMAND_FLIP_STAGING "FLIP_STAGING"
 #define COMMAND_REBUILD_CURRENT_PROJECT_IN_MENU "COMMAND_REBUILD_CURRENT_PROJECT_IN_MENU"
 #define COMMAND_REBUILD_ALL_PROJECTS_IN_MENU "COMMAND_REBUILD_ALL_PROJECTS_IN_MENU"
-#define BUILD_COMMAND_LIST "build command list"
-#define REFRESH_TEXT_DISPLAY "refresh_text_display"
-#define YANK_SELECTED_TEXT "YANK_SELECTED_TEXT"
-#define SAVE_MENU_CONTENTS_TO_FILE "SAVE_MENU_CONTENTS_TO_FILE"
-#define BEEBOT_SETUP_BLAST_COMPONENT_COMMAND "BEEBOT_SETUP_BLAST_COMPONENT_COMMAND"
-#define SET_FILE_PREVIEW_TO_A_FILE_FROM_THE_CURRENT_SELECTION "SET_FILE_PREVIEW_TO_A_FILE_FROM_THE_CURRENT_SELECTION"
-#define TOGGLE_MENU_MOVING_WITH_CURSOR "TOGGLE_MENU_MOVING_WITH_CURSOR"
+#define COMMAND_BUILD_COMMAND_LIST "BUILD_COMMAND_LIST"
+#define COMMAND_REFRESH_TEXT_DISPLAY "REFRESH_TEXT_DISPLAY"
+#define COMMAND_YANK_SELECTED_TEXT "YANK_SELECTED_TEXT"
+#define COMMAND_SAVE_MENU_CONTENTS_TO_FILE "SAVE_MENU_CONTENTS_TO_FILE"
+#define COMMAND_BEEBOT_SETUP_BLAST_COMPONENT_COMMAND "BEEBOT_SETUP_BLAST_COMPONENT_COMMAND"
+#define COMMAND_SET_FILE_PREVIEW_TO_A_FILE_FROM_THE_CURRENT_SELECTION "SET_FILE_PREVIEW_TO_A_FILE_FROM_THE_CURRENT_SELECTION"
+#define COMMAND_TOGGLE_MENU_MOVING_WITH_CURSOR "TOGGLE_MENU_MOVING_WITH_CURSOR"
 #define COMMAND_RERUN_MAKE_WITH_COMPONENT_AS_FOCUS "COMMAND_RERUN_MAKE_WITH_COMPONENT_AS_FOCUS"
 
 #define DELIMITER std::string(" - ")
@@ -114,16 +117,16 @@ std::string extract_component_from_menu_option(std::string text_to_extract_token
 #include <map>
 
 std::map<char, std::string> command_mapping = {
-   { 'j', MOVE_CURSOR_DOWN },
-   { 'k', MOVE_CURSOR_UP },
-   { 'q', EVENT_ABORT_PROGRAM },
-   { 'y', YANK_SELECTED_TEXT },
+   { 'j', COMMAND_MOVE_CURSOR_DOWN },
+   { 'k', COMMAND_MOVE_CURSOR_UP },
+   { 'q', COMMAND_ABORT_PROGRAM },
+   { 'y', COMMAND_YANK_SELECTED_TEXT },
    { 'p', COMMAND_REBUILD_CURRENT_PROJECT_IN_MENU },
    { 'f', COMMAND_RERUN_MAKE_WITH_COMPONENT_AS_FOCUS },
    { 'a', COMMAND_REBUILD_ALL_PROJECTS_IN_MENU },
-   { 's', SAVE_MENU_CONTENTS_TO_FILE },
-   { 'c', BEEBOT_SETUP_BLAST_COMPONENT_COMMAND },
-   { 'm', TOGGLE_MENU_MOVING_WITH_CURSOR },
+   { 's', COMMAND_SAVE_MENU_CONTENTS_TO_FILE },
+   { 'c', COMMAND_BEEBOT_SETUP_BLAST_COMPONENT_COMMAND },
+   { 'm', COMMAND_TOGGLE_MENU_MOVING_WITH_CURSOR },
 };
 
 
@@ -179,10 +182,10 @@ bool Projekt::process_event(std::string e)
       create_text("command_list_text", 170, 4).set_styles(COLOR_PAIR(5));
 
       // initial events
-      emit_event(BUILD_COMMAND_LIST);
+      emit_event(COMMAND_BUILD_COMMAND_LIST);
       emit_event(COMMAND_REBUILD_CURRENT_PROJECT_IN_MENU);
    }
-   if (e == YANK_SELECTED_TEXT)
+   if (e == COMMAND_YANK_SELECTED_TEXT)
    {
       Menu &menu = find_menu("main_menu");
       std::string trimmed = Blast::String::Trimmer(menu.current_selection()).trim();
@@ -190,27 +193,27 @@ bool Projekt::process_event(std::string e)
       command << "printf \"" << trimmed << "\" | pbcopy";
       system(command.str().c_str());
    }
-   else if (e == MOVE_CURSOR_DOWN)
+   else if (e == COMMAND_MOVE_CURSOR_DOWN)
    {
       Menu &menu = find_menu("main_menu");
       menu.move_cursor_down();
       if (menu_is_moving_with_cursor) menu.set_y(menu.get_y()-1);
 
-      emit_event(SET_FILE_PREVIEW_TO_A_FILE_FROM_THE_CURRENT_SELECTION);
+      emit_event(COMMAND_SET_FILE_PREVIEW_TO_A_FILE_FROM_THE_CURRENT_SELECTION);
    }
-   else if (e == MOVE_CURSOR_UP)
+   else if (e == COMMAND_MOVE_CURSOR_UP)
    {
       Menu &menu = find_menu("main_menu");
       menu.move_cursor_up();
       if (menu_is_moving_with_cursor) menu.set_y(menu.get_y()+1);
 
-      emit_event(SET_FILE_PREVIEW_TO_A_FILE_FROM_THE_CURRENT_SELECTION);
+      emit_event(COMMAND_SET_FILE_PREVIEW_TO_A_FILE_FROM_THE_CURRENT_SELECTION);
    }
-   else if (e == TOGGLE_MENU_MOVING_WITH_CURSOR)
+   else if (e == COMMAND_TOGGLE_MENU_MOVING_WITH_CURSOR)
    {
       menu_is_moving_with_cursor = !menu_is_moving_with_cursor;
    }
-   else if (e == BUILD_COMMAND_LIST)
+   else if (e == COMMAND_BUILD_COMMAND_LIST)
    {
       std::string command_mapping_string = compose_command_mapping_text(command_mapping);
       find_text("command_list_text").set_text(command_mapping_string);
@@ -323,7 +326,7 @@ bool Projekt::process_event(std::string e)
       menu.set_x(10);
       menu.set_y(10);
    }
-   if (e == SET_FILE_PREVIEW_TO_A_FILE_FROM_THE_CURRENT_SELECTION)
+   if (e == COMMAND_SET_FILE_PREVIEW_TO_A_FILE_FROM_THE_CURRENT_SELECTION)
    {
       Menu &main_menu = find_menu("main_menu");
       Menu &file_preview = find_menu("file_preview");
@@ -339,7 +342,7 @@ bool Projekt::process_event(std::string e)
 
       file_preview.set_options(file_lines);
    }
-   if (e == SAVE_MENU_CONTENTS_TO_FILE)
+   if (e == COMMAND_SAVE_MENU_CONTENTS_TO_FILE)
    {
       Menu &menu = find_menu("main_menu");
       std::vector<std::string> options = menu.get_options();
@@ -349,7 +352,7 @@ bool Projekt::process_event(std::string e)
 
       file_put_contents("tmp/output_list_of_components.txt", result_to_write_to_file.str());
    }
-   if (e == BEEBOT_SETUP_BLAST_COMPONENT_COMMAND)
+   if (e == COMMAND_BEEBOT_SETUP_BLAST_COMPONENT_COMMAND)
    {
       Menu &menu = find_menu("main_menu");
       std::string trimmed = Blast::String::Trimmer(menu.current_selection()).trim();
