@@ -17,8 +17,7 @@ namespace Blast
       DirectoryCreator(std::vector<std::string> directory_components={}, bool path_is_absolute=false);
       ~DirectoryCreator();
 
-
-   bool create();
+      bool create();
    };
 }
 

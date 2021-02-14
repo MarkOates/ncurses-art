@@ -12,8 +12,7 @@ public:
    EpicDarkFont();
    ~EpicDarkFont();
 
-
-std::string run();
+   std::string run();
 };
 
 

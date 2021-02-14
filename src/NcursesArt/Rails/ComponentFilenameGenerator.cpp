@@ -29,10 +29,9 @@ std::string ComponentFilenameGenerator::get_component_basename()
 
 std::string ComponentFilenameGenerator::get_model_filename()
 {
-std::stringstream result;
-result << "app/models/" << component_basename << ".rb"; 
-return result.str();
-
+   std::stringstream result;
+   result << "app/models/" << component_basename << ".rb"; 
+   return result.str();
 }
 } // namespace Rails
 } // namespace NcursesArt

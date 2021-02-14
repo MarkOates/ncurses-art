@@ -14,8 +14,7 @@ public:
    ASCIICharacterRenderer();
    ~ASCIICharacterRenderer();
 
-
-int draw_character(std::map<char, std::vector<std::string>> letters={}, char c='a', int x=0, int y=0);
+   int draw_character(std::map<char, std::vector<std::string>> letters={}, char c='a', int x=0, int y=0);
 };
 
 

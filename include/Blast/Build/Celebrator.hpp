@@ -16,8 +16,7 @@ namespace Blast
          Celebrator();
          ~Celebrator();
 
-
-      std::string generate_full_width_output_banner(std::string message="", int width=80);
+         std::string generate_full_width_output_banner(std::string message="", int width=80);
       };
    }
 }

@@ -21,7 +21,6 @@ public:
    void set_image_filename(std::string image_filename);
    void set_correct_answer(std::string correct_answer);
    void set_incorrect_answers(std::vector<std::string> incorrect_answers);
-
    std::string get_question();
    std::string get_image_filename();
    std::string get_correct_answer();

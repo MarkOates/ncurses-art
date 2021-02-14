@@ -15,9 +15,8 @@ public:
    ~Quiz();
 
    void set_questions(std::vector<Question> questions);
-
    std::vector<Question> get_questions();
-void shuffle_questions();
+   void shuffle_questions();
 };
 
 

@@ -14,8 +14,7 @@ public:
    OrigamiMommyFontLoader();
    ~OrigamiMommyFontLoader();
 
-
-std::map<char, std::vector<std::string>> load();
+   std::map<char, std::vector<std::string>> load();
 };
 
 

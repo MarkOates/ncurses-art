@@ -27,8 +27,7 @@ std::string FileExistenceChecker::get_filename()
 
 bool FileExistenceChecker::exists()
 {
-return std::filesystem::exists(filename);
-
+   return std::filesystem::exists(filename);
 }
 } // namespace Blast
 

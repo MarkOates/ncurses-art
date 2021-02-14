@@ -14,9 +14,8 @@ public:
    SmallFontLoader();
    ~SmallFontLoader();
 
-
-std::string sanitize_string(std::string unfiltered_phrase="");
-std::map<char, std::vector<std::string>> load();
+   std::string sanitize_string(std::string unfiltered_phrase="");
+   std::map<char, std::vector<std::string>> load();
 };
 
 

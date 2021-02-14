@@ -12,8 +12,7 @@ public:
    Checkbox();
    ~Checkbox();
 
-
-std::string run();
+   std::string run();
 };
 
 

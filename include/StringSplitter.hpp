@@ -15,8 +15,7 @@ public:
    StringSplitter(std::string string="", char delimiter=' ');
    ~StringSplitter();
 
-
-std::vector<std::string> split();
+   std::vector<std::string> split();
 };
 
 

@@ -21,9 +21,8 @@ DirectoryExistenceChecker::~DirectoryExistenceChecker()
 
 bool DirectoryExistenceChecker::exists()
 {
-struct stat info;
-return stat(directory_name.c_str(), &info) == 0 && S_ISDIR(info.st_mode);
-
+   struct stat info;
+   return stat(directory_name.c_str(), &info) == 0 && S_ISDIR(info.st_mode);
 }
 } // namespace Blast
 

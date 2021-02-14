@@ -16,10 +16,9 @@ public:
    QuizYAMLLoader(Quiz* quiz=nullptr, std::string yaml_filename="");
    ~QuizYAMLLoader();
 
-
    std::string get_yaml_filename();
-bool load();
-std::string get_type_string(YAML::Node node=YAML::Node());
+   bool load();
+   std::string get_type_string(YAML::Node node=YAML::Node());
 };
 
 

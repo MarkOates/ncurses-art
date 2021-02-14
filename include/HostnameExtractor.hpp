@@ -12,8 +12,7 @@ public:
    HostnameExtractor();
    ~HostnameExtractor();
 
-
-std::string get_computer_name();
+   std::string get_computer_name();
 };
 
 

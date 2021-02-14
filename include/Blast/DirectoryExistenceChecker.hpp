@@ -15,8 +15,7 @@ namespace Blast
       DirectoryExistenceChecker(std::string directory_name="");
       ~DirectoryExistenceChecker();
 
-
-   bool exists();
+      bool exists();
    };
 }
 

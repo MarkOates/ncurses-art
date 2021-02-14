@@ -16,8 +16,7 @@ namespace Blast
       FileLastWriteTime(std::string filename="");
       ~FileLastWriteTime();
 
-
-   std::time_t last_write_time();
+      std::time_t last_write_time();
    };
 }
 

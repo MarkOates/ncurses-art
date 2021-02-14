@@ -33,11 +33,10 @@ std::vector<Question> Quiz::get_questions()
 
 void Quiz::shuffle_questions()
 {
-std::random_device rd;
-std::mt19937 g(rd());
-std::shuffle(questions.begin(), questions.end(), g);
-std::shuffle(questions.begin(), questions.end(), g);
-
+   std::random_device rd;
+   std::mt19937 g(rd());
+   std::shuffle(questions.begin(), questions.end(), g);
+   std::shuffle(questions.begin(), questions.end(), g);
 }
 
 
