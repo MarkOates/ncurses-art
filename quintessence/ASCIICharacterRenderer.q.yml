@@ -1,4 +1,6 @@
 functions:
+
+
   - name: draw_character
     parameters:
       - name: letters
@@ -42,12 +44,20 @@ functions:
       }
 
       return letter_width/3;               // I have *no* idea why, but the letters have a width 3x as long.
+
+
 function_body_symbol_dependencies:
+
+
   - mvaddnstr
   - std::map
   - std::vector
   - std::string
+
+
 dependencies:
+
+
   - symbol: std::map<char, std::vector<std::string>>
     headers: [ 'map', 'vector', 'string' ]
   - symbol: std::map
