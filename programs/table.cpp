@@ -7,6 +7,8 @@
 #define INITIALIZE "INITIALIZE"
 
 
+#include <functional>
+
 class Program
 {
 private:
