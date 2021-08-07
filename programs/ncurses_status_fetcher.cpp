@@ -217,6 +217,9 @@ std::string get_status_icon_and_text(final_status_t status, int num_local_branch
 {
    switch (status)
    {
+   case NONE:
+      return "⧄  none";
+      break;
    case UNPROCESSED:
       return "▫️  unprocessed";
       break;
@@ -278,36 +281,37 @@ void initialize()
 
       projects = {
          { ".dotfiles",        { false, ProjectStatus(".dotfiles") } },
-         //{ "Adventures of Beary",  { false, ProjectStatus("adventures-of-beary") } },
          { "union",            { false, ProjectStatus("union") } },
+         { "allegro_flare",    { false, ProjectStatus("allegro_flare") } },
+         //{ "beebot",           { false, ProjectStatus("beebot") } },
+         { "blast",            { false, ProjectStatus("blast") } },
+         //{ "first_vim_plugin", { false, ProjectStatus("first_vim_plugin") } },
+         { "hexagon",          { false, ProjectStatus("hexagon") } },
+         //{ "lightracer-max",       { false, ProjectStatus("lightracer-max") } },
+         { "me",               { false, ProjectStatus("me") } },
+         { "ncurses-art",      { false, ProjectStatus("ncurses-art") } },
+         { "Releaser",      { false, ProjectStatus("Releaser") } },
+         { "Peri",      { false, ProjectStatus("Peri") } },
+         { "oatescodes",       { false, ProjectStatus("oatescodes") } },
+         //{ "tilemap",              { false, ProjectStatus("tilemap") } },
+         //{ "tileo",                { false, ProjectStatus("tileo") } },
+         //{ "motris",               { false, ProjectStatus("motris") } },
+         //{ "DragonWrath",      { false, ProjectStatus("DragonWrath") } },
+         //{ "Adventures of Beary",  { false, ProjectStatus("adventures-of-beary") } },
          //{ "Alex Park",            { false, ProjectStatus("AlexPark") } },
-         { "HomeServer",       { false, ProjectStatus("HomeServer") } },
+         //{ "HomeServer",       { false, ProjectStatus("HomeServer") } },
          //{ "Slug3D",               { false, ProjectStatus("slug_3d") } },
          //{ "LabyrinthOfLore",  { false, ProjectStatus("LabyrinthOfLore") } },
          //{ "allegro-planet",   { false, ProjectStatus("allegro-planet") } },
-         { "allegro_flare",    { false, ProjectStatus("allegro_flare") } },
          //{ "flare_network",    { false, ProjectStatus("flare_network") } },
          //{ "allegroflare.github.io", { false, ProjectStatus("allegroflare.github.io") } },
          //{ "beary2d",              { false, ProjectStatus("beary2d") } },
-         { "beebot",           { false, ProjectStatus("beebot") } },
-         { "blast",            { false, ProjectStatus("blast") } },
          //{ "crayola",          { false, ProjectStatus("crayola") } },
          //{ "crayola-client",   { false, ProjectStatus("crayola-client") } },
          //{ "disclife",         { false, ProjectStatus("disclife") } },
          //{ "dungeon",              { false, ProjectStatus("dungeon") } },
-         { "first_vim_plugin", { false, ProjectStatus("first_vim_plugin") } },
-         { "fullscore",        { false, ProjectStatus("fullscore") } },
-         { "Solitare",          { false, ProjectStatus("Solitare") } },
-         { "hexagon",          { false, ProjectStatus("hexagon") } },
-         { "lightracer-max",       { false, ProjectStatus("lightracer-max") } },
-         { "me",               { false, ProjectStatus("me") } },
-         { "motris",               { false, ProjectStatus("motris") } },
-         { "ncurses-art",      { false, ProjectStatus("ncurses-art") } },
-         { "Releaser",      { false, ProjectStatus("Releaser") } },
-         { "DragonWrath",      { false, ProjectStatus("DragonWrath") } },
-         { "oatescodes",       { false, ProjectStatus("oatescodes") } },
-         { "tilemap",              { false, ProjectStatus("tilemap") } },
-         { "tileo",                { false, ProjectStatus("tileo") } },
+         //{ "fullscore",        { false, ProjectStatus("fullscore") } },
+         //{ "Solitare",          { false, ProjectStatus("Solitare") } },
       };
 
       emit_event(REFRESH_OUTPUT_REPORT);
