@@ -291,7 +291,7 @@ void initialize()
          { "me",               { false, ProjectStatus("me") } },
          { "ncurses-art",      { false, ProjectStatus("ncurses-art") } },
          { "Releaser",      { false, ProjectStatus("Releaser") } },
-         { "Peri",      { false, ProjectStatus("Peri") } },
+         //{ "Peri",      { false, ProjectStatus("Peri") } },
          { "oatescodes",       { false, ProjectStatus("oatescodes") } },
          //{ "tilemap",              { false, ProjectStatus("tilemap") } },
          //{ "tileo",                { false, ProjectStatus("tileo") } },
