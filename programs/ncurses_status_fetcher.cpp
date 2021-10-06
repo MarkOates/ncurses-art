@@ -283,7 +283,7 @@ void initialize()
          { ".dotfiles",        { false, ProjectStatus(".dotfiles") } },
          { "union",            { false, ProjectStatus("union") } },
          { "allegro_flare",    { false, ProjectStatus("allegro_flare") } },
-         //{ "beebot",           { false, ProjectStatus("beebot") } },
+         { "beebot",           { false, ProjectStatus("beebot") } },
          { "blast",            { false, ProjectStatus("blast") } },
          //{ "first_vim_plugin", { false, ProjectStatus("first_vim_plugin") } },
          { "hexagon",          { false, ProjectStatus("hexagon") } },
