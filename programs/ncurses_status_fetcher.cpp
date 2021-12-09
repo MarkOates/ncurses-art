@@ -294,7 +294,7 @@ void initialize()
          //{ "Peri",      { false, ProjectStatus("Peri") } },
          { "oatescodes",       { false, ProjectStatus("oatescodes") } },
          //{ "tilemap",              { false, ProjectStatus("tilemap") } },
-         //{ "tileo",                { false, ProjectStatus("tileo") } },
+         { "tileo",                { false, ProjectStatus("tileo") } },
          //{ "motris",               { false, ProjectStatus("motris") } },
          //{ "DragonWrath",      { false, ProjectStatus("DragonWrath") } },
          //{ "Adventures of Beary",  { false, ProjectStatus("adventures-of-beary") } },
