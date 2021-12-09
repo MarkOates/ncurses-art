@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <head>
 <style>
+*
+{
+  font-family: 'Arial';
+  padding: 3px 20px;
+}
 table td
 {
   padding: 3px 20px;
@@ -38,7 +43,6 @@ table td
 
 .component h3
 {
-  font-family: 'Arial';
 }
 </style>
 </head>
@@ -46,53 +50,21 @@ table td
 <h1>TOC</h1>
 <ul>
   <li><a href="#quintessence/ASCIICharacterRenderer.q.yml">quintessence/ASCIICharacterRenderer.q.yml</a></li>
-</ul>
-<ul>
   <li><a href="#quintessence/Blast/String/Trimmer.q.yml">quintessence/Blast/String/Trimmer.q.yml</a></li>
-</ul>
-<ul>
   <li><a href="#quintessence/Checkbox.q.yml">quintessence/Checkbox.q.yml</a></li>
-</ul>
-<ul>
   <li><a href="#quintessence/EpicDarkFont.q.yml">quintessence/EpicDarkFont.q.yml</a></li>
-</ul>
-<ul>
   <li><a href="#quintessence/HostnameExtractor.q.yml">quintessence/HostnameExtractor.q.yml</a></li>
-</ul>
-<ul>
   <li><a href="#quintessence/NcursesArt/GithubRepoStatusFetcher.q.yml">quintessence/NcursesArt/GithubRepoStatusFetcher.q.yml</a></li>
-</ul>
-<ul>
   <li><a href="#quintessence/NcursesArt/Rails/ComponentFilenameGenerator.q.yml">quintessence/NcursesArt/Rails/ComponentFilenameGenerator.q.yml</a></li>
-</ul>
-<ul>
   <li><a href="#quintessence/OrigamiMommyFontLoader.q.yml">quintessence/OrigamiMommyFontLoader.q.yml</a></li>
-</ul>
-<ul>
   <li><a href="#quintessence/ProjectComponentBasenameExtractor.q.yml">quintessence/ProjectComponentBasenameExtractor.q.yml</a></li>
-</ul>
-<ul>
   <li><a href="#quintessence/ProjectFilenameGenerator.q.yml">quintessence/ProjectFilenameGenerator.q.yml</a></li>
-</ul>
-<ul>
   <li><a href="#quintessence/ProjectListBuilder.q.yml">quintessence/ProjectListBuilder.q.yml</a></li>
-</ul>
-<ul>
   <li><a href="#quintessence/Question.q.yml">quintessence/Question.q.yml</a></li>
-</ul>
-<ul>
   <li><a href="#quintessence/Quiz.q.yml">quintessence/Quiz.q.yml</a></li>
-</ul>
-<ul>
   <li><a href="#quintessence/QuizYAMLLoader.q.yml">quintessence/QuizYAMLLoader.q.yml</a></li>
-</ul>
-<ul>
   <li><a href="#quintessence/SmallFontLoader.q.yml">quintessence/SmallFontLoader.q.yml</a></li>
-</ul>
-<ul>
   <li><a href="#quintessence/StringSplitter.q.yml">quintessence/StringSplitter.q.yml</a></li>
-</ul>
-<ul>
   <li><a href="#quintessence/StringVectorIntersection.q.yml">quintessence/StringVectorIntersection.q.yml</a></li>
 </ul>
 <h1>Components</h1>
@@ -648,4 +620,92 @@ table td
     </table>
   </div>
 </ul>
+<h1>Dependents</h1>
+<pre>
+{
+  "std::map<char, std::vector<std::string>>": [
+    "quintessence/ASCIICharacterRenderer.q.yml",
+    "quintessence/OrigamiMommyFontLoader.q.yml",
+    "quintessence/SmallFontLoader.q.yml"
+  ],
+  "std::map": [
+    "quintessence/ASCIICharacterRenderer.q.yml",
+    "quintessence/OrigamiMommyFontLoader.q.yml",
+    "quintessence/SmallFontLoader.q.yml"
+  ],
+  "std::vector": [
+    "quintessence/ASCIICharacterRenderer.q.yml",
+    "quintessence/OrigamiMommyFontLoader.q.yml",
+    "quintessence/SmallFontLoader.q.yml"
+  ],
+  "std::string": [
+    "quintessence/ASCIICharacterRenderer.q.yml"
+  ],
+  "char": [
+    "quintessence/ASCIICharacterRenderer.q.yml",
+    "quintessence/StringSplitter.q.yml"
+  ],
+  "mvaddnstr": [
+    "quintessence/ASCIICharacterRenderer.q.yml"
+  ],
+  "std::find_if": [
+    "quintessence/Blast/String/Trimmer.q.yml"
+  ],
+  "Blast::ShellCommandExecutorWithCallback": [
+    "quintessence/HostnameExtractor.q.yml",
+    "quintessence/NcursesArt/GithubRepoStatusFetcher.q.yml"
+  ],
+  "Blast::String::Trimmer": [
+    "quintessence/HostnameExtractor.q.yml",
+    "quintessence/NcursesArt/GithubRepoStatusFetcher.q.yml"
+  ],
+  "Blast::StringSplitter": [
+    "quintessence/NcursesArt/GithubRepoStatusFetcher.q.yml"
+  ],
+  "std::stringstream": [
+    "quintessence/NcursesArt/GithubRepoStatusFetcher.q.yml"
+  ],
+  "std::sort": [
+    "quintessence/NcursesArt/GithubRepoStatusFetcher.q.yml",
+    "quintessence/StringVectorIntersection.q.yml"
+  ],
+  "std::cerr": [
+    "quintessence/NcursesArt/GithubRepoStatusFetcher.q.yml"
+  ],
+  "std::endl": [
+    "quintessence/NcursesArt/GithubRepoStatusFetcher.q.yml"
+  ],
+  "std::vector<std::string>": [
+    "quintessence/NcursesArt/GithubRepoStatusFetcher.q.yml",
+    "quintessence/StringVectorIntersection.q.yml"
+  ],
+  "std::pair<std::string, std::string>": [
+    "quintessence/ProjectComponentBasenameExtractor.q.yml"
+  ],
+  "std::filesystem::directory_iterator": [
+    "quintessence/ProjectListBuilder.q.yml"
+  ],
+  "std::vector<Question>": [
+    "quintessence/Quiz.q.yml"
+  ],
+  "std::random_device": [
+    "quintessence/Quiz.q.yml"
+  ],
+  "std::mt19937": [
+    "quintessence/Quiz.q.yml"
+  ],
+  "std::shuffle": [
+    "quintessence/Quiz.q.yml"
+  ],
+  "Quiz*": [
+    "quintessence/QuizYAMLLoader.q.yml"
+  ],
+  "YAML::Node": [
+    "quintessence/QuizYAMLLoader.q.yml"
+  ],
+  "std::set_intersection": [
+    "quintessence/StringVectorIntersection.q.yml"
+  ]
+}
+</pre>
 </body>
