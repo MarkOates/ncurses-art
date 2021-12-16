@@ -1,0 +1,85 @@
+{
+  "std/map<char, std/vector<std/string>>": [
+    "ASCIICharacterRenderer",
+    "OrigamiMommyFontLoader",
+    "SmallFontLoader"
+  ],
+  "std/map": [
+    "ASCIICharacterRenderer",
+    "OrigamiMommyFontLoader",
+    "SmallFontLoader"
+  ],
+  "std/vector": [
+    "ASCIICharacterRenderer",
+    "OrigamiMommyFontLoader",
+    "SmallFontLoader"
+  ],
+  "std/string": [
+    "ASCIICharacterRenderer"
+  ],
+  "char": [
+    "ASCIICharacterRenderer",
+    "StringSplitter"
+  ],
+  "mvaddnstr": [
+    "ASCIICharacterRenderer"
+  ],
+  "std/find_if": [
+    "Blast/String/Trimmer"
+  ],
+  "Blast/ShellCommandExecutorWithCallback": [
+    "HostnameExtractor",
+    "NcursesArt/GithubRepoStatusFetcher"
+  ],
+  "Blast/String/Trimmer": [
+    "HostnameExtractor",
+    "NcursesArt/GithubRepoStatusFetcher"
+  ],
+  "Blast/StringSplitter": [
+    "NcursesArt/GithubRepoStatusFetcher"
+  ],
+  "std/stringstream": [
+    "NcursesArt/GithubRepoStatusFetcher"
+  ],
+  "std/sort": [
+    "NcursesArt/GithubRepoStatusFetcher",
+    "StringVectorIntersection"
+  ],
+  "std/cerr": [
+    "NcursesArt/GithubRepoStatusFetcher"
+  ],
+  "std/endl": [
+    "NcursesArt/GithubRepoStatusFetcher"
+  ],
+  "std/vector<std/string>": [
+    "NcursesArt/GithubRepoStatusFetcher",
+    "StringVectorIntersection"
+  ],
+  "std/pair<std/string, std/string>": [
+    "ProjectComponentBasenameExtractor"
+  ],
+  "std/filesystem/directory_iterator": [
+    "ProjectListBuilder"
+  ],
+  "std/vector<Question>": [
+    "Quiz"
+  ],
+  "std/random_device": [
+    "Quiz"
+  ],
+  "std/mt19937": [
+    "Quiz"
+  ],
+  "std/shuffle": [
+    "Quiz"
+  ],
+  "Quiz": [
+    "QuizYAMLLoader"
+  ],
+  "YAML/Node": [
+    "QuizYAMLLoader"
+  ],
+  "std/set_intersection": [
+    "StringVectorIntersection"
+  ]
+}

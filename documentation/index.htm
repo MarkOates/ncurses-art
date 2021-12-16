@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<head>
+<style>
+*
+{
+  font-family: 'Arial';
+  padding: 3px 20px;
+}
+table td
+{
+  padding: 3px 20px;
+}
+.property
+{
+  color: blue;
+}
+.private_property
+{
+  color: lightblue;
+}
+
+.method
+{
+  color: red;
+}
+
+.private_method
+{
+  color: pink;
+}
+
+.dependency
+{
+  color: green;
+}
+
+.component
+{
+  padding: 20 10 20 10;
+  margin: 20 10 20 10;
+  background-color: #dfdfdf;
+}
+
+.component h3
+{
+}
+</style>
+</head>
+<body>
+<h1>TOC</h1>
+<ul>
+  <li><a href="#quintessence/ASCIICharacterRenderer.q.yml">quintessence/ASCIICharacterRenderer.q.yml</a></li>
+  <li><a href="#quintessence/Blast/String/Trimmer.q.yml">quintessence/Blast/String/Trimmer.q.yml</a></li>
+  <li><a href="#quintessence/Checkbox.q.yml">quintessence/Checkbox.q.yml</a></li>
+  <li><a href="#quintessence/EpicDarkFont.q.yml">quintessence/EpicDarkFont.q.yml</a></li>
+  <li><a href="#quintessence/HostnameExtractor.q.yml">quintessence/HostnameExtractor.q.yml</a></li>
+  <li><a href="#quintessence/NcursesArt/GithubRepoStatusFetcher.q.yml">quintessence/NcursesArt/GithubRepoStatusFetcher.q.yml</a></li>
+  <li><a href="#quintessence/NcursesArt/Rails/ComponentFilenameGenerator.q.yml">quintessence/NcursesArt/Rails/ComponentFilenameGenerator.q.yml</a></li>
+  <li><a href="#quintessence/OrigamiMommyFontLoader.q.yml">quintessence/OrigamiMommyFontLoader.q.yml</a></li>
+  <li><a href="#quintessence/ProjectComponentBasenameExtractor.q.yml">quintessence/ProjectComponentBasenameExtractor.q.yml</a></li>
+  <li><a href="#quintessence/ProjectFilenameGenerator.q.yml">quintessence/ProjectFilenameGenerator.q.yml</a></li>
+  <li><a href="#quintessence/ProjectListBuilder.q.yml">quintessence/ProjectListBuilder.q.yml</a></li>
+  <li><a href="#quintessence/Question.q.yml">quintessence/Question.q.yml</a></li>
+  <li><a href="#quintessence/Quiz.q.yml">quintessence/Quiz.q.yml</a></li>
+  <li><a href="#quintessence/QuizYAMLLoader.q.yml">quintessence/QuizYAMLLoader.q.yml</a></li>
+  <li><a href="#quintessence/SmallFontLoader.q.yml">quintessence/SmallFontLoader.q.yml</a></li>
+  <li><a href="#quintessence/StringSplitter.q.yml">quintessence/StringSplitter.q.yml</a></li>
+  <li><a href="#quintessence/StringVectorIntersection.q.yml">quintessence/StringVectorIntersection.q.yml</a></li>
+</ul>
+<h1>Components</h1>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/ASCIICharacterRenderer.q.yml">quintessence/ASCIICharacterRenderer.q.yml</h3>
+     <table>
+    </table>
+     <table>
+<tr>
+  <td class="method">draw_character(4)</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::map&lt;char, std::vector&lt;std::string&gt;&gt;&quot;, &quot;headers&quot;=&gt;[&quot;map&quot;, &quot;vector&quot;, &quot;string&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::map&quot;, &quot;headers&quot;=&gt;[&quot;map&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::vector&quot;, &quot;headers&quot;=&gt;[&quot;vector&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::string&quot;, &quot;headers&quot;=&gt;[&quot;string&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;char&quot;, &quot;headers&quot;=&gt;[]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;mvaddnstr&quot;, &quot;headers&quot;=&gt;[&quot;ncurses.h&quot;]}</td>
+</tr>
+    </table>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Blast/String/Trimmer.q.yml">quintessence/Blast/String/Trimmer.q.yml</h3>
+     <table>
+<tr>
+  <td class="property">text</td>
+  <td class="property">std::string</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="method">trim()</td>
+</tr>
+<tr>
+  <td class="private_method">ltrim(1)</td>
+</tr>
+<tr>
+  <td class="private_method">rtrim(1)</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::find_if&quot;, &quot;headers&quot;=&gt;[&quot;algorithm&quot;]}</td>
+</tr>
+    </table>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Checkbox.q.yml">quintessence/Checkbox.q.yml</h3>
+     <table>
+    </table>
+     <table>
+<tr>
+  <td class="method">run()</td>
+</tr>
+    </table>
+     <table>
+    </table>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/EpicDarkFont.q.yml">quintessence/EpicDarkFont.q.yml</h3>
+     <table>
+    </table>
+     <table>
+<tr>
+  <td class="method">run()</td>
+</tr>
+    </table>
+     <table>
+    </table>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/HostnameExtractor.q.yml">quintessence/HostnameExtractor.q.yml</h3>
+     <table>
+    </table>
+     <table>
+<tr>
+  <td class="method">get_computer_name()</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::ShellCommandExecutorWithCallback&quot;, &quot;headers&quot;=&gt;[&quot;Blast/ShellCommandExecutorWithCallback.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::String::Trimmer&quot;, &quot;headers&quot;=&gt;[&quot;Blast/String/Trimmer.hpp&quot;]}</td>
+</tr>
+    </table>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/NcursesArt/GithubRepoStatusFetcher.q.yml">quintessence/NcursesArt/GithubRepoStatusFetcher.q.yml</h3>
+     <table>
+<tr>
+  <td class="property">last_captured_output_from_status_request</td>
+  <td class="property">std::string</td>
+</tr>
+<tr>
+  <td class="property">git_status_command</td>
+  <td class="property">std::string</td>
+</tr>
+<tr>
+  <td class="property">git_pull_command</td>
+  <td class="property">std::string</td>
+</tr>
+<tr>
+  <td class="property">git_branch_count_command</td>
+  <td class="property">std::string</td>
+</tr>
+<tr>
+  <td class="property">git_current_branch_command</td>
+  <td class="property">std::string</td>
+</tr>
+<tr>
+  <td class="property">git_remote_branch_names_command</td>
+  <td class="property">std::string</td>
+</tr>
+<tr>
+  <td class="property">component_quintessence_filenames_command</td>
+  <td class="property">std::string</td>
+</tr>
+<tr>
+  <td class="property">git_current_staged_files_command</td>
+  <td class="property">std::string</td>
+</tr>
+<tr>
+  <td class="property">repo_name</td>
+  <td class="property"></td>
+</tr>
+<tr>
+  <td class="property">repos_directory</td>
+  <td class="property">std::string</td>
+</tr>
+<tr>
+  <td class="property">only_poll_once</td>
+  <td class="property">bool</td>
+</tr>
+<tr>
+  <td class="property">status_polled</td>
+  <td class="property">bool</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="method">local_repo_exists()</td>
+</tr>
+<tr>
+  <td class="method">has_file_changes()</td>
+</tr>
+<tr>
+  <td class="method">has_untracked_files()</td>
+</tr>
+<tr>
+  <td class="method">is_the_repo_in_sync_with_remote()</td>
+</tr>
+<tr>
+  <td class="method">is_the_local_repo_ahead()</td>
+</tr>
+<tr>
+  <td class="method">is_the_local_repo_behind()</td>
+</tr>
+<tr>
+  <td class="method">get_branch_count()</td>
+</tr>
+<tr>
+  <td class="method">get_branch_names_at_remote()</td>
+</tr>
+<tr>
+  <td class="method">is_current_branch_master()</td>
+</tr>
+<tr>
+  <td class="method">get_current_branch_name_command()</td>
+</tr>
+<tr>
+  <td class="method">get_pull_command()</td>
+</tr>
+<tr>
+  <td class="method">get_status_command()</td>
+</tr>
+<tr>
+  <td class="method">get_current_staged_files_command()</td>
+</tr>
+<tr>
+  <td class="method">get_current_staged_files()</td>
+</tr>
+<tr>
+  <td class="method">get_current_branch_name()</td>
+</tr>
+<tr>
+  <td class="method">get_quintessence_filenames()</td>
+</tr>
+<tr>
+  <td class="method">have_the_local_and_remote_repos_diverged()</td>
+</tr>
+<tr>
+  <td class="method">last_captured_output_from_status_request_contains_string(1)</td>
+</tr>
+<tr>
+  <td class="method">poll_status()</td>
+</tr>
+<tr>
+  <td class="method">execute_command(1)</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::StringSplitter&quot;, &quot;headers&quot;=&gt;[&quot;Blast/StringSplitter.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::String::Trimmer&quot;, &quot;headers&quot;=&gt;[&quot;Blast/String/Trimmer.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::stringstream&quot;, &quot;headers&quot;=&gt;[&quot;sstream&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::sort&quot;, &quot;headers&quot;=&gt;[&quot;algorithm&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::cerr&quot;, &quot;headers&quot;=&gt;[&quot;iostream&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::endl&quot;, &quot;headers&quot;=&gt;[&quot;iostream&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::ShellCommandExecutorWithCallback&quot;, &quot;headers&quot;=&gt;[&quot;Blast/ShellCommandExecutorWithCallback.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::vector&lt;std::string&gt;&quot;, &quot;headers&quot;=&gt;[&quot;vector&quot;, &quot;string&quot;]}</td>
+</tr>
+    </table>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/NcursesArt/Rails/ComponentFilenameGenerator.q.yml">quintessence/NcursesArt/Rails/ComponentFilenameGenerator.q.yml</h3>
+     <table>
+<tr>
+  <td class="property">component_basename</td>
+  <td class="property">std::string</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="method">get_model_filename()</td>
+</tr>
+    </table>
+     <table>
+    </table>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/OrigamiMommyFontLoader.q.yml">quintessence/OrigamiMommyFontLoader.q.yml</h3>
+     <table>
+    </table>
+     <table>
+<tr>
+  <td class="method">load()</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::map&lt;char, std::vector&lt;std::string&gt;&gt;&quot;, &quot;headers&quot;=&gt;[&quot;map&quot;, &quot;vector&quot;, &quot;string&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::vector&quot;, &quot;headers&quot;=&gt;[&quot;vector&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::map&quot;, &quot;headers&quot;=&gt;[&quot;map&quot;]}</td>
+</tr>
+    </table>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/ProjectComponentBasenameExtractor.q.yml">quintessence/ProjectComponentBasenameExtractor.q.yml</h3>
+     <table>
+<tr>
+  <td class="property">filename</td>
+  <td class="property">std::string</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="method">identify_file_type()</td>
+</tr>
+<tr>
+  <td class="method">identify_component_basename()</td>
+</tr>
+<tr>
+  <td class="method">extract_component()</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::pair&lt;std::string, std::string&gt;&quot;, &quot;headers&quot;=&gt;[&quot;string&quot;]}</td>
+</tr>
+    </table>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/ProjectFilenameGenerator.q.yml">quintessence/ProjectFilenameGenerator.q.yml</h3>
+     <table>
+<tr>
+  <td class="property">basename</td>
+  <td class="property"></td>
+</tr>
+<tr>
+  <td class="property">underscores</td>
+  <td class="property">bool</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="method">generate_quintessence_filename()</td>
+</tr>
+<tr>
+  <td class="method">generate_source_filename()</td>
+</tr>
+<tr>
+  <td class="method">generate_header_filename()</td>
+</tr>
+<tr>
+  <td class="method">generate_test_src_filename()</td>
+</tr>
+<tr>
+  <td class="method">generate_example_src_filename()</td>
+</tr>
+<tr>
+  <td class="method">generate_obj_binary()</td>
+</tr>
+<tr>
+  <td class="method">generate_test_binary()</td>
+</tr>
+<tr>
+  <td class="method">generate_example_binary()</td>
+</tr>
+    </table>
+     <table>
+    </table>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/ProjectListBuilder.q.yml">quintessence/ProjectListBuilder.q.yml</h3>
+     <table>
+<tr>
+  <td class="property">repos_directory</td>
+  <td class="property">std::string</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="method">get_directories()</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::filesystem::directory_iterator&quot;, &quot;headers&quot;=&gt;[&quot;filesystem&quot;]}</td>
+</tr>
+    </table>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Question.q.yml">quintessence/Question.q.yml</h3>
+     <table>
+<tr>
+  <td class="property">question</td>
+  <td class="property">std::string</td>
+</tr>
+<tr>
+  <td class="property">image_filename</td>
+  <td class="property">std::string</td>
+</tr>
+<tr>
+  <td class="property">correct_answer</td>
+  <td class="property">std::string</td>
+</tr>
+<tr>
+  <td class="property">incorrect_answers</td>
+  <td class="property">std::vector&lt;std::string&gt;</td>
+</tr>
+    </table>
+     <table>
+    </table>
+     <table>
+    </table>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Quiz.q.yml">quintessence/Quiz.q.yml</h3>
+     <table>
+<tr>
+  <td class="property">questions</td>
+  <td class="property">std::vector&lt;Question&gt;</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="method">shuffle_questions()</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::vector&lt;Question&gt;&quot;, &quot;headers&quot;=&gt;[&quot;vector&quot;, &quot;Question.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::random_device&quot;, &quot;headers&quot;=&gt;[&quot;random&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::mt19937&quot;, &quot;headers&quot;=&gt;[&quot;random&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::shuffle&quot;, &quot;headers&quot;=&gt;[&quot;algorithm&quot;]}</td>
+</tr>
+    </table>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/QuizYAMLLoader.q.yml">quintessence/QuizYAMLLoader.q.yml</h3>
+     <table>
+<tr>
+  <td class="property">quiz</td>
+  <td class="property">Quiz*</td>
+</tr>
+<tr>
+  <td class="property">yaml_filename</td>
+  <td class="property">std::string</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="method">load()</td>
+</tr>
+<tr>
+  <td class="method">get_type_string(1)</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Quiz*&quot;, &quot;headers&quot;=&gt;[&quot;Quiz.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;YAML::Node&quot;, &quot;headers&quot;=&gt;[&quot;yaml-cpp/yaml.h&quot;], &quot;include_directories&quot;=&gt;[&quot;yaml-cpp/include&quot;], &quot;linked_directories&quot;=&gt;[&quot;yaml-cpp/build&quot;]}</td>
+</tr>
+    </table>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/SmallFontLoader.q.yml">quintessence/SmallFontLoader.q.yml</h3>
+     <table>
+    </table>
+     <table>
+<tr>
+  <td class="method">sanitize_string(1)</td>
+</tr>
+<tr>
+  <td class="method">load()</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::map&lt;char, std::vector&lt;std::string&gt;&gt;&quot;, &quot;headers&quot;=&gt;[&quot;map&quot;, &quot;vector&quot;, &quot;string&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::vector&quot;, &quot;headers&quot;=&gt;[&quot;vector&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::map&quot;, &quot;headers&quot;=&gt;[&quot;map&quot;]}</td>
+</tr>
+    </table>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/StringSplitter.q.yml">quintessence/StringSplitter.q.yml</h3>
+     <table>
+<tr>
+  <td class="property">string</td>
+  <td class="property">std::string</td>
+</tr>
+<tr>
+  <td class="property">delimiter</td>
+  <td class="property">char</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="method">split()</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;char&quot;, &quot;headers&quot;=&gt;[]}</td>
+</tr>
+    </table>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/StringVectorIntersection.q.yml">quintessence/StringVectorIntersection.q.yml</h3>
+     <table>
+<tr>
+  <td class="property">v1</td>
+  <td class="property">std::vector&lt;std::string&gt;</td>
+</tr>
+<tr>
+  <td class="property">v2</td>
+  <td class="property">std::vector&lt;std::string&gt;</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="method">intersection()</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::vector&lt;std::string&gt;&quot;, &quot;headers&quot;=&gt;[&quot;vector&quot;, &quot;string&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::sort&quot;, &quot;headers&quot;=&gt;[&quot;algorithm&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::set_intersection&quot;, &quot;headers&quot;=&gt;[&quot;algorithm&quot;]}</td>
+</tr>
+    </table>
+  </div>
+</ul>
+<h1>Dependents</h1>
+<pre>
+{
+  "std/map<char, std/vector<std/string>>": [
+    "ASCIICharacterRenderer",
+    "OrigamiMommyFontLoader",
+    "SmallFontLoader"
+  ],
+  "std/map": [
+    "ASCIICharacterRenderer",
+    "OrigamiMommyFontLoader",
+    "SmallFontLoader"
+  ],
+  "std/vector": [
+    "ASCIICharacterRenderer",
+    "OrigamiMommyFontLoader",
+    "SmallFontLoader"
+  ],
+  "std/string": [
+    "ASCIICharacterRenderer"
+  ],
+  "char": [
+    "ASCIICharacterRenderer",
+    "StringSplitter"
+  ],
+  "mvaddnstr": [
+    "ASCIICharacterRenderer"
+  ],
+  "std/find_if": [
+    "Blast/String/Trimmer"
+  ],
+  "Blast/ShellCommandExecutorWithCallback": [
+    "HostnameExtractor",
+    "NcursesArt/GithubRepoStatusFetcher"
+  ],
+  "Blast/String/Trimmer": [
+    "HostnameExtractor",
+    "NcursesArt/GithubRepoStatusFetcher"
+  ],
+  "Blast/StringSplitter": [
+    "NcursesArt/GithubRepoStatusFetcher"
+  ],
+  "std/stringstream": [
+    "NcursesArt/GithubRepoStatusFetcher"
+  ],
+  "std/sort": [
+    "NcursesArt/GithubRepoStatusFetcher",
+    "StringVectorIntersection"
+  ],
+  "std/cerr": [
+    "NcursesArt/GithubRepoStatusFetcher"
+  ],
+  "std/endl": [
+    "NcursesArt/GithubRepoStatusFetcher"
+  ],
+  "std/vector<std/string>": [
+    "NcursesArt/GithubRepoStatusFetcher",
+    "StringVectorIntersection"
+  ],
+  "std/pair<std/string, std/string>": [
+    "ProjectComponentBasenameExtractor"
+  ],
+  "std/filesystem/directory_iterator": [
+    "ProjectListBuilder"
+  ],
+  "std/vector<Question>": [
+    "Quiz"
+  ],
+  "std/random_device": [
+    "Quiz"
+  ],
+  "std/mt19937": [
+    "Quiz"
+  ],
+  "std/shuffle": [
+    "Quiz"
+  ],
+  "Quiz": [
+    "QuizYAMLLoader"
+  ],
+  "YAML/Node": [
+    "QuizYAMLLoader"
+  ],
+  "std/set_intersection": [
+    "StringVectorIntersection"
+  ]
+}
+</pre>
+</body>

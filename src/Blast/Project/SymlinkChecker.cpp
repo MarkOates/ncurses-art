@@ -31,7 +31,9 @@ SymlinkChecker::~SymlinkChecker()
 bool SymlinkChecker::is_symlink()
 {
    std::filesystem::path path(filename);
-   if (!std::filesystem::exists(path))
+   //if (!std::filesystem::exists(path))
+   return std::filesystem::is_symlink(std::filesystem::symlink_status(path));
+   //if (std::filesystem::is_symlink(std::filesystem::status(path)))
    {
       std::stringstream error_message;
       error_message << "an error occurred when trying to read_symlink_target in "
@@ -40,7 +42,7 @@ bool SymlinkChecker::is_symlink()
       throw std::runtime_error(error_message.str());
    }
 
-   return is_symlink__shell_call_impl();
+   //return is_symlink__shell_call_impl();
 
    // This is the expected implementation below, but std::filesystem::is_symlink is returning false
    // on Windows so these lines are disabled and the shell call is used in its place

@@ -119,7 +119,10 @@ void SourceReleaseBuilder::copy_file(std::string source_filename, std::string de
 std::vector<std::pair<std::string, std::string>> SourceReleaseBuilder::list_symlinks()
 {
    std::string command = std::string("find ") + destination_directory;
-   Blast::ShellCommandExecutorWithCallback executor(command, ShellCommandExecutorWithCallback::simple_silent_callback);
+   Blast::ShellCommandExecutorWithCallback executor(
+      command,
+      ShellCommandExecutorWithCallback::simple_silent_callback
+   );
    std::string executor_result = executor.execute();
    StringSplitter splitter(executor_result, '\n');
 
@@ -136,11 +139,14 @@ std::vector<std::pair<std::string, std::string>> SourceReleaseBuilder::list_syml
       }
    }
 
+   std::sort(result.begin(), result.end());
+
    return result;
 }
 
 void SourceReleaseBuilder::replace_symlinks_with_copies_of_linked_files()
 {
+   std::cout << "Reading symlinks... " << std::endl;
    std::vector<std::pair<std::string, std::string>> symlinks = list_symlinks();
 
    for (auto &symlink : symlinks)
@@ -158,6 +164,8 @@ void SourceReleaseBuilder::replace_symlinks_with_copies_of_linked_files()
 
       copy_file(file_to_copy_source, file_to_copy_destination);
    }
+
+   std::cout << "Finished reading symlinks (" << symlinks.size() << ")." << std::endl;
    return;
 }
 
