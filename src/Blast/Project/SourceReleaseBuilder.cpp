@@ -8,6 +8,7 @@
 #include <Blast/Project/SymlinkChecker.hpp>
 #include <Blast/ShellCommandExecutorWithCallback.hpp>
 #include <Blast/StringSplitter.hpp>
+#include <Blast/Project/ProjectSymlinkFixer.hpp>
 #include <cstdio>
 #include <sstream>
 #include <cstdio>
@@ -56,14 +57,20 @@ void SourceReleaseBuilder::write_file_contents(std::string filename, std::string
 
 std::string SourceReleaseBuilder::get_makefile_content()
 {
-   std::string MAKEFILE_CONTENT = R"HEREDOC(SRC_FILES := $(shell find src -type f)
-   ALLEGRO_LIBS=-lallegro_color -lallegro_font -lallegro_ttf -lallegro_dialog -lallegro_audio -lallegro_acodec -lallegro_primitives -lallegro_image -lallegro -lallegro_main
-   main: $(SRC_FILES)
-   )HEREDOC";
-   MAKEFILE_CONTENT += "\t";
-   MAKEFILE_CONTENT += "g++ -std=c++17 $^ programs/" + project_name + ".cpp -o " + project_name
-                     + " -I./include $(ALLEGRO_LIBS)";
-   return MAKEFILE_CONTENT;
+   std::stringstream MAKEFILE_CONTENT;
+   std::string binary_name = "FadeToWhite"; // project_name
+   MAKEFILE_CONTENT << "SRC_FILES := $(shell find src -type f)"
+                    << std::endl
+                    << "ALLEGRO_LIBS=-lallegro_color -lallegro_font -lallegro_ttf -lallegro_dialog "
+                    << "-lallegro_audio -lallegro_acodec -lallegro_primitives -lallegro_image -lallegro "
+                    << "-lallegro_main" << std::endl
+                    << std::endl
+                    << "main: $(SRC_FILES)" << std::endl
+                    << "\t"
+                    << "g++ -std=c++17 $^ programs/" << project_name << ".cpp -o " << binary_name
+                    << " -I./include $(ALLEGRO_LIBS)"
+                    ;
+   return MAKEFILE_CONTENT.str();
 }
 
 std::string SourceReleaseBuilder::get_pinfo_content()
@@ -132,7 +139,9 @@ std::vector<std::pair<std::string, std::string>> SourceReleaseBuilder::list_syml
    for (auto &filename : filenames)
    {
       Blast::Project::SymlinkChecker symlink_checker(filename);
-      if (symlink_checker.is_symlink())
+      bool symlink_status = symlink_checker.is_symlink();
+
+      if (symlink_status)
       {
          std::pair<std::string, std::string> this_symlink_info{ filename, symlink_checker.read_symlink_target() };
          result.push_back(this_symlink_info);
@@ -142,6 +151,13 @@ std::vector<std::pair<std::string, std::string>> SourceReleaseBuilder::list_syml
    std::sort(result.begin(), result.end());
 
    return result;
+}
+
+void SourceReleaseBuilder::fix_symlink_targets_from_relative_to_absolute()
+{
+   Blast::Project::ProjectSymlinkFixer symlink_fixer(destination_directory);
+   symlink_fixer.run();
+   return;
 }
 
 void SourceReleaseBuilder::replace_symlinks_with_copies_of_linked_files()
@@ -253,6 +269,10 @@ void SourceReleaseBuilder::generate_source_release()
    std::cout << "Creating rudimentary Makefile...";
    std::string makefile_full_filename = destination_directory + "/Makefile";
    write_file_contents(makefile_full_filename, get_makefile_content());
+   std::cout << "done." << std::endl;
+
+   std::cout << "Fixing symlinks from relative to absolute...";
+   fix_symlink_targets_from_relative_to_absolute();
    std::cout << "done." << std::endl;
 
    replace_symlinks_with_copies_of_linked_files();

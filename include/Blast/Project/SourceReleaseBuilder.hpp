@@ -27,6 +27,7 @@ namespace Blast
          std::string get_pinfo_content();
          void copy_file(std::string source_filename="", std::string destination_filename="");
          std::vector<std::pair<std::string, std::string>> list_symlinks();
+         void fix_symlink_targets_from_relative_to_absolute();
          void replace_symlinks_with_copies_of_linked_files();
          std::string get_source_release_folder_name();
          std::string get_macos_release_folder_name();

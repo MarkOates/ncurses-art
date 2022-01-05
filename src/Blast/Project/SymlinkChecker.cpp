@@ -1,6 +1,7 @@
 
 
 #include <Blast/Project/SymlinkChecker.hpp>
+#include <iostream>
 #include <sstream>
 #include <filesystem>
 #include <filesystem>
@@ -31,8 +32,13 @@ SymlinkChecker::~SymlinkChecker()
 bool SymlinkChecker::is_symlink()
 {
    std::filesystem::path path(filename);
-   //if (!std::filesystem::exists(path))
-   return std::filesystem::is_symlink(std::filesystem::symlink_status(path));
+   if (!std::filesystem::exists(path)) return false;
+
+   bool symlink_status = std::filesystem::is_symlink(std::filesystem::symlink_status(path));
+
+   return symlink_status;
+
+   //std::filesystem::is_symlink(std::filesystem::symlink_status(path));
    //if (std::filesystem::is_symlink(std::filesystem::status(path)))
    {
       std::stringstream error_message;
