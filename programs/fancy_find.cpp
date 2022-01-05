@@ -376,7 +376,7 @@ std::endl;
       Menu &menu = find_menu("main_menu");
       menu.set_options(tokens);
       menu.set_x(COLS/4);
-      menu.set_y(5);
+      menu.set_y(11);
    }
    return true;
 }
