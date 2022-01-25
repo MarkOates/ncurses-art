@@ -298,6 +298,7 @@ void initialize()
          //{ "fullscore",        { false, ProjectStatus("fullscore") } },
          //{ "motris",               { false, ProjectStatus("motris") } },
          //{ "tilemap",              { false, ProjectStatus("tilemap") } },
+         { "Fade to White (Krampus21)", { false, ProjectStatus("Krampus21") } },
          { ".dotfiles",        { false, ProjectStatus(".dotfiles") } },
          { "DragonWrath",      { false, ProjectStatus("DragonWrath") } },
          { "Releaser",      { false, ProjectStatus("Releaser") } },
