@@ -313,6 +313,7 @@ void initialize()
          { "oatescodes",       { false, ProjectStatus("oatescodes") } },
          { "tileo",                { false, ProjectStatus("tileo") } },
          { "union",            { false, ProjectStatus("union") } },
+         { "Wicked",            { false, ProjectStatus("Wicked") } },
       };
 
       emit_event(REFRESH_OUTPUT_REPORT);
