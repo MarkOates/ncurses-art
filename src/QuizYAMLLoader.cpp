@@ -24,7 +24,7 @@ std::string QuizYAMLLoader::get_yaml_filename()
 }
 
 
-bool QuizYAMLLoader::load()
+bool QuizYAMLLoader::load_and_append()
 {
    YAML::Node loaded_file = YAML::LoadFile(yaml_filename);
    YAML::Node questions_within_yaml = loaded_file["questions"];
@@ -49,7 +49,8 @@ bool QuizYAMLLoader::load()
      });
    }
 
-   quiz->set_questions(questions);
+   //quiz->set_questions(questions);
+   quiz->append_questions(questions);
    return true;
 }
 

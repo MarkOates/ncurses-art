@@ -17,7 +17,7 @@ public:
    ~QuizYAMLLoader();
 
    std::string get_yaml_filename();
-   bool load();
+   bool load_and_append();
    std::string get_type_string(YAML::Node node=YAML::Node());
 };
 

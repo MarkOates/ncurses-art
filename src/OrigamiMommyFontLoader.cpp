@@ -20,6 +20,7 @@ OrigamiMommyFontLoader::~OrigamiMommyFontLoader()
 
 std::map<char, std::vector<std::string>> OrigamiMommyFontLoader::load()
 {
+   // more fonts at https://patorjk.com/software/taag/#p=display&h=1&f=CaMiZ&t=This%20is%20the%20thing%20to%20type
    std::string shade_chars_for_reference = " ░▒▓█";
 
    std::map<char, std::vector<std::string>> letters = {

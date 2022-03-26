@@ -21,6 +21,7 @@ int current_question_index = -1;
 bool quiz_finished = false;
 
 Quiz quiz;
+std::vector<std::string> quiz_filenames;
 
 
 Question get_current_question()
@@ -29,10 +30,10 @@ Question get_current_question()
 }
 
 
-void set_quiz_questions(Quiz &q, std::string quiz_yaml_filename)
+void load_quiz_questions(Quiz &q, std::string quiz_yaml_filename)
 {
    QuizYAMLLoader quiz_yaml_loader(&q, quiz_yaml_filename);
-   quiz_yaml_loader.load();
+   quiz_yaml_loader.load_and_append();
 
    quiz.shuffle_questions();
 }
@@ -44,6 +45,11 @@ void set_quiz_questions(Quiz &q, std::string quiz_yaml_filename)
 void initialize()
 {
    if (args.size() <= 1) throw std::runtime_error("You must run this quiz with a filename as a command-line arg.");
+
+   for (int i=1; i<args.size(); i++)
+   {
+      quiz_filenames.push_back(args[i]);
+   }
 
    init_color(21, (int)(175.0/255.0*1000), 0, (int)(255.0/255.0*1000));
    init_pair(3, COLOR_BLACK, 21);
@@ -59,8 +65,10 @@ void initialize()
    mappings['o'] = OPEN_IMAGE;
 
    events[INITIALIZE] = []{
-      std::string quiz_yaml_filename = args[1];
-      set_quiz_questions(quiz, quiz_yaml_filename);
+      for (auto &quiz_filename : quiz_filenames)
+      {
+         load_quiz_questions(quiz, quiz_filename);
+      }
       current_question_index = -1;
       quiz_finished = false;
       emit_event(ROTATE_QUESTION);

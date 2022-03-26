@@ -9,7 +9,7 @@ properties:
     constructor_arg: true
     getter: true
 functions:
-  - name: load
+  - name: load_and_append
     type: bool
     body: |
       YAML::Node loaded_file = YAML::LoadFile(yaml_filename);
@@ -35,7 +35,8 @@ functions:
         });
       }
 
-      quiz->set_questions(questions);
+      //quiz->set_questions(questions);
+      quiz->append_questions(questions);
       return true;
   - name: get_type_string
     type: std::string

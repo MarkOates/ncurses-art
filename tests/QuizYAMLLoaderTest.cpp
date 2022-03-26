@@ -14,14 +14,14 @@ TEST(QuizYAMLLoaderTest, get_type_string__returns_the_expected_value)
    EXPECT_EQ("Sequence", quiz_yaml_loader.get_type_string(node));
 }
 
-TEST(QuizYAMLLoaderTest, load__opens_the_contents_of_the_expected_test_file)
+TEST(QuizYAMLLoaderTest, load_and_append__opens_the_contents_of_the_expected_test_file)
 {
    std::string quiz_filename = "tests/fixtures/quiz.yml";
    Quiz quiz;
    
    QuizYAMLLoader quiz_yaml_loader(&quiz, quiz_filename);
 
-   EXPECT_TRUE(quiz_yaml_loader.load());
+   EXPECT_TRUE(quiz_yaml_loader.load_and_append());
 
    Question expected_question{
       "The speed limit approaching a school crosswalk is",
@@ -55,3 +55,9 @@ TEST(QuizYAMLLoaderTest, load__opens_the_contents_of_the_expected_test_file)
    EXPECT_EQ(expected_second_question.get_correct_answer(), second_question.get_correct_answer());
    EXPECT_EQ(expected_second_question.get_incorrect_answers(), second_question.get_incorrect_answers());
 }
+
+TEST(QuizYAMLLoaderTest, load_and_append__will_append_the_questions_to_the_quiz)
+{
+   // TODO
+}
+

@@ -5,11 +5,13 @@
 #include <Blast/ProjectComponentFileTypes.hpp>
 #include <Blast/FileLastWriteTime.hpp>
 #include <Blast/ProjectComponentFilenameGenerator.hpp>
+#include <iostream>
 #include <Blast/ProjectComponentFilenameGenerator.hpp>
 #include <Blast/ProjectComponentFileTypes.hpp>
 #include <Blast/FileExistenceChecker.hpp>
 #include <Blast/ProjectComponentFileTypes.hpp>
 #include <vector>
+#include <Blast/ProjectComponentFileTypes.hpp>
 #include <Blast/ProjectComponentFileTypes.hpp>
 #include <Blast/ProjectComponentFileTypes.hpp>
 #include <Blast/ProjectComponentFileTypes.hpp>
@@ -67,6 +69,7 @@ std::vector<std::string> Component::list_existing_component_files()
       Blast::ProjectComponentFileTypes::HEADER_FILE,
       Blast::ProjectComponentFileTypes::TEST_FILE,
       Blast::ProjectComponentFileTypes::EXAMPLE_FILE,
+      Blast::ProjectComponentFileTypes::DOCUMENTATION_FILE,
       //Blast::ProjectComponentFileTypes::OBJECT_FILE,
       //Blast::ProjectComponentFileTypes::TEST_BINARY,
       //Blast::ProjectComponentFileTypes::EXAMPLE_BINARY,
@@ -94,6 +97,7 @@ std::time_t Component::last_write_time()
       Blast::ProjectComponentFileTypes::HEADER_FILE,
       Blast::ProjectComponentFileTypes::TEST_FILE,
       Blast::ProjectComponentFileTypes::EXAMPLE_FILE,
+      Blast::ProjectComponentFileTypes::DOCUMENTATION_FILE,
       //Blast::ProjectComponentFileTypes::OBJECT_FILE,
       //Blast::ProjectComponentFileTypes::TEST_BINARY,
       //Blast::ProjectComponentFileTypes::EXAMPLE_BINARY,
@@ -120,6 +124,10 @@ bool Component::check_file_existence(Blast::ProjectComponentFileTypes::project_f
 {
    std::string filename = Blast::ProjectComponentFilenameGenerator(name, type).generate_filename();
    std::string full_filename = project_root + filename;
+
+   std::cout << std::endl;
+   std::cout << "## " << full_filename << std::endl;
+
    return Blast::FileExistenceChecker(full_filename).exists();
 }
 
@@ -131,6 +139,7 @@ bool Component::exists()
       Blast::ProjectComponentFileTypes::HEADER_FILE,
       Blast::ProjectComponentFileTypes::TEST_FILE,
       Blast::ProjectComponentFileTypes::EXAMPLE_FILE,
+      Blast::ProjectComponentFileTypes::DOCUMENTATION_FILE,
       //Blast::ProjectComponentFileTypes::OBJECT_FILE,
       //Blast::ProjectComponentFileTypes::TEST_BINARY,
       //Blast::ProjectComponentFileTypes::EXAMPLE_BINARY,
@@ -160,6 +169,11 @@ bool Component::has_only_source_and_header()
 bool Component::has_test()
 {
    return check_file_existence(Blast::ProjectComponentFileTypes::TEST_FILE);
+}
+
+bool Component::has_documentation()
+{
+   return check_file_existence(Blast::ProjectComponentFileTypes::DOCUMENTATION_FILE);
 }
 
 std::vector<std::pair<std::string, std::string>> Component::read_symlinks()

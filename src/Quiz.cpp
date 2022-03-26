@@ -31,6 +31,11 @@ std::vector<Question> Quiz::get_questions()
 }
 
 
+void Quiz::append_questions(std::vector<Question> new_questions)
+{
+   questions.insert( questions.end(), new_questions.begin(), new_questions.end() ); return;
+}
+
 void Quiz::shuffle_questions()
 {
    std::random_device rd;
