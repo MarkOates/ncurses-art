@@ -86,6 +86,17 @@ void initialize()
       std::mt19937 g(rd());
       std::shuffle(answers.begin(), answers.end(), g);
 
+
+      // Shuffle one more time if the first option happens to be the correct answer.
+      // This is just to make it more likely that the user will have to read and consider
+      // more of the options
+      if (!answers.empty())
+      {
+         if (current_question.get_correct_answer() == answers[0])
+            std::shuffle(answers.begin(), answers.end(), g);
+      }
+
+
       find_text("question").set_text(current_question.get_question());
       find_menu("answers").set_options(answers);
 
