@@ -614,6 +614,9 @@ table td
   <td class="method">load()</td>
 </tr>
 <tr>
+  <td class="method">trim(1)</td>
+</tr>
+<tr>
   <td class="method">extract_subject(4)</td>
 </tr>
 <tr>
@@ -632,6 +635,9 @@ table td
 </tr>
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::StringSplitter&quot;, &quot;headers&quot;=&gt;[&quot;Blast/StringSplitter.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::String::Trimmer&quot;, &quot;headers&quot;=&gt;[&quot;Blast/String/Trimmer.hpp&quot;]}</td>
 </tr>
     </table>
   </div>
@@ -755,7 +761,8 @@ table td
   ],
   "Blast/String/Trimmer": [
     "HostnameExtractor",
-    "NcursesArt/GithubRepoStatusFetcher"
+    "NcursesArt/GithubRepoStatusFetcher",
+    "Quizes/MultiplexSheetLoader"
   ],
   "Blast/StringSplitter": [
     "NcursesArt/GithubRepoStatusFetcher",

@@ -1,0 +1,42 @@
+properties:
+
+
+  - name: questions_DUMMY
+    type: std::vector<Quizes::MultiplexQuestion>
+    init_with: '{}'
+    static: true
+    getter_ref: true
+
+  - name: questions
+    type: std::vector<Quizes::MultiplexQuestion>&
+    init_with: 'get_questions_DUMMY_ref()'
+
+
+functions:
+
+
+  - name: select_with_dates
+    type: std::vector<Quizes::MultiplexQuestion>
+    body: |
+      std::vector<Quizes::MultiplexQuestion> result;
+      for (auto &question : questions)
+      {
+         if (question.get_date().empty()) continue;
+         result.push_back(question);
+      }
+      return result;
+    body_dependency_symbols:
+      - Blast::String::Trimmer
+
+
+dependencies:
+
+
+  - symbol: std::vector<Quizes::MultiplexQuestion>&
+    headers: [ vector, Quizes/MultiplexQuestion.hpp ]
+  - symbol: std::vector<Quizes::MultiplexQuestion>
+    headers: [ vector, Quizes/MultiplexQuestion.hpp ]
+  - symbol: Blast::String::Trimmer
+    headers: [ Blast/String/Trimmer.hpp ]
+
+

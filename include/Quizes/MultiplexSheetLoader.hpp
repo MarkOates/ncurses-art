@@ -23,6 +23,7 @@ namespace Quizes
       bool get_loaded();
       std::vector<Quizes::MultiplexQuestion> get_questions();
       bool load();
+      std::string trim(std::string str="");
       std::string extract_subject(std::string event_or_document="[not-set]", std::string person_name_or_symbol="[not-set]", std::string subject_group="[not-set]", int line_number=0);
       std::string extract_subject_type(std::string event_or_document="[not-set]", std::string person_name_or_symbol="[not-set]", std::string subject_group="[not-set]");
    };

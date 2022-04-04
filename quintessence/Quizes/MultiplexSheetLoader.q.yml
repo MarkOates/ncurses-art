@@ -60,12 +60,12 @@ functions:
          }
          
          // name the columns
-         std::string date = columns[0];
-         std::string subject_event_or_document = columns[1];
-         std::string subject_person_name_or_symbol = columns[2];
-         std::string subject_group = columns[3];
-         std::string relevance = columns[4];
-         std::string reference_page = columns[5];
+         std::string date = trim(columns[0]);
+         std::string subject_event_or_document = trim(columns[1]);
+         std::string subject_person_name_or_symbol = trim(columns[2]);
+         std::string subject_group = trim(columns[3]);
+         std::string relevance = trim(columns[4]);
+         std::string reference_page = trim(columns[5]);
 
          // swizzle the subject columns
          std::string subject = extract_subject(
@@ -84,8 +84,21 @@ functions:
       loaded = true;
       return true;
     body_dependency_symbols:
+      - Blast::String::Trimmer
       - Blast::StringSplitter
       - Quizes::MultiplexQuestion
+
+
+  - name: trim
+    type: std::string
+    parameters:
+      - name: str
+        type: std::string
+        default_argument: '""'
+    body: |
+      return Blast::String::Trimmer(str).trim();
+    body_dependency_symbols:
+      - Blast::String::Trimmer
 
 
   - name: extract_subject
@@ -154,5 +167,7 @@ dependencies:
     headers: [ Blast/FileExistenceChecker.hpp ]
   - symbol: Blast::StringSplitter
     headers: [ Blast/StringSplitter.hpp ]
+  - symbol: Blast::String::Trimmer
+    headers: [ Blast/String/Trimmer.hpp ]
 
 

@@ -33,7 +33,8 @@
   ],
   "Blast/String/Trimmer": [
     "HostnameExtractor",
-    "NcursesArt/GithubRepoStatusFetcher"
+    "NcursesArt/GithubRepoStatusFetcher",
+    "Quizes/MultiplexSheetLoader"
   ],
   "Blast/StringSplitter": [
     "NcursesArt/GithubRepoStatusFetcher",

@@ -3,10 +3,12 @@
 #include <Quizes/MultiplexSheetLoader.hpp>
 #include <stdexcept>
 #include <sstream>
+#include <Blast/String/Trimmer.hpp>
 #include <Blast/StringSplitter.hpp>
 #include <Quizes/MultiplexQuestion.hpp>
 #include <stdexcept>
 #include <sstream>
+#include <Blast/String/Trimmer.hpp>
 
 
 namespace Quizes
@@ -85,12 +87,12 @@ bool MultiplexSheetLoader::load()
       }
       
       // name the columns
-      std::string date = columns[0];
-      std::string subject_event_or_document = columns[1];
-      std::string subject_person_name_or_symbol = columns[2];
-      std::string subject_group = columns[3];
-      std::string relevance = columns[4];
-      std::string reference_page = columns[5];
+      std::string date = trim(columns[0]);
+      std::string subject_event_or_document = trim(columns[1]);
+      std::string subject_person_name_or_symbol = trim(columns[2]);
+      std::string subject_group = trim(columns[3]);
+      std::string relevance = trim(columns[4]);
+      std::string reference_page = trim(columns[5]);
 
       // swizzle the subject columns
       std::string subject = extract_subject(
@@ -108,6 +110,11 @@ bool MultiplexSheetLoader::load()
    }
    loaded = true;
    return true;
+}
+
+std::string MultiplexSheetLoader::trim(std::string str)
+{
+   return Blast::String::Trimmer(str).trim();
 }
 
 std::string MultiplexSheetLoader::extract_subject(std::string event_or_document, std::string person_name_or_symbol, std::string subject_group, int line_number)
