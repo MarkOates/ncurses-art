@@ -49,7 +49,7 @@ std::vector<Quizes::MultiplexQuestion> MultiplexSheetLoader::get_questions()
    return questions;
 }
 
-void MultiplexSheetLoader::load()
+bool MultiplexSheetLoader::load()
 {
    if (!((!loaded)))
       {
@@ -59,10 +59,20 @@ void MultiplexSheetLoader::load()
       }
    const int EXPECTED_NUM_COLUMNS = 6;
    std::vector<std::string> lines = Blast::StringSplitter(raw_csv, '\n').split();
-   int line_num = 1;
+   bool discard_first_line = true;
+   int line_num = 0;
+
+   if (discard_first_line)
+   {
+      assert(!lines.empty());
+      lines.front() = std::move(lines.back());
+      lines.pop_back();
+      line_num++;
+   }
+
    for (auto &line : lines)
    {
-      std::vector<std::string> columns = Blast::StringSplitter(line, ',').split();
+      std::vector<std::string> columns = Blast::StringSplitter(line, '\t').split();
       if (columns.size() != EXPECTED_NUM_COLUMNS)
       {
          std::stringstream error_message;
@@ -84,7 +94,7 @@ void MultiplexSheetLoader::load()
 
       // swizzle the subject columns
       std::string subject = extract_subject(
-         subject_event_or_document, subject_person_name_or_symbol, subject_group);
+         subject_event_or_document, subject_person_name_or_symbol, subject_group, line_num);
       std::string subject_type = extract_subject_type(
          subject_event_or_document, subject_person_name_or_symbol, subject_group);
 
@@ -97,7 +107,7 @@ void MultiplexSheetLoader::load()
       line_num++;
    }
    loaded = true;
-   return;
+   return true;
 }
 
 std::string MultiplexSheetLoader::extract_subject(std::string event_or_document, std::string person_name_or_symbol, std::string subject_group, int line_number)
@@ -105,7 +115,11 @@ std::string MultiplexSheetLoader::extract_subject(std::string event_or_document,
    std::vector<std::string> inputs = { event_or_document, person_name_or_symbol, subject_group };
    for (int i=0; i<inputs.size(); i++)
    {
-      if (inputs[i].empty()) inputs.erase(inputs.begin() + i);
+      if (inputs[i].empty())
+      {
+         inputs.erase(inputs.begin() + i);
+         i--;
+      }
    }
    if (inputs.size() != 1)
    {

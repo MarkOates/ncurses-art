@@ -29,14 +29,25 @@ functions:
     
 
   - name: load
+    type: bool
     guards: [ (!loaded) ]
     body: |
       const int EXPECTED_NUM_COLUMNS = 6;
       std::vector<std::string> lines = Blast::StringSplitter(raw_csv, '\n').split();
-      int line_num = 1;
+      bool discard_first_line = true;
+      int line_num = 0;
+
+      if (discard_first_line)
+      {
+         assert(!lines.empty());
+         lines.front() = std::move(lines.back());
+         lines.pop_back();
+         line_num++;
+      }
+
       for (auto &line : lines)
       {
-         std::vector<std::string> columns = Blast::StringSplitter(line, ',').split();
+         std::vector<std::string> columns = Blast::StringSplitter(line, '\t').split();
          if (columns.size() != EXPECTED_NUM_COLUMNS)
          {
             std::stringstream error_message;
@@ -58,7 +69,7 @@ functions:
 
          // swizzle the subject columns
          std::string subject = extract_subject(
-            subject_event_or_document, subject_person_name_or_symbol, subject_group);
+            subject_event_or_document, subject_person_name_or_symbol, subject_group, line_num);
          std::string subject_type = extract_subject_type(
             subject_event_or_document, subject_person_name_or_symbol, subject_group);
 
@@ -71,10 +82,11 @@ functions:
          line_num++;
       }
       loaded = true;
-      return;
+      return true;
     body_dependency_symbols:
       - Blast::StringSplitter
       - Quizes::MultiplexQuestion
+
 
   - name: extract_subject
     type: std::string
@@ -95,7 +107,11 @@ functions:
       std::vector<std::string> inputs = { event_or_document, person_name_or_symbol, subject_group };
       for (int i=0; i<inputs.size(); i++)
       {
-         if (inputs[i].empty()) inputs.erase(inputs.begin() + i);
+         if (inputs[i].empty())
+         {
+            inputs.erase(inputs.begin() + i);
+            i--;
+         }
       }
       if (inputs.size() != 1)
       {
