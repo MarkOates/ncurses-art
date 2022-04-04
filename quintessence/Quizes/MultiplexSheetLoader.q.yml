@@ -1,0 +1,103 @@
+properties:
+
+
+  - name: raw_csv
+    type: std::string
+    init_with: '""'
+    constructor_arg: true
+    getter: true
+
+  - name: questions
+    type: std::vector<Quizes::MultiplexQuestion>
+    init_with: ''
+    getter: explicit
+
+  - name: loaded
+    type: bool
+    init_with: false
+    getter: true
+
+
+functions:
+
+
+  - name: get_questions
+    type: std::vector<Quizes::MultiplexQuestion>
+    guards: [ loaded ]
+    body: |
+      return questions;
+    
+
+  - name: load
+    guards: [ (!loaded) ]
+    body: |
+      const int EXPECTED_NUM_COLUMNS = 6;
+      std::vector<std::string> lines = Blast::StringSplitter(raw_csv, '\n').split();
+      int line_num = 1;
+      for (auto &line : lines)
+      {
+         std::vector<std::string> columns = Blast::StringSplitter(line, ',').split();
+         if (columns.size() != EXPECTED_NUM_COLUMNS)
+         {
+            std::stringstream error_message;
+            error_message << "There was not the expected number of columns ("
+                          << EXPECTED_NUM_COLUMNS
+                          << ") on line "
+                          << line_num << ". Instead, there were "
+                          << columns.size() << " columns.";
+            throw std::runtime_error(error_message.str());
+         }
+         
+         std::string date = columns[0];
+         std::string subject_event_or_document = columns[1];
+         std::string subject_person_name_or_symbol = columns[2];
+         std::string subject_group = columns[3];
+         std::string relevance = columns[4];
+         std::string reference_page = columns[5];
+
+         std::string subject_type = "[unextracted-subject-type]";
+
+         
+
+         line_num++;
+      }
+      loaded = true;
+      return;
+    body_dependency_symbols:
+      - Blast::StringSplitter
+
+
+  - name: extract_subject_text
+    type: std::string
+    parameters:
+      - name: event_or_document
+        type: std::string
+        default_argument: '"[not-set]"'
+      - name: person_name_or_symbol
+        type: std::string
+        default_argument: '"[not-set]"'
+      - name: subject_group
+        type: std::string
+        default_argument: '"[not-set]"'
+      - name: line_number
+        type: int
+        default_argument: 0
+    body: |
+      //if (event_or_document.empty() && person_name_or_symbol.empty() && subject_group.empty())
+      //{
+         //std::runtime_error("all 3 cannot be empty");
+      //{}
+      return "not-extracted";
+
+
+dependencies:
+
+
+  - symbol: std::vector<Quizes::MultiplexQuestion>
+    headers: [ vector, Quizes/MultiplexQuestion.hpp ]
+  - symbol: Blast::FileExistenceChecker
+    headers: [ Blast/FileExistenceChecker.hpp ]
+  - symbol: Blast::StringSplitter
+    headers: [ Blast/StringSplitter.hpp ]
+
+

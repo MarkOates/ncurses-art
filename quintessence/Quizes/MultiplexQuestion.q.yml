@@ -1,0 +1,34 @@
+properties:
+
+
+  - name: date
+    type: std::string
+    init_with: '"[undefined-date]"'
+    getter: true
+    setter: true
+
+  - name: subject
+    type: std::string
+    init_with: '"[undefined-subject]"'
+    getter: true
+    setter: true
+    
+  - name: subject_type
+    type: std::string
+    init_with: '"[undefined-subject-type]"'
+    getter: true
+    setter: true
+    
+  - name: relevance
+    type: std::string
+    init_with: '"[undefined-subject]"'
+    getter: true
+    setter: true
+    
+  - name: reference_page
+    type: int
+    init_with: 0
+    getter: true
+    setter: true
+
+
