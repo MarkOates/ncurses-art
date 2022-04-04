@@ -6,29 +6,34 @@ properties:
     init_with: '"[undefined-date]"'
     getter: true
     setter: true
+    constructor_arg: true
 
   - name: subject
     type: std::string
     init_with: '"[undefined-subject]"'
     getter: true
     setter: true
+    constructor_arg: true
     
   - name: subject_type
     type: std::string
     init_with: '"[undefined-subject-type]"'
     getter: true
     setter: true
+    constructor_arg: true
     
   - name: relevance
     type: std::string
     init_with: '"[undefined-subject]"'
     getter: true
     setter: true
+    constructor_arg: true
     
   - name: reference_page
-    type: int
-    init_with: 0
+    type: std::string
+    init_with: '"[page-not-set]"'
     getter: true
     setter: true
+    constructor_arg: true
 
 

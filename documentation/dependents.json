@@ -36,7 +36,8 @@
     "NcursesArt/GithubRepoStatusFetcher"
   ],
   "Blast/StringSplitter": [
-    "NcursesArt/GithubRepoStatusFetcher"
+    "NcursesArt/GithubRepoStatusFetcher",
+    "Quizes/MultiplexSheetLoader"
   ],
   "std/stringstream": [
     "NcursesArt/GithubRepoStatusFetcher"
@@ -78,6 +79,15 @@
   ],
   "YAML/Node": [
     "QuizYAMLLoader"
+  ],
+  "std/vector<Quizes/MultiplexQuestion>": [
+    "Quizes/MultiplexSheetLoader"
+  ],
+  "Quizes/MultiplexQuestion": [
+    "Quizes/MultiplexSheetLoader"
+  ],
+  "Blast/FileExistenceChecker": [
+    "Quizes/MultiplexSheetLoader"
   ],
   "std/set_intersection": [
     "StringVectorIntersection"

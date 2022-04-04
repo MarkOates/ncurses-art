@@ -63,6 +63,8 @@ table td
   <li><a href="#quintessence/Question.q.yml">quintessence/Question.q.yml</a></li>
   <li><a href="#quintessence/Quiz.q.yml">quintessence/Quiz.q.yml</a></li>
   <li><a href="#quintessence/QuizYAMLLoader.q.yml">quintessence/QuizYAMLLoader.q.yml</a></li>
+  <li><a href="#quintessence/Quizes/MultiplexQuestion.q.yml">quintessence/Quizes/MultiplexQuestion.q.yml</a></li>
+  <li><a href="#quintessence/Quizes/MultiplexSheetLoader.q.yml">quintessence/Quizes/MultiplexSheetLoader.q.yml</a></li>
   <li><a href="#quintessence/SmallFontLoader.q.yml">quintessence/SmallFontLoader.q.yml</a></li>
   <li><a href="#quintessence/StringSplitter.q.yml">quintessence/StringSplitter.q.yml</a></li>
   <li><a href="#quintessence/StringVectorIntersection.q.yml">quintessence/StringVectorIntersection.q.yml</a></li>
@@ -543,6 +545,84 @@ table td
 </ul>
 <ul>
   <div class="component">
+    <h3 id="quintessence/Quizes/MultiplexQuestion.q.yml">quintessence/Quizes/MultiplexQuestion.q.yml</h3>
+     <table>
+<tr>
+  <td class="property">date</td>
+  <td class="property">std::string</td>
+</tr>
+<tr>
+  <td class="property">subject</td>
+  <td class="property">std::string</td>
+</tr>
+<tr>
+  <td class="property">subject_type</td>
+  <td class="property">std::string</td>
+</tr>
+<tr>
+  <td class="property">relevance</td>
+  <td class="property">std::string</td>
+</tr>
+<tr>
+  <td class="property">reference_page</td>
+  <td class="property">std::string</td>
+</tr>
+    </table>
+     <table>
+    </table>
+     <table>
+    </table>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Quizes/MultiplexSheetLoader.q.yml">quintessence/Quizes/MultiplexSheetLoader.q.yml</h3>
+     <table>
+<tr>
+  <td class="property">raw_csv</td>
+  <td class="property">std::string</td>
+</tr>
+<tr>
+  <td class="property">questions</td>
+  <td class="property">std::vector&lt;Quizes::MultiplexQuestion&gt;</td>
+</tr>
+<tr>
+  <td class="property">loaded</td>
+  <td class="property">bool</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="method">get_questions()</td>
+</tr>
+<tr>
+  <td class="method">load()</td>
+</tr>
+<tr>
+  <td class="method">extract_subject(4)</td>
+</tr>
+<tr>
+  <td class="method">extract_subject_type(3)</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::vector&lt;Quizes::MultiplexQuestion&gt;&quot;, &quot;headers&quot;=&gt;[&quot;vector&quot;, &quot;Quizes/MultiplexQuestion.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Quizes::MultiplexQuestion&quot;, &quot;headers&quot;=&gt;[&quot;Quizes/MultiplexQuestion.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::FileExistenceChecker&quot;, &quot;headers&quot;=&gt;[&quot;Blast/FileExistenceChecker.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::StringSplitter&quot;, &quot;headers&quot;=&gt;[&quot;Blast/StringSplitter.hpp&quot;]}</td>
+</tr>
+    </table>
+  </div>
+</ul>
+<ul>
+  <div class="component">
     <h3 id="quintessence/SmallFontLoader.q.yml">quintessence/SmallFontLoader.q.yml</h3>
      <table>
     </table>
@@ -663,7 +743,8 @@ table td
     "NcursesArt/GithubRepoStatusFetcher"
   ],
   "Blast/StringSplitter": [
-    "NcursesArt/GithubRepoStatusFetcher"
+    "NcursesArt/GithubRepoStatusFetcher",
+    "Quizes/MultiplexSheetLoader"
   ],
   "std/stringstream": [
     "NcursesArt/GithubRepoStatusFetcher"
@@ -705,6 +786,15 @@ table td
   ],
   "YAML/Node": [
     "QuizYAMLLoader"
+  ],
+  "std/vector<Quizes/MultiplexQuestion>": [
+    "Quizes/MultiplexSheetLoader"
+  ],
+  "Quizes/MultiplexQuestion": [
+    "Quizes/MultiplexSheetLoader"
+  ],
+  "Blast/FileExistenceChecker": [
+    "Quizes/MultiplexSheetLoader"
   ],
   "std/set_intersection": [
     "StringVectorIntersection"

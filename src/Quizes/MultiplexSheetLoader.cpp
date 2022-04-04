@@ -4,6 +4,7 @@
 #include <stdexcept>
 #include <sstream>
 #include <Blast/StringSplitter.hpp>
+#include <Quizes/MultiplexQuestion.hpp>
 #include <stdexcept>
 #include <sstream>
 
@@ -73,6 +74,7 @@ void MultiplexSheetLoader::load()
          throw std::runtime_error(error_message.str());
       }
       
+      // name the columns
       std::string date = columns[0];
       std::string subject_event_or_document = columns[1];
       std::string subject_person_name_or_symbol = columns[2];
@@ -80,9 +82,17 @@ void MultiplexSheetLoader::load()
       std::string relevance = columns[4];
       std::string reference_page = columns[5];
 
-      std::string subject_type = "[unextracted-subject-type]";
+      // swizzle the subject columns
+      std::string subject = extract_subject(
+         subject_event_or_document, subject_person_name_or_symbol, subject_group);
+      std::string subject_type = extract_subject_type(
+         subject_event_or_document, subject_person_name_or_symbol, subject_group);
 
-      
+      // create teh quiz object
+      Quizes::MultiplexQuestion question(date, subject, subject_type, relevance, reference_page);
+
+      // add the question to the questions
+      questions.push_back(question);
 
       line_num++;
    }
@@ -90,13 +100,30 @@ void MultiplexSheetLoader::load()
    return;
 }
 
-std::string MultiplexSheetLoader::extract_subject_text(std::string event_or_document, std::string person_name_or_symbol, std::string subject_group, int line_number)
+std::string MultiplexSheetLoader::extract_subject(std::string event_or_document, std::string person_name_or_symbol, std::string subject_group, int line_number)
 {
-   //if (event_or_document.empty() && person_name_or_symbol.empty() && subject_group.empty())
-   //{
-      //std::runtime_error("all 3 cannot be empty");
-   //{}
-   return "not-extracted";
+   std::vector<std::string> inputs = { event_or_document, person_name_or_symbol, subject_group };
+   for (int i=0; i<inputs.size(); i++)
+   {
+      if (inputs[i].empty()) inputs.erase(inputs.begin() + i);
+   }
+   if (inputs.size() != 1)
+   {
+      std::stringstream error_message;
+      error_message << "Only one subject can be present, but none or several was present on line "
+                    << line_number << ".";
+      throw std::runtime_error(error_message.str());
+   }
+   return inputs[0];
+}
+
+std::string MultiplexSheetLoader::extract_subject_type(std::string event_or_document, std::string person_name_or_symbol, std::string subject_group)
+{
+   if (!event_or_document.empty()) return "event_or_document";
+   if (!person_name_or_symbol.empty()) return "person_name_or_symbol";
+   if (!subject_group.empty()) return "subject_group";
+   throw std::runtime_error("unexpected extraction of extract_subject_type not valid for some reason.");
+   return "[error-path]";
 }
 } // namespace Quizes
 

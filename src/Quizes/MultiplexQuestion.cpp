@@ -8,12 +8,12 @@ namespace Quizes
 {
 
 
-MultiplexQuestion::MultiplexQuestion()
-   : date("[undefined-date]")
-   , subject("[undefined-subject]")
-   , subject_type("[undefined-subject-type]")
-   , relevance("[undefined-subject]")
-   , reference_page(0)
+MultiplexQuestion::MultiplexQuestion(std::string date, std::string subject, std::string subject_type, std::string relevance, std::string reference_page)
+   : date(date)
+   , subject(subject)
+   , subject_type(subject_type)
+   , relevance(relevance)
+   , reference_page(reference_page)
 {
 }
 
@@ -47,7 +47,7 @@ void MultiplexQuestion::set_relevance(std::string relevance)
 }
 
 
-void MultiplexQuestion::set_reference_page(int reference_page)
+void MultiplexQuestion::set_reference_page(std::string reference_page)
 {
    this->reference_page = reference_page;
 }
@@ -77,7 +77,7 @@ std::string MultiplexQuestion::get_relevance()
 }
 
 
-int MultiplexQuestion::get_reference_page()
+std::string MultiplexQuestion::get_reference_page()
 {
    return reference_page;
 }
