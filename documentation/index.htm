@@ -635,7 +635,10 @@ table td
   <td class="method">sanitize_quotes(1)</td>
 </tr>
 <tr>
-  <td class="method">split_and_shuffle_by_semicolon(1)</td>
+  <td class="method">split_trim_and_shuffle_by_semicolon(1)</td>
+</tr>
+<tr>
+  <td class="method">trim(1)</td>
 </tr>
     </table>
      <table>
@@ -647,6 +650,9 @@ table td
 </tr>
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::vector&lt;Quizes::MultiplexQuestion&gt;&quot;, &quot;headers&quot;=&gt;[&quot;vector&quot;, &quot;Quizes/MultiplexQuestion.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::String::Trimmer&quot;, &quot;headers&quot;=&gt;[&quot;Blast/String/Trimmer.hpp&quot;]}</td>
 </tr>
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Quizes::MultiplexSheetLoader&quot;, &quot;headers&quot;=&gt;[&quot;Quizes/MultiplexSheetLoader.hpp&quot;]}</td>
@@ -840,6 +846,7 @@ table td
     "HostnameExtractor",
     "NcursesArt/GithubRepoStatusFetcher",
     "Quizes/MultiplexQuestionCollectionHelper",
+    "Quizes/MultiplexQuizRunner",
     "Quizes/MultiplexSheetLoader"
   ],
   "Blast/StringSplitter": [

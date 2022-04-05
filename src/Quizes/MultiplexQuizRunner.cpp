@@ -14,6 +14,7 @@
 #include <random>
 #include <Blast/StringSplitter.hpp>
 #include <Blast/StringJoiner.hpp>
+#include <Blast/String/Trimmer.hpp>
 
 
 namespace Quizes
@@ -34,7 +35,7 @@ MultiplexQuizRunner::~MultiplexQuizRunner()
 void MultiplexQuizRunner::initialize()
 {
    //std::string QUIZ_FILE = "/Users/markoates/Repos/me/quizes/discover_canada/csv/Canada Flash Cards - Capitals.tsv";
-   std::string QUIZ_FILE = "/Users/markoates/Repos/me/quizes/discover_canada/csv/Canada Flash Cards - Provinces.tsv";
+   std::string QUIZ_FILE = "/Users/markoates/Repos/me/quizes/discover_canada/csv/Canada Flash Cards - Provinces-P2.tsv";
    std::string file_contents = get_file_contents(QUIZ_FILE);
 
    Quizes::MultiplexSheetLoader loader(file_contents);
@@ -87,7 +88,8 @@ std::string MultiplexQuizRunner::format_for_quiz_yaml_relevance(std::vector<Quiz
    {
       std::string subject = sanitize_quotes(question.get_subject());
       std::string reference_page = sanitize_quotes(question.get_reference_page());
-      std::string relevance = sanitize_quotes(question.get_relevance());
+      std::vector<std::string> relevance_options = split_trim_and_shuffle_by_semicolon(sanitize_quotes(question.get_relevance()));
+      std::string relevance = Blast::StringJoiner(relevance_options, "; ").join();
 
       output << "  \"" << subject << " (page " << reference_page << ")\":" << std::endl;
       output << "    - \"" << relevance << "\"" << std::endl;
@@ -126,15 +128,25 @@ std::string MultiplexQuizRunner::sanitize_quotes(std::string str)
    return escaped;
 }
 
-std::vector<std::string> MultiplexQuizRunner::split_and_shuffle_by_semicolon(std::string str)
+std::vector<std::string> MultiplexQuizRunner::split_trim_and_shuffle_by_semicolon(std::string str)
 {
    std::vector<std::string> tokens = Blast::StringSplitter(str, ';').split();
+
+   for (auto &token : tokens)
+   {
+      token = trim(token);
+   }
 
    std::random_device rng;
    std::mt19937 urng(rng());
    std::shuffle(tokens.begin(), tokens.end(), urng);
 
    return tokens;
+}
+
+std::string MultiplexQuizRunner::trim(std::string str)
+{
+   return Blast::String::Trimmer(str).trim();
 }
 } // namespace Quizes
 

@@ -35,6 +35,7 @@
     "HostnameExtractor",
     "NcursesArt/GithubRepoStatusFetcher",
     "Quizes/MultiplexQuestionCollectionHelper",
+    "Quizes/MultiplexQuizRunner",
     "Quizes/MultiplexSheetLoader"
   ],
   "Blast/StringSplitter": [

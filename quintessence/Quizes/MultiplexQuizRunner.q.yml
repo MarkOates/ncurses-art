@@ -12,7 +12,7 @@ functions:
   - name: initialize
     body: |
       //std::string QUIZ_FILE = "/Users/markoates/Repos/me/quizes/discover_canada/csv/Canada Flash Cards - Capitals.tsv";
-      std::string QUIZ_FILE = "/Users/markoates/Repos/me/quizes/discover_canada/csv/Canada Flash Cards - Provinces.tsv";
+      std::string QUIZ_FILE = "/Users/markoates/Repos/me/quizes/discover_canada/csv/Canada Flash Cards - Provinces-P2.tsv";
       std::string file_contents = get_file_contents(QUIZ_FILE);
 
       Quizes::MultiplexSheetLoader loader(file_contents);
@@ -82,7 +82,8 @@ functions:
       {
          std::string subject = sanitize_quotes(question.get_subject());
          std::string reference_page = sanitize_quotes(question.get_reference_page());
-         std::string relevance = sanitize_quotes(question.get_relevance());
+         std::vector<std::string> relevance_options = split_trim_and_shuffle_by_semicolon(sanitize_quotes(question.get_relevance()));
+         std::string relevance = Blast::StringJoiner(relevance_options, "; ").join();
 
          output << "  \"" << subject << " (page " << reference_page << ")\":" << std::endl;
          output << "    - \"" << relevance << "\"" << std::endl;
@@ -144,7 +145,7 @@ functions:
       return escaped;
 
 
-  - name: split_and_shuffle_by_semicolon
+  - name: split_trim_and_shuffle_by_semicolon
     type: std::vector<std::string>
     parameters:
       - name: str
@@ -152,6 +153,11 @@ functions:
         default_argument: '""'
     body: |
       std::vector<std::string> tokens = Blast::StringSplitter(str, ';').split();
+
+      for (auto &token : tokens)
+      {
+         token = trim(token);
+      }
  
       std::random_device rng;
       std::mt19937 urng(rng());
@@ -164,6 +170,18 @@ functions:
       - Blast::StringJoiner
 
 
+  - name: trim
+    type: std::string
+    parameters:
+      - name: str
+        type: std::string
+        default_argument: '""'
+    body: |
+      return Blast::String::Trimmer(str).trim();
+    body_dependency_symbols:
+      - Blast::String::Trimmer
+
+
 dependencies:
 
 
@@ -173,6 +191,8 @@ dependencies:
     headers: [ string, fstream, streambuf ]
   - symbol: std::vector<Quizes::MultiplexQuestion>
     headers: [ vector, Quizes/MultiplexQuestion.hpp ]
+  - symbol: Blast::String::Trimmer
+    headers: [ Blast/String/Trimmer.hpp ]
   - symbol: Quizes::MultiplexSheetLoader
     headers: [ Quizes/MultiplexSheetLoader.hpp ]
   - symbol: Quizes::MultiplexQuestionCollectionHelper
