@@ -17,6 +17,7 @@ namespace Quizes
       ~MultiplexQuestionCollectionHelper();
 
       std::vector<Quizes::MultiplexQuestion> select_with_dates();
+      std::vector<Quizes::MultiplexQuestion> select_with_relevance();
    };
 }
 

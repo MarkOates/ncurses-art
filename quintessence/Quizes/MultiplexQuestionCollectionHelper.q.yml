@@ -24,6 +24,20 @@ functions:
       - Blast::String::Trimmer
 
 
+  - name: select_with_relevance
+    type: std::vector<Quizes::MultiplexQuestion>
+    body: |
+      std::vector<Quizes::MultiplexQuestion> result;
+      for (auto &question : questions)
+      {
+         if (question.get_relevance().empty()) continue;
+         result.push_back(question);
+      }
+      return result;
+    body_dependency_symbols:
+      - Blast::String::Trimmer
+
+
 dependencies:
 
 

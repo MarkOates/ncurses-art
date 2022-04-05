@@ -19,7 +19,8 @@ namespace Quizes
 
       void initialize();
       void run();
-      std::string format_for_quiz_yaml(std::vector<Quizes::MultiplexQuestion> questions={});
+      std::string format_for_quiz_yaml_date(std::vector<Quizes::MultiplexQuestion> questions={});
+      std::string format_for_quiz_yaml_relevance(std::vector<Quizes::MultiplexQuestion> questions={});
       void write_file_contents(std::string filename="", std::string file_contents="");
       std::string get_file_contents(std::string filename="no-file.txt");
    };
