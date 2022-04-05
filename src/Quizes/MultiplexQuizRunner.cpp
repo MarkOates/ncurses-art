@@ -59,10 +59,10 @@ std::string MultiplexQuizRunner::format_for_quiz_yaml(std::vector<Quizes::Multip
    output << "questions:" << std::endl;
    for (auto &question : questions)
    {
-      output << "  \"" << question.get_subject() << " (page " << question.get_reference_page() << "\":" << std::endl;
+      output << "  \"" << question.get_subject() << " (page " << question.get_reference_page() << ")\":" << std::endl;
       output << "    - \"" << question.get_date() << "\"" << std::endl;
       output << std::endl;
-      output << "  \"" << question.get_date() << " (page " << question.get_reference_page() << "\":" << std::endl;
+      output << "  \"" << question.get_date() << " (page " << question.get_reference_page() << ")\":" << std::endl;
       output << "    - \"" << question.get_subject() << "\"" << std::endl;
       output << std::endl;
    }
