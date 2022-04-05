@@ -23,6 +23,8 @@ namespace Quizes
       std::string format_for_quiz_yaml_relevance(std::vector<Quizes::MultiplexQuestion> questions={});
       void write_file_contents(std::string filename="", std::string file_contents="");
       std::string get_file_contents(std::string filename="no-file.txt");
+      std::string sanitize_quotes(std::string str="");
+      std::vector<std::string> split_and_shuffle_by_semicolon(std::string str="");
    };
 }
 

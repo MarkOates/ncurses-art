@@ -39,6 +39,7 @@
   ],
   "Blast/StringSplitter": [
     "NcursesArt/GithubRepoStatusFetcher",
+    "Quizes/MultiplexQuizRunner",
     "Quizes/MultiplexSheetLoader"
   ],
   "std/stringstream": [
@@ -87,6 +88,9 @@
     "Quizes/MultiplexQuizRunner",
     "Quizes/MultiplexSheetLoader"
   ],
+  "random_shuffling_deps": [
+    "Quizes/MultiplexQuizRunner"
+  ],
   "file_loading_deps": [
     "Quizes/MultiplexQuizRunner"
   ],
@@ -94,6 +98,9 @@
     "Quizes/MultiplexQuizRunner"
   ],
   "Quizes/MultiplexQuestionCollectionHelper": [
+    "Quizes/MultiplexQuizRunner"
+  ],
+  "Blast/StringJoiner": [
     "Quizes/MultiplexQuizRunner"
   ],
   "std/ofstream": [

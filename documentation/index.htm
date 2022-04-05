@@ -631,8 +631,17 @@ table td
 <tr>
   <td class="method">get_file_contents(1)</td>
 </tr>
+<tr>
+  <td class="method">sanitize_quotes(1)</td>
+</tr>
+<tr>
+  <td class="method">split_and_shuffle_by_semicolon(1)</td>
+</tr>
     </table>
      <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;random_shuffling_deps&quot;, &quot;headers&quot;=&gt;[&quot;ctime&quot;, &quot;random&quot;]}</td>
+</tr>
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;file_loading_deps&quot;, &quot;headers&quot;=&gt;[&quot;string&quot;, &quot;fstream&quot;, &quot;streambuf&quot;]}</td>
 </tr>
@@ -644,6 +653,12 @@ table td
 </tr>
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Quizes::MultiplexQuestionCollectionHelper&quot;, &quot;headers&quot;=&gt;[&quot;Quizes/MultiplexQuestionCollectionHelper.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::StringSplitter&quot;, &quot;headers&quot;=&gt;[&quot;Blast/StringSplitter.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::StringJoiner&quot;, &quot;headers&quot;=&gt;[&quot;Blast/StringJoiner.hpp&quot;]}</td>
 </tr>
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::ofstream&quot;, &quot;headers&quot;=&gt;[&quot;fstream&quot;]}</td>
@@ -829,6 +844,7 @@ table td
   ],
   "Blast/StringSplitter": [
     "NcursesArt/GithubRepoStatusFetcher",
+    "Quizes/MultiplexQuizRunner",
     "Quizes/MultiplexSheetLoader"
   ],
   "std/stringstream": [
@@ -877,6 +893,9 @@ table td
     "Quizes/MultiplexQuizRunner",
     "Quizes/MultiplexSheetLoader"
   ],
+  "random_shuffling_deps": [
+    "Quizes/MultiplexQuizRunner"
+  ],
   "file_loading_deps": [
     "Quizes/MultiplexQuizRunner"
   ],
@@ -884,6 +903,9 @@ table td
     "Quizes/MultiplexQuizRunner"
   ],
   "Quizes/MultiplexQuestionCollectionHelper": [
+    "Quizes/MultiplexQuizRunner"
+  ],
+  "Blast/StringJoiner": [
     "Quizes/MultiplexQuizRunner"
   ],
   "std/ofstream": [

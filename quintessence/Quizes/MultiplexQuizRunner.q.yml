@@ -11,7 +11,8 @@ functions:
 
   - name: initialize
     body: |
-      std::string QUIZ_FILE = "/Users/markoates/Repos/me/quizes/discover_canada/csv/Canada Flash Cards - Capitals.tsv";
+      //std::string QUIZ_FILE = "/Users/markoates/Repos/me/quizes/discover_canada/csv/Canada Flash Cards - Capitals.tsv";
+      std::string QUIZ_FILE = "/Users/markoates/Repos/me/quizes/discover_canada/csv/Canada Flash Cards - Provinces.tsv";
       std::string file_contents = get_file_contents(QUIZ_FILE);
 
       Quizes::MultiplexSheetLoader loader(file_contents);
@@ -52,11 +53,15 @@ functions:
       output << "questions:" << std::endl;
       for (auto &question : questions)
       {
-         output << "  \"" << question.get_subject() << " (page " << question.get_reference_page() << ")\":" << std::endl;
-         output << "    - \"" << question.get_date() << "\"" << std::endl;
+         std::string subject = sanitize_quotes(question.get_subject());
+         std::string reference_page = sanitize_quotes(question.get_reference_page());
+         std::string date = sanitize_quotes(question.get_date());
+
+         output << "  \"" << subject << " (page " << reference_page << ")\":" << std::endl;
+         output << "    - \"" << date << "\"" << std::endl;
          output << std::endl;
-         output << "  \"" << question.get_date() << " (page " << question.get_reference_page() << ")\":" << std::endl;
-         output << "    - \"" << question.get_subject() << "\"" << std::endl;
+         output << "  \"" << date << " (page " << reference_page << ")\":" << std::endl;
+         output << "    - \"" << subject << "\"" << std::endl;
          output << std::endl;
       }
       return output.str();
@@ -75,9 +80,9 @@ functions:
       output << "questions:" << std::endl;
       for (auto &question : questions)
       {
-         std::string subject = question.get_subject();
-         std::string reference_page = question.get_reference_page();
-         std::string relevance = question.get_relevance();
+         std::string subject = sanitize_quotes(question.get_subject());
+         std::string reference_page = sanitize_quotes(question.get_reference_page());
+         std::string relevance = sanitize_quotes(question.get_relevance());
 
          output << "  \"" << subject << " (page " << reference_page << ")\":" << std::endl;
          output << "    - \"" << relevance << "\"" << std::endl;
@@ -121,9 +126,49 @@ functions:
       - file_loading_deps
 
 
+  - name: sanitize_quotes
+    type: std::string
+    parameters:
+      - name: str
+        type: std::string
+        default_argument: '""'
+    body: |
+      std::size_t n = str.length();
+      std::string escaped;
+      escaped.reserve(n * 2);        // pessimistic preallocation
+      for (std::size_t i = 0; i < n; ++i) {
+          if (str[i] == '\\' || str[i] == '\"' || str[i] == '\'')
+              escaped += '\\';
+          escaped += str[i];
+      }
+      return escaped;
+
+
+  - name: split_and_shuffle_by_semicolon
+    type: std::vector<std::string>
+    parameters:
+      - name: str
+        type: std::string
+        default_argument: '""'
+    body: |
+      std::vector<std::string> tokens = Blast::StringSplitter(str, ';').split();
+ 
+      std::random_device rng;
+      std::mt19937 urng(rng());
+      std::shuffle(tokens.begin(), tokens.end(), urng);
+
+      return tokens;
+    body_dependency_symbols:
+      - random_shuffling_deps
+      - Blast::StringSplitter
+      - Blast::StringJoiner
+
+
 dependencies:
 
 
+  - symbol: random_shuffling_deps
+    headers: [ ctime, random ]
   - symbol: file_loading_deps
     headers: [ string, fstream, streambuf ]
   - symbol: std::vector<Quizes::MultiplexQuestion>
@@ -132,6 +177,10 @@ dependencies:
     headers: [ Quizes/MultiplexSheetLoader.hpp ]
   - symbol: Quizes::MultiplexQuestionCollectionHelper
     headers: [ Quizes/MultiplexQuestionCollectionHelper.hpp ]
+  - symbol: Blast::StringSplitter
+    headers: [ Blast/StringSplitter.hpp ]
+  - symbol: Blast::StringJoiner
+    headers: [ Blast/StringJoiner.hpp ]
   - symbol: std::ofstream
     headers: [ fstream ]
 

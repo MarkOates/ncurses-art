@@ -82,7 +82,8 @@ bool MultiplexSheetLoader::load()
                        << EXPECTED_NUM_COLUMNS
                        << ") on line "
                        << line_num << ". Instead, there were "
-                       << columns.size() << " columns.";
+                       << columns.size() << " columns. "
+                       << "The line is \"" << line << "\"";
          throw std::runtime_error(error_message.str());
       }
       
