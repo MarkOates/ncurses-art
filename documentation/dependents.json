@@ -34,6 +34,7 @@
   "Blast/String/Trimmer": [
     "HostnameExtractor",
     "NcursesArt/GithubRepoStatusFetcher",
+    "Quizes/MultiplexQuestionCollectionHelper",
     "Quizes/MultiplexSheetLoader"
   ],
   "Blast/StringSplitter": [
@@ -82,7 +83,21 @@
     "QuizYAMLLoader"
   ],
   "std/vector<Quizes/MultiplexQuestion>": [
+    "Quizes/MultiplexQuestionCollectionHelper",
+    "Quizes/MultiplexQuizRunner",
     "Quizes/MultiplexSheetLoader"
+  ],
+  "file_loading_deps": [
+    "Quizes/MultiplexQuizRunner"
+  ],
+  "Quizes/MultiplexSheetLoader": [
+    "Quizes/MultiplexQuizRunner"
+  ],
+  "Quizes/MultiplexQuestionCollectionHelper": [
+    "Quizes/MultiplexQuizRunner"
+  ],
+  "std/ofstream": [
+    "Quizes/MultiplexQuizRunner"
   ],
   "Quizes/MultiplexQuestion": [
     "Quizes/MultiplexSheetLoader"

@@ -8,23 +8,14 @@ namespace Quizes
 {
 
 
-std::vector<Quizes::MultiplexQuestion> MultiplexQuestionCollectionHelper::questions_DUMMY = {};
-
-
-MultiplexQuestionCollectionHelper::MultiplexQuestionCollectionHelper()
-   : questions(get_questions_DUMMY_ref())
+MultiplexQuestionCollectionHelper::MultiplexQuestionCollectionHelper(std::vector<Quizes::MultiplexQuestion> questions)
+   : questions(questions)
 {
 }
 
 
 MultiplexQuestionCollectionHelper::~MultiplexQuestionCollectionHelper()
 {
-}
-
-
-std::vector<Quizes::MultiplexQuestion> &MultiplexQuestionCollectionHelper::get_questions_DUMMY_ref()
-{
-   return questions_DUMMY;
 }
 
 

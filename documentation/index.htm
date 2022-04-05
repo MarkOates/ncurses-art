@@ -64,6 +64,7 @@ table td
   <li><a href="#quintessence/Quiz.q.yml">quintessence/Quiz.q.yml</a></li>
   <li><a href="#quintessence/QuizYAMLLoader.q.yml">quintessence/QuizYAMLLoader.q.yml</a></li>
   <li><a href="#quintessence/Quizes/MultiplexQuestion.q.yml">quintessence/Quizes/MultiplexQuestion.q.yml</a></li>
+  <li><a href="#quintessence/Quizes/MultiplexQuestionCollectionHelper.q.yml">quintessence/Quizes/MultiplexQuestionCollectionHelper.q.yml</a></li>
   <li><a href="#quintessence/Quizes/MultiplexQuizRunner.q.yml">quintessence/Quizes/MultiplexQuizRunner.q.yml</a></li>
   <li><a href="#quintessence/Quizes/MultiplexSheetLoader.q.yml">quintessence/Quizes/MultiplexSheetLoader.q.yml</a></li>
   <li><a href="#quintessence/SmallFontLoader.q.yml">quintessence/SmallFontLoader.q.yml</a></li>
@@ -577,15 +578,70 @@ table td
 </ul>
 <ul>
   <div class="component">
-    <h3 id="quintessence/Quizes/MultiplexQuizRunner.q.yml">quintessence/Quizes/MultiplexQuizRunner.q.yml</h3>
-     <table>
-    </table>
+    <h3 id="quintessence/Quizes/MultiplexQuestionCollectionHelper.q.yml">quintessence/Quizes/MultiplexQuestionCollectionHelper.q.yml</h3>
      <table>
 <tr>
-  <td class="method">run()</td>
+  <td class="property">questions</td>
+  <td class="property">std::vector&lt;Quizes::MultiplexQuestion&gt;</td>
 </tr>
     </table>
      <table>
+<tr>
+  <td class="method">select_with_dates()</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::vector&lt;Quizes::MultiplexQuestion&gt;&quot;, &quot;headers&quot;=&gt;[&quot;vector&quot;, &quot;Quizes/MultiplexQuestion.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::String::Trimmer&quot;, &quot;headers&quot;=&gt;[&quot;Blast/String/Trimmer.hpp&quot;]}</td>
+</tr>
+    </table>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Quizes/MultiplexQuizRunner.q.yml">quintessence/Quizes/MultiplexQuizRunner.q.yml</h3>
+     <table>
+<tr>
+  <td class="property">question_pool</td>
+  <td class="property">std::vector&lt;Quizes::MultiplexQuestion&gt;</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="method">initialize()</td>
+</tr>
+<tr>
+  <td class="method">run()</td>
+</tr>
+<tr>
+  <td class="method">format_for_quiz_yaml(1)</td>
+</tr>
+<tr>
+  <td class="method">write_file_contents(2)</td>
+</tr>
+<tr>
+  <td class="method">get_file_contents(1)</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;file_loading_deps&quot;, &quot;headers&quot;=&gt;[&quot;string&quot;, &quot;fstream&quot;, &quot;streambuf&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::vector&lt;Quizes::MultiplexQuestion&gt;&quot;, &quot;headers&quot;=&gt;[&quot;vector&quot;, &quot;Quizes/MultiplexQuestion.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Quizes::MultiplexSheetLoader&quot;, &quot;headers&quot;=&gt;[&quot;Quizes/MultiplexSheetLoader.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Quizes::MultiplexQuestionCollectionHelper&quot;, &quot;headers&quot;=&gt;[&quot;Quizes/MultiplexQuestionCollectionHelper.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::ofstream&quot;, &quot;headers&quot;=&gt;[&quot;fstream&quot;]}</td>
+</tr>
     </table>
   </div>
 </ul>
@@ -762,6 +818,7 @@ table td
   "Blast/String/Trimmer": [
     "HostnameExtractor",
     "NcursesArt/GithubRepoStatusFetcher",
+    "Quizes/MultiplexQuestionCollectionHelper",
     "Quizes/MultiplexSheetLoader"
   ],
   "Blast/StringSplitter": [
@@ -810,7 +867,21 @@ table td
     "QuizYAMLLoader"
   ],
   "std/vector<Quizes/MultiplexQuestion>": [
+    "Quizes/MultiplexQuestionCollectionHelper",
+    "Quizes/MultiplexQuizRunner",
     "Quizes/MultiplexSheetLoader"
+  ],
+  "file_loading_deps": [
+    "Quizes/MultiplexQuizRunner"
+  ],
+  "Quizes/MultiplexSheetLoader": [
+    "Quizes/MultiplexQuizRunner"
+  ],
+  "Quizes/MultiplexQuestionCollectionHelper": [
+    "Quizes/MultiplexQuizRunner"
+  ],
+  "std/ofstream": [
+    "Quizes/MultiplexQuizRunner"
   ],
   "Quizes/MultiplexQuestion": [
     "Quizes/MultiplexSheetLoader"

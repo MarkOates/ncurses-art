@@ -35,6 +35,7 @@ TEST(Quizes_MultiplexSheetLoaderTest, load__loads_the_sheet)
    std::string file_contents = get_file_contents(QUIZ_FILE);
    Quizes::MultiplexSheetLoader loader(file_contents);
    ASSERT_EQ(true, loader.load());
+   ASSERT_EQ(90, loader.get_questions().size());
 }
 
 

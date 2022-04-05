@@ -1,15 +1,10 @@
 properties:
 
 
-  - name: questions_DUMMY
+  - name: questions
     type: std::vector<Quizes::MultiplexQuestion>
     init_with: '{}'
-    static: true
-    getter_ref: true
-
-  - name: questions
-    type: std::vector<Quizes::MultiplexQuestion>&
-    init_with: 'get_questions_DUMMY_ref()'
+    constructor_arg: true
 
 
 functions:
@@ -32,8 +27,6 @@ functions:
 dependencies:
 
 
-  - symbol: std::vector<Quizes::MultiplexQuestion>&
-    headers: [ vector, Quizes/MultiplexQuestion.hpp ]
   - symbol: std::vector<Quizes::MultiplexQuestion>
     headers: [ vector, Quizes/MultiplexQuestion.hpp ]
   - symbol: Blast::String::Trimmer

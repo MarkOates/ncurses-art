@@ -1,8 +1,111 @@
+properties:
+
+
+  - name: question_pool
+    type: std::vector<Quizes::MultiplexQuestion>
+    init_with: ''
+
+
 functions:
 
 
+  - name: initialize
+    body: |
+      std::string QUIZ_FILE = "/Users/markoates/Repos/me/quizes/discover_canada/csv/Canada Flash Cards - Sheet2.tsv";
+      std::string file_contents = get_file_contents(QUIZ_FILE);
+
+      Quizes::MultiplexSheetLoader loader(file_contents);
+      loader.load();
+      question_pool = loader.get_questions();
+      return;
+    body_dependency_symbols:
+      - Quizes::MultiplexSheetLoader
+
+
   - name: run
+    body: |
+      initialize();
+
+      Quizes::MultiplexQuestionCollectionHelper collection_helper(question_pool);
+      std::vector<Quizes::MultiplexQuestion> date_questions = collection_helper.select_with_dates();
+
+      std::string QUIZ_YAML_OUTPUT_FILE =
+         "/Users/markoates/Repos/me/quizes/discover_canada/csv/multiplex_output.yml";
+      std::string yaml_formatted = format_for_quiz_yaml(date_questions);
+      write_file_contents(QUIZ_YAML_OUTPUT_FILE, yaml_formatted);
+      
+
+      return;
+    body_dependency_symbols:
+      - Quizes::MultiplexQuestionCollectionHelper
+      - std::cout
+
+
+  - name: format_for_quiz_yaml
     type: std::string
-    body: return "Hello World!";
+    parameters:
+      - name: questions
+        type: std::vector<Quizes::MultiplexQuestion>
+        default_argument: '{}'
+    body: |
+      std::stringstream output;
+      output << "questions:" << std::endl;
+      for (auto &question : questions)
+      {
+         output << "  \"" << question.get_subject() << " (page " << question.get_reference_page() << "\":" << std::endl;
+         output << "    - \"" << question.get_date() << "\"" << std::endl;
+         output << std::endl;
+         output << "  \"" << question.get_date() << " (page " << question.get_reference_page() << "\":" << std::endl;
+         output << "    - \"" << question.get_subject() << "\"" << std::endl;
+         output << std::endl;
+      }
+      return output.str();
+    body_dependency_symbols:
+      - std::stringstream
+
+
+  - name: write_file_contents
+    parameters:
+      - name: filename
+        type: std::string
+        default_argument: "\"\""
+      - name: file_contents
+        type: std::string
+        default_argument: "\"\""
+    body: |
+      std::ofstream out(filename);
+      out << file_contents;
+      out.close();
+    body_dependency_symbols:
+      - std::ofstream
+
+
+  - name: get_file_contents
+    type: std::string
+    parameters:
+      - name: filename
+        type: std::string
+        default_argument: '"no-file.txt"'
+    body: |
+      std::ifstream t(filename);
+      std::string str((std::istreambuf_iterator<char>(t)), std::istreambuf_iterator<char>());
+      return str;
+    body_dependency_symbols:
+      - file_loading_deps
+
+
+dependencies:
+
+
+  - symbol: file_loading_deps
+    headers: [ string, fstream, streambuf ]
+  - symbol: std::vector<Quizes::MultiplexQuestion>
+    headers: [ vector, Quizes/MultiplexQuestion.hpp ]
+  - symbol: Quizes::MultiplexSheetLoader
+    headers: [ Quizes/MultiplexSheetLoader.hpp ]
+  - symbol: Quizes::MultiplexQuestionCollectionHelper
+    headers: [ Quizes/MultiplexQuestionCollectionHelper.hpp ]
+  - symbol: std::ofstream
+    headers: [ fstream ]
 
 
