@@ -2,6 +2,7 @@
 
 #include <Quizes/MultiplexQuizRunner.hpp>
 #include <Quizes/MultiplexSheetLoader.hpp>
+#include <Quizes/MultiplexSheetLoader.hpp>
 #include <Quizes/MultiplexQuestionCollectionHelper.hpp>
 #include <iostream>
 #include <sstream>
@@ -34,27 +35,45 @@ MultiplexQuizRunner::~MultiplexQuizRunner()
 
 void MultiplexQuizRunner::initialize()
 {
-   //std::string QUIZ_FILE = "/Users/markoates/Repos/me/quizes/discover_canada/csv/Canada Flash Cards - Capitals.tsv";
-   std::string QUIZ_FILE = "/Users/markoates/Repos/me/quizes/discover_canada/csv/Canada Flash Cards - Provinces-P2.tsv";
-   std::string file_contents = get_file_contents(QUIZ_FILE);
-
-   Quizes::MultiplexSheetLoader loader(file_contents);
-   loader.load();
-   question_pool = loader.get_questions();
    return;
 }
 
 void MultiplexQuizRunner::run()
 {
-   initialize();
+   // initialize
+   std::string FOLDER = "/Users/markoates/Repos/me/quizes/discover_canada/csv/";
+   std::vector<std::string> quiz_files = {
+      "Canada Flash Cards - Capitals.tsv",
+      "Canada Flash Cards - Provinces-P2.tsv",
+   };
 
-   Quizes::MultiplexQuestionCollectionHelper collection_helper(question_pool);
-   std::vector<Quizes::MultiplexQuestion> date_questions = collection_helper.select_with_relevance();
+   for (auto &quiz_file : quiz_files)
+   {
+      std::string QUIZ_FILE = FOLDER + quiz_file;
+      std::string file_contents = get_file_contents(QUIZ_FILE);
 
-   std::string QUIZ_YAML_OUTPUT_FILE =
-      "/Users/markoates/Repos/me/quizes/discover_canada/csv/multiplex_output.yml";
-   std::string yaml_formatted = format_for_quiz_yaml_relevance(date_questions);
-   write_file_contents(QUIZ_YAML_OUTPUT_FILE, yaml_formatted);
+      Quizes::MultiplexSheetLoader loader(file_contents);
+      loader.load();
+      question_pool = loader.get_questions();
+
+      // write relevance:
+      {
+         Quizes::MultiplexQuestionCollectionHelper collection_helper(question_pool);
+         std::vector<Quizes::MultiplexQuestion> date_questions = collection_helper.select_with_relevance();
+         std::string QUIZ_YAML_OUTPUT_FILE = FOLDER + quiz_file + "-relevance.yml";
+         std::string yaml_formatted = format_for_quiz_yaml_relevance(date_questions);
+         write_file_contents(QUIZ_YAML_OUTPUT_FILE, yaml_formatted);
+      }
+
+      // write dates
+      {
+         Quizes::MultiplexQuestionCollectionHelper collection_helper(question_pool);
+         std::vector<Quizes::MultiplexQuestion> date_questions = collection_helper.select_with_dates();
+         std::string QUIZ_YAML_OUTPUT_FILE = FOLDER + quiz_file + "-dates.yml";
+         std::string yaml_formatted = format_for_quiz_yaml_date(date_questions);
+         write_file_contents(QUIZ_YAML_OUTPUT_FILE, yaml_formatted);
+      }
+   }
 
 
    return;
