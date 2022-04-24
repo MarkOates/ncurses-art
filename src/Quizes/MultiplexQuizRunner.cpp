@@ -42,9 +42,16 @@ void MultiplexQuizRunner::run()
 {
    // initialize
    std::string FOLDER = "/Users/markoates/Repos/me/quizes/discover_canada/csv/";
+   std::string OUTPUT_FOLDER = "/Users/markoates/Repos/me/quizes/discover_canada/csv/generated/";
    std::vector<std::string> quiz_files = {
       "Canada Flash Cards - Capitals.tsv",
+      "Canada Flash Cards - Formation.tsv",
+      "Canada Flash Cards - History1.tsv",
       "Canada Flash Cards - Provinces-P2.tsv",
+      "Canada Flash Cards - Provinces.tsv",
+      "Canada Flash Cards - Representatives.tsv",
+      "Canada Flash Cards - Symbols Heros.tsv",
+      "Canada Flash Cards - 3rd Party Questions.tsv",
    };
 
    for (auto &quiz_file : quiz_files)
@@ -60,7 +67,7 @@ void MultiplexQuizRunner::run()
       {
          Quizes::MultiplexQuestionCollectionHelper collection_helper(question_pool);
          std::vector<Quizes::MultiplexQuestion> date_questions = collection_helper.select_with_relevance();
-         std::string QUIZ_YAML_OUTPUT_FILE = FOLDER + quiz_file + "-relevance.yml";
+         std::string QUIZ_YAML_OUTPUT_FILE = OUTPUT_FOLDER + quiz_file + "-relevance.yml";
          std::string yaml_formatted = format_for_quiz_yaml_relevance(date_questions);
          write_file_contents(QUIZ_YAML_OUTPUT_FILE, yaml_formatted);
       }
@@ -69,7 +76,7 @@ void MultiplexQuizRunner::run()
       {
          Quizes::MultiplexQuestionCollectionHelper collection_helper(question_pool);
          std::vector<Quizes::MultiplexQuestion> date_questions = collection_helper.select_with_dates();
-         std::string QUIZ_YAML_OUTPUT_FILE = FOLDER + quiz_file + "-dates.yml";
+         std::string QUIZ_YAML_OUTPUT_FILE = OUTPUT_FOLDER + quiz_file + "-dates.yml";
          std::string yaml_formatted = format_for_quiz_yaml_date(date_questions);
          write_file_contents(QUIZ_YAML_OUTPUT_FILE, yaml_formatted);
       }
@@ -108,11 +115,19 @@ std::string MultiplexQuizRunner::format_for_quiz_yaml_relevance(std::vector<Quiz
       std::string subject = sanitize_quotes(question.get_subject());
       std::string reference_page = sanitize_quotes(question.get_reference_page());
       std::vector<std::string> relevance_options = split_trim_and_shuffle_by_semicolon(sanitize_quotes(question.get_relevance()));
+      int num_options = relevance_options.size();
       std::string relevance = Blast::StringJoiner(relevance_options, "; ").join();
 
-      output << "  \"" << subject << " (page " << reference_page << ")\":" << std::endl;
-      output << "    - \"" << relevance << "\"" << std::endl;
+      output << "  \"" << subject << "";
+        if (num_options >= 1) output << " (pick " << num_options << ")";
+      output << " (page " << reference_page << ")\":" << std::endl;
+      output << "    - \"[select here]" << "\"" << std::endl;
+      for (auto &option : relevance_options)
+      {
+         output << "    - \"" << option << "\"" << std::endl;
+      }
       output << std::endl;
+
       output << "  \"" << relevance << " (page " << reference_page << ")\":" << std::endl;
       output << "    - \"" << subject << "\"" << std::endl;
       output << std::endl;
