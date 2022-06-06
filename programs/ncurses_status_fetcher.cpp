@@ -314,6 +314,7 @@ void initialize()
          { "tileo",                { false, ProjectStatus("tileo") } },
          { "union",            { false, ProjectStatus("union") } },
          { "Wicked",            { false, ProjectStatus("Wicked") } },
+         { "/Library/Application Support/Adobe/CEP/extensions", { false, ProjectStatus("unset") },
       };
 
       emit_event(REFRESH_OUTPUT_REPORT);
