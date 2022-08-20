@@ -1,7 +1,7 @@
 #include <Projekt.h>
 #include "projekt_helper.h"
 
-#include <map>
+#include <unordered_map>
 
 #include <ncurses.h>
 
@@ -17,7 +17,7 @@
 #define COPY_VIM_EDIT_COMMAND "copy \"vim open\" command to clipboard"
 #define DELETE_FILE_COMMAND "delete the selected file from the system"
 
-std::map<char, std::string> command_mapping = {
+std::unordered_map<char, std::string> command_mapping = {
    { 'j', MOVE_CURSOR_DOWN },
    { 'k', MOVE_CURSOR_UP },
    { 10, COMMAND_FLIP_STAGING },
@@ -31,7 +31,7 @@ std::map<char, std::string> command_mapping = {
    { 'd', DELETE_FILE_COMMAND },
 };
 
-std::string compose_command_mapping_text(std::map<char, std::string> &command_mapping)
+std::string compose_command_mapping_text(std::unordered_map<char, std::string> &command_mapping)
 {
    std::stringstream result;
    for (auto &command_map : command_mapping)
