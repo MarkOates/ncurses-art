@@ -15,6 +15,7 @@
 #define COPY_RAILS_RERUN_RSPEC_COMMAND "copy \"rspec test\" command to clipboard"
 #define COPY_RAILS_RUBOCOP_COMMAND "copy \"rubocop\" command to clipboard"
 #define COPY_VIM_EDIT_COMMAND "copy \"vim open\" command to clipboard"
+#define DELETE_FILE_COMMAND "delete the selected file from the system"
 
 std::map<char, std::string> command_mapping = {
    { 'j', MOVE_CURSOR_DOWN },
@@ -27,6 +28,7 @@ std::map<char, std::string> command_mapping = {
    { 's', COPY_RAILS_RERUN_RSPEC_COMMAND },
    { 'r', COPY_RAILS_RUBOCOP_COMMAND },
    { 'v', COPY_VIM_EDIT_COMMAND },
+   { 'd', DELETE_FILE_COMMAND },
 };
 
 std::string compose_command_mapping_text(std::map<char, std::string> &command_mapping)
@@ -291,6 +293,20 @@ bool Projekt::process_event(std::string e)
       if (previous_file_line != -1) menu.set_cursor_pos(previous_file_line);
       else menu.move_cursor_up();
       emit_event(REFRESH_TEXT_DISPLAY);
+   }
+   else if (e == DELETE_FILE_COMMAND)
+   {
+      Menu &menu = find_menu("main_menu");
+      std::string current_selection = menu.current_selection();
+      std::vector<std::string> line_tokens = split_string(current_selection, " ");
+
+      GitStatusLineDeducer git_status_line_deducer(menu);
+
+      std::stringstream system_command;
+      system_command << "rm " << git_status_line_deducer.parse_filename();
+      system_command << " > /dev/null";
+      system(system_command.str().c_str());
+      emit_event(COMMAND_REBUILD_MENU);
    }
    else if (e == COMMAND_FLIP_STAGING)
    {
