@@ -51,6 +51,7 @@ table td
 <ul>
   <li><a href="#quintessence/ASCIICharacterRenderer.q.yml">quintessence/ASCIICharacterRenderer.q.yml</a></li>
   <li><a href="#quintessence/Blast/String/Trimmer.q.yml">quintessence/Blast/String/Trimmer.q.yml</a></li>
+  <li><a href="#quintessence/Blast/TimeStamper.q.yml">quintessence/Blast/TimeStamper.q.yml</a></li>
   <li><a href="#quintessence/Checkbox.q.yml">quintessence/Checkbox.q.yml</a></li>
   <li><a href="#quintessence/EpicDarkFont.q.yml">quintessence/EpicDarkFont.q.yml</a></li>
   <li><a href="#quintessence/HostnameExtractor.q.yml">quintessence/HostnameExtractor.q.yml</a></li>
@@ -127,6 +128,23 @@ table td
      <table>
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::find_if&quot;, &quot;headers&quot;=&gt;[&quot;algorithm&quot;]}</td>
+</tr>
+    </table>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Blast/TimeStamper.q.yml">quintessence/Blast/TimeStamper.q.yml</h3>
+     <table>
+    </table>
+     <table>
+<tr>
+  <td class="method">generate_now_timestamp_utc()</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::time_t&quot;, &quot;headers&quot;=&gt;[&quot;sstream&quot;, &quot;ctime&quot;, &quot;iomanip&quot;]}</td>
 </tr>
     </table>
   </div>
@@ -837,6 +855,9 @@ table td
   ],
   "std/find_if": [
     "Blast/String/Trimmer"
+  ],
+  "std/time_t": [
+    "Blast/TimeStamper"
   ],
   "Blast/ShellCommandExecutorWithCallback": [
     "HostnameExtractor",

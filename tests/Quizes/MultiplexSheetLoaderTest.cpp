@@ -5,7 +5,7 @@
 
 
 #include <Blast/FileExistenceChecker.hpp>
-#define QUIZ_FILE "/Users/markoates/Repos/me/quizes/discover_canada/csv/Canada Flash Cards - Sheet2.tsv"
+#define QUIZ_FILE "/Users/markoates/Repos/me/quizes/discover_canada/csv/Canada Flash Cards - Capitals.tsv"
 
 
 
@@ -35,7 +35,7 @@ TEST(Quizes_MultiplexSheetLoaderTest, load__loads_the_sheet)
    std::string file_contents = get_file_contents(QUIZ_FILE);
    Quizes::MultiplexSheetLoader loader(file_contents);
    ASSERT_EQ(true, loader.load());
-   ASSERT_EQ(90, loader.get_questions().size());
+   ASSERT_EQ(26, loader.get_questions().size());
 }
 
 

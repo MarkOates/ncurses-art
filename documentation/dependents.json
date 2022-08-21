@@ -27,6 +27,9 @@
   "std/find_if": [
     "Blast/String/Trimmer"
   ],
+  "std/time_t": [
+    "Blast/TimeStamper"
+  ],
   "Blast/ShellCommandExecutorWithCallback": [
     "HostnameExtractor",
     "NcursesArt/GithubRepoStatusFetcher"

@@ -125,8 +125,8 @@ bool Component::check_file_existence(Blast::ProjectComponentFileTypes::project_f
    std::string filename = Blast::ProjectComponentFilenameGenerator(name, type).generate_filename();
    std::string full_filename = project_root + filename;
 
-   std::cout << std::endl;
-   std::cout << "## " << full_filename << std::endl;
+   //std::cout << std::endl;
+   //std::cout << "## " << full_filename << std::endl;
 
    return Blast::FileExistenceChecker(full_filename).exists();
 }
